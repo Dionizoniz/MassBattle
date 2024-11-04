@@ -3,34 +3,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using TMPro;
 
-public class EnumDropdownWrapper<T> : IDisposable where T : Enum  
+public class EnumDropdownWrapper<T> : IDisposable where T : Enum
 {
-    public Action<T> OnValueChanged;
+    public event Action<T> OnValueChanged;
 
-    private readonly TMP_Dropdown dropdown;
-
-    private readonly ReadOnlyDictionary<string, int> nameToIndex;
+    private readonly TMP_Dropdown _dropdown;
+    private readonly ReadOnlyDictionary<string, int> _nameToIndex;
 
     public EnumDropdownWrapper(TMP_Dropdown dropdown)
     {
-        this.dropdown = dropdown;
-        nameToIndex = new ReadOnlyDictionary<string, int>(Enum.GetNames(typeof(T))
-            .Select((name,index) => (name,index))
-            .ToDictionary(x => x.name, x => x.index));
+        _dropdown = dropdown;
+
+        _nameToIndex = new ReadOnlyDictionary<string, int>(Enum.GetNames(typeof(T))
+                                                               .Select((name, index) => (name, index))
+                                                               .ToDictionary(x => x.name, x => x.index));
 
         dropdown.ClearOptions();
-        dropdown.AddOptions(nameToIndex.Keys.ToList());
+        dropdown.AddOptions(_nameToIndex.Keys.ToList());
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
-    }
-
-    public T Value()
-    {
-        return (T)Enum.GetValues(typeof(T)).GetValue(dropdown.value);
-    }
-
-    public void SetValueWithoutNotify(T value)
-    {
-        dropdown.SetValueWithoutNotify(EnumToIndex(value));
     }
 
     private void OnDropdownValueChanged(int index)
@@ -38,13 +28,17 @@ public class EnumDropdownWrapper<T> : IDisposable where T : Enum
         OnValueChanged?.Invoke((T)Enum.GetValues(typeof(T)).GetValue(index));
     }
 
-    private int EnumToIndex(T value)
+    public T Value() => (T)Enum.GetValues(typeof(T)).GetValue(_dropdown.value);
+
+    public void SetValueWithoutNotify(T value)
     {
-        return nameToIndex[value.ToString()];
+        _dropdown.SetValueWithoutNotify(EnumToIndex(value));
     }
+
+    private int EnumToIndex(T value) => _nameToIndex[value.ToString()];
 
     public void Dispose()
     {
-        dropdown.onValueChanged.RemoveListener(OnDropdownValueChanged);
+        _dropdown.onValueChanged.RemoveListener(OnDropdownValueChanged);
     }
 }
