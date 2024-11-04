@@ -1,6 +1,6 @@
 {
     "name": "MassBattle",
-    "rootNamespace": "",
+    "rootNamespace": "MassBattle",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
