@@ -1,17 +1,17 @@
 {
-  "name": "MassBattle.Logic",
-  "rootNamespace": "",
-  "references": [
-    "GUID:6055be8ebefd69e48b49212b09b47b2f",
-    "GUID:a12dca627f400e147b2bbc36b3a017e4"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "MassBattle.Logic",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:a12dca627f400e147b2bbc36b3a017e4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
