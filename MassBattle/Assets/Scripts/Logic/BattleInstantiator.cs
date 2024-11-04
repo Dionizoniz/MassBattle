@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-
 public class BattleInstantiator : MonoBehaviour
 {
     public static BattleInstantiator instance { get; private set; }
@@ -31,11 +30,11 @@ public class BattleInstantiator : MonoBehaviour
     public Color army1Color;
     public Color army2Color;
 
-    public GameOverMenu gameOverMenu;
+    //public GameOverMenu gameOverMenu; // TODO change reference direction
 
     void InstanceArmy(IArmyModel model, Army army, Bounds instanceBounds)
     {
-        for ( int i = 0; i < model.warriors; i++ )
+        for (int i = 0; i < model.warriors; i++)
         {
             GameObject go = Instantiate(warriorPrefab.gameObject);
             go.transform.position = Utils.GetRandomPosInBounds(instanceBounds);
@@ -47,7 +46,7 @@ public class BattleInstantiator : MonoBehaviour
             army.warriors.Add(go.GetComponent<Warrior>());
         }
 
-        for ( int i = 0; i < model.archers; i++ )
+        for (int i = 0; i < model.archers; i++)
         {
             GameObject go = Object.Instantiate(archerPrefab.gameObject);
             go.transform.position = Utils.GetRandomPosInBounds(instanceBounds);
@@ -76,10 +75,11 @@ public class BattleInstantiator : MonoBehaviour
 
     void Update()
     {
-        if ( army1.GetUnits().Count == 0 || army2.GetUnits().Count == 0 )
+        if (army1.GetUnits().Count == 0 || army2.GetUnits().Count == 0)
         {
-            gameOverMenu.gameObject.SetActive(true);
-            gameOverMenu.Populate();
+            // TODO improve logic
+            // gameOverMenu.gameObject.SetActive(true); 
+            // gameOverMenu.Populate();
         }
 
         Vector3 mainCenter = Utils.GetCenter(army1.GetUnits()) + Utils.GetCenter(army2.GetUnits());
