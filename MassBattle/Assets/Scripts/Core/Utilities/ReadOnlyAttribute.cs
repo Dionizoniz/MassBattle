@@ -2,7 +2,7 @@ using UnityEngine;
 
 //Source: https://www.patrykgalach.com/2020/01/20/readonly-attribute-in-unity-editor/
 
-namespace Core.Utilities
+namespace MassBattle.Core.Utilities
 {
     /// <summary>
     /// Read Only attribute.

@@ -1,8 +1,7 @@
-using Core.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Core.Utils.Editor
+namespace MassBattle.Core.Utilities.Editor
 {
     /// <summary> This class contain custom drawer for ReadOnly attribute. </summary>
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]

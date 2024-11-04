@@ -1,4 +1,4 @@
-using Core.Utilities;
+using MassBattle.Core.Utilities;
 using UnityEngine;
 
 /// <summary>
