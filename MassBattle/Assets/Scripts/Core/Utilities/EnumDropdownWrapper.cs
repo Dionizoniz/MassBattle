@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using TMPro;
 
-namespace Core.Utils
+namespace Core.Utilities
 {
     public class EnumDropdownWrapper<T> : IDisposable where T : Enum
     {

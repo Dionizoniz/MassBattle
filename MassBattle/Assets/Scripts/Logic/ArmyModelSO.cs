@@ -1,4 +1,4 @@
-using Core.Utils;
+using Core.Utilities;
 using UnityEngine;
 
 /// <summary>
