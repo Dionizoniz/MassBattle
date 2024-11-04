@@ -1,5 +1,5 @@
+using Core.Utils;
 using UnityEngine;
-
 
 /// <summary>
 /// ScriptableObject containing the data of an army
@@ -9,21 +9,24 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create ArmyModel", fileName = "ArmyModel", order = 0)]
 public class ArmyModelSO : ScriptableObject, IArmyModel
 {
-    [ReadOnlyAttribute, SerializeField] private int warriorsValue = 100;
+    [ReadOnly, SerializeField]
+    private int warriorsValue = 100;
     public int warriors
     {
         get => warriorsValue;
         set => warriorsValue = value;
     }
 
-    [ReadOnlyAttribute, SerializeField] private int archersValue = 100;
+    [ReadOnly, SerializeField]
+    private int archersValue = 100;
     public int archers
     {
         get => archersValue;
         set => archersValue = value;
     }
 
-    [ReadOnlyAttribute, SerializeField] private ArmyStrategy strategyValue = ArmyStrategy.Basic;
+    [ReadOnly, SerializeField]
+    private ArmyStrategy strategyValue = ArmyStrategy.Basic;
     public ArmyStrategy strategy
     {
         get => strategyValue;
