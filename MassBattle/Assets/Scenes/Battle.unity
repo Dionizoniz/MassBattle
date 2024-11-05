@@ -378,51 +378,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103258115}
   m_CullTransparentMesh: 1
---- !u!1 &157425730
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 157425732}
-  - component: {fileID: 157425731}
-  m_Layer: 0
-  m_Name: BattleInstaller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &157425731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157425730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 661c60e1cd1343deab4a764dd13947ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleSpawner: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
---- !u!4 &157425732
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157425730}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 79, z: -61}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &354391273
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,58 +884,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armyWins: {fileID: 584733685}
   goToMenu: {fileID: 87333000}
---- !u!1 &1951697634
-GameObject:
+--- !u!1001 &2827420444990579853
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1951697636}
-  - component: {fileID: 1951697635}
-  m_Layer: 0
-  m_Name: Battle Instantiator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1951697635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951697634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4aeece4e56b0314a96a4315134bd6ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  army1Model: {fileID: 11400000, guid: a6c80dd762eaa2942967f75607f7c7a3, type: 2}
-  army2Model: {fileID: 11400000, guid: 72f780312aa8e3c40b08fe23dd9b7117, type: 2}
-  warriorPrefab: {fileID: 4074248562238301595, guid: d84cac85cdce1be419a5e701d52e9cee, type: 3}
-  archerPrefab: {fileID: 8284140959867094785, guid: d5b353320e661744aa811b1a632ee53e, type: 3}
-  leftArmySpawnBounds: {fileID: 0}
-  rightArmySpawnBounds: {fileID: 0}
-  army1Color: {r: 0.2305195, g: 0.75, b: 0.7012987, a: 1}
-  army2Color: {r: 0.15909089, g: 0.75, b: 0.262987, a: 1}
---- !u!4 &1951697636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951697634}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.293858, y: -13.677345, z: 20.49112}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3818286532263933388, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_Name
+      value: BattleInstaller
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 79
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -61
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130533897925472857, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99f6adf5dc96c5b468f4906a96d55be9, type: 3}
 --- !u!1001 &9212749969560720142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1051,9 +1011,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 354391276}
-  - {fileID: 527681571}
+  - {fileID: 2827420444990579853}
   - {fileID: 9212749969560720142}
-  - {fileID: 1951697636}
+  - {fileID: 527681571}
   - {fileID: 1714358168}
   - {fileID: 1485598339}
-  - {fileID: 157425732}
