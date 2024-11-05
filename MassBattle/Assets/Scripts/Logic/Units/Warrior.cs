@@ -13,16 +13,10 @@ namespace MassBattle.Logic.Units
             if (Vector3.Distance(transform.position, target.transform.position) > attackRange)
                 return;
 
-            BaseUnit targetUnit = target.GetComponentInChildren<BaseUnit>();
-
-            if (targetUnit == null)
-                return;
-
             attackCooldown = maxAttackCooldown;
-
             animator.SetTrigger("Attack");
 
-            targetUnit.Hit(gameObject);
+            target.Hit(gameObject);
         }
 
         public void OnDeathAnimFinished()

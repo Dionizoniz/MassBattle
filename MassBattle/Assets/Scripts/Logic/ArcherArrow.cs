@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Units;
 using UnityEngine;
@@ -32,13 +30,12 @@ public class ArcherArrow : MonoBehaviour
         transform.position += direction * speed;
         transform.forward = direction;
 
-        foreach (var a in army.enemyArmy.FindAllUnits())
+        foreach (var unit in army.enemyArmy.FindAllUnits())
         {
-            float dist = Vector3.Distance(a.transform.position, transform.position);
+            float dist = Vector3.Distance(unit.transform.position, transform.position);
 
             if (dist < speed)
             {
-                BaseUnit unit = a.GetComponent<BaseUnit>();
                 unit.Hit(gameObject);
                 Destroy(gameObject);
                 return;
