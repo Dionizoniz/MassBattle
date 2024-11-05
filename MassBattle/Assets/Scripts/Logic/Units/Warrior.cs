@@ -20,7 +20,6 @@ namespace MassBattle.Logic.Units
 
             attackCooldown = maxAttackCooldown;
 
-            var animator = GetComponentInChildren<Animator>();
             animator.SetTrigger("Attack");
 
             targetUnit.Hit(gameObject);

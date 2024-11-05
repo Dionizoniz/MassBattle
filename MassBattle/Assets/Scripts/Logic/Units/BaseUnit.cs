@@ -23,6 +23,9 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         protected float postAttackDelay;
 
+        [Space, SerializeField]
+        protected Animator animator;
+
         public Army army;
 
         [NonSerialized]
@@ -70,13 +73,11 @@ namespace MassBattle.Logic.Units
                 else if (this is Archer)
                     army.archers.Remove(this as Archer);
 
-                var animator = GetComponentInChildren<Animator>();
-                animator?.SetTrigger("Death");
+                animator.SetTrigger("Death");
             }
             else
             {
-                var animator = GetComponentInChildren<Animator>();
-                animator?.SetTrigger("Hit");
+                animator.SetTrigger("Hit");
             }
         }
 
@@ -100,7 +101,6 @@ namespace MassBattle.Logic.Units
                     break;
             }
 
-            var animator = GetComponentInChildren<Animator>();
             animator.SetFloat("MovementSpeed", (transform.position - lastPosition).magnitude / speed);
             lastPosition = transform.position;
         }

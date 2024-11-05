@@ -151,10 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  speed: 0.1
   defense: 0
   attack: 10
+  attackRange: 20
   maxAttackCooldown: 5
   postAttackDelay: 1
-  speed: 0.1
-  attackRange: 20
+  animator: {fileID: 6969590871247763298}
   arrowPrefab: {fileID: 4995913744683215106, guid: 43df16efbb83b484d91bf87170fd46c2, type: 3}

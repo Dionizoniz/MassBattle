@@ -23,8 +23,7 @@ namespace MassBattle.Logic.Units
             arrow.GetComponent<ArcherArrow>().army = army;
             arrow.transform.position = transform.position;
 
-            var animator = GetComponentInChildren<Animator>();
-            animator?.SetTrigger("Attack");
+            animator.SetTrigger("Attack");
 
             if (army == BattleInstantiator.instance.army1)
                 arrow.GetComponent<Renderer>().material.color = BattleInstantiator.instance.army1Color;

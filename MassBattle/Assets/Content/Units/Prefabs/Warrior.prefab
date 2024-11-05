@@ -157,3 +157,4 @@ MonoBehaviour:
   attackRange: 2.5
   maxAttackCooldown: 1
   postAttackDelay: 0
+  animator: {fileID: 6969590871247763298, guid: d5b353320e661744aa811b1a632ee53e, type: 3}
