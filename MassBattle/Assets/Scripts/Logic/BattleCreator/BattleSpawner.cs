@@ -26,11 +26,20 @@ namespace MassBattle.Logic.BattleCreator
 
         private IBattleInstaller battleInstaller;
 
-        public readonly Army army1 = new(); // TODO improve
-        public readonly Army army2 = new(); // TODO improve
+        private readonly Army army1 = new(); // TODO improve
+        private readonly Army army2 = new(); // TODO improve
 
         public Color army1Color; // TODO improve
         public Color army2Color; // TODO improve
+
+        public Army Army1
+        {
+            get => army1;
+        }
+        public Army Army2
+        {
+            get => army2;
+        }
 
         public void Initialize(IBattleInstaller battleInstaller)
         {

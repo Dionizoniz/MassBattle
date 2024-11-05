@@ -16,9 +16,9 @@ namespace MassBattle.Logic.Units
             if (Vector3.Distance(transform.position, enemy.transform.position) > attackRange)
                 return;
 
-            Color arrowColor = army == BattleInstantiator.instance.army1 ?
-                                       BattleInstantiator.instance.army1Color :
-                                       BattleInstantiator.instance.army2Color;
+            Color arrowColor = army == battleInstaller.BattleSpawner.Army1 ?
+                                       battleInstaller.BattleSpawner.Army1.color :
+                                       battleInstaller.BattleSpawner.Army2.color;
 
             attackCooldown = maxAttackCooldown;
             ArcherArrow spawnedArrow = Instantiate(arrowPrefab);

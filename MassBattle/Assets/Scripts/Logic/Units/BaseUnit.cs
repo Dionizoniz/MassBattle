@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Logic.Installers;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public abstract class BaseUnit : MonoBehaviour
+    public abstract class BaseUnit : MonoBehaviour, IInitialize
     {
         [SerializeField]
         protected float health = 50f;
@@ -35,6 +36,8 @@ namespace MassBattle.Logic.Units
 
         protected float attackCooldown;
         private Vector3 lastPosition;
+
+        protected IBattleInstaller battleInstaller;
 
         public abstract void Attack(GameObject enemy);
 
@@ -138,6 +141,11 @@ namespace MassBattle.Logic.Units
                     transform.position -= toNearest * (2.0f - dist);
                 }
             }
+        }
+
+        public void Initialize(IBattleInstaller battleInstaller)
+        {
+            this.battleInstaller = battleInstaller;
         }
     }
 }
