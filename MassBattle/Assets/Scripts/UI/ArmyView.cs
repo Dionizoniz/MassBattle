@@ -1,3 +1,4 @@
+using MassBattle.Core.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,11 +10,16 @@ public interface IArmyView
 
 public class ArmyView : MonoBehaviour, IArmyView
 {
-    [SerializeField] private Slider warriorsCount;
-    [SerializeField] private TextMeshProUGUI warriorsLabel;
-    [SerializeField] private Slider archersCount;
-    [SerializeField] private TextMeshProUGUI archersLabel;
-    [SerializeField] private TMP_Dropdown strategyDropdown;
+    [SerializeField]
+    private Slider warriorsCount;
+    [SerializeField]
+    private TextMeshProUGUI warriorsLabel;
+    [SerializeField]
+    private Slider archersCount;
+    [SerializeField]
+    private TextMeshProUGUI archersLabel;
+    [SerializeField]
+    private TMP_Dropdown strategyDropdown;
 
     private EnumDropdownWrapper<ArmyStrategy> enumDropdown;
     private IArmyPresenter presenter = null;
