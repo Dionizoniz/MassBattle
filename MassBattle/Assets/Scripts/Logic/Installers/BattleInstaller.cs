@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-namespace MassBattle.Logic.Installators
+namespace MassBattle.Logic.Installers
 {
-    public class BattleInstallator : MonoBehaviour
+    public class BattleInstaller : MonoBehaviour
     {
-        
+        // BattleCreator
+        // BattleArmiesProvider
+        // Pooling ???
     }
 }
