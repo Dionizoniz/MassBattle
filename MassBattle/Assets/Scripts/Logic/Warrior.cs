@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
 public class Warrior : BaseUnit
 {
-    void Awake()
-    {
-        health = 50;
-        defense = 5;
-        attack = 20;
-        maxAttackCooldown = 1f;
-        postAttackDelay = 0;
-    }
-
     public override void Attack(GameObject target)
     {
         if (attackCooldown > 0)

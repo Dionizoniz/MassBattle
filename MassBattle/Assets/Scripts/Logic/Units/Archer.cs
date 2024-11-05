@@ -8,15 +8,6 @@ namespace MassBattle.Logic.Units
         [Space, SerializeField]
         private ArcherArrow arrowPrefab;
 
-        private void Awake()
-        {
-            health = 5;
-            defense = 0;
-            attack = 10;
-            maxAttackCooldown = 5f;
-            postAttackDelay = 1f;
-        }
-
         public override void Attack(GameObject enemy)
         {
             if (attackCooldown > 0)
