@@ -27,6 +27,8 @@ namespace MassBattle.Logic.Units
 
         [Space, SerializeField]
         protected Animator animator;
+        [SerializeField]
+        private Renderer renderer;
 
         public float AttackValue => attack;
 
@@ -40,10 +42,26 @@ namespace MassBattle.Logic.Units
 
         protected IBattleInstaller battleInstaller;
 
+        protected Color color;
+
         public abstract void Attack(BaseUnit enemy);
 
         protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
         protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
+
+        public void Initialize(IBattleInstaller battleInstaller)
+        {
+            this.battleInstaller = battleInstaller;
+        }
+
+        public void SetColor(Color color)
+        {
+            this.color = color;
+
+            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            propertyBlock.SetColor("_Color", color);
+            renderer.SetPropertyBlock(propertyBlock);
+        }
 
         public virtual void Move(Vector3 delta)
         {
@@ -142,11 +160,6 @@ namespace MassBattle.Logic.Units
                     transform.position -= toNearest * (2.0f - dist);
                 }
             }
-        }
-
-        public void Initialize(IBattleInstaller battleInstaller)
-        {
-            this.battleInstaller = battleInstaller;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace MassBattle.Logic.BattleCreator
 
             spawnedUnit.army = army;
             spawnedUnit.armyModel = model;
-            spawnedUnit.GetComponentInChildren<Renderer>().material.color = army.color;
+            spawnedUnit.SetColor(army.color);
 
             return spawnedUnit;
         }

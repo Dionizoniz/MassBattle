@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 787b6a8780e539b4da22093701be6116, type: 2}
+  - {fileID: 2100000, guid: 61d3feb38e3d88f46af9c3f50aafdc5d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,4 +158,5 @@ MonoBehaviour:
   maxAttackCooldown: 5
   postAttackDelay: 1
   animator: {fileID: 6969590871247763298}
+  renderer: {fileID: 5068147908177715982}
   arrowPrefab: {fileID: 4995913744683215106, guid: 43df16efbb83b484d91bf87170fd46c2, type: 3}
