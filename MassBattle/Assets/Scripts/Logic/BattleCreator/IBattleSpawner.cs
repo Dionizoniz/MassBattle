@@ -1,7 +1,5 @@
 ﻿namespace MassBattle.Logic.BattleCreator
 {
-    public interface IBattleCreator
-    {
-        
-    }
+    public interface IBattleSpawner
+    { }
 }

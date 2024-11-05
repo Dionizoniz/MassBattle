@@ -2,6 +2,6 @@
 {
     public interface IInitialize
     {
-        
+        void Initialize(IBattleInstaller battleInstaller);
     }
 }
