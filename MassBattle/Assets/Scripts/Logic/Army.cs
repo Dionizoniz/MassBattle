@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MassBattle.Logic.Units;
 using UnityEngine;
 
 public class Army
@@ -12,14 +13,14 @@ public class Army
     {
         List<GameObject> result = new List<GameObject>();
 
-        foreach ( var warrior in warriors )
+        foreach (var warrior in warriors)
         {
-            result.Add( warrior.gameObject );
+            result.Add(warrior.gameObject);
         }
 
-        foreach ( var archer in archers )
+        foreach (var archer in archers)
         {
-            result.Add( archer.gameObject );
+            result.Add(archer.gameObject);
         }
 
         return result;
