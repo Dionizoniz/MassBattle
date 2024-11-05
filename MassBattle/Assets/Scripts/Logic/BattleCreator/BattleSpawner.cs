@@ -1,10 +1,11 @@
-﻿using MassBattle.Logic.Installers;
+﻿using System;
+using MassBattle.Logic.Installers;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    public class BattleSpawner : MonoBehaviour, IBattleSpawner, IInitialize
+    public class BattleSpawner : MonoBehaviour, IBattleSpawner
     {
         [SerializeField]
         private ArmyModelSO army1Model;
@@ -44,7 +45,10 @@ namespace MassBattle.Logic.BattleCreator
         public void Initialize(IBattleInstaller battleInstaller)
         {
             this.battleInstaller = battleInstaller;
+        }
 
+        private void Start()
+        {
             army1.color = army1Color;
             army1.enemyArmy = army2;
 
@@ -73,6 +77,7 @@ namespace MassBattle.Logic.BattleCreator
         private T SpawnUnit<T>(T unitToSpawn, IArmyModel model, Army army, Bounds instanceBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
+            spawnedUnit.Initialize(battleInstaller);
 
             spawnedUnit.transform.position = Utils.GetRandomPosInBounds(instanceBounds);
 
@@ -81,6 +86,25 @@ namespace MassBattle.Logic.BattleCreator
             spawnedUnit.GetComponentInChildren<Renderer>().material.color = army.color;
 
             return spawnedUnit;
+        }
+
+        private Vector3 forwardTarget; // TODO improve solution - now is moved only
+
+        void Update()
+        {
+            if (army1.GetUnits().Count == 0 || army2.GetUnits().Count == 0)
+            {
+                // TODO improve logic
+                // gameOverMenu.gameObject.SetActive(true); 
+                // gameOverMenu.Populate();
+            }
+
+            Vector3 mainCenter = Utils.GetCenter(army1.GetUnits()) + Utils.GetCenter(army2.GetUnits());
+            mainCenter *= 0.5f;
+
+            forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
+
+            Camera.main.transform.forward += (forwardTarget - Camera.main.transform.forward) * 0.1f;
         }
     }
 }

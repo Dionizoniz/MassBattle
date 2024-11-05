@@ -10,9 +10,10 @@ namespace MassBattle.Logic.Installers
 
         public IBattleSpawner BattleSpawner { get; private set; }
 
-        private void Awake()
+        private void Start()
         {
             BattleSpawner = Instantiate(battleSpawner);
+            BattleSpawner.Initialize(this);
         }
 
         // BattleArmiesProvider
