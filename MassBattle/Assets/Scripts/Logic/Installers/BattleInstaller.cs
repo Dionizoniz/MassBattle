@@ -8,6 +8,13 @@ namespace MassBattle.Logic.Installers
         [SerializeField]
         private BattleSpawner battleSpawner;
 
+        public IBattleSpawner BattleSpawner { get; private set; }
+
+        private void Awake()
+        {
+            BattleSpawner = Instantiate(battleSpawner);
+        }
+
         // BattleArmiesProvider
         // Pooling ???
         // summary screen

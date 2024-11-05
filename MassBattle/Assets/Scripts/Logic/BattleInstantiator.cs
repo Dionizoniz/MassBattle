@@ -70,8 +70,8 @@ public class BattleInstantiator : MonoBehaviour
         army2.color = army2Color;
         army2.enemyArmy = army1;
 
-        InstanceArmy(army1Model, army1, leftArmySpawnBounds.bounds);
-        InstanceArmy(army2Model, army2, rightArmySpawnBounds.bounds);
+        //     InstanceArmy(army1Model, army1, leftArmySpawnBounds.bounds);
+        //    InstanceArmy(army2Model, army2, rightArmySpawnBounds.bounds);
     }
 
     void Update()
