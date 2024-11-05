@@ -5,10 +5,7 @@ namespace MassBattle.Logic.Units
 {
     public class Archer : BaseUnit
     {
-        [SerializeField]
-        private float attackRange = 20f;
-
-        [SerializeField]
+        [Space, SerializeField]
         private ArcherArrow arrowPrefab;
 
         private void Awake()

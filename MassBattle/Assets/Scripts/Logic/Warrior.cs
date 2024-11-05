@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class Warrior : BaseUnit
 {
-    [NonSerialized]
-    public float attackRange = 2.5f;
-
     void Awake()
     {
         health = 50;

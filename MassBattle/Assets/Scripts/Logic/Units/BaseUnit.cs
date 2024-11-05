@@ -10,15 +10,18 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         protected float health = 50f;
         [SerializeField]
-        protected float defense;
+        protected float speed = 0.1f;
         [SerializeField]
+        protected float defense;
+
+        [Space, SerializeField]
         protected float attack = 20f;
+        [SerializeField]
+        protected float attackRange = 2.5f;
         [SerializeField]
         protected float maxAttackCooldown = 1f;
         [SerializeField]
         protected float postAttackDelay;
-        [SerializeField]
-        protected float speed = 0.1f;
 
         public Army army;
 
