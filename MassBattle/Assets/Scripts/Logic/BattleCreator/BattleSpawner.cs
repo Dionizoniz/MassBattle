@@ -1,4 +1,5 @@
-﻿using MassBattle.Logic.Installers;
+﻿using MassBattle.Logic.Armies;
+using MassBattle.Logic.Installers;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -24,38 +25,30 @@ namespace MassBattle.Logic.BattleCreator
         [SerializeField]
         private BoxCollider rightArmySpawnBounds;
 
-        private IBattleInstaller battleInstaller;
+        private IArmyProvider ArmyProvider => battleInstaller.ArmyProvider;
 
-        private readonly Army army1 = new(); // TODO improve
-        private readonly Army army2 = new(); // TODO improve
+        private IBattleInstaller battleInstaller;
 
         public Color army1Color; // TODO improve
         public Color army2Color; // TODO improve
 
-        public Army Army1
-        {
-            get => army1;
-        }
-        public Army Army2
-        {
-            get => army2;
-        }
-
         public void Initialize(IBattleInstaller battleInstaller)
         {
             this.battleInstaller = battleInstaller;
+
+            SpawnArmies();
         }
 
-        private void Start()
+        private void SpawnArmies()
         {
-            army1.color = army1Color;
-            army1.enemyArmy = army2;
+            ArmyProvider.Army1.color = army1Color;
+            ArmyProvider.Army1.enemyArmy = ArmyProvider.Army2;
 
-            army2.color = army2Color;
-            army2.enemyArmy = army1;
+            ArmyProvider.Army2.color = army2Color;
+            ArmyProvider.Army2.enemyArmy = ArmyProvider.Army1;
 
-            SpawnArmy(army1Model, army1, leftArmySpawnBounds.bounds);
-            SpawnArmy(army2Model, army2, rightArmySpawnBounds.bounds);
+            SpawnArmy(army1Model, ArmyProvider.Army1, leftArmySpawnBounds.bounds);
+            SpawnArmy(army2Model, ArmyProvider.Army2, rightArmySpawnBounds.bounds);
         }
 
         private void SpawnArmy(IArmyModel model, Army army, Bounds instanceBounds)
@@ -91,14 +84,16 @@ namespace MassBattle.Logic.BattleCreator
 
         void Update()
         {
-            if (army1.GetUnits().Count == 0 || army2.GetUnits().Count == 0)
+            if (ArmyProvider.Army1.CalculateUnitsCount() == 0 || ArmyProvider.Army2.CalculateUnitsCount() == 0)
             {
                 // TODO improve logic
                 // gameOverMenu.gameObject.SetActive(true); 
                 // gameOverMenu.Populate();
             }
 
-            Vector3 mainCenter = Utils.GetCenter(army1.GetUnits()) + Utils.GetCenter(army2.GetUnits());
+            Vector3 mainCenter = Utils.GetCenter(ArmyProvider.Army1.FindAllUnits()) +
+                                 Utils.GetCenter(ArmyProvider.Army2.FindAllUnits());
+
             mainCenter *= 0.5f;
 
             forwardTarget = (mainCenter - Camera.main.transform.position).normalized;

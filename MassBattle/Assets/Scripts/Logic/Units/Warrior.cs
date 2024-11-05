@@ -5,7 +5,7 @@ namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit
     {
-        public override void Attack(GameObject target)
+        public override void Attack(BaseUnit target)
         {
             if (attackCooldown > 0)
                 return;
@@ -30,7 +30,7 @@ namespace MassBattle.Logic.Units
             Destroy(gameObject);
         }
 
-        protected override void UpdateDefensive(List<GameObject> allies, List<GameObject> enemies)
+        protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = Utils.GetCenter(enemies);
 
@@ -43,7 +43,7 @@ namespace MassBattle.Logic.Units
                     Move(Vector3.right);
             }
 
-            Utils.GetNearestObject(gameObject, enemies, out GameObject nearestObject);
+            Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestObject);
 
             if (nearestObject == null)
                 return;
@@ -58,9 +58,9 @@ namespace MassBattle.Logic.Units
             Attack(nearestObject);
         }
 
-        protected override void UpdateBasic(List<GameObject> allies, List<GameObject> enemies)
+        protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            Utils.GetNearestObject(gameObject, enemies, out GameObject nearestEnemy);
+            Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy == null)
                 return;

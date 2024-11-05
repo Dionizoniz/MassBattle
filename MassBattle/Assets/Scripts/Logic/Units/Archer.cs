@@ -8,7 +8,7 @@ namespace MassBattle.Logic.Units
         [Space, SerializeField]
         private ArcherArrow arrowPrefab;
 
-        public override void Attack(GameObject enemy)
+        public override void Attack(BaseUnit enemy)
         {
             if (attackCooldown > 0)
                 return;
@@ -16,9 +16,9 @@ namespace MassBattle.Logic.Units
             if (Vector3.Distance(transform.position, enemy.transform.position) > attackRange)
                 return;
 
-            Color arrowColor = army == battleInstaller.BattleSpawner.Army1 ?
-                                       battleInstaller.BattleSpawner.Army1.color :
-                                       battleInstaller.BattleSpawner.Army2.color;
+            Color arrowColor = army == battleInstaller.ArmyProvider.Army1 ?
+                                       battleInstaller.ArmyProvider.Army1.color :
+                                       battleInstaller.ArmyProvider.Army2.color;
 
             attackCooldown = maxAttackCooldown;
             ArcherArrow spawnedArrow = Instantiate(arrowPrefab);
@@ -32,7 +32,7 @@ namespace MassBattle.Logic.Units
             Destroy(gameObject);
         }
 
-        protected override void UpdateDefensive(List<GameObject> allies, List<GameObject> enemies)
+        protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = Utils.GetCenter(enemies);
             float distToEnemyX = Mathf.Abs(enemyCenter.x - transform.position.x);
@@ -46,7 +46,7 @@ namespace MassBattle.Logic.Units
                     Move(Vector3.right);
             }
 
-            float distToNearest = Utils.GetNearestObject(gameObject, enemies, out GameObject nearestEnemy);
+            float distToNearest = Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy == null)
                 return;
@@ -69,9 +69,9 @@ namespace MassBattle.Logic.Units
             Attack(nearestEnemy);
         }
 
-        protected override void UpdateBasic(List<GameObject> allies, List<GameObject> enemies)
+        protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            Utils.GetNearestObject(gameObject, enemies, out GameObject nearestEnemy);
+            Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy == null)
                 return;

@@ -1,4 +1,6 @@
-﻿using MassBattle.Logic.BattleCreator;
+﻿using System;
+using MassBattle.Logic.Armies;
+using MassBattle.Logic.BattleCreator;
 using UnityEngine;
 
 namespace MassBattle.Logic.Installers
@@ -9,14 +11,19 @@ namespace MassBattle.Logic.Installers
         private BattleSpawner battleSpawner;
 
         public IBattleSpawner BattleSpawner { get; private set; }
+        public IArmyProvider ArmyProvider { get; private set; }
+
+        private void Awake()
+        {
+            BattleSpawner = Instantiate(battleSpawner);
+            ArmyProvider = new ArmyProvider();
+        }
 
         private void Start()
         {
-            BattleSpawner = Instantiate(battleSpawner);
             BattleSpawner.Initialize(this);
         }
 
-        // BattleArmiesProvider
         // Pooling ???
         // summary screen
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
 using UnityEngine;
 
@@ -39,10 +40,10 @@ namespace MassBattle.Logic.Units
 
         protected IBattleInstaller battleInstaller;
 
-        public abstract void Attack(GameObject enemy);
+        public abstract void Attack(BaseUnit enemy);
 
-        protected abstract void UpdateDefensive(List<GameObject> allies, List<GameObject> enemies);
-        protected abstract void UpdateBasic(List<GameObject> allies, List<GameObject> enemies);
+        protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
+        protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
 
         public virtual void Move(Vector3 delta)
         {
@@ -91,8 +92,8 @@ namespace MassBattle.Logic.Units
             if (health < 0)
                 return;
 
-            List<GameObject> allies = army.GetUnits();
-            List<GameObject> enemies = army.enemyArmy.GetUnits();
+            List<BaseUnit> allies = army.FindAllUnits();
+            List<BaseUnit> enemies = army.enemyArmy.FindAllUnits();
 
             UpdateBasicRules(allies, enemies);
 
@@ -110,15 +111,15 @@ namespace MassBattle.Logic.Units
             lastPosition = transform.position;
         }
 
-        void UpdateBasicRules(List<GameObject> allies, List<GameObject> enemies)
+        void UpdateBasicRules(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             attackCooldown -= Time.deltaTime;
             EvadeAllies(allies);
         }
 
-        void EvadeAllies(List<GameObject> allies)
+        void EvadeAllies(List<BaseUnit> allies)
         {
-            var allUnits = army.GetUnits().Union(army.enemyArmy.GetUnits()).ToList();
+            var allUnits = army.FindAllUnits().Union(army.enemyArmy.FindAllUnits()).ToList();
 
             Vector3 center = Utils.GetCenter(allUnits);
 
