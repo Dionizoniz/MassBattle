@@ -15,6 +15,16 @@ public class ArcherArrow : MonoBehaviour
 
     public Army army;
 
+    public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
+    {
+        target = targetUnit.transform.position;
+        attack = sourceUnit.AttackValue;
+        army = sourceUnit.army;
+        transform.position = sourceUnit.transform.position;
+
+        GetComponent<Renderer>().material.color = color;
+    }
+
     public void Update()
     {
         Vector3 direction = (target - transform.position).normalized;

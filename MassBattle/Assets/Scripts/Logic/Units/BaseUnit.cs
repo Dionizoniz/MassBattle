@@ -26,6 +26,8 @@ namespace MassBattle.Logic.Units
         [Space, SerializeField]
         protected Animator animator;
 
+        public float AttackValue => attack;
+
         public Army army;
 
         [NonSerialized]

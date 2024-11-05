@@ -16,19 +16,15 @@ namespace MassBattle.Logic.Units
             if (Vector3.Distance(transform.position, enemy.transform.position) > attackRange)
                 return;
 
+            Color arrowColor = army == BattleInstantiator.instance.army1 ?
+                                       BattleInstantiator.instance.army1Color :
+                                       BattleInstantiator.instance.army2Color;
+
             attackCooldown = maxAttackCooldown;
-            GameObject arrow = Object.Instantiate(arrowPrefab.gameObject);
-            arrow.GetComponent<ArcherArrow>().target = enemy.transform.position;
-            arrow.GetComponent<ArcherArrow>().attack = attack;
-            arrow.GetComponent<ArcherArrow>().army = army;
-            arrow.transform.position = transform.position;
+            ArcherArrow spawnedArrow = Instantiate(arrowPrefab);
+            spawnedArrow.Initialize(this, enemy.GetComponent<BaseUnit>(), arrowColor);
 
             animator.SetTrigger("Attack");
-
-            if (army == BattleInstantiator.instance.army1)
-                arrow.GetComponent<Renderer>().material.color = BattleInstantiator.instance.army1Color;
-            else
-                arrow.GetComponent<Renderer>().material.color = BattleInstantiator.instance.army2Color;
         }
 
         public void OnDeathAnimFinished()
