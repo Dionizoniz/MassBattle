@@ -20,5 +20,13 @@ namespace MassBattle.Logic.Setup
         public int WarriorsCount => warriorsCount;
         public int ArchersCount => archersCount;
         public ArmyStrategy StrategyType => strategyType;
+
+        public ArmySetup(string id, int warriorsCount, int archersCount, ArmyStrategy strategyType)
+        {
+            this.id = id;
+            this.warriorsCount = warriorsCount;
+            this.archersCount = archersCount;
+            this.strategyType = strategyType;
+        }
     }
 }
