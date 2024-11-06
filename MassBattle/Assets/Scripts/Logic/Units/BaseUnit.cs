@@ -58,7 +58,7 @@ namespace MassBattle.Logic.Units
         {
             this.color = color;
 
-            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
             renderer.SetPropertyBlock(propertyBlock);
         }
