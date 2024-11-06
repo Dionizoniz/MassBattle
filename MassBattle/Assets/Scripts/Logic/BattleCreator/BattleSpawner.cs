@@ -51,7 +51,6 @@ namespace MassBattle.Logic.BattleCreator
             ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
             List<Archer> archers = new();
-            ArmyStrategy armyStrategy = ArmyStrategy.Basic; // improve
 
             if (armySetup != null)
             {
@@ -66,15 +65,13 @@ namespace MassBattle.Logic.BattleCreator
                     Archer spawnedArcher = SpawnUnit(archerPrefab, armyId, color, spawnBounds);
                     archers.Add(spawnedArcher);
                 }
-
-                armyStrategy = armySetup.StrategyType;
             }
             else
             {
                 Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            return new ArmyData(armyId, warriors, archers, armyStrategy, color);
+            return new ArmyData(armySetup, warriors, archers, color);
         }
 
         private T SpawnUnit<T>(T unitToSpawn, string armyId, Color color, Bounds spawnBounds) where T : BaseUnit

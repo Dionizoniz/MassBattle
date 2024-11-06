@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -7,20 +8,19 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyData
     {
-        public readonly string id;
-        public readonly List<Warrior> warriors = new();
-        public readonly List<Archer> archers = new();
-        public readonly ArmyStrategy strategy;
-        public readonly Color color;
+        public ArmySetup ArmySetup { get; private set; }
 
+        public readonly List<Warrior> warriors;
+        public readonly List<Archer> archers;
+
+        public readonly Color color;
         public ArmyData enemyArmyData;
 
-        public ArmyData(string id, List<Warrior> warriors, List<Archer> archers, ArmyStrategy strategy, Color color)
+        public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers, Color color)
         {
-            this.id = id;
+            ArmySetup = armySetup;
             this.warriors = warriors;
             this.archers = archers;
-            this.strategy = strategy;
             this.color = color;
         }
 

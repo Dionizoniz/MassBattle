@@ -24,7 +24,7 @@ namespace MassBattle.Logic.Armies
 
         public ArmyData FindArmyBy(string armyId)
         {
-            return armies.FirstOrDefault(army => army.id == armyId);
+            return armies.FirstOrDefault(army => army.ArmySetup.Id == armyId);
         }
 
         public void FillUpEnemiesForRegisteredArmies() // TODO simplify logic ???

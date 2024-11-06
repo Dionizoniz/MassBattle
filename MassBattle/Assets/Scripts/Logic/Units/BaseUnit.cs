@@ -111,7 +111,7 @@ namespace MassBattle.Logic.Units
 
             UpdateBasicRules(allies, enemies);
 
-            switch (ArmyData.strategy)
+            switch (ArmyData.ArmySetup.StrategyType)
             {
                 case ArmyStrategy.Defensive:
                     UpdateDefensive(allies, enemies);
