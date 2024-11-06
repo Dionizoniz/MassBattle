@@ -1,6 +1,6 @@
-﻿using System;
-using MassBattle.Logic.Armies;
+﻿using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.Logic.Installers
@@ -9,8 +9,12 @@ namespace MassBattle.Logic.Installers
     {
         [SerializeField]
         private BattleSpawner battleSpawner;
+        [SerializeField]
+        private BattleSetup battleSetup;
 
         public IBattleSpawner BattleSpawner { get; private set; }
+        public IBattleSetup BattleSetup => battleSetup;
+
         public IArmyProvider ArmyProvider { get; private set; }
 
         private void Awake()

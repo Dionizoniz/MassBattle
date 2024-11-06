@@ -32,10 +32,7 @@ namespace MassBattle.Logic.Units
 
         public float AttackValue => attack;
 
-        public Army army;
-
-        [NonSerialized]
-        public IArmyModel armyModel;
+        public string armyId;
 
         protected float attackCooldown;
         private Vector3 lastPosition;

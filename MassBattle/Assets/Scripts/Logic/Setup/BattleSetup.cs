@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MassBattle.Logic.Setup
 {
     [CreateAssetMenu(menuName = "Create BattleSetup", fileName = "BattleSetup", order = 0)]
-    public class BattleSetup : ScriptableObject
+    public class BattleSetup : ScriptableObject, IBattleSetup
     {
         [SerializeField]
         private List<ArmySetup> defaultArmySetups = new();

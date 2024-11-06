@@ -2,7 +2,7 @@
 {
     public class ArmyProvider : IArmyProvider
     {
-        public Army Army1 { get; } = new();
-        public Army Army2 { get; } = new();
+        public Army Army1 { get; }
+        public Army Army2 { get; }
     }
 }

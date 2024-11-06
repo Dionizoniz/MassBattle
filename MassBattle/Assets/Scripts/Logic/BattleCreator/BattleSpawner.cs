@@ -1,5 +1,7 @@
-﻿using MassBattle.Logic.Armies;
+﻿using System.Collections.Generic;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
+using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -8,22 +10,14 @@ namespace MassBattle.Logic.BattleCreator
     public class BattleSpawner : MonoBehaviour, IBattleSpawner
     {
         [SerializeField]
-        private ArmyModelSO army1Model;
-
-        [SerializeField]
-        private ArmyModelSO army2Model;
-
-        [SerializeField]
         private Warrior warriorPrefab;
-
         [SerializeField]
         private Archer archerPrefab;
 
+        [Space, SerializeField]
+        private List<BoxCollider> spawnArmyBounds = new(); // TODO check that size is same as colors
         [SerializeField]
-        private BoxCollider leftArmySpawnBounds;
-
-        [SerializeField]
-        private BoxCollider rightArmySpawnBounds;
+        private List<Color> armyColors = new(); // TODO move colors to setup ???
 
         private IArmyProvider ArmyProvider => battleInstaller.ArmyProvider;
 
@@ -41,41 +35,55 @@ namespace MassBattle.Logic.BattleCreator
 
         private void SpawnArmies()
         {
-            ArmyProvider.Army1.color = army1Color;
-            ArmyProvider.Army1.enemyArmy = ArmyProvider.Army2;
+            List<string> armyIds = battleInstaller.BattleSetup.FindAllArmySetupIds();
 
-            ArmyProvider.Army2.color = army2Color;
-            ArmyProvider.Army2.enemyArmy = ArmyProvider.Army1;
+            // clear provider armies
 
-            SpawnArmy(army1Model, ArmyProvider.Army1, leftArmySpawnBounds.bounds);
-            SpawnArmy(army2Model, ArmyProvider.Army2, rightArmySpawnBounds.bounds);
+            for (int i = 0; i < armyIds.Count; i++)
+            {
+                // TODO add index protections
+                Army army = SpawnArmy(armyIds[i], armyColors[i], spawnArmyBounds[i].bounds);
+
+                // register army to provider
+            }
         }
 
-        private void SpawnArmy(IArmyModel model, Army army, Bounds instanceBounds)
+        private Army SpawnArmy(string armyId, Color color, Bounds spawnBounds) // TODO simplify code
         {
-            for (int i = 0; i < model.warriors; i++)
+            ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
+            List<Warrior> warriors = new();
+            List<Archer> archers = new();
+
+            if (armySetup != null)
             {
-                Warrior spawnedUnit = SpawnUnit(warriorPrefab, model, army, instanceBounds);
-                army.warriors.Add(spawnedUnit);
+                for (int i = 0; i < armySetup.WarriorsCount; i++)
+                {
+                    Warrior spawnedWarrior = SpawnUnit(warriorPrefab, armyId, color, spawnBounds);
+                    warriors.Add(spawnedWarrior);
+                }
+
+                for (int i = 0; i < armySetup.WarriorsCount; i++)
+                {
+                    Archer spawnedArcher = SpawnUnit(archerPrefab, armyId, color, spawnBounds);
+                    archers.Add(spawnedArcher);
+                }
+            }
+            else
+            {
+                Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            for (int i = 0; i < model.archers; i++)
-            {
-                Archer spawnedUnit = SpawnUnit(archerPrefab, model, army, instanceBounds);
-                army.archers.Add(spawnedUnit);
-            }
+            return new Army(armyId, warriors, archers, color);
         }
 
-        private T SpawnUnit<T>(T unitToSpawn, IArmyModel model, Army army, Bounds instanceBounds) where T : BaseUnit
+        private T SpawnUnit<T>(T unitToSpawn, string armyId, Color color, Bounds spawnBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
             spawnedUnit.Initialize(battleInstaller);
 
-            spawnedUnit.transform.position = Utils.GetRandomPosInBounds(instanceBounds);
-
-            spawnedUnit.army = army;
-            spawnedUnit.armyModel = model;
-            spawnedUnit.SetColor(army.color);
+            spawnedUnit.transform.position = Utils.GetRandomPosInBounds(spawnBounds);
+            spawnedUnit.armyId = armyId;
+            spawnedUnit.SetColor(color);
 
             return spawnedUnit;
         }
