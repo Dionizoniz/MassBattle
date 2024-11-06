@@ -10,23 +10,27 @@ namespace MassBattle.UI.LaunchMenu
     {
         [SerializeField]
         private TextMeshProUGUI armyIdLabel;
-        [SerializeField]
+
+        [Space, SerializeField]
         private Slider warriorsSlider;
         [SerializeField]
+        private TextMeshProUGUI warriorsCountLabel;
+
+        [Space, SerializeField]
         private Slider archerSlider;
         [SerializeField]
-        private TMP_Dropdown strategyDropdown;
+        private TextMeshProUGUI archerCountLabel;
 
-        private int WarriorsCount => (int)warriorsSlider.value;
-        private int ArchersCount => (int)archerSlider.value;
+        [Space, SerializeField]
+        private TMP_Dropdown strategyDropdown;
 
         private EnumDropdownWrapper<ArmyStrategy> strategyTypeWrapper;
 
         public void InitializeData(ArmySetup armySetup)
         {
             armyIdLabel.text = armySetup.Id;
-            warriorsSlider.SetValueWithoutNotify(armySetup.WarriorsCount);
-            archerSlider.SetValueWithoutNotify(armySetup.ArchersCount);
+            warriorsSlider.value = armySetup.WarriorsCount;
+            archerSlider.value = armySetup.ArchersCount;
 
             strategyTypeWrapper = new EnumDropdownWrapper<ArmyStrategy>(strategyDropdown);
             strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
@@ -34,7 +38,25 @@ namespace MassBattle.UI.LaunchMenu
 
         public ArmySetup CreateArmySetup()
         {
-            return new ArmySetup(armyIdLabel.text, WarriorsCount, ArchersCount, strategyTypeWrapper.Value());
+            int warriorsCount = (int)warriorsSlider.value;
+            int archersCount = (int)archerSlider.value;
+
+            return new ArmySetup(armyIdLabel.text, warriorsCount, archersCount, strategyTypeWrapper.Value());
+        }
+
+        public void RefreshWarriorsCountLabel(float value)
+        {
+            warriorsCountLabel.text = value.ToString();
+        }
+
+        public void RefreshArchersCountLabel(float value)
+        {
+            archerCountLabel.text = value.ToString();
+        }
+
+        private void OnDestroy()
+        {
+            strategyTypeWrapper.Dispose();
         }
     }
 }

@@ -32,6 +32,11 @@ namespace MassBattle.Logic.Setup
             return registeredArmySetups.FindIndex(armySetup => armySetup.Id == id);
         }
 
+        public List<string> FindAllArmySetupIds()
+        {
+            return ArmySetups.Select(x => x.Id).ToList();
+        }
+
         public ArmySetup TryFindArmySetupBy(string id)
         {
             return ArmySetups.FirstOrDefault(armySetup => armySetup.Id == id);
