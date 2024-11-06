@@ -33,10 +33,5 @@ namespace MassBattle.UI.LaunchMenu
                 armyPanels[i].InitializeData(armySetup);
             }
         }
-
-        // so reference
-        // panels references list
-        // init panels
-        // start battle logic with register data
     }
 }
