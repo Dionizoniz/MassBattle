@@ -11,24 +11,30 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private TextMeshProUGUI armyIdLabel;
         [SerializeField]
-        private TMP_Dropdown strategyDropdown;
-        [SerializeField]
         private Slider warriorsSlider;
         [SerializeField]
         private Slider archerSlider;
+        [SerializeField]
+        private TMP_Dropdown strategyDropdown;
 
-        private EnumDropdownWrapper<ArmyStrategy> enumDropdown;
+        private int WarriorsCount => (int)warriorsSlider.value;
+        private int ArchersCount => (int)archerSlider.value;
 
-        private void InitializeData()
+        private EnumDropdownWrapper<ArmyStrategy> strategyTypeWrapper;
+
+        public void InitializeData(ArmySetup armySetup)
         {
-            enumDropdown = new EnumDropdownWrapper<ArmyStrategy>(strategyDropdown);
+            armyIdLabel.text = armySetup.Id;
+            warriorsSlider.SetValueWithoutNotify(armySetup.WarriorsCount);
+            archerSlider.SetValueWithoutNotify(armySetup.ArchersCount);
+
+            strategyTypeWrapper = new EnumDropdownWrapper<ArmyStrategy>(strategyDropdown);
+            strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
         }
 
-        private ArmySetup CreateArmySetup()
+        public ArmySetup CreateArmySetup()
         {
-            ArmyStrategy strategyType = enumDropdown.Value();
-
-            return new ArmySetup(armyIdLabel.text, (int)warriorsSlider.value, (int)archerSlider.value, strategyType);
+            return new ArmySetup(armyIdLabel.text, WarriorsCount, ArchersCount, strategyTypeWrapper.Value());
         }
     }
 }
