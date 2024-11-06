@@ -3,8 +3,8 @@
     public interface IArmyProvider
     {
         void ClearArmies();
-        void RegisterArmy(Army army);
-        Army FindArmyBy(string armyId);
+        void RegisterArmy(ArmyData armyData);
+        ArmyData FindArmyBy(string armyId);
         void FillUpEnemiesForRegisteredArmies();
     }
 }

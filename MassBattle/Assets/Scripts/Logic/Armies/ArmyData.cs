@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
-    public class Army
+    public class ArmyData
     {
         public readonly string id;
         public readonly List<Warrior> warriors = new();
@@ -13,9 +13,9 @@ namespace MassBattle.Logic.Armies
         public readonly ArmyStrategy strategy;
         public readonly Color color;
 
-        public Army enemyArmy;
+        public ArmyData enemyArmyData;
 
-        public Army(string id, List<Warrior> warriors, List<Archer> archers, ArmyStrategy strategy, Color color)
+        public ArmyData(string id, List<Warrior> warriors, List<Archer> archers, ArmyStrategy strategy, Color color)
         {
             this.id = id;
             this.warriors = warriors;

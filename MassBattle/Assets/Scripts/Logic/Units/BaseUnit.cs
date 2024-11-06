@@ -37,8 +37,8 @@ namespace MassBattle.Logic.Units
         protected float attackCooldown;
         private Vector3 lastPosition;
 
-        private Army cachedArmy;
-        public Army Army => cachedArmy ??= battleInstaller.ArmyProvider.FindArmyBy(armyId);
+        private ArmyData cachedArmyData;
+        public ArmyData ArmyData => cachedArmyData ??= battleInstaller.ArmyProvider.FindArmyBy(armyId);
 
         public abstract void Attack(BaseUnit enemy);
 
@@ -89,9 +89,9 @@ namespace MassBattle.Logic.Units
                 transform.forward = sourceGo.transform.position - transform.position;
 
                 if (this is Warrior)
-                    Army.warriors.Remove(this as Warrior);
+                    ArmyData.warriors.Remove(this as Warrior);
                 else if (this is Archer)
-                    Army.archers.Remove(this as Archer);
+                    ArmyData.archers.Remove(this as Archer);
 
                 animator.SetTrigger("Death");
             }
@@ -106,12 +106,12 @@ namespace MassBattle.Logic.Units
             if (health < 0)
                 return;
 
-            List<BaseUnit> allies = Army.FindAllUnits();
-            List<BaseUnit> enemies = Army.enemyArmy.FindAllUnits();
+            List<BaseUnit> allies = ArmyData.FindAllUnits();
+            List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
 
             UpdateBasicRules(allies, enemies);
 
-            switch (Army.strategy)
+            switch (ArmyData.strategy)
             {
                 case ArmyStrategy.Defensive:
                     UpdateDefensive(allies, enemies);
@@ -133,7 +133,7 @@ namespace MassBattle.Logic.Units
 
         void EvadeAllies(List<BaseUnit> allies)
         {
-            var allUnits = Army.FindAllUnits().Union(Army.enemyArmy.FindAllUnits()).ToList();
+            var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
 
             Vector3 center = Utils.GetCenter(allUnits);
 

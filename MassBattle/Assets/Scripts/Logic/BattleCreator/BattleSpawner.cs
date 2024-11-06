@@ -39,14 +39,14 @@ namespace MassBattle.Logic.BattleCreator
             for (int i = 0; i < armyIds.Count; i++)
             {
                 // TODO add index protections
-                Army army = SpawnArmy(armyIds[i], armyColors[i], spawnArmyBounds[i].bounds);
-                ArmyProvider.RegisterArmy(army);
+                ArmyData armyData = SpawnArmy(armyIds[i], armyColors[i], spawnArmyBounds[i].bounds);
+                ArmyProvider.RegisterArmy(armyData);
             }
 
             ArmyProvider.FillUpEnemiesForRegisteredArmies();
         }
 
-        private Army SpawnArmy(string armyId, Color color, Bounds spawnBounds) // TODO simplify code
+        private ArmyData SpawnArmy(string armyId, Color color, Bounds spawnBounds) // TODO simplify code
         {
             ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
@@ -74,7 +74,7 @@ namespace MassBattle.Logic.BattleCreator
                 Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            return new Army(armyId, warriors, archers, armyStrategy, color);
+            return new ArmyData(armyId, warriors, archers, armyStrategy, color);
         }
 
         private T SpawnUnit<T>(T unitToSpawn, string armyId, Color color, Bounds spawnBounds) where T : BaseUnit
