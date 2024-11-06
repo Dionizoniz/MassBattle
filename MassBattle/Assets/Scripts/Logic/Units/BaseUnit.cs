@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
@@ -32,17 +31,14 @@ namespace MassBattle.Logic.Units
 
         public float AttackValue => attack;
 
-        public Army army;
-
-        [NonSerialized]
-        public IArmyModel armyModel;
-
+        public string armyId; // TODO improve access
+        protected IBattleInstaller battleInstaller;
+        protected Color color;
         protected float attackCooldown;
         private Vector3 lastPosition;
 
-        protected IBattleInstaller battleInstaller;
-
-        protected Color color;
+        private ArmyData cachedArmyData;
+        public ArmyData ArmyData => cachedArmyData ??= battleInstaller.ArmyProvider.FindArmyBy(armyId);
 
         public abstract void Attack(BaseUnit enemy);
 
@@ -58,7 +54,7 @@ namespace MassBattle.Logic.Units
         {
             this.color = color;
 
-            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
             renderer.SetPropertyBlock(propertyBlock);
         }
@@ -93,9 +89,9 @@ namespace MassBattle.Logic.Units
                 transform.forward = sourceGo.transform.position - transform.position;
 
                 if (this is Warrior)
-                    army.warriors.Remove(this as Warrior);
+                    ArmyData.warriors.Remove(this as Warrior);
                 else if (this is Archer)
-                    army.archers.Remove(this as Archer);
+                    ArmyData.archers.Remove(this as Archer);
 
                 animator.SetTrigger("Death");
             }
@@ -110,12 +106,12 @@ namespace MassBattle.Logic.Units
             if (health < 0)
                 return;
 
-            List<BaseUnit> allies = army.FindAllUnits();
-            List<BaseUnit> enemies = army.enemyArmy.FindAllUnits();
+            List<BaseUnit> allies = ArmyData.FindAllUnits();
+            List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
 
             UpdateBasicRules(allies, enemies);
 
-            switch (armyModel.strategy)
+            switch (ArmyData.ArmySetup.StrategyType)
             {
                 case ArmyStrategy.Defensive:
                     UpdateDefensive(allies, enemies);
@@ -137,7 +133,7 @@ namespace MassBattle.Logic.Units
 
         void EvadeAllies(List<BaseUnit> allies)
         {
-            var allUnits = army.FindAllUnits().Union(army.enemyArmy.FindAllUnits()).ToList();
+            var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
 
             Vector3 center = Utils.GetCenter(allUnits);
 

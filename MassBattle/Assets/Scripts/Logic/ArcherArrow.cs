@@ -12,13 +12,13 @@ public class ArcherArrow : MonoBehaviour
     [NonSerialized]
     public float attack;
 
-    public Army army;
+    public ArmyData armyData;
 
     public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
     {
         target = targetUnit.transform.position;
         attack = sourceUnit.AttackValue;
-        army = sourceUnit.army;
+        armyData = sourceUnit.ArmyData;
         transform.position = sourceUnit.transform.position;
 
         GetComponent<Renderer>().material.color = color;
@@ -30,7 +30,7 @@ public class ArcherArrow : MonoBehaviour
         transform.position += direction * speed;
         transform.forward = direction;
 
-        foreach (var unit in army.enemyArmy.FindAllUnits())
+        foreach (var unit in armyData.enemyArmyData.FindAllUnits())
         {
             float dist = Vector3.Distance(unit.transform.position, transform.position);
 
