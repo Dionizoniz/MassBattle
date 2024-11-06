@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f53874373b440886ce4fbd1373c202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  army1Model: {fileID: 11400000, guid: a6c80dd762eaa2942967f75607f7c7a3, type: 2}
-  army2Model: {fileID: 11400000, guid: 72f780312aa8e3c40b08fe23dd9b7117, type: 2}
   warriorPrefab: {fileID: 4074248562238301595, guid: d84cac85cdce1be419a5e701d52e9cee, type: 3}
   archerPrefab: {fileID: 8284140959867094785, guid: d5b353320e661744aa811b1a632ee53e, type: 3}
-  leftArmySpawnBounds: {fileID: 5474776707220575050}
-  rightArmySpawnBounds: {fileID: 4414628728238337065}
+  spawnArmyBounds:
+  - {fileID: 5474776707220575050}
+  - {fileID: 4414628728238337065}
+  armyColors:
+  - {r: 0.23137255, g: 0.7490196, b: 0.7019608, a: 1}
+  - {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
   army1Color: {r: 0.23137255, g: 0.7490196, b: 0.7019608, a: 1}
   army2Color: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
 --- !u!1 &3349813727564622901

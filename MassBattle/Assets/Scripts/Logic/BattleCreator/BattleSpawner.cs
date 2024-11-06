@@ -23,9 +23,6 @@ namespace MassBattle.Logic.BattleCreator
 
         private IBattleInstaller battleInstaller;
 
-        public Color army1Color; // TODO improve
-        public Color army2Color; // TODO improve
-
         public void Initialize(IBattleInstaller battleInstaller)
         {
             this.battleInstaller = battleInstaller;
@@ -37,15 +34,16 @@ namespace MassBattle.Logic.BattleCreator
         {
             List<string> armyIds = battleInstaller.BattleSetup.FindAllArmySetupIds();
 
-            // clear provider armies
+            ArmyProvider.ClearArmies();
 
             for (int i = 0; i < armyIds.Count; i++)
             {
                 // TODO add index protections
                 Army army = SpawnArmy(armyIds[i], armyColors[i], spawnArmyBounds[i].bounds);
-
-                // register army to provider
+                ArmyProvider.RegisterArmy(army);
             }
+
+            ArmyProvider.FillUpEnemiesForRegisteredArmies();
         }
 
         private Army SpawnArmy(string armyId, Color color, Bounds spawnBounds) // TODO simplify code
@@ -53,6 +51,7 @@ namespace MassBattle.Logic.BattleCreator
             ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
             List<Archer> archers = new();
+            ArmyStrategy armyStrategy = ArmyStrategy.Basic; // improve
 
             if (armySetup != null)
             {
@@ -67,13 +66,15 @@ namespace MassBattle.Logic.BattleCreator
                     Archer spawnedArcher = SpawnUnit(archerPrefab, armyId, color, spawnBounds);
                     archers.Add(spawnedArcher);
                 }
+
+                armyStrategy = armySetup.StrategyType;
             }
             else
             {
                 Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            return new Army(armyId, warriors, archers, color);
+            return new Army(armyId, warriors, archers, armyStrategy, color);
         }
 
         private T SpawnUnit<T>(T unitToSpawn, string armyId, Color color, Bounds spawnBounds) where T : BaseUnit
@@ -92,21 +93,21 @@ namespace MassBattle.Logic.BattleCreator
 
         void Update()
         {
-            if (ArmyProvider.Army1.CalculateUnitsCount() == 0 || ArmyProvider.Army2.CalculateUnitsCount() == 0)
+            //if (ArmyProvider.Army1.CalculateUnitsCount() == 0 || ArmyProvider.Army2.CalculateUnitsCount() == 0)
             {
                 // TODO improve logic
                 // gameOverMenu.gameObject.SetActive(true); 
                 // gameOverMenu.Populate();
             }
 
-            Vector3 mainCenter = Utils.GetCenter(ArmyProvider.Army1.FindAllUnits()) +
-                                 Utils.GetCenter(ArmyProvider.Army2.FindAllUnits());
-
-            mainCenter *= 0.5f;
-
-            forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
-
-            Camera.main.transform.forward += (forwardTarget - Camera.main.transform.forward) * 0.1f;
+            // Vector3 mainCenter = Utils.GetCenter(ArmyProvider.Army1.FindAllUnits()) +
+            //                      Utils.GetCenter(ArmyProvider.Army2.FindAllUnits());
+            //
+            // mainCenter *= 0.5f;
+            //
+            // forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
+            //
+            // Camera.main.transform.forward += (forwardTarget - Camera.main.transform.forward) * 0.1f;
         }
     }
 }

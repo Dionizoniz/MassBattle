@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MassBattle.Logic.Setup;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -21,6 +22,8 @@ namespace MassBattle.UI.LaunchMenu
                 ArmySetup armySetup = panel.CreateArmySetup();
                 battleSetup.RegisterArmySetup(armySetup);
             }
+
+            SceneManager.LoadScene(1);
         }
 
         private void Awake()

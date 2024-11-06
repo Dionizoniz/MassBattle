@@ -10,15 +10,17 @@ namespace MassBattle.Logic.Armies
         public readonly string id;
         public readonly List<Warrior> warriors = new();
         public readonly List<Archer> archers = new();
+        public readonly ArmyStrategy strategy;
         public readonly Color color;
 
         public Army enemyArmy;
 
-        public Army(string id, List<Warrior> warriors, List<Archer> archers, Color color)
+        public Army(string id, List<Warrior> warriors, List<Archer> archers, ArmyStrategy strategy, Color color)
         {
             this.id = id;
             this.warriors = warriors;
             this.archers = archers;
+            this.strategy = strategy;
             this.color = color;
         }
 

@@ -2,7 +2,9 @@
 {
     public interface IArmyProvider
     {
-        Army Army1 { get; }
-        Army Army2 { get; }
+        void ClearArmies();
+        void RegisterArmy(Army army);
+        Army FindArmyBy(string armyId);
+        void FillUpEnemiesForRegisteredArmies();
     }
 }

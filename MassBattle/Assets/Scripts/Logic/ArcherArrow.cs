@@ -18,7 +18,7 @@ public class ArcherArrow : MonoBehaviour
     {
         target = targetUnit.transform.position;
         attack = sourceUnit.AttackValue;
-        army = sourceUnit.army;
+        army = sourceUnit.Army;
         transform.position = sourceUnit.transform.position;
 
         GetComponent<Renderer>().material.color = color;
