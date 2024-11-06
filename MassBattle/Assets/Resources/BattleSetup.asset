@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: BattleSetup
   m_EditorClassIdentifier: 
   defaultArmySetups:
-  - id: Army 1
+  - armyId: Army 1
     warriorsCount: 80
     archersCount: 70
     strategyType: 0
-  - id: Army 2
+    armyColor: {r: 0.23137255, g: 0.7490196, b: 0.7019608, a: 1}
+  - armyId: Army 2
     warriorsCount: 80
     archersCount: 70
     strategyType: 0
+    armyColor: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}

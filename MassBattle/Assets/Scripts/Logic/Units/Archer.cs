@@ -18,7 +18,7 @@ namespace MassBattle.Logic.Units
 
             attackCooldown = maxAttackCooldown;
             ArcherArrow spawnedArrow = Instantiate(arrowPrefab);
-            spawnedArrow.Initialize(this, enemy, ArmyData.color);
+            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
 
             animator.SetTrigger("Attack");
         }

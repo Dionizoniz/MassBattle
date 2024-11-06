@@ -16,8 +16,6 @@ namespace MassBattle.Logic.BattleCreator
 
         [Space, SerializeField]
         private List<BoxCollider> spawnArmyBounds = new(); // TODO check that size is same as colors
-        [SerializeField]
-        private List<Color> armyColors = new(); // TODO move colors to setup ???
 
         private IArmyProvider ArmyProvider => battleInstaller.ArmyProvider;
 
@@ -39,14 +37,14 @@ namespace MassBattle.Logic.BattleCreator
             for (int i = 0; i < armyIds.Count; i++)
             {
                 // TODO add index protections
-                ArmyData armyData = SpawnArmy(armyIds[i], armyColors[i], spawnArmyBounds[i].bounds);
+                ArmyData armyData = SpawnArmy(armyIds[i], spawnArmyBounds[i].bounds);
                 ArmyProvider.RegisterArmy(armyData);
             }
 
             ArmyProvider.FillUpEnemiesForRegisteredArmies();
         }
 
-        private ArmyData SpawnArmy(string armyId, Color color, Bounds spawnBounds) // TODO simplify code
+        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
         {
             ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
@@ -56,13 +54,13 @@ namespace MassBattle.Logic.BattleCreator
             {
                 for (int i = 0; i < armySetup.WarriorsCount; i++)
                 {
-                    Warrior spawnedWarrior = SpawnUnit(warriorPrefab, armyId, color, spawnBounds);
+                    Warrior spawnedWarrior = SpawnUnit(warriorPrefab, armySetup, spawnBounds);
                     warriors.Add(spawnedWarrior);
                 }
 
                 for (int i = 0; i < armySetup.WarriorsCount; i++)
                 {
-                    Archer spawnedArcher = SpawnUnit(archerPrefab, armyId, color, spawnBounds);
+                    Archer spawnedArcher = SpawnUnit(archerPrefab, armySetup, spawnBounds);
                     archers.Add(spawnedArcher);
                 }
             }
@@ -71,17 +69,17 @@ namespace MassBattle.Logic.BattleCreator
                 Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            return new ArmyData(armySetup, warriors, archers, color);
+            return new ArmyData(armySetup, warriors, archers);
         }
 
-        private T SpawnUnit<T>(T unitToSpawn, string armyId, Color color, Bounds spawnBounds) where T : BaseUnit
+        private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
             spawnedUnit.Initialize(battleInstaller);
 
             spawnedUnit.transform.position = Utils.GetRandomPosInBounds(spawnBounds);
-            spawnedUnit.armyId = armyId;
-            spawnedUnit.SetColor(color);
+            spawnedUnit.armyId = armySetup.ArmyId;
+            spawnedUnit.SetColor(armySetup.ArmyColor);
 
             return spawnedUnit;
         }

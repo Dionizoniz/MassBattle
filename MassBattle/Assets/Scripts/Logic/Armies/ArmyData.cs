@@ -13,15 +13,13 @@ namespace MassBattle.Logic.Armies
         public readonly List<Warrior> warriors;
         public readonly List<Archer> archers;
 
-        public readonly Color color;
         public ArmyData enemyArmyData;
 
-        public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers, Color color)
+        public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
             ArmySetup = armySetup;
             this.warriors = warriors;
             this.archers = archers;
-            this.color = color;
         }
 
         public int CalculateUnitsCount() => warriors.Count + archers.Count;

@@ -23,12 +23,14 @@ namespace MassBattle.UI.LaunchMenu
 
         [Space, SerializeField]
         private TMP_Dropdown strategyDropdown;
+        [SerializeField]
+        private Image armyColor;
 
         private EnumDropdownWrapper<ArmyStrategy> strategyTypeWrapper;
 
         public void InitializeData(ArmySetup armySetup)
         {
-            armyIdLabel.text = armySetup.Id;
+            armyIdLabel.text = armySetup.ArmyId;
             warriorsSlider.value = armySetup.WarriorsCount;
             archerSlider.value = armySetup.ArchersCount;
 
@@ -40,8 +42,9 @@ namespace MassBattle.UI.LaunchMenu
         {
             int warriorsCount = (int)warriorsSlider.value;
             int archersCount = (int)archerSlider.value;
+            ArmyStrategy strategyType = strategyTypeWrapper.Value();
 
-            return new ArmySetup(armyIdLabel.text, warriorsCount, archersCount, strategyTypeWrapper.Value());
+            return new ArmySetup(armyIdLabel.text, warriorsCount, archersCount, strategyType, armyColor.color);
         }
 
         public void RefreshWarriorsCountLabel(float value)

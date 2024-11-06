@@ -17,7 +17,7 @@ namespace MassBattle.Logic.Setup
 
         public void RegisterArmySetup(ArmySetup armySetup)
         {
-            int index = FindRegisteredArmySetupIndexBy(armySetup.Id);
+            int index = FindRegisteredArmySetupIndexBy(armySetup.ArmyId);
 
             if (index > 0)
             {
@@ -29,17 +29,17 @@ namespace MassBattle.Logic.Setup
 
         private int FindRegisteredArmySetupIndexBy(string id)
         {
-            return registeredArmySetups.FindIndex(armySetup => armySetup.Id == id);
+            return registeredArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
         }
 
         public List<string> FindAllArmySetupIds()
         {
-            return ArmySetups.Select(x => x.Id).ToList();
+            return ArmySetups.Select(x => x.ArmyId).ToList();
         }
 
         public ArmySetup TryFindArmySetupBy(string id)
         {
-            return ArmySetups.FirstOrDefault(armySetup => armySetup.Id == id);
+            return ArmySetups.FirstOrDefault(armySetup => armySetup.ArmyId == id);
         }
 
         public void ClearRegisteredArmySetups()
