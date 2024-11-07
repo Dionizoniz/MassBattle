@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
-using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
@@ -10,8 +8,8 @@ namespace MassBattle.Logic.Armies
     {
         public ArmySetup ArmySetup { get; private set; }
 
-        public readonly List<Warrior> warriors;
-        public readonly List<Archer> archers;
+        public readonly List<Warrior> warriors; // TODO change access
+        public readonly List<Archer> archers; // TODO change access
 
         public ArmyData enemyArmyData;
 

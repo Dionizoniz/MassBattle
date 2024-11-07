@@ -6,7 +6,7 @@ namespace MassBattle.Core.Utilities.Editor
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
-        private bool guiState;
+        private bool _guiState;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -20,7 +20,7 @@ namespace MassBattle.Core.Utilities.Editor
 
         private void CacheGuiState()
         {
-            guiState = GUI.enabled;
+            _guiState = GUI.enabled;
         }
 
         private void DisablingPropertyEdit()
@@ -30,7 +30,7 @@ namespace MassBattle.Core.Utilities.Editor
 
         private void RestoreGuiState()
         {
-            GUI.enabled = guiState;
+            GUI.enabled = _guiState;
         }
     }
 }

@@ -5,37 +5,37 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyProvider : IArmyProvider
     {
-        private List<ArmyData> armies = new(); // TODO new name???
+        private readonly List<ArmyData> _armies = new(); // TODO new name???
 
         public void ClearArmies()
         {
-            armies.Clear();
+            _armies.Clear();
         }
 
         public void RegisterArmy(ArmyData armyData)
         {
-            if (armies.Contains(armyData))
+            if (_armies.Contains(armyData))
             {
-                armies.Remove(armyData);
+                _armies.Remove(armyData);
             }
 
-            armies.Add(armyData);
+            _armies.Add(armyData);
         }
 
         public ArmyData FindArmyBy(string armyId)
         {
-            return armies.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
+            return _armies.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
         }
 
         public void FillUpEnemiesForRegisteredArmies() // TODO simplify logic ???
         {
-            for (int armyIndex = 0; armyIndex < armies.Count; armyIndex++)
+            for (int armyIndex = 0; armyIndex < _armies.Count; armyIndex++)
             {
-                for (int enemyIndex = 0; enemyIndex < armies.Count; enemyIndex++)
+                for (int enemyIndex = 0; enemyIndex < _armies.Count; enemyIndex++)
                 {
                     if (armyIndex != enemyIndex) // TODO improve logic and make it as a list
                     {
-                        armies[armyIndex].enemyArmyData = armies[enemyIndex];
+                        _armies[armyIndex].enemyArmyData = _armies[enemyIndex];
                     }
                 }
             }

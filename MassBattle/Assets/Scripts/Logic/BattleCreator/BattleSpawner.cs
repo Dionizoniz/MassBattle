@@ -11,34 +11,34 @@ namespace MassBattle.Logic.BattleCreator
     public class BattleSpawner : MonoBehaviour, IBattleSpawner
     {
         [SerializeField]
-        private Warrior warriorPrefab;
+        private Warrior _warriorPrefab;
         [SerializeField]
-        private Archer archerPrefab;
+        private Archer _archerPrefab;
 
         [Space, SerializeField]
-        private List<BoxCollider> spawnArmyBounds = new(); // TODO check that size is same as colors
+        private List<BoxCollider> _spawnArmyBounds = new(); // TODO check that size is same as colors
 
-        private IArmyProvider ArmyProvider => battleInstaller.ArmyProvider;
+        private IArmyProvider ArmyProvider => _battleInstaller.ArmyProvider;
 
-        private IBattleInstaller battleInstaller;
+        private IBattleInstaller _battleInstaller;
 
         public void Initialize(IBattleInstaller battleInstaller)
         {
-            this.battleInstaller = battleInstaller;
+            _battleInstaller = battleInstaller;
 
             SpawnArmies();
         }
 
         private void SpawnArmies()
         {
-            List<string> armyIds = battleInstaller.BattleSetup.FindAllArmySetupIds();
+            List<string> armyIds = _battleInstaller.BattleSetup.FindAllArmySetupIds();
 
             ArmyProvider.ClearArmies();
 
             for (int i = 0; i < armyIds.Count; i++)
             {
                 // TODO add index protections
-                ArmyData armyData = SpawnArmy(armyIds[i], spawnArmyBounds[i].bounds);
+                ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
                 ArmyProvider.RegisterArmy(armyData);
             }
 
@@ -47,7 +47,7 @@ namespace MassBattle.Logic.BattleCreator
 
         private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
         {
-            ArmySetup armySetup = battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
+            ArmySetup armySetup = _battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
             List<Archer> archers = new();
 
@@ -55,13 +55,13 @@ namespace MassBattle.Logic.BattleCreator
             {
                 for (int i = 0; i < armySetup.WarriorsCount; i++)
                 {
-                    Warrior spawnedWarrior = SpawnUnit(warriorPrefab, armySetup, spawnBounds);
+                    Warrior spawnedWarrior = SpawnUnit(_warriorPrefab, armySetup, spawnBounds);
                     warriors.Add(spawnedWarrior);
                 }
 
                 for (int i = 0; i < armySetup.WarriorsCount; i++)
                 {
-                    Archer spawnedArcher = SpawnUnit(archerPrefab, armySetup, spawnBounds);
+                    Archer spawnedArcher = SpawnUnit(_archerPrefab, armySetup, spawnBounds);
                     archers.Add(spawnedArcher);
                 }
             }
@@ -76,7 +76,7 @@ namespace MassBattle.Logic.BattleCreator
         private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
-            spawnedUnit.Initialize(battleInstaller);
+            spawnedUnit.Initialize(_battleInstaller);
 
             spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
             spawnedUnit.armyId = armySetup.ArmyId;
@@ -85,7 +85,7 @@ namespace MassBattle.Logic.BattleCreator
             return spawnedUnit;
         }
 
-        private Vector3 forwardTarget; // TODO improve solution - now is moved only
+        private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
         void Update()
         {
@@ -101,9 +101,9 @@ namespace MassBattle.Logic.BattleCreator
             //
             // mainCenter *= 0.5f;
             //
-            // forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
+            // _forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
             //
-            // Camera.main.transform.forward += (forwardTarget - Camera.main.transform.forward) * 0.1f;
+            // Camera.main.transform.forward += (_forwardTarget - Camera.main.transform.forward) * 0.1f;
         }
     }
 }
