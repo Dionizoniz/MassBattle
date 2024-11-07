@@ -3,6 +3,7 @@ using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
+using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
@@ -77,7 +78,7 @@ namespace MassBattle.Logic.BattleCreator
             T spawnedUnit = Instantiate(unitToSpawn);
             spawnedUnit.Initialize(battleInstaller);
 
-            spawnedUnit.transform.position = Utils.GetRandomPosInBounds(spawnBounds);
+            spawnedUnit.transform.position = PositionFinder.GetRandomPosInBounds(spawnBounds);
             spawnedUnit.armyId = armySetup.ArmyId;
             spawnedUnit.SetColor(armySetup.ArmyColor);
 

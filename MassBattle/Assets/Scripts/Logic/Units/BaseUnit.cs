@@ -3,6 +3,7 @@ using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
 using MassBattle.Logic.Setup;
+using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -136,7 +137,7 @@ namespace MassBattle.Logic.Units
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
 
-            Vector3 center = Utils.GetCenter(allUnits);
+            Vector3 center = PositionFinder.GetCenter(allUnits);
 
             float centerDist = Vector3.Distance(gameObject.transform.position, center);
 
