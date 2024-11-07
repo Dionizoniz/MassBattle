@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Logic.Utilities;
+using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -7,14 +8,14 @@ namespace MassBattle.Logic.Units
     public class Archer : BaseUnit
     {
         [Space, SerializeField]
-        private ArcherArrow _arrowPrefab;
+        private Arrow _arrowPrefab;
 
         public override void Attack(BaseUnit enemy)
         {
             if (CanAttack(enemy))
             {
                 _attackCooldown = _maxAttackCooldown;
-                ArcherArrow spawnedArrow = Instantiate(_arrowPrefab);
+                Arrow spawnedArrow = Instantiate(_arrowPrefab);
                 spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
 
                 _animator.SetTrigger("Attack");

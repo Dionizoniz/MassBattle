@@ -4,6 +4,7 @@ using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Utilities;
+using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -77,7 +78,7 @@ namespace MassBattle.Logic.Units
             }
             else
             {
-                ArcherArrow arrow = sourceGo.GetComponent<ArcherArrow>();
+                Arrow arrow = sourceGo.GetComponent<Arrow>();
                 sourceAttack = arrow.attack;
             }
 
