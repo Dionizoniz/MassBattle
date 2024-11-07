@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7907187414978200123}
   - component: {fileID: 2021462409839564664}
   - component: {fileID: 3678075164039831391}
+  - component: {fileID: 2575470813176336879}
+  - component: {fileID: 7408683372009728387}
   m_Layer: 5
   m_Name: LaunchMenuCanvas
   m_TagString: Untagged
@@ -118,10 +120,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5417803459fd8c45a2efd61e84c8038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 7408683372009728387}
+  _view: {fileID: 2575470813176336879}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
+--- !u!114 &2575470813176336879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679519037847288845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7e0044315d43238daab796b56b477a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _armyPanels:
   - {fileID: 5692959093308495468}
   - {fileID: 9097907900036232181}
+--- !u!114 &7408683372009728387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679519037847288845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36d992fa82a46f9ba6988a5ec90abbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2941376402394918197
 GameObject:
   m_ObjectHideFlags: 0

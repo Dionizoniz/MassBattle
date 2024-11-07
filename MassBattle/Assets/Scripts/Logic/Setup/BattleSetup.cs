@@ -10,26 +10,27 @@ namespace MassBattle.Logic.Setup
         [SerializeField]
         private List<ArmySetup> _defaultArmySetups = new();
 
-        private readonly List<ArmySetup> _registeredArmySetups = new();
+        // Add readonly if you do not need save data between runs in editor mode
+        private List<ArmySetup> _savedArmySetups = new();
 
-        private bool ExistRegisteredArmySetups => _registeredArmySetups != null && _registeredArmySetups.Count > 0;
-        private List<ArmySetup> ArmySetups => ExistRegisteredArmySetups ? _registeredArmySetups : _defaultArmySetups;
+        private bool UseSavedArmySetups => _savedArmySetups != null && _savedArmySetups.Count > 0;
+        private IEnumerable<ArmySetup> ArmySetups => UseSavedArmySetups ? _savedArmySetups : _defaultArmySetups;
 
-        public void RegisterArmySetup(ArmySetup armySetup)
+        public void SaveArmySetup(ArmySetup armySetup)
         {
-            int index = FindRegisteredArmySetupIndexBy(armySetup.ArmyId);
+            int index = FindSavedArmySetupIndexBy(armySetup.ArmyId);
 
             if (index > 0)
             {
-                _registeredArmySetups.RemoveAt(index);
+                _savedArmySetups.RemoveAt(index);
             }
 
-            _registeredArmySetups.Add(armySetup);
+            _savedArmySetups.Add(armySetup);
         }
 
-        private int FindRegisteredArmySetupIndexBy(string id)
+        private int FindSavedArmySetupIndexBy(string id)
         {
-            return _registeredArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
+            return _savedArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
         }
 
         public List<string> FindAllArmySetupIds()
@@ -42,9 +43,9 @@ namespace MassBattle.Logic.Setup
             return ArmySetups.FirstOrDefault(armySetup => armySetup.ArmyId == id);
         }
 
-        public void ClearRegisteredArmySetups()
+        public void ClearSavedArmySetups()
         {
-            _registeredArmySetups.Clear();
+            _savedArmySetups.Clear();
         }
     }
 }

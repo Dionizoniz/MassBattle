@@ -4,9 +4,9 @@ namespace MassBattle.Logic.Setup
 {
     public interface IBattleSetup
     {
-        void RegisterArmySetup(ArmySetup armySetup);
+        void SaveArmySetup(ArmySetup armySetup);
         List<string> FindAllArmySetupIds();
         ArmySetup TryFindArmySetupBy(string id);
-        void ClearRegisteredArmySetups();
+        void ClearSavedArmySetups();
     }
 }
