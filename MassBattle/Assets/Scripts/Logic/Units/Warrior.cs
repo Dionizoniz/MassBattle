@@ -38,7 +38,7 @@ namespace MassBattle.Logic.Units
                     Move(Vector3.right);
             }
 
-            PositionFinder.FindNearestObject(gameObject, enemies, out BaseUnit nearestObject);
+            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestObject);
 
             if (nearestObject == null)
                 return;
@@ -55,7 +55,7 @@ namespace MassBattle.Logic.Units
 
         protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            PositionFinder.FindNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
+            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy == null)
                 return;
