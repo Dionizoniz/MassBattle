@@ -2,6 +2,7 @@
 using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Installers;
+using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -113,10 +114,10 @@ namespace MassBattle.Logic.Units
 
             switch (ArmyData.ArmySetup.StrategyType)
             {
-                case ArmyStrategy.Defensive:
+                case StrategyType.Defensive:
                     UpdateDefensive(allies, enemies);
                     break;
-                case ArmyStrategy.Basic:
+                case StrategyType.Basic:
                     UpdateBasic(allies, enemies);
                     break;
             }

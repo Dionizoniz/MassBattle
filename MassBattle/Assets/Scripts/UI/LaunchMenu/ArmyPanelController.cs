@@ -26,7 +26,7 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private Image armyColor;
 
-        private EnumDropdownWrapper<ArmyStrategy> strategyTypeWrapper;
+        private EnumDropdownWrapper<StrategyType> strategyTypeWrapper;
 
         public void InitializeData(ArmySetup armySetup)
         {
@@ -34,7 +34,7 @@ namespace MassBattle.UI.LaunchMenu
             warriorsSlider.value = armySetup.WarriorsCount;
             archerSlider.value = armySetup.ArchersCount;
 
-            strategyTypeWrapper = new EnumDropdownWrapper<ArmyStrategy>(strategyDropdown);
+            strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(strategyDropdown);
             strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
         }
 
@@ -42,7 +42,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             int warriorsCount = (int)warriorsSlider.value;
             int archersCount = (int)archerSlider.value;
-            ArmyStrategy strategyType = strategyTypeWrapper.Value();
+            StrategyType strategyType = strategyTypeWrapper.Value();
 
             return new ArmySetup(armyIdLabel.text, warriorsCount, archersCount, strategyType, armyColor.color);
         }
