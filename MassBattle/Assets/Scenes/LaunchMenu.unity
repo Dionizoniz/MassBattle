@@ -861,7 +861,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1887171653864323322, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
       propertyPath: m_Name
-      value: StartBattleButton
+      value: LaunchBattleButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071558714584088189, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_text
+      value: Launch
       objectReference: {fileID: 0}
     - target: {fileID: 8910708335085165356, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
       propertyPath: m_Pivot.x
@@ -1042,11 +1046,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410185774585670002, guid: a3fd236eed8313d40ada1e3bfc15b824, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3410185774585670002, guid: a3fd236eed8313d40ada1e3bfc15b824, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 41.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6083201757610031109, guid: a3fd236eed8313d40ada1e3bfc15b824, type: 3}
       propertyPath: m_AnchorMax.y
