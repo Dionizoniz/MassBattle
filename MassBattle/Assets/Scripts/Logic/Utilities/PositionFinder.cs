@@ -9,8 +9,10 @@ namespace MassBattle.Logic.Utilities
         public static Vector3 FindRandomPositionIn(Bounds bounds)
         {
             Vector3 pos = Vector3.zero;
+
             pos.x = Random.Range(bounds.min.x, bounds.max.x);
             pos.z = Random.Range(bounds.min.z, bounds.max.z);
+
             return pos;
         }
 
@@ -31,11 +33,13 @@ namespace MassBattle.Logic.Utilities
         public static float FindNearestUnit(BaseUnit source, List<BaseUnit> targets, out BaseUnit nearestUnits)
         {
             float minDistance = float.MaxValue;
+            Vector3 sourcePosition = source.transform.position;
             nearestUnits = null;
 
-            foreach (var target in targets)
+            for (var index = 0; index < targets.Count; index++)
             {
-                float distance = Vector3.Distance(source.transform.position, target.transform.position);
+                BaseUnit target = targets[index];
+                float distance = Vector3.Distance(sourcePosition, target.transform.position);
 
                 if (distance < minDistance)
                 {
