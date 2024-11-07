@@ -8,18 +8,18 @@ namespace MassBattle.Logic.Installers
     public class BattleInstaller : MonoBehaviour, IBattleInstaller
     {
         [SerializeField]
-        private BattleSpawner battleSpawner;
+        private BattleSpawner _battleSpawner;
         [SerializeField]
-        private BattleSetup battleSetup;
+        private BattleSetup _battleSetup;
 
         public IBattleSpawner BattleSpawner { get; private set; }
-        public IBattleSetup BattleSetup => battleSetup;
+        public IBattleSetup BattleSetup => _battleSetup;
 
         public IArmyProvider ArmyProvider { get; private set; }
 
         private void Awake()
         {
-            BattleSpawner = Instantiate(battleSpawner);
+            BattleSpawner = Instantiate(_battleSpawner);
             ArmyProvider = new ArmyProvider();
         }
 
@@ -27,8 +27,5 @@ namespace MassBattle.Logic.Installers
         {
             BattleSpawner.Initialize(this);
         }
-
-        // Pooling ???
-        // summary screen
     }
 }
