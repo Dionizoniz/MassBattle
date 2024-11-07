@@ -2,18 +2,20 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
 Library/
-*.cache
-obj/
+[Tt]emp/
+[Oo]bj/
 [Bb]uild/
-Logs/
+[Bb]uilds/
+[Ll]ogs/
 [Uu]serSettings/
+*.cache
+
 
 # ===================================== #
 # Visual Studio / MonoDevelop / Rider   #
 # ===================================== #
-ExportedObj/
+[Ee]xportedObj/
 .vs/
 .vscode/
 .idea/
