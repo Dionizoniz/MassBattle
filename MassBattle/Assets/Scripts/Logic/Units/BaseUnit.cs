@@ -137,7 +137,7 @@ namespace MassBattle.Logic.Units
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
 
-            Vector3 center = PositionFinder.GetCenter(allUnits);
+            Vector3 center = PositionFinder.FindCenterOf(allUnits);
 
             float centerDist = Vector3.Distance(gameObject.transform.position, center);
 

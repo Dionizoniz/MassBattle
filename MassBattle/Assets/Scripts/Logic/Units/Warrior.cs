@@ -27,7 +27,7 @@ namespace MassBattle.Logic.Units
 
         protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            Vector3 enemyCenter = PositionFinder.GetCenter(enemies);
+            Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
 
             if (Mathf.Abs(enemyCenter.x - transform.position.x) > 20)
             {
@@ -38,7 +38,7 @@ namespace MassBattle.Logic.Units
                     Move(Vector3.right);
             }
 
-            PositionFinder.GetNearestObject(gameObject, enemies, out BaseUnit nearestObject);
+            PositionFinder.FindNearestObject(gameObject, enemies, out BaseUnit nearestObject);
 
             if (nearestObject == null)
                 return;
@@ -55,7 +55,7 @@ namespace MassBattle.Logic.Units
 
         protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            PositionFinder.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
+            PositionFinder.FindNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy == null)
                 return;

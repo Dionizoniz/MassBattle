@@ -6,7 +6,7 @@ namespace MassBattle.Logic.Utilities
 {
     public static class PositionFinder
     {
-        public static Vector3 GetRandomPosInBounds(Bounds bounds)
+        public static Vector3 FindRandomPositionIn(Bounds bounds)
         {
             Vector3 pos = Vector3.zero;
             pos.x = Random.Range(bounds.min.x, bounds.max.x);
@@ -14,8 +14,7 @@ namespace MassBattle.Logic.Utilities
             return pos;
         }
 
-        public static Vector3 GetCenter<T>(List<T> objects)
-                where T : Component
+        public static Vector3 FindCenterOf<T>(List<T> objects) where T : Component
         {
             Vector3 result = Vector3.zero;
 
@@ -31,7 +30,7 @@ namespace MassBattle.Logic.Utilities
             return result;
         }
 
-        public static Vector3 GetCenter(List<BaseUnit> units)
+        public static Vector3 FindCenterOf(List<BaseUnit> units)
         {
             Vector3 result = Vector3.zero;
 
@@ -47,7 +46,7 @@ namespace MassBattle.Logic.Utilities
             return result;
         }
 
-        public static Vector3 GetCenter(List<GameObject> objects)
+        public static Vector3 FindCenterOf(List<GameObject> objects)
         {
             Vector3 result = Vector3.zero;
 
@@ -63,7 +62,7 @@ namespace MassBattle.Logic.Utilities
             return result;
         }
 
-        public static float GetNearestObject(GameObject source, List<BaseUnit> objects, out BaseUnit nearestObject)
+        public static float FindNearestObject(GameObject source, List<BaseUnit> objects, out BaseUnit nearestObject)
         {
             float minDist = float.MaxValue;
             nearestObject = null;
