@@ -33,6 +33,7 @@ namespace MassBattle.UI.LaunchMenu
             _armyIdLabel.text = armySetup.ArmyId;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
+            _armyColor.color = armySetup.ArmyColor;
 
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
