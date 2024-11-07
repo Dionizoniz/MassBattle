@@ -9,57 +9,57 @@ namespace MassBattle.UI.LaunchMenu
     public class ArmyPanelController : MonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI armyIdLabel;
+        private TextMeshProUGUI _armyIdLabel;
 
         [Space, SerializeField]
-        private Slider warriorsSlider;
+        private Slider _warriorsSlider;
         [SerializeField]
-        private TextMeshProUGUI warriorsCountLabel;
+        private TextMeshProUGUI _warriorsCountLabel;
 
         [Space, SerializeField]
-        private Slider archerSlider;
+        private Slider _archerSlider;
         [SerializeField]
-        private TextMeshProUGUI archerCountLabel;
+        private TextMeshProUGUI _archerCountLabel;
 
         [Space, SerializeField]
-        private TMP_Dropdown strategyDropdown;
+        private TMP_Dropdown _strategyDropdown;
         [SerializeField]
-        private Image armyColor;
+        private Image _armyColor;
 
-        private EnumDropdownWrapper<StrategyType> strategyTypeWrapper;
+        private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
 
         public void InitializeData(ArmySetup armySetup)
         {
-            armyIdLabel.text = armySetup.ArmyId;
-            warriorsSlider.value = armySetup.WarriorsCount;
-            archerSlider.value = armySetup.ArchersCount;
+            _armyIdLabel.text = armySetup.ArmyId;
+            _warriorsSlider.value = armySetup.WarriorsCount;
+            _archerSlider.value = armySetup.ArchersCount;
 
-            strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(strategyDropdown);
-            strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
+            _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
+            _strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
         }
 
         public ArmySetup CreateArmySetup()
         {
-            int warriorsCount = (int)warriorsSlider.value;
-            int archersCount = (int)archerSlider.value;
-            StrategyType strategyType = strategyTypeWrapper.Value();
+            int warriorsCount = (int)_warriorsSlider.value;
+            int archersCount = (int)_archerSlider.value;
+            StrategyType strategyType = _strategyTypeWrapper.Value();
 
-            return new ArmySetup(armyIdLabel.text, warriorsCount, archersCount, strategyType, armyColor.color);
+            return new ArmySetup(_armyIdLabel.text, warriorsCount, archersCount, strategyType, _armyColor.color);
         }
 
         public void RefreshWarriorsCountLabel(float value)
         {
-            warriorsCountLabel.text = value.ToString();
+            _warriorsCountLabel.text = value.ToString();
         }
 
         public void RefreshArchersCountLabel(float value)
         {
-            archerCountLabel.text = value.ToString();
+            _archerCountLabel.text = value.ToString();
         }
 
         private void OnDestroy()
         {
-            strategyTypeWrapper.Dispose();
+            _strategyTypeWrapper.Dispose();
         }
     }
 }

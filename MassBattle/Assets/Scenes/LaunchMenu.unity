@@ -896,13 +896,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cbdb8cf8c54ec195b8878205ec145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyIdLabel: {fileID: 647820620}
-  warriorsSlider: {fileID: 1655515794}
-  warriorsCountLabel: {fileID: 361788516}
-  archerSlider: {fileID: 1614538317}
-  archerCountLabel: {fileID: 2075815377}
-  strategyDropdown: {fileID: 2084949143}
-  armyColor: {fileID: 453816560}
+  _armyIdLabel: {fileID: 647820620}
+  _warriorsSlider: {fileID: 1655515794}
+  _warriorsCountLabel: {fileID: 361788516}
+  _archerSlider: {fileID: 1614538317}
+  _archerCountLabel: {fileID: 2075815377}
+  _strategyDropdown: {fileID: 2084949143}
+  _armyColor: {fileID: 453816560}
 --- !u!224 &364130639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4244,8 +4244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5417803459fd8c45a2efd61e84c8038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
-  armyPanels:
+  _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
+  _armyPanels:
   - {fileID: 1539317811}
   - {fileID: 364130638}
 --- !u!1 &1534617317
@@ -4417,13 +4417,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cbdb8cf8c54ec195b8878205ec145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyIdLabel: {fileID: 565649361}
-  warriorsSlider: {fileID: 664563793}
-  warriorsCountLabel: {fileID: 1406410686}
-  archerSlider: {fileID: 1855118224}
-  archerCountLabel: {fileID: 764473914}
-  strategyDropdown: {fileID: 1235123520}
-  armyColor: {fileID: 1426349663}
+  _armyIdLabel: {fileID: 565649361}
+  _warriorsSlider: {fileID: 664563793}
+  _warriorsCountLabel: {fileID: 1406410686}
+  _archerSlider: {fileID: 1855118224}
+  _archerCountLabel: {fileID: 764473914}
+  _strategyDropdown: {fileID: 1235123520}
+  _armyColor: {fileID: 1426349663}
 --- !u!1 &1559950592
 GameObject:
   m_ObjectHideFlags: 0

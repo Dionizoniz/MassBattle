@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverMenu : MonoBehaviour
+public class GameOverMenu : MonoBehaviour // TODO refactor and restore functionality
 {
     public TextMeshProUGUI armyWins;
     public Button goToMenu;
@@ -23,12 +21,12 @@ public class GameOverMenu : MonoBehaviour
         // }
     }
 
-    void Awake()
+    private void Awake()
     {
         goToMenu.onClick.AddListener(GoToMenu);
     }
 
-    void GoToMenu()
+    private void GoToMenu()
     {
         SceneManager.LoadScene(0);
     }

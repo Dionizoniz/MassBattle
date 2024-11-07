@@ -8,32 +8,50 @@ namespace MassBattle.UI.LaunchMenu
     public class LaunchMenuController : MonoBehaviour
     {
         [SerializeField]
-        private BattleSetup battleSetup;
+        private BattleSetup _battleSetup;
 
         [SerializeField]
-        private List<ArmyPanelController> armyPanels = new();
+        private List<ArmyPanelController> _armyPanels = new();
 
         public void StartBattle()
         {
-            battleSetup.ClearRegisteredArmySetups();
+            ClearRegisteredArmySetups();
+            RegisterArmiesSetup();
+            LoadBattleScene();
+        }
 
-            foreach (var panel in armyPanels)
+        private void ClearRegisteredArmySetups()
+        {
+            _battleSetup.ClearRegisteredArmySetups();
+        }
+
+        private void RegisterArmiesSetup()
+        {
+            foreach (var panel in _armyPanels)
             {
                 ArmySetup armySetup = panel.CreateArmySetup();
-                battleSetup.RegisterArmySetup(armySetup);
+                _battleSetup.RegisterArmySetup(armySetup);
             }
+        }
 
+        private void LoadBattleScene()
+        {
             SceneManager.LoadScene(1);
         }
 
         private void Awake()
         {
-            List<string> armyIds = battleSetup.FindAllArmySetupIds();
+            InitializePanels();
+        }
 
-            for (var i = 0; i < armyIds.Count || i < armyPanels.Count; i++)
+        private void InitializePanels()
+        {
+            List<string> armyIds = _battleSetup.FindAllArmySetupIds();
+
+            for (var i = 0; i < armyIds.Count || i < _armyPanels.Count; i++)
             {
-                ArmySetup armySetup = battleSetup.TryFindArmySetupBy(armyIds[i]);
-                armyPanels[i].InitializeData(armySetup);
+                ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyIds[i]);
+                _armyPanels[i].InitializeData(armySetup);
             }
         }
     }

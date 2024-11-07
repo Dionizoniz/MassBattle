@@ -3,7 +3,7 @@ using MassBattle.Logic.Armies;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
-public class ArcherArrow : MonoBehaviour
+public class ArcherArrow : MonoBehaviour // TODO refactor
 {
     public float speed;
 

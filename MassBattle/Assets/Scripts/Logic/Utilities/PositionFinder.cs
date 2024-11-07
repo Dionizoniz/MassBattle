@@ -8,12 +8,12 @@ namespace MassBattle.Logic.Utilities
     {
         public static Vector3 FindRandomPositionIn(Bounds bounds)
         {
-            Vector3 pos = Vector3.zero;
+            Vector3 position = Vector3.zero;
 
-            pos.x = Random.Range(bounds.min.x, bounds.max.x);
-            pos.z = Random.Range(bounds.min.z, bounds.max.z);
+            position.x = Random.Range(bounds.min.x, bounds.max.x);
+            position.z = Random.Range(bounds.min.z, bounds.max.z);
 
-            return pos;
+            return position;
         }
 
         public static Vector3 FindCenterOf<T>(List<T> elements) where T : Component
