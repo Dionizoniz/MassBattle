@@ -30,38 +30,6 @@ namespace MassBattle.Logic.Utilities
             return result;
         }
 
-        public static Vector3 FindCenterOf(List<BaseUnit> units)
-        {
-            Vector3 result = Vector3.zero;
-
-            foreach (var unit in units)
-            {
-                result += unit.transform.position;
-            }
-
-            result.x /= units.Count;
-            result.y /= units.Count;
-            result.z /= units.Count;
-
-            return result;
-        }
-
-        public static Vector3 FindCenterOf(List<GameObject> objects)
-        {
-            Vector3 result = Vector3.zero;
-
-            foreach (var o in objects)
-            {
-                result += o.transform.position;
-            }
-
-            result.x /= objects.Count;
-            result.y /= objects.Count;
-            result.z /= objects.Count;
-
-            return result;
-        }
-
         public static float FindNearestObject(GameObject source, List<BaseUnit> objects, out BaseUnit nearestObject)
         {
             float minDist = float.MaxValue;
