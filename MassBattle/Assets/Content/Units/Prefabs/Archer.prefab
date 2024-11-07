@@ -159,4 +159,14 @@ MonoBehaviour:
   postAttackDelay: 1
   animator: {fileID: 6969590871247763298}
   renderer: {fileID: 5068147908177715982}
-  arrowPrefab: {fileID: 4995913744683215106, guid: 43df16efbb83b484d91bf87170fd46c2, type: 3}
+  _health: 5
+  _speed: 0.1
+  _defense: 0
+  _attack: 10
+  _attackRange: 20
+  _maxAttackCooldown: 5
+  _postAttackDelay: 1
+  _animator: {fileID: 6969590871247763298}
+  _renderer: {fileID: 5068147908177715982}
+  armyId: 
+  _arrowPrefab: {fileID: 4995913744683215106, guid: 43df16efbb83b484d91bf87170fd46c2, type: 3}

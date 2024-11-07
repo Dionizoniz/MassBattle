@@ -8,12 +8,12 @@ namespace MassBattle.Logic.Setup
     public class BattleSetup : ScriptableObject, IBattleSetup
     {
         [SerializeField]
-        private List<ArmySetup> defaultArmySetups = new();
+        private List<ArmySetup> _defaultArmySetups = new();
 
-        private List<ArmySetup> registeredArmySetups = new();
+        private readonly List<ArmySetup> _registeredArmySetups = new();
 
-        private bool ExistRegisteredArmySetups => registeredArmySetups != null && registeredArmySetups.Count > 0;
-        private List<ArmySetup> ArmySetups => ExistRegisteredArmySetups ? registeredArmySetups : defaultArmySetups;
+        private bool ExistRegisteredArmySetups => _registeredArmySetups != null && _registeredArmySetups.Count > 0;
+        private List<ArmySetup> ArmySetups => ExistRegisteredArmySetups ? _registeredArmySetups : _defaultArmySetups;
 
         public void RegisterArmySetup(ArmySetup armySetup)
         {
@@ -21,15 +21,15 @@ namespace MassBattle.Logic.Setup
 
             if (index > 0)
             {
-                registeredArmySetups.RemoveAt(index);
+                _registeredArmySetups.RemoveAt(index);
             }
 
-            registeredArmySetups.Add(armySetup);
+            _registeredArmySetups.Add(armySetup);
         }
 
         private int FindRegisteredArmySetupIndexBy(string id)
         {
-            return registeredArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
+            return _registeredArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
         }
 
         public List<string> FindAllArmySetupIds()
@@ -44,7 +44,7 @@ namespace MassBattle.Logic.Setup
 
         public void ClearRegisteredArmySetups()
         {
-            registeredArmySetups.Clear();
+            _registeredArmySetups.Clear();
         }
     }
 }

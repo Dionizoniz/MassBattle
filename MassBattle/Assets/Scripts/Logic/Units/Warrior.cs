@@ -6,18 +6,21 @@ namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit
     {
-        public override void Attack(BaseUnit target)
+        public override void Attack(BaseUnit enemy)
         {
-            if (attackCooldown > 0)
-                return;
+            if (CanAttack(enemy))
+            {
+                _attackCooldown = _maxAttackCooldown;
+                _animator.SetTrigger("Attack");
 
-            if (Vector3.Distance(transform.position, target.transform.position) > attackRange)
-                return;
+                enemy.Hit(gameObject);
+            }
+        }
 
-            attackCooldown = maxAttackCooldown;
-            animator.SetTrigger("Attack");
-
-            target.Hit(gameObject);
+        private bool CanAttack(BaseUnit enemy)
+        {
+            return _attackCooldown <= 0 &&
+                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
         }
 
         public void OnDeathAnimFinished()
@@ -32,39 +35,46 @@ namespace MassBattle.Logic.Units
             if (Mathf.Abs(enemyCenter.x - transform.position.x) > 20)
             {
                 if (enemyCenter.x < transform.position.x)
+                {
                     Move(Vector3.left);
+                }
 
                 if (enemyCenter.x > transform.position.x)
+                {
                     Move(Vector3.right);
+                }
             }
 
             PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestObject);
 
-            if (nearestObject == null)
-                return;
+            if (nearestObject != null)
 
-            if (attackCooldown <= 0)
-                Move((nearestObject.transform.position - transform.position).normalized);
-            else
             {
-                Move((nearestObject.transform.position - transform.position).normalized * -1);
-            }
+                if (_attackCooldown <= 0)
+                {
+                    Move((nearestObject.transform.position - transform.position).normalized);
+                }
+                else
+                {
+                    Move((nearestObject.transform.position - transform.position).normalized * -1);
+                }
 
-            Attack(nearestObject);
+                Attack(nearestObject);
+            }
         }
 
         protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
-            if (nearestEnemy == null)
-                return;
+            if (nearestEnemy != null)
+            {
+                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                toNearest.Scale(new Vector3(1, 0, 1));
+                Move(toNearest.normalized);
 
-            Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-            toNearest.Scale(new Vector3(1, 0, 1));
-            Move(toNearest.normalized);
-
-            Attack(nearestEnemy);
+                Attack(nearestEnemy);
+            }
         }
     }
 }

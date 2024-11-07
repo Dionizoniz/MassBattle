@@ -11,36 +11,35 @@ namespace MassBattle.Logic.Units
     public abstract class BaseUnit : MonoBehaviour, IInitialize
     {
         [SerializeField]
-        protected float health = 50f;
+        protected float _health = 50f;
         [SerializeField]
-        protected float speed = 0.1f;
+        protected float _speed = 0.1f;
         [SerializeField]
-        protected float defense;
+        protected float _defense;
 
         [Space, SerializeField]
-        protected float attack = 20f;
+        protected float _attack = 20f;
         [SerializeField]
-        protected float attackRange = 2.5f;
+        protected float _attackRange = 2.5f;
         [SerializeField]
-        protected float maxAttackCooldown = 1f;
+        protected float _maxAttackCooldown = 1f;
         [SerializeField]
-        protected float postAttackDelay;
+        protected float _postAttackDelay;
 
         [Space, SerializeField]
-        protected Animator animator;
+        protected Animator _animator;
         [SerializeField]
-        private Renderer renderer;
+        private Renderer _renderer;
 
-        public float AttackValue => attack;
+        public float AttackValue => _attack;
+        public ArmyData ArmyData => _cachedArmyData ??= _battleInstaller.ArmyProvider.FindArmyBy(armyId);
+
+        protected float _attackCooldown;
+        private ArmyData _cachedArmyData;
+        private IBattleInstaller _battleInstaller;
+        private Vector3 _lastUnitPosition;
 
         public string armyId; // TODO improve access
-        protected IBattleInstaller battleInstaller;
-        protected Color color;
-        protected float attackCooldown;
-        private Vector3 lastPosition;
-
-        private ArmyData cachedArmyData;
-        public ArmyData ArmyData => cachedArmyData ??= battleInstaller.ArmyProvider.FindArmyBy(armyId);
 
         public abstract void Attack(BaseUnit enemy);
 
@@ -49,34 +48,32 @@ namespace MassBattle.Logic.Units
 
         public void Initialize(IBattleInstaller battleInstaller)
         {
-            this.battleInstaller = battleInstaller;
+            _battleInstaller = battleInstaller;
         }
 
-        public void SetColor(Color color)
+        public void SetColor(Color color) // TODO Update to use ArmyData 
         {
-            this.color = color;
-
             MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
-            renderer.SetPropertyBlock(propertyBlock);
+            _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        public virtual void Move(Vector3 delta)
+        protected void Move(Vector3 delta)
         {
-            if (attackCooldown > maxAttackCooldown - postAttackDelay)
-                return;
-
-            transform.position += delta * speed;
+            if (_attackCooldown < _maxAttackCooldown - _postAttackDelay)
+            {
+                transform.position += delta * _speed;
+            }
         }
 
-        public virtual void Hit(GameObject sourceGo)
+        public void Hit(GameObject sourceGo) // TODO Convert to interface !!!
         {
             BaseUnit source = sourceGo.GetComponent<BaseUnit>();
             float sourceAttack = 0;
 
             if (source != null)
             {
-                sourceAttack = source.attack;
+                sourceAttack = source._attack;
             }
             else
             {
@@ -84,78 +81,83 @@ namespace MassBattle.Logic.Units
                 sourceAttack = arrow.attack;
             }
 
-            health -= Mathf.Max(sourceAttack - defense, 0);
+            _health -= Mathf.Max(sourceAttack - _defense, 0);
 
-            if (health < 0)
+            if (_health < 0)
             {
                 transform.forward = sourceGo.transform.position - transform.position;
 
-                if (this is Warrior)
-                    ArmyData.warriors.Remove(this as Warrior);
-                else if (this is Archer)
-                    ArmyData.archers.Remove(this as Archer);
+                switch (this) // TODO convert to send to provider instead of manually removing elements
+                {
+                    case Warrior:
+                        ArmyData.warriors.Remove(this as Warrior);
+                        break;
+                    case Archer:
+                        ArmyData.archers.Remove(this as Archer);
+                        break;
+                }
 
-                animator.SetTrigger("Death");
+                _animator.SetTrigger("Death");
             }
             else
             {
-                animator.SetTrigger("Hit");
+                _animator.SetTrigger("Hit");
             }
         }
 
         private void Update()
         {
-            if (health < 0)
-                return;
-
-            List<BaseUnit> allies = ArmyData.FindAllUnits();
-            List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
-
-            UpdateBasicRules(allies, enemies);
-
-            switch (ArmyData.ArmySetup.StrategyType)
+            if (_health > 0)
             {
-                case StrategyType.Defensive:
-                    UpdateDefensive(allies, enemies);
-                    break;
-                case StrategyType.Basic:
-                    UpdateBasic(allies, enemies);
-                    break;
-            }
+                List<BaseUnit> allies = ArmyData.FindAllUnits();
+                List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
 
-            animator.SetFloat("MovementSpeed", (transform.position - lastPosition).magnitude / speed);
-            lastPosition = transform.position;
+                UpdateBasicRules(allies, enemies);
+
+                switch (ArmyData.ArmySetup.StrategyType)
+                {
+                    case StrategyType.Defensive:
+                        UpdateDefensive(allies, enemies);
+                        break;
+                    case StrategyType.Basic:
+                        UpdateBasic(allies, enemies);
+                        break;
+                }
+
+                var position = transform.position;
+                _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
+                _lastUnitPosition = position;
+            }
         }
 
-        void UpdateBasicRules(List<BaseUnit> allies, List<BaseUnit> enemies)
+        private void UpdateBasicRules(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            attackCooldown -= Time.deltaTime;
+            _attackCooldown -= Time.deltaTime;
             EvadeAllies(allies);
         }
 
-        void EvadeAllies(List<BaseUnit> allies)
+        private void EvadeAllies(List<BaseUnit> allies)
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
-
             Vector3 center = PositionFinder.FindCenterOf(allUnits);
-
             float centerDist = Vector3.Distance(gameObject.transform.position, center);
 
             if (centerDist > 80.0f)
             {
                 Vector3 toNearest = (center - transform.position).normalized;
                 transform.position -= toNearest * (80.0f - centerDist);
-                return;
             }
-
-            foreach (var obj in allUnits)
+            else
             {
-                float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
-
-                if (dist < 2f)
+                foreach (var obj in allUnits)
                 {
-                    Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                    transform.position -= toNearest * (2.0f - dist);
+                    float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
+
+                    if (dist < 2f)
+                    {
+                        Vector3 toNearest = (obj.transform.position - transform.position).normalized;
+                        transform.position -= toNearest * (2.0f - dist);
+                    }
                 }
             }
         }

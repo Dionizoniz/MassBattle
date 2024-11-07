@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188c8d75f84842129e5e50ad9b5a1907, type: 3}
   m_Name: BattleSetup
   m_EditorClassIdentifier: 
-  defaultArmySetups:
+  _defaultArmySetups:
   - _armyId: Army 1
     _warriorsCount: 60
     _archersCount: 60
