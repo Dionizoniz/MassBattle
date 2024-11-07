@@ -159,3 +159,13 @@ MonoBehaviour:
   postAttackDelay: 0
   animator: {fileID: 969375995027188649}
   renderer: {fileID: 5506000164979033747}
+  _health: 50
+  _speed: 0.1
+  _defense: 5
+  _attack: 20
+  _attackRange: 2.5
+  _maxAttackCooldown: 1
+  _postAttackDelay: 0
+  _animator: {fileID: 969375995027188649}
+  _renderer: {fileID: 5506000164979033747}
+  armyId: 

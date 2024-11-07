@@ -3,27 +3,34 @@ using UnityEngine;
 
 namespace MassBattle.Core.Utilities.Editor
 {
-    /// <summary> This class contain custom drawer for ReadOnly attribute. </summary>
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
-        /// <summary> Unity method for drawing GUI in Editor </summary>
-        /// <param name="position">Position.</param>
-        /// <param name="property">Property.</param>
-        /// <param name="label">Label.</param>
+        private bool _guiState;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            // Saving previous GUI enabled value
-            var previousGUIState = GUI.enabled;
+            CacheGuiState();
+            DisablingPropertyEdit();
 
-            // Disabling edit for property
-            GUI.enabled = false;
-
-            // Drawing Property
             EditorGUI.PropertyField(position, property, label);
 
-            // Setting old GUI enabled value
-            GUI.enabled = previousGUIState;
+            RestoreGuiState();
+        }
+
+        private void CacheGuiState()
+        {
+            _guiState = GUI.enabled;
+        }
+
+        private void DisablingPropertyEdit()
+        {
+            GUI.enabled = false;
+        }
+
+        private void RestoreGuiState()
+        {
+            GUI.enabled = _guiState;
         }
     }
 }

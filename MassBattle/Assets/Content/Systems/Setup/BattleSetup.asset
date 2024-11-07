@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188c8d75f84842129e5e50ad9b5a1907, type: 3}
   m_Name: BattleSetup
   m_EditorClassIdentifier: 
-  defaultArmySetups:
-  - armyId: Army 1
-    warriorsCount: 80
-    archersCount: 70
-    strategyType: 0
-    armyColor: {r: 0.23137255, g: 0.7490196, b: 0.7019608, a: 1}
-  - armyId: Army 2
-    warriorsCount: 80
-    archersCount: 70
-    strategyType: 0
-    armyColor: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
+  _defaultArmySetups:
+  - _armyId: Army 1
+    _warriorsCount: 60
+    _archersCount: 60
+    _strategyType: 0
+    _armyColor: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
+  - _armyId: Army 2
+    _warriorsCount: 60
+    _archersCount: 60
+    _strategyType: 0
+    _armyColor: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}

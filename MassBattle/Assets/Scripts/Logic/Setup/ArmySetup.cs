@@ -7,30 +7,30 @@ namespace MassBattle.Logic.Setup
     public class ArmySetup
     {
         [SerializeField]
-        private string armyId;
+        private string _armyId;
 
         [SerializeField]
-        private int warriorsCount;
+        private int _warriorsCount;
         [SerializeField]
-        private int archersCount;
+        private int _archersCount;
         [SerializeField]
-        private ArmyStrategy strategyType;
+        private StrategyType _strategyType;
         [SerializeField]
-        private Color armyColor;
+        private Color _armyColor;
 
-        public string ArmyId => armyId;
-        public int WarriorsCount => warriorsCount;
-        public int ArchersCount => archersCount;
-        public ArmyStrategy StrategyType => strategyType;
-        public Color ArmyColor => armyColor;
+        public string ArmyId => _armyId;
+        public int WarriorsCount => _warriorsCount;
+        public int ArchersCount => _archersCount;
+        public StrategyType StrategyType => _strategyType;
+        public Color ArmyColor => _armyColor;
 
-        public ArmySetup(string armyId, int warriorsCount, int archersCount, ArmyStrategy strategyType, Color armyColor)
+        public ArmySetup(string armyId, int warriorsCount, int archersCount, StrategyType strategyType, Color armyColor)
         {
-            this.armyId = armyId;
-            this.warriorsCount = warriorsCount;
-            this.archersCount = archersCount;
-            this.strategyType = strategyType;
-            this.armyColor = armyColor;
+            _armyId = armyId;
+            _warriorsCount = warriorsCount;
+            _archersCount = archersCount;
+            _strategyType = strategyType;
+            _armyColor = armyColor;
         }
     }
 }

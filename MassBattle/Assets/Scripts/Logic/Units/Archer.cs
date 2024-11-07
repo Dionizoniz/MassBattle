@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using MassBattle.Logic.Utilities;
+using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -6,21 +8,24 @@ namespace MassBattle.Logic.Units
     public class Archer : BaseUnit
     {
         [Space, SerializeField]
-        private ArcherArrow arrowPrefab;
+        private Arrow _arrowPrefab;
 
         public override void Attack(BaseUnit enemy)
         {
-            if (attackCooldown > 0)
-                return;
+            if (CanAttack(enemy))
+            {
+                _attackCooldown = _maxAttackCooldown;
+                Arrow spawnedArrow = Instantiate(_arrowPrefab);
+                spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
 
-            if (Vector3.Distance(transform.position, enemy.transform.position) > attackRange)
-                return;
+                _animator.SetTrigger("Attack");
+            }
+        }
 
-            attackCooldown = maxAttackCooldown;
-            ArcherArrow spawnedArrow = Instantiate(arrowPrefab);
-            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
-
-            animator.SetTrigger("Attack");
+        private bool CanAttack(BaseUnit enemy)
+        {
+            return _attackCooldown <= 0 &&
+                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
         }
 
         public void OnDeathAnimFinished()
@@ -30,53 +35,57 @@ namespace MassBattle.Logic.Units
 
         protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            Vector3 enemyCenter = Utils.GetCenter(enemies);
+            Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
             float distToEnemyX = Mathf.Abs(enemyCenter.x - transform.position.x);
 
-            if (distToEnemyX > attackRange)
+            if (distToEnemyX > _attackRange)
             {
                 if (enemyCenter.x < transform.position.x)
+                {
                     Move(Vector3.left);
+                }
 
                 if (enemyCenter.x > transform.position.x)
+                {
                     Move(Vector3.right);
+                }
             }
 
-            float distToNearest = Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
+            float distToNearest = PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
-            if (nearestEnemy == null)
-                return;
-
-            if (distToNearest < attackRange)
+            if (nearestEnemy != null)
             {
-                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
+                if (distToNearest < _attackRange)
+                {
+                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                    toNearest.Scale(new Vector3(1, 0, 1));
 
-                Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
-                Move(-(toNearest + flank).normalized);
-            }
-            else
-            {
-                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
-                Move(toNearest.normalized);
-            }
+                    Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
+                    Move(-(toNearest + flank).normalized);
+                }
+                else
+                {
+                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                    toNearest.Scale(new Vector3(1, 0, 1));
+                    Move(toNearest.normalized);
+                }
 
-            Attack(nearestEnemy);
+                Attack(nearestEnemy);
+            }
         }
 
         protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
-            Utils.GetNearestObject(gameObject, enemies, out BaseUnit nearestEnemy);
+            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
-            if (nearestEnemy == null)
-                return;
+            if (nearestEnemy != null)
+            {
+                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                toNearest.Scale(new Vector3(1, 0, 1));
+                Move(toNearest.normalized);
 
-            Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-            toNearest.Scale(new Vector3(1, 0, 1));
-            Move(toNearest.normalized);
-
-            Attack(nearestEnemy);
+                Attack(nearestEnemy);
+            }
         }
     }
 }
