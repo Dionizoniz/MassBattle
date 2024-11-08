@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MassBattle.Core.Entities
+namespace MassBattle.Core.Entities.Database
 {
     public interface IBaseDatabase<T> where T : IId
     {

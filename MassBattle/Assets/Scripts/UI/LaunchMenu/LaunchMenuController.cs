@@ -1,4 +1,4 @@
-using MassBattle.Core.Patterns;
+using MassBattle.Core.Entities.MVC;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using UnityEngine;

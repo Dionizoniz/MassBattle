@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Core.Entities
+﻿namespace MassBattle.Core.Entities.Database
 {
     public interface IId
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MassBattle.Core.Patterns
+namespace MassBattle.Core.Entities.MVC
 {
     public abstract class Controller<TModel, TView> : MonoBehaviour, IController
             where TModel : IModel<TView>

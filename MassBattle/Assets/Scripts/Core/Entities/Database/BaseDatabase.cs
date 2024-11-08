@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace MassBattle.Core.Entities
+namespace MassBattle.Core.Entities.Database
 {
     public class BaseDatabase<T> : ScriptableObject, IBaseDatabase<T> where T : IId
     {

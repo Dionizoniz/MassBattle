@@ -1,4 +1,5 @@
 ﻿using MassBattle.Core.Entities;
+using MassBattle.Core.Entities.Database;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases
