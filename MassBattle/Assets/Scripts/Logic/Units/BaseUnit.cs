@@ -94,10 +94,10 @@ namespace MassBattle.Logic.Units
                 switch (this) // TODO convert to send to provider instead of manually removing elements
                 {
                     case Warrior:
-                        ArmyData.warriors.Remove(this as Warrior);
+                        ArmyData.RemoveWarrior(this as Warrior);
                         break;
                     case Archer:
-                        ArmyData.archers.Remove(this as Archer);
+                        ArmyData.RemoveArcher(this as Archer);
                         break;
                 }
 

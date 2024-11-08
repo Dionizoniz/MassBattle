@@ -8,25 +8,35 @@ namespace MassBattle.Logic.Armies
     {
         public ArmySetup ArmySetup { get; private set; }
 
-        public readonly List<Warrior> warriors; // TODO change access
-        public readonly List<Archer> archers; // TODO change access
+        private readonly List<Warrior> _warriors;
+        private readonly List<Archer> _archers;
 
         public ArmyData enemyArmyData;
 
         public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
             ArmySetup = armySetup;
-            this.warriors = warriors;
-            this.archers = archers;
+            _warriors = warriors;
+            _archers = archers;
         }
 
-        public int CalculateUnitsCount() => warriors.Count + archers.Count;
+        public void RemoveWarrior(Warrior warrior)
+        {
+            _warriors.Remove(warrior);
+        }
+
+        public void RemoveArcher(Archer archer)
+        {
+            _archers.Remove(archer);
+        }
+
+        public int CalculateUnitsCount() => _warriors.Count + _archers.Count;
 
         public List<BaseUnit> FindAllUnits() // TODO Optimize
         {
             List<BaseUnit> units = new();
-            units.AddRange(warriors);
-            units.AddRange(archers);
+            units.AddRange(_warriors);
+            units.AddRange(_archers);
 
             return units;
         }
