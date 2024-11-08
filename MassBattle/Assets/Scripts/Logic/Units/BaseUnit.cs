@@ -42,6 +42,13 @@ namespace MassBattle.Logic.Units
         protected float _attackCooldown;
         private Vector3 _lastUnitPosition;
 
+        // TODO NEW UPDATE APPROACH
+        // calculate new target - from strategy (nearest) - all in first frame after that X per frame
+        // calculate new position - from strategy (base/defence)
+        // calculate evade offset
+        // apply position + direction * speed * deltatime
+        // try attack if in range
+
         public abstract void Attack(BaseUnit enemy);
 
         protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
