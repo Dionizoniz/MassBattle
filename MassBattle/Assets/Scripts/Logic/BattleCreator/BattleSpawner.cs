@@ -10,6 +10,8 @@ namespace MassBattle.Logic.BattleCreator
 {
     public class BattleSpawner : MonoBehaviour, IBattleSpawner
     {
+        private const string UNITS_ROOT_NAME = "UnitsRoot";
+
         [SerializeField]
         private Warrior _warriorPrefab;
         [SerializeField]
@@ -20,6 +22,7 @@ namespace MassBattle.Logic.BattleCreator
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
+        private Transform _unitsRoot;
 
         private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
@@ -28,13 +31,13 @@ namespace MassBattle.Logic.BattleCreator
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;
 
+            CreateUnitsRoot();
             SpawnArmies();
         }
 
         private void SpawnArmies()
         {
             List<string> armyIds = _battleSetup.FindAllArmySetupIds();
-
             _armyProvider.ClearArmies();
 
             for (int i = 0; i < armyIds.Count; i++)
@@ -45,6 +48,11 @@ namespace MassBattle.Logic.BattleCreator
             }
 
             _armyProvider.FillUpEnemiesForRegisteredArmies();
+        }
+
+        private void CreateUnitsRoot()
+        {
+            _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
         }
 
         private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
@@ -77,7 +85,7 @@ namespace MassBattle.Logic.BattleCreator
 
         private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit
         {
-            T spawnedUnit = Instantiate(unitToSpawn);
+            T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
 
             spawnedUnit.Initialize(_armyProvider, armySetup);
             spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
