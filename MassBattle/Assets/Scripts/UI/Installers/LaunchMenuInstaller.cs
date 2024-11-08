@@ -8,12 +8,12 @@ namespace MassBattle.UI.Installers
     public class LaunchMenuInstaller : MonoBehaviour, ILaunchMenuInstaller
     {
         [SerializeField]
-        private LaunchMenuController _launchMenuController;
+        private LaunchMenuController _launchMenuControllerToSpawn;
         [SerializeField]
-        private BattleSetup _battleSetup;
+        private EventSystem _eventSystemToSpawn;
 
         [Space, SerializeField]
-        private EventSystem _eventSystem;
+        private BattleSetup _battleSetup;
 
         private void Awake()
         {
@@ -23,13 +23,13 @@ namespace MassBattle.UI.Installers
 
         private void SpawnLaunchMenuController()
         {
-            ILaunchMenuController launchMenu = Instantiate(_launchMenuController);
+            ILaunchMenuController launchMenu = Instantiate(_launchMenuControllerToSpawn);
             launchMenu.InjectData(_battleSetup);
         }
 
         private void SpawnEventSystem()
         {
-            Instantiate(_eventSystem);
+            Instantiate(_eventSystemToSpawn);
         }
     }
 }
