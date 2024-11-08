@@ -78,11 +78,9 @@ namespace MassBattle.Logic.BattleCreator
         private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
-            spawnedUnit.Initialize(_armyProvider);
 
+            spawnedUnit.Initialize(_armyProvider, armySetup);
             spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
-            spawnedUnit.armyId = armySetup.ArmyId;
-            spawnedUnit.SetColor(armySetup.ArmyColor);
 
             return spawnedUnit;
         }

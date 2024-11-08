@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Installers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Utilities;
 using MassBattle.Logic.Weapons;
@@ -33,27 +32,30 @@ namespace MassBattle.Logic.Units
         private Renderer _renderer;
 
         public float AttackValue => _attack;
-        public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(armyId);
+        public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
-        protected float _attackCooldown;
-        private ArmyData _cachedArmyData;
         private IArmyProvider _armyProvider;
 
-        private Vector3 _lastUnitPosition;
+        private ArmyData _cachedArmyData;
+        private string _armyId;
 
-        public string armyId; // TODO improve access
+        protected float _attackCooldown;
+        private Vector3 _lastUnitPosition;
 
         public abstract void Attack(BaseUnit enemy);
 
         protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
         protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
 
-        public void Initialize(IArmyProvider armyProvider)
+        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
             _armyProvider = armyProvider;
+            _armyId = armySetup.ArmyId;
+
+            UpdateColor(armySetup.ArmyColor);
         }
 
-        public void SetColor(Color color) // TODO Update to use ArmyData 
+        private void UpdateColor(Color color)
         {
             MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
