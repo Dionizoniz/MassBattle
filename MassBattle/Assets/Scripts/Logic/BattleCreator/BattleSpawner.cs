@@ -59,7 +59,7 @@ namespace MassBattle.Logic.BattleCreator
                     warriors.Add(spawnedWarrior);
                 }
 
-                for (int i = 0; i < armySetup.WarriorsCount; i++)
+                for (int i = 0; i < armySetup.ArchersCount; i++)
                 {
                     Archer spawnedArcher = SpawnUnit(_archerPrefab, armySetup, spawnBounds);
                     archers.Add(spawnedArcher);

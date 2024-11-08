@@ -1,58 +1,33 @@
-using System.Collections.Generic;
+using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MassBattle.UI.LaunchMenu
 {
-    public class LaunchMenuController : MonoBehaviour
+    public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>, ILaunchMenuController
     {
         [SerializeField]
         private BattleSetup _battleSetup;
 
-        [SerializeField]
-        private List<ArmyPanelController> _armyPanels = new();
+        private ColorDatabase _colorDatabase;
+
+        public void InjectData(BattleSetup battleSetup, ColorDatabase colorDatabase)
+        {
+            _battleSetup = battleSetup;
+            _colorDatabase = colorDatabase;
+        }
 
         public void StartBattle()
         {
-            ClearRegisteredArmySetups();
-            RegisterArmiesSetup();
-            LoadBattleScene();
+            _model.StartBattle(_battleSetup);
         }
 
-        private void ClearRegisteredArmySetups()
+        protected override void Initialize()
         {
-            _battleSetup.ClearRegisteredArmySetups();
-        }
+            base.Initialize();
 
-        private void RegisterArmiesSetup()
-        {
-            foreach (var panel in _armyPanels)
-            {
-                ArmySetup armySetup = panel.CreateArmySetup();
-                _battleSetup.RegisterArmySetup(armySetup);
-            }
-        }
-
-        private void LoadBattleScene()
-        {
-            SceneManager.LoadScene(1);
-        }
-
-        private void Awake()
-        {
-            InitializePanels();
-        }
-
-        private void InitializePanels()
-        {
-            List<string> armyIds = _battleSetup.FindAllArmySetupIds();
-
-            for (var i = 0; i < armyIds.Count || i < _armyPanels.Count; i++)
-            {
-                ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyIds[i]);
-                _armyPanels[i].InitializeData(armySetup);
-            }
+            _view.SpawnPanels(_battleSetup, _colorDatabase);
         }
     }
 }
