@@ -9,6 +9,11 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private BattleSetup _battleSetup;
 
+        public void InjectData(BattleSetup battleSetup)
+        {
+            _battleSetup = battleSetup;
+        }
+
         public void StartBattle()
         {
             _model.StartBattle(_battleSetup);
