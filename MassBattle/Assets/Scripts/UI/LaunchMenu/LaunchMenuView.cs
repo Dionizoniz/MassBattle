@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MassBattle.Core.Entities.MVC;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
@@ -34,6 +35,21 @@ namespace MassBattle.UI.LaunchMenu
             armyPanel.InitializeData(armySetup, colorDatabase);
 
             ArmyPanels.Add(armyPanel);
+        }
+
+        private void OnDestroy()
+        {
+            DestroyArmyPanels();
+        }
+
+        private void DestroyArmyPanels()
+        {
+            foreach (var panel in ArmyPanels)
+            {
+                Destroy(panel.gameObject);
+            }
+
+            ArmyPanels.Clear();
         }
     }
 }
