@@ -23,7 +23,7 @@ namespace MassBattle.UI.Installers
 
         private void SpawnLaunchMenuController()
         {
-            LaunchMenuController launchMenu = Instantiate(_launchMenuController);
+            ILaunchMenuController launchMenu = Instantiate(_launchMenuController);
             launchMenu.InjectData(_battleSetup);
         }
 

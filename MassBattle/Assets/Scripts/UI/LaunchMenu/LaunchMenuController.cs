@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
 {
-    public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>
+    public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>, ILaunchMenuController
     {
         [SerializeField]
         private BattleSetup _battleSetup;
