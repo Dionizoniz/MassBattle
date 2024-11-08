@@ -15,8 +15,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
-        // TODO change to SpawnPanels and adjust logic
-        public void InitializePanels(BattleSetup battleSetup, IColorDatabase colorDatabase)
+        public void SpawnPanels(BattleSetup battleSetup, IColorDatabase colorDatabase)
         {
             foreach (var armyId in battleSetup.FindAllArmySetupIds())
             {

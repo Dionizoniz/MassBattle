@@ -27,7 +27,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             base.Initialize();
 
-            _view.InitializePanels(_battleSetup, _colorDatabase);
+            _view.SpawnPanels(_battleSetup, _colorDatabase);
         }
     }
 }
