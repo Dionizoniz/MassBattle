@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using MassBattle.Core.Entities;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases
+namespace MassBattle.Core.Entities
 {
-    public class BaseDatabase<T> : ScriptableObject where T : IId
+    public class BaseDatabase<T> : ScriptableObject, IBaseDatabase<T> where T : IId
     {
         [SerializeField]
-        private List<T> _elements = new();
+        protected List<T> _elements = new();
 
         public List<string> FindAllElementIds()
         {
-            return _elements.Select(x => x.Id).ToList();
+            return _elements.Select(element => element.Id).ToList();
         }
 
         public T TryFindElementBy(int index)
@@ -26,10 +25,23 @@ namespace MassBattle.Logic.Databases
             else
             {
                 Debug.LogWarning("Database index out of range. Returning first element.");
-                result = FindFirstElement();
+                result = FindDefaultElement();
             }
 
             return result;
+        }
+
+        public T FindDefaultElement()
+        {
+            return _elements[0];
+        }
+
+        public T TryFindNextElementFor(int index)
+        {
+            index++;
+            index %= _elements.Count;
+
+            return _elements[index];
         }
 
         public T TryFindElementBy(string id)
@@ -39,15 +51,10 @@ namespace MassBattle.Logic.Databases
             if (result == null)
             {
                 Debug.LogWarning("Database has not contain ID. Returning first element.");
-                result = FindFirstElement();
+                result = FindDefaultElement();
             }
 
             return result;
-        }
-
-        private T FindFirstElement()
-        {
-            return _elements[0];
         }
     }
 }
