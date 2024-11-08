@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661c60e1cd1343deab4a764dd13947ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleSpawner: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
+  _battleSpawnerToSpawn: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
