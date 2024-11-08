@@ -1,4 +1,5 @@
 using MassBattle.Core.Utilities;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using TMPro;
 using UnityEngine;
@@ -27,9 +28,12 @@ namespace MassBattle.UI.LaunchMenu
         private Image _armyColor;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
+        private IColorDatabase _colorDatabase;
 
-        public void InitializeData(ArmySetup armySetup)
+        public void InitializeData(ArmySetup armySetup, IColorDatabase colorDatabase)
         {
+            _colorDatabase = colorDatabase;
+
             _armyIdLabel.text = armySetup.ArmyId;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
@@ -56,6 +60,19 @@ namespace MassBattle.UI.LaunchMenu
         public void RefreshArchersCountLabel(float value)
         {
             _archerCountLabel.text = value.ToString();
+        }
+
+        public void ChangeArmyColorToNext()
+        {
+            int index = _colorDatabase.FindColorIndex(_armyColor.color);
+            ColorData nextColor = FindNextColorData(index);
+
+            _armyColor.color = nextColor.Color;
+        }
+
+        private ColorData FindNextColorData(int index)
+        {
+            return index >= 0 ? _colorDatabase.TryFindNextElementFor(index) : _colorDatabase.FindDefaultElement();
         }
 
         private void OnDestroy()

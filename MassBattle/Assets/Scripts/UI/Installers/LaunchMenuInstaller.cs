@@ -1,3 +1,4 @@
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using MassBattle.UI.LaunchMenu;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace MassBattle.UI.Installers
 
         [Space, SerializeField]
         private BattleSetup _battleSetup;
+        [SerializeField]
+        private ColorDatabase _colorDatabase;
 
         private void Awake()
         {
@@ -24,7 +27,7 @@ namespace MassBattle.UI.Installers
         private void SpawnLaunchMenuController()
         {
             ILaunchMenuController launchMenu = Instantiate(_launchMenuControllerToSpawn);
-            launchMenu.InjectData(_battleSetup);
+            launchMenu.InjectData(_battleSetup, _colorDatabase);
         }
 
         private void SpawnEventSystem()

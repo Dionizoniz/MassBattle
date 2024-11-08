@@ -1,4 +1,5 @@
 using MassBattle.Core.Patterns;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using UnityEngine;
 
@@ -9,9 +10,12 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private BattleSetup _battleSetup;
 
-        public void InjectData(BattleSetup battleSetup)
+        private ColorDatabase _colorDatabase;
+
+        public void InjectData(BattleSetup battleSetup, ColorDatabase colorDatabase)
         {
             _battleSetup = battleSetup;
+            _colorDatabase = colorDatabase;
         }
 
         public void StartBattle()
@@ -23,7 +27,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             base.Initialize();
 
-            _view.InitializePanels(_battleSetup);
+            _view.InitializePanels(_battleSetup, _colorDatabase);
         }
     }
 }

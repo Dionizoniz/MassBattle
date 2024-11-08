@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace MassBattle.UI.LaunchMenu
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
-        public void InitializePanels(BattleSetup battleSetup) // TODO change to SpawnPanels and adjust logic
+        // TODO change to SpawnPanels and adjust logic
+        public void InitializePanels(BattleSetup battleSetup, IColorDatabase colorDatabase)
         {
             foreach (var armyId in battleSetup.FindAllArmySetupIds())
             {
@@ -22,15 +24,15 @@ namespace MassBattle.UI.LaunchMenu
 
                 if (armySetup != null)
                 {
-                    SpawnArmyPanel(armySetup);
+                    SpawnArmyPanel(armySetup, colorDatabase);
                 }
             }
         }
 
-        private void SpawnArmyPanel(ArmySetup armySetup)
+        private void SpawnArmyPanel(ArmySetup armySetup, IColorDatabase colorDatabase)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(armySetup);
+            armyPanel.InitializeData(armySetup, colorDatabase);
 
             ArmyPanels.Add(armyPanel);
         }
