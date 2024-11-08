@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 2883984677231467287}
   - component: {fileID: 4460425341903629956}
   - component: {fileID: 6058642899876836264}
+  - component: {fileID: 730167411496561958}
   m_Layer: 5
   m_Name: ArmyPanel
   m_TagString: Untagged
@@ -346,6 +347,26 @@ MonoBehaviour:
   _archerCountLabel: {fileID: 6861590161091054961}
   _strategyDropdown: {fileID: 1931070844660064425}
   _armyColor: {fileID: 2308853536272142479}
+--- !u!114 &730167411496561958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668997428313140793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 800
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &9206979193825021605
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,11 +551,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_Pivot.x
@@ -815,11 +836,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_Pivot.x
