@@ -12,7 +12,7 @@ namespace MassBattle.Core.Patterns
         [SerializeField]
         protected TView _view;
 
-        private void Awake()
+        private void Start()
         {
             Initialize();
         }
