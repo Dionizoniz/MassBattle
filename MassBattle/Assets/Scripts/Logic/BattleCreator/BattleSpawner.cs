@@ -18,36 +18,38 @@ namespace MassBattle.Logic.BattleCreator
         [Space, SerializeField]
         private List<BoxCollider> _spawnArmyBounds = new(); // TODO check that size is same as colors
 
-        private IArmyProvider ArmyProvider => _battleInstaller.ArmyProvider;
+        private IBattleSetup _battleSetup;
+        private IArmyProvider _armyProvider;
 
-        private IBattleInstaller _battleInstaller;
+        private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
-        public void Initialize(IBattleInstaller battleInstaller)
+        public void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider)
         {
-            _battleInstaller = battleInstaller;
+            _battleSetup = battleSetup;
+            _armyProvider = armyProvider;
 
             SpawnArmies();
         }
 
         private void SpawnArmies()
         {
-            List<string> armyIds = _battleInstaller.BattleSetup.FindAllArmySetupIds();
+            List<string> armyIds = _battleSetup.FindAllArmySetupIds();
 
-            ArmyProvider.ClearArmies();
+            _armyProvider.ClearArmies();
 
             for (int i = 0; i < armyIds.Count; i++)
             {
                 // TODO add index protections
                 ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
-                ArmyProvider.RegisterArmy(armyData);
+                _armyProvider.RegisterArmy(armyData);
             }
 
-            ArmyProvider.FillUpEnemiesForRegisteredArmies();
+            _armyProvider.FillUpEnemiesForRegisteredArmies();
         }
 
         private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
         {
-            ArmySetup armySetup = _battleInstaller.BattleSetup.TryFindArmySetupBy(armyId);
+            ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
             List<Archer> archers = new();
 
@@ -76,7 +78,7 @@ namespace MassBattle.Logic.BattleCreator
         private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit
         {
             T spawnedUnit = Instantiate(unitToSpawn);
-            spawnedUnit.Initialize(_battleInstaller);
+            spawnedUnit.Initialize(_armyProvider);
 
             spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
             spawnedUnit.armyId = armySetup.ArmyId;
@@ -84,8 +86,6 @@ namespace MassBattle.Logic.BattleCreator
 
             return spawnedUnit;
         }
-
-        private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
         void Update()
         {

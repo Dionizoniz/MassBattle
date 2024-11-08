@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public abstract class BaseUnit : MonoBehaviour, IInitialize
+    public abstract class BaseUnit : MonoBehaviour
     {
         [SerializeField]
         protected float _health = 50f;
@@ -33,11 +33,12 @@ namespace MassBattle.Logic.Units
         private Renderer _renderer;
 
         public float AttackValue => _attack;
-        public ArmyData ArmyData => _cachedArmyData ??= _battleInstaller.ArmyProvider.FindArmyBy(armyId);
+        public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(armyId);
 
         protected float _attackCooldown;
         private ArmyData _cachedArmyData;
-        private IBattleInstaller _battleInstaller;
+        private IArmyProvider _armyProvider;
+
         private Vector3 _lastUnitPosition;
 
         public string armyId; // TODO improve access
@@ -47,9 +48,9 @@ namespace MassBattle.Logic.Units
         protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
         protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
 
-        public void Initialize(IBattleInstaller battleInstaller)
+        public void Initialize(IArmyProvider armyProvider)
         {
-            _battleInstaller = battleInstaller;
+            _armyProvider = armyProvider;
         }
 
         public void SetColor(Color color) // TODO Update to use ArmyData 
