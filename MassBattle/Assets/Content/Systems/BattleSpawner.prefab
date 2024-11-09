@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f53874373b440886ce4fbd1373c202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warriorPrefab: {fileID: 4074248562238301595, guid: d84cac85cdce1be419a5e701d52e9cee, type: 3}
-  _archerPrefab: {fileID: 8284140959867094785, guid: d5b353320e661744aa811b1a632ee53e, type: 3}
+  _warriorPrefab: {fileID: 1726437177833949907, guid: e0bb51e59cb7ac0479ef15c87dce1c41, type: 3}
+  _archerPrefab: {fileID: 1375424081673512322, guid: a04561132aa8d9043a38b1561f9bf0a6, type: 3}
   _spawnArmyBounds:
   - {fileID: 5474776707220575050}
   - {fileID: 4414628728238337065}
