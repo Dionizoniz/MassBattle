@@ -112,26 +112,16 @@ namespace MassBattle.Logic.Units
         private Vector3 FindEvadeOtherUnitsDirection() // TODO refactor
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
-            Vector3 center = PositionFinder.FindCenterOf(allUnits);
-            float centerDist = Vector3.Distance(gameObject.transform.position, center);
             Vector3 evadeOffset = Vector3.zero;
 
-            if (centerDist > 80.0f)
+            foreach (var obj in allUnits)
             {
-                Vector3 toNearest = (center - transform.position).normalized;
-                evadeOffset -= toNearest * (80.0f - centerDist);
-            }
-            else
-            {
-                foreach (var obj in allUnits)
-                {
-                    float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
+                float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
 
-                    if (dist < 2f)
-                    {
-                        Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                        evadeOffset -= toNearest * (2.0f - dist);
-                    }
+                if (dist < 2f)
+                {
+                    Vector3 toNearest = (obj.transform.position - transform.position).normalized;
+                    evadeOffset -= toNearest * (2.0f - dist);
                 }
             }
 
