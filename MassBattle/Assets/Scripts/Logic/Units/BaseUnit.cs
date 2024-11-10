@@ -42,8 +42,8 @@ namespace MassBattle.Logic.Units
         protected float _timeSinceLastAttack;
         private Vector3 _lastUnitPosition;
 
-        protected abstract void UpdateDefensive(List<BaseUnit> enemies);
-        protected abstract void UpdateBasic(List<BaseUnit> enemies);
+        protected abstract void UpdateDefensive(BaseUnit enemy);
+        protected abstract void UpdateBasic(BaseUnit enemy);
 
         public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
@@ -136,10 +136,10 @@ namespace MassBattle.Logic.Units
                 switch (ArmyData.ArmySetup.StrategyType)
                 {
                     case StrategyType.Defensive:
-                        UpdateDefensive(enemies);
+                        UpdateDefensive(nearestEnemy);
                         break;
                     case StrategyType.Basic:
-                        UpdateBasic(enemies);
+                        UpdateBasic(nearestEnemy);
                         break;
                 }
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using MassBattle.Logic.Utilities;
-using MassBattle.Logic.Weapons;
+﻿using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -16,15 +14,15 @@ namespace MassBattle.Logic.Units
             spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
         }
 
-        protected override void UpdateDefensive(List<BaseUnit> enemies)
+        protected override void UpdateDefensive(BaseUnit enemy)
         {
-            float distToNearest = PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
-
-            if (nearestEnemy != null)
+            if (enemy != null)
             {
-                if (distToNearest < _attackRange)
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+
+                if (distanceToEnemy < _attackRange)
                 {
-                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                    Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                     toNearest.Scale(new Vector3(1, 0, 1));
 
                     Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
@@ -32,20 +30,18 @@ namespace MassBattle.Logic.Units
                 }
                 else
                 {
-                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                    Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                     toNearest.Scale(new Vector3(1, 0, 1));
                     Move(toNearest.normalized);
                 }
             }
         }
 
-        protected override void UpdateBasic(List<BaseUnit> enemies)
+        protected override void UpdateBasic(BaseUnit enemy)
         {
-            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
-
-            if (nearestEnemy != null)
+            if (enemy != null)
             {
-                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                 toNearest.Scale(new Vector3(1, 0, 1));
                 Move(toNearest.normalized);
             }

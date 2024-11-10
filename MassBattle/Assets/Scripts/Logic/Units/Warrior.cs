@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using MassBattle.Logic.Utilities;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
@@ -11,30 +9,26 @@ namespace MassBattle.Logic.Units
             enemy.Hit(gameObject);
         }
 
-        protected override void UpdateDefensive(List<BaseUnit> enemies)
+        protected override void UpdateDefensive(BaseUnit enemy)
         {
-            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestObject);
-
-            if (nearestObject != null)
+            if (enemy != null)
             {
                 if (_timeSinceLastAttack >= _maxAttackCooldown)
                 {
-                    Move((nearestObject.transform.position - transform.position).normalized);
+                    Move((enemy.transform.position - transform.position).normalized);
                 }
                 else
                 {
-                    Move((nearestObject.transform.position - transform.position).normalized * -1);
+                    Move((enemy.transform.position - transform.position).normalized * -1);
                 }
             }
         }
 
-        protected override void UpdateBasic(List<BaseUnit> enemies)
+        protected override void UpdateBasic(BaseUnit enemy)
         {
-            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
-
-            if (nearestEnemy != null)
+            if (enemy != null)
             {
-                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
+                Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                 toNearest.Scale(new Vector3(1, 0, 1));
                 Move(toNearest.normalized);
             }
