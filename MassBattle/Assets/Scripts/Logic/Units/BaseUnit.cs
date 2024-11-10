@@ -32,6 +32,7 @@ namespace MassBattle.Logic.Units
         private Renderer _renderer;
 
         public float AttackValue => _attackValue;
+        public float AttackRange => _attackRange;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
         private IArmyProvider _armyProvider;
@@ -39,20 +40,20 @@ namespace MassBattle.Logic.Units
         private string _armyId;
 
         private IStrategy _strategy;
-        protected float _timeSinceLastAttack;
+        private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
         public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
-            _strategy = CreateStrategy();
+            _strategy = CreateStrategy(armySetup.StrategyType);
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(armySetup.ArmyColor);
         }
 
-        protected abstract IStrategy CreateStrategy();
+        protected abstract IStrategy CreateStrategy(StrategyType strategyType);
 
         private void CalculateInitialTimeSinceLastAttack()
         {
@@ -102,20 +103,9 @@ namespace MassBattle.Logic.Units
 
         private bool CanMove(BaseUnit enemy) => enemy != null && _timeSinceLastAttack >= _postAttackDelay;
 
-        private Vector3 FindMoveDirection(BaseUnit enemy) // TODO move to strategy class
+        private Vector3 FindMoveDirection(BaseUnit enemy)
         {
-            Vector3 moveDirection = Vector3.zero;
-
-            if (ArmyData.ArmySetup.StrategyType == StrategyType.Defensive)
-            {
-                moveDirection = UpdateDefensive(enemy);
-            }
-            else if (ArmyData.ArmySetup.StrategyType == StrategyType.Basic)
-            {
-                moveDirection = UpdateBasic(enemy);
-            }
-
-            return moveDirection;
+            return _strategy.FindMoveDirection(this, enemy);
         }
 
         private Vector3 FindEvadeOtherUnitsDirection() // TODO refactor
@@ -168,22 +158,19 @@ namespace MassBattle.Logic.Units
 
         private bool CanAttack(BaseUnit enemy)
         {
-            bool isEnemyExist = enemy != null;
-            bool isEnoughTimeSinceLastAttack = false;
             bool isEnemyInAttackRange = false;
 
-            if (isEnemyExist)
+            if (enemy != null)
             {
-                isEnoughTimeSinceLastAttack = _timeSinceLastAttack >= _attackCooldown;
                 isEnemyInAttackRange = Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
             }
 
-            return isEnoughTimeSinceLastAttack && isEnemyInAttackRange;
+            return IsEnoughTimeSinceLastAttack() && isEnemyInAttackRange;
         }
 
+        public bool IsEnoughTimeSinceLastAttack() => _timeSinceLastAttack >= _attackCooldown;
+
         protected abstract void PerformAttack(BaseUnit enemy);
-        protected abstract Vector3 UpdateDefensive(BaseUnit enemy); // TODO move to strategy class
-        protected abstract Vector3 UpdateBasic(BaseUnit enemy); // TODO move to strategy class
 
         public void Hit(GameObject sourceGo) // TODO Optimize & Refactor & Convert to interface !!!
         {

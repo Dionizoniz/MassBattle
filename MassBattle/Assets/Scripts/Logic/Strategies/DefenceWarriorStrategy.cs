@@ -5,9 +5,22 @@ namespace MassBattle.Logic.Strategies
 {
     public class DefenceWarriorStrategy : BaseWarriorStrategy
     {
-        public override Vector3 FindMoveDirection(BaseUnit enemy)
+        public override Vector3 FindMoveDirection(BaseUnit owner, BaseUnit enemy)
         {
-            return Vector3.zero;
+            Vector3 ownerPosition = owner.transform.position;
+            Vector3 enemyPosition = enemy.transform.position;
+            Vector3 moveDirection;
+
+            if (owner.IsEnoughTimeSinceLastAttack())
+            {
+                moveDirection = (enemyPosition - ownerPosition).normalized;
+            }
+            else
+            {
+                moveDirection = (enemyPosition - ownerPosition).normalized * -1;
+            }
+
+            return moveDirection;
         }
     }
 }
