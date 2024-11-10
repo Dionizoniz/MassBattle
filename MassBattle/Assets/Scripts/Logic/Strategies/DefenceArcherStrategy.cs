@@ -5,28 +5,21 @@ namespace MassBattle.Logic.Strategies
 {
     public class DefenceArcherStrategy : BaseStrategy
     {
-        public override Vector3 FindMoveDirection(BaseUnit owner, BaseUnit enemy)
+        public DefenceArcherStrategy(BaseUnit owner) : base(owner)
+        { }
+
+        public override Vector3 FindMoveDirection(BaseUnit enemy)
         {
-            Vector3 ownerPosition = owner.transform.position;
-            Vector3 enemyPosition = enemy.transform.position;
-            Vector3 moveDirection;
+            Vector3 offsetToEnemy = enemy.transform.position - OwnerPosition;
+            Vector3 resultDirection = offsetToEnemy;
 
-            if (Vector3.Distance(ownerPosition, enemyPosition) < owner.AttackRange)
+            if (offsetToEnemy.magnitude < _owner.AttackRange)
             {
-                Vector3 toNearest = (enemyPosition - ownerPosition).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
-
-                Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
-                moveDirection = -(toNearest + flank).normalized;
-            }
-            else
-            {
-                Vector3 toNearest = (enemyPosition - ownerPosition).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
-                moveDirection = toNearest.normalized;
+                Vector3 flankOffset = Quaternion.Euler(0, 90, 0) * offsetToEnemy;
+                resultDirection = (offsetToEnemy + flankOffset) * -1f;
             }
 
-            return moveDirection;
+            return resultDirection.normalized;
         }
     }
 }

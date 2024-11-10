@@ -5,6 +5,15 @@ namespace MassBattle.Logic.Strategies
 {
     public abstract class BaseStrategy : IStrategy
     {
-        public abstract Vector3 FindMoveDirection(BaseUnit owner, BaseUnit enemy);
+        protected readonly BaseUnit _owner;
+
+        protected Vector3 OwnerPosition => _owner.transform.position;
+
+        protected BaseStrategy(BaseUnit owner)
+        {
+            _owner = owner;
+        }
+
+        public abstract Vector3 FindMoveDirection(BaseUnit enemy);
     }
 }

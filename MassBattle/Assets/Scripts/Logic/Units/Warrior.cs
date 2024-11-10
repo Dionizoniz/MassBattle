@@ -10,15 +10,15 @@ namespace MassBattle.Logic.Units
         {
             return strategyType switch
             {
-                    StrategyType.Basic => new SimpleStrategy(),
-                    StrategyType.Defensive => new DefenceWarriorStrategy(),
+                    StrategyType.Basic => new SimpleStrategy(this),
+                    StrategyType.Defensive => new DefenceWarriorStrategy(this),
                     _ => FindDefaultStrategy()
             };
 
             IStrategy FindDefaultStrategy()
             {
                 Debug.LogError("Create default strategy instead for missing StrategyType in Warrior.cs");
-                return new SimpleStrategy();
+                return new SimpleStrategy(this);
             }
         }
 

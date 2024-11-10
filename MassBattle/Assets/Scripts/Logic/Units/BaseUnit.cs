@@ -102,11 +102,7 @@ namespace MassBattle.Logic.Units
         }
 
         private bool CanMove(BaseUnit enemy) => enemy != null && _timeSinceLastAttack >= _postAttackDelay;
-
-        private Vector3 FindMoveDirection(BaseUnit enemy)
-        {
-            return _strategy.FindMoveDirection(this, enemy);
-        }
+        private Vector3 FindMoveDirection(BaseUnit enemy) => _strategy.FindMoveDirection(enemy);
 
         private Vector3 FindEvadeOtherUnitsDirection() // TODO refactor
         {
