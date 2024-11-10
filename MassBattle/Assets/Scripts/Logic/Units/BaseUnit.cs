@@ -143,7 +143,7 @@ namespace MassBattle.Logic.Units
             Vector3 position = transform.position;
 
             float movementDistance = (position - _lastPosition).magnitude;
-            float speed = movementDistance / _movementSpeed * Time.deltaTime;
+            float speed = movementDistance / (_movementSpeed * Time.deltaTime);
             _animator.SetFloat(MOVEMENT_SPEED, speed);
 
             _lastPosition = position;
