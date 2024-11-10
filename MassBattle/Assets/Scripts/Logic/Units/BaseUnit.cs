@@ -21,6 +21,8 @@ namespace MassBattle.Logic.Units
         protected float _defense;
         [SerializeField]
         protected float _movementSpeed = 2f;
+        [SerializeField]
+        private float _radiusToAvoidUnits = 2f;
 
         [Space, SerializeField]
         protected float _attackValue = 20f;
@@ -118,10 +120,10 @@ namespace MassBattle.Logic.Units
             {
                 float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
 
-                if (dist < 2f)
+                if (dist < _radiusToAvoidUnits)
                 {
                     Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                    evadeOffset -= toNearest * (2.0f - dist);
+                    evadeOffset -= toNearest * (_radiusToAvoidUnits - dist);
                 }
             }
 
