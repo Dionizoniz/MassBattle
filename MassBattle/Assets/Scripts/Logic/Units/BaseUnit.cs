@@ -2,7 +2,6 @@
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Strategies;
-using MassBattle.Logic.Units.Weapons;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
 
