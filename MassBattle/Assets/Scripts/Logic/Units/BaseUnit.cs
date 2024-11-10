@@ -15,7 +15,7 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         protected float _defense;
         [SerializeField]
-        protected float _speed = 2f;
+        protected float _movementSpeed = 2f;
 
         [Space, SerializeField]
         protected float _attackValue = 20f;
@@ -94,7 +94,7 @@ namespace MassBattle.Logic.Units
                 Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
 
                 Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
-                float speed = _speed * Time.deltaTime;
+                float speed = _movementSpeed * Time.deltaTime;
                 transform.position += averageMoveDirection * speed;
             }
 
@@ -136,7 +136,7 @@ namespace MassBattle.Logic.Units
         private void UpdateAnimatorMovementSpeed() // TODO optimize "MovementSpeed"
         {
             Vector3 position = transform.position;
-            float speed = _speed * Time.deltaTime;
+            float speed = _movementSpeed * Time.deltaTime;
             _animator.SetFloat("MovementSpeed", (position - _lastPosition).magnitude / speed);
             _lastPosition = position;
         }
