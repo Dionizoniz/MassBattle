@@ -9,18 +9,18 @@ namespace MassBattle.Logic.Weapons
     {
         public float speed;
 
-        [NonSerialized]
-        public Vector3 target;
+        
         [NonSerialized]
         public float attack;
 
-        public ArmyData armyData;
+        private ArmyData _armyData;
+        private Vector3 _target;
 
         public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
         {
-            target = targetUnit.transform.position;
+            _target = targetUnit.transform.position;
             attack = sourceUnit.AttackValue;
-            armyData = sourceUnit.ArmyData;
+            _armyData = sourceUnit.ArmyData;
             transform.position = sourceUnit.transform.position;
 
             GetComponent<Renderer>().material.color = color;
@@ -28,11 +28,11 @@ namespace MassBattle.Logic.Weapons
 
         public void Update()
         {
-            Vector3 direction = (target - transform.position).normalized;
+            Vector3 direction = (_target - transform.position).normalized;
             transform.position += direction * speed;
             transform.forward = direction;
 
-            foreach (var unit in armyData.enemyArmyData.FindAllUnits())
+            foreach (var unit in _armyData.enemyArmyData.FindAllUnits())
             {
                 float dist = Vector3.Distance(unit.transform.position, transform.position);
 
@@ -44,7 +44,7 @@ namespace MassBattle.Logic.Weapons
                 }
             }
 
-            if (Vector3.Distance(transform.position, target) < speed)
+            if (Vector3.Distance(transform.position, _target) < speed)
             {
                 Destroy(gameObject);
             }
