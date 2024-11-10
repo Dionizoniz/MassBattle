@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -30,11 +31,13 @@ namespace MassBattle.Logic.Utilities
             return result;
         }
 
-        public static float FindNearestUnit(BaseUnit source, List<BaseUnit> targets, out BaseUnit nearestUnits)
+        public static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData)
         {
-            float minDistance = float.MaxValue;
+            List<BaseUnit> targets = targetArmyData.FindAllUnits();
             Vector3 sourcePosition = source.transform.position;
-            nearestUnits = null;
+
+            BaseUnit nearestUnits = null;
+            float minDistance = float.MaxValue;
 
             for (var index = 0; index < targets.Count; index++)
             {
@@ -48,7 +51,7 @@ namespace MassBattle.Logic.Utilities
                 }
             }
 
-            return minDistance;
+            return nearestUnits;
         }
     }
 }

@@ -9,29 +9,37 @@ namespace MassBattle.Logic.Units
             enemy.Hit(gameObject);
         }
 
-        protected override void UpdateDefensive(BaseUnit enemy)
+        protected override Vector3 UpdateDefensive(BaseUnit enemy)
         {
+            Vector3 moveDirection = Vector3.zero;
+
             if (enemy != null)
             {
                 if (_timeSinceLastAttack >= _maxAttackCooldown)
                 {
-                    Move((enemy.transform.position - transform.position).normalized);
+                    moveDirection = (enemy.transform.position - transform.position).normalized;
                 }
                 else
                 {
-                    Move((enemy.transform.position - transform.position).normalized * -1);
+                    moveDirection = (enemy.transform.position - transform.position).normalized * -1;
                 }
             }
+
+            return moveDirection;
         }
 
-        protected override void UpdateBasic(BaseUnit enemy)
+        protected override Vector3 UpdateBasic(BaseUnit enemy)
         {
+            Vector3 moveDirection = Vector3.zero;
+
             if (enemy != null)
             {
                 Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                 toNearest.Scale(new Vector3(1, 0, 1));
-                Move(toNearest.normalized);
+                moveDirection = toNearest.normalized;
             }
+
+            return moveDirection;
         }
     }
 }

@@ -35,7 +35,6 @@ namespace MassBattle.Logic.Units
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
         private IArmyProvider _armyProvider;
-
         private ArmyData _cachedArmyData;
         private string _armyId;
 
@@ -67,34 +66,17 @@ namespace MassBattle.Logic.Units
         {
             if (_health > 0)
             {
-                List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
-
-                // TODO NEW UPDATE APPROACH
-                // update cooldown
                 UpdateCooldown();
 
-                // calculate new target - from strategy (nearest) - all in first frame after that X per frame
-                PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
+                BaseUnit nearestEnemy = FindNearestEnemy();
+                Vector3 moveDirection = FindMoveDirection(nearestEnemy);
+                Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
 
-                // calculate new position - from strategy (base/defence)
-
-                // calculate evade offset
-                EvadeOtherUnits();
-
-                // apply position + direction * speed * deltaTime
+                Vector3 finalMoveDirection = (moveDirection + evadeDirection) / 2;
+                Move(finalMoveDirection);
 
                 // try attack if in range
                 TryAttack(nearestEnemy);
-
-                switch (ArmyData.ArmySetup.StrategyType)
-                {
-                    case StrategyType.Defensive:
-                        UpdateDefensive(nearestEnemy);
-                        break;
-                    case StrategyType.Basic:
-                        UpdateBasic(nearestEnemy);
-                        break;
-                }
 
                 var position = transform.position;
                 _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
@@ -107,16 +89,39 @@ namespace MassBattle.Logic.Units
             _timeSinceLastAttack += Time.deltaTime;
         }
 
-        private void EvadeOtherUnits() // TODO refactor
+        private BaseUnit FindNearestEnemy()
+        {
+            return PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
+        }
+
+        private Vector3 FindMoveDirection(BaseUnit enemy)
+        {
+            Vector3 moveDirection = Vector3.zero;
+
+            if (ArmyData.ArmySetup.StrategyType == StrategyType.Defensive)
+            {
+                moveDirection = UpdateDefensive(enemy);
+            }
+            else if (ArmyData.ArmySetup.StrategyType == StrategyType.Basic)
+            {
+                moveDirection = UpdateBasic(enemy);
+            }
+
+            return moveDirection;
+        }
+
+        private Vector3 FindEvadeOtherUnitsDirection() // TODO refactor
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
             Vector3 center = PositionFinder.FindCenterOf(allUnits);
             float centerDist = Vector3.Distance(gameObject.transform.position, center);
 
+            Vector3 evadeOffset = Vector3.zero;
+
             if (centerDist > 80.0f)
             {
                 Vector3 toNearest = (center - transform.position).normalized;
-                transform.position -= toNearest * (80.0f - centerDist);
+                evadeOffset -= toNearest * (80.0f - centerDist);
             }
             else
             {
@@ -127,13 +132,15 @@ namespace MassBattle.Logic.Units
                     if (dist < 2f)
                     {
                         Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                        transform.position -= toNearest * (2.0f - dist);
+                        evadeOffset -= toNearest * (2.0f - dist);
                     }
                 }
             }
+
+            return evadeOffset.normalized;
         }
 
-        protected void Move(Vector3 delta)
+        private void Move(Vector3 delta)
         {
             if (_timeSinceLastAttack >= _postAttackDelay)
             {
@@ -159,8 +166,8 @@ namespace MassBattle.Logic.Units
         }
 
         protected abstract void PerformAttack(BaseUnit enemy);
-        protected abstract void UpdateDefensive(BaseUnit enemy); // TODO move to strategy
-        protected abstract void UpdateBasic(BaseUnit enemy); // TODO move to strategy
+        protected abstract Vector3 UpdateDefensive(BaseUnit enemy); // TODO move to strategy
+        protected abstract Vector3 UpdateBasic(BaseUnit enemy); // TODO move to strategy
 
         public void Hit(GameObject sourceGo) // TODO Refactor & Convert to interface !!!
         {

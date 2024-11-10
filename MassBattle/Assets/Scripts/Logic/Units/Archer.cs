@@ -14,8 +14,10 @@ namespace MassBattle.Logic.Units
             spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
         }
 
-        protected override void UpdateDefensive(BaseUnit enemy)
+        protected override Vector3 UpdateDefensive(BaseUnit enemy)
         {
+            Vector3 moveDirection = Vector3.zero;
+
             if (enemy != null)
             {
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
@@ -26,25 +28,31 @@ namespace MassBattle.Logic.Units
                     toNearest.Scale(new Vector3(1, 0, 1));
 
                     Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
-                    Move(-(toNearest + flank).normalized);
+                    moveDirection = -(toNearest + flank).normalized;
                 }
                 else
                 {
                     Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                     toNearest.Scale(new Vector3(1, 0, 1));
-                    Move(toNearest.normalized);
+                    moveDirection = toNearest.normalized;
                 }
             }
+
+            return moveDirection;
         }
 
-        protected override void UpdateBasic(BaseUnit enemy)
+        protected override Vector3 UpdateBasic(BaseUnit enemy)
         {
+            Vector3 moveDirection = Vector3.zero;
+
             if (enemy != null)
             {
                 Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
                 toNearest.Scale(new Vector3(1, 0, 1));
-                Move(toNearest.normalized);
+                moveDirection = toNearest.normalized;
             }
+
+            return moveDirection;
         }
     }
 }
