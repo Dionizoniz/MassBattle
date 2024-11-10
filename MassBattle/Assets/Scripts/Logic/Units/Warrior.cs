@@ -11,18 +11,15 @@ namespace MassBattle.Logic.Units
 
         protected override Vector3 UpdateDefensive(BaseUnit enemy)
         {
-            Vector3 moveDirection = Vector3.zero;
+            Vector3 moveDirection;
 
-            if (enemy != null)
+            if (_timeSinceLastAttack >= _attackCooldown)
             {
-                if (_timeSinceLastAttack >= _attackCooldown)
-                {
-                    moveDirection = (enemy.transform.position - transform.position).normalized;
-                }
-                else
-                {
-                    moveDirection = (enemy.transform.position - transform.position).normalized * -1;
-                }
+                moveDirection = (enemy.transform.position - transform.position).normalized;
+            }
+            else
+            {
+                moveDirection = (enemy.transform.position - transform.position).normalized * -1;
             }
 
             return moveDirection;
@@ -30,14 +27,9 @@ namespace MassBattle.Logic.Units
 
         protected override Vector3 UpdateBasic(BaseUnit enemy)
         {
-            Vector3 moveDirection = Vector3.zero;
-
-            if (enemy != null)
-            {
-                Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
-                moveDirection = toNearest.normalized;
-            }
+            Vector3 toNearest = (enemy.transform.position - transform.position).normalized;
+            toNearest.Scale(new Vector3(1, 0, 1));
+            Vector3 moveDirection = toNearest.normalized;
 
             return moveDirection;
         }

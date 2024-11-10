@@ -54,7 +54,7 @@ namespace MassBattle.Logic.Units
             _timeSinceLastAttack = _postAttackDelay;
         }
 
-        private void UpdateColor(Color color)
+        private void UpdateColor(Color color) // TODO optimize "_Color"
         {
             MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
@@ -82,7 +82,7 @@ namespace MassBattle.Logic.Units
 
         private void TryMove(BaseUnit enemy)
         {
-            if (CanMove())
+            if (CanMove(enemy))
             {
                 Vector3 moveDirection = FindMoveDirection(enemy);
                 Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
@@ -95,9 +95,9 @@ namespace MassBattle.Logic.Units
             UpdateAnimatorMovementSpeed();
         }
 
-        private bool CanMove() => _timeSinceLastAttack >= _postAttackDelay;
+        private bool CanMove(BaseUnit enemy) => enemy != null && _timeSinceLastAttack >= _postAttackDelay;
 
-        private Vector3 FindMoveDirection(BaseUnit enemy)
+        private Vector3 FindMoveDirection(BaseUnit enemy) // TODO move to strategy class
         {
             Vector3 moveDirection = Vector3.zero;
 
@@ -142,7 +142,7 @@ namespace MassBattle.Logic.Units
             return evadeOffset.normalized;
         }
 
-        private void UpdateAnimatorMovementSpeed()
+        private void UpdateAnimatorMovementSpeed() // TODO optimize "MovementSpeed"
         {
             Vector3 position = transform.position;
             float speed = _speed * Time.deltaTime;
@@ -150,9 +150,9 @@ namespace MassBattle.Logic.Units
             _lastPosition = position;
         }
 
-        private void TryAttack(BaseUnit enemy)
+        private void TryAttack(BaseUnit enemy) // TODO optimize "Attack"
         {
-            if (enemy != null && CanAttack(enemy))
+            if (CanAttack(enemy))
             {
                 _timeSinceLastAttack = 0f;
                 _animator.SetTrigger("Attack");
@@ -163,15 +163,24 @@ namespace MassBattle.Logic.Units
 
         private bool CanAttack(BaseUnit enemy)
         {
-            return _timeSinceLastAttack >= _attackCooldown &&
-                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+            bool isEnemyExist = enemy != null;
+            bool isEnoughTimeSinceLastAttack = false;
+            bool isEnemyInAttackRange = false;
+
+            if (isEnemyExist)
+            {
+                isEnoughTimeSinceLastAttack = _timeSinceLastAttack >= _attackCooldown;
+                isEnemyInAttackRange = Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+            }
+
+            return isEnoughTimeSinceLastAttack && isEnemyInAttackRange;
         }
 
         protected abstract void PerformAttack(BaseUnit enemy);
-        protected abstract Vector3 UpdateDefensive(BaseUnit enemy); // TODO move to strategy
-        protected abstract Vector3 UpdateBasic(BaseUnit enemy); // TODO move to strategy
+        protected abstract Vector3 UpdateDefensive(BaseUnit enemy); // TODO move to strategy class
+        protected abstract Vector3 UpdateBasic(BaseUnit enemy); // TODO move to strategy class
 
-        public void Hit(GameObject sourceGo) // TODO Refactor & Convert to interface !!!
+        public void Hit(GameObject sourceGo) // TODO Optimize & Refactor & Convert to interface !!!
         {
             BaseUnit source = sourceGo.GetComponent<BaseUnit>();
             float sourceAttack = 0;
