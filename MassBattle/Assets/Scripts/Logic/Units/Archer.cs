@@ -1,4 +1,7 @@
-﻿using MassBattle.Logic.Weapons;
+﻿using System;
+using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
+using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -7,6 +10,22 @@ namespace MassBattle.Logic.Units
     {
         [Space, SerializeField]
         private Arrow _arrowPrefab;
+
+        protected override IStrategy CreateStrategy()
+        {
+            return ArmyData.ArmySetup.StrategyType switch
+            {
+                    StrategyType.Basic => new SimpleArcherStrategy(),
+                    StrategyType.Defensive => new DefenceArcherStrategy(),
+                    _ => FindDefaultStrategy()
+            };
+
+            IStrategy FindDefaultStrategy()
+            {
+                Debug.LogError("Create default strategy instead for missing StrategyType in Archer.cs");
+                return new SimpleArcherStrategy();
+            }
+        }
 
         protected override void PerformAttack(BaseUnit enemy)
         {

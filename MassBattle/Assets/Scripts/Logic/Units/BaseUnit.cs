@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
 using MassBattle.Logic.Weapons;
 using UnityEngine;
@@ -37,6 +38,7 @@ namespace MassBattle.Logic.Units
         private ArmyData _cachedArmyData;
         private string _armyId;
 
+        private IStrategy _strategy;
         protected float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
@@ -44,10 +46,13 @@ namespace MassBattle.Logic.Units
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
+            _strategy = CreateStrategy();
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(armySetup.ArmyColor);
         }
+
+        protected abstract IStrategy CreateStrategy();
 
         private void CalculateInitialTimeSinceLastAttack()
         {

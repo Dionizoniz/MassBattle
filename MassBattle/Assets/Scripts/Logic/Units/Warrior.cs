@@ -1,9 +1,27 @@
-﻿using UnityEngine;
+﻿using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
+using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit
     {
+        protected override IStrategy CreateStrategy()
+        {
+            return ArmyData.ArmySetup.StrategyType switch
+            {
+                    StrategyType.Basic => new SimpleWarriorStrategy(),
+                    StrategyType.Defensive => new DefenceWarriorStrategy(),
+                    _ => FindDefaultStrategy()
+            };
+
+            IStrategy FindDefaultStrategy()
+            {
+                Debug.LogError("Create default strategy instead for missing StrategyType in Warrior.cs");
+                return new SimpleWarriorStrategy();
+            }
+        }
+
         protected override void PerformAttack(BaseUnit enemy)
         {
             enemy.Hit(gameObject);
