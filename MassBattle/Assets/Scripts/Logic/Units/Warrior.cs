@@ -6,21 +6,9 @@ namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit
     {
-        public override void Attack(BaseUnit enemy)
+        protected override void PerformAttack(BaseUnit enemy)
         {
-            if (CanAttack(enemy))
-            {
-                _timeSinceLastAttack = 0f;
-                _animator.SetTrigger("Attack");
-
-                enemy.Hit(gameObject);
-            }
-        }
-
-        private bool CanAttack(BaseUnit enemy)
-        {
-            return _timeSinceLastAttack >= _maxAttackCooldown &&
-                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+            enemy.Hit(gameObject);
         }
 
         public void OnDeathAnimFinished()
@@ -57,8 +45,6 @@ namespace MassBattle.Logic.Units
                 {
                     Move((nearestObject.transform.position - transform.position).normalized * -1);
                 }
-
-                Attack(nearestObject);
             }
         }
 
@@ -71,8 +57,6 @@ namespace MassBattle.Logic.Units
                 Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
                 toNearest.Scale(new Vector3(1, 0, 1));
                 Move(toNearest.normalized);
-
-                Attack(nearestEnemy);
             }
         }
     }

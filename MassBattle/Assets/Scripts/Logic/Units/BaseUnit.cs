@@ -42,8 +42,6 @@ namespace MassBattle.Logic.Units
         protected float _timeSinceLastAttack;
         private Vector3 _lastUnitPosition;
 
-        public abstract void Attack(BaseUnit enemy);
-
         protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
         protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
 
@@ -113,20 +111,23 @@ namespace MassBattle.Logic.Units
         {
             if (_health > 0)
             {
+                List<BaseUnit> allies = ArmyData.FindAllUnits();
+                List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
+
                 // TODO NEW UPDATE APPROACH
                 // update cooldown
                 UpdateCooldown();
 
                 // calculate new target - from strategy (nearest) - all in first frame after that X per frame
+                PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
+
                 // calculate new position - from strategy (base/defence)
                 // calculate evade offset
                 EvadeOtherUnits();
 
                 // apply position + direction * speed * deltaTime
                 // try attack if in range
-
-                List<BaseUnit> allies = ArmyData.FindAllUnits();
-                List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
+                TryAttack(nearestEnemy);
 
                 switch (ArmyData.ArmySetup.StrategyType)
                 {
@@ -174,5 +175,24 @@ namespace MassBattle.Logic.Units
                 }
             }
         }
+
+        private void TryAttack(BaseUnit enemy)
+        {
+            if (enemy != null && CanAttack(enemy))
+            {
+                _timeSinceLastAttack = 0f;
+                _animator.SetTrigger("Attack");
+
+                PerformAttack(enemy);
+            }
+        }
+
+        private bool CanAttack(BaseUnit enemy)
+        {
+            return _timeSinceLastAttack >= _maxAttackCooldown &&
+                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+        }
+
+        protected abstract void PerformAttack(BaseUnit enemy);
     }
 }
