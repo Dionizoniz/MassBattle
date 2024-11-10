@@ -9,6 +9,12 @@ namespace MassBattle.Logic.Units
 {
     public abstract class BaseUnit : MonoBehaviour
     {
+        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int ATTACK = Animator.StringToHash("Attack");
+        private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
+        private static readonly int HIT = Animator.StringToHash("Hit");
+        private static readonly int DEATH = Animator.StringToHash("Death");
+
         [SerializeField]
         protected float _health = 50f;
         [SerializeField]
@@ -59,10 +65,10 @@ namespace MassBattle.Logic.Units
             _timeSinceLastAttack = _postAttackDelay;
         }
 
-        private void UpdateColor(Color color) // TODO optimize "_Color"
+        private void UpdateColor(Color color)
         {
             MaterialPropertyBlock propertyBlock = new();
-            propertyBlock.SetColor("_Color", color);
+            propertyBlock.SetColor(COLOR, color);
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
@@ -132,20 +138,23 @@ namespace MassBattle.Logic.Units
             return evadeOffset.normalized;
         }
 
-        private void UpdateAnimatorMovementSpeed() // TODO optimize "MovementSpeed"
+        private void UpdateAnimatorMovementSpeed()
         {
             Vector3 position = transform.position;
-            float speed = _movementSpeed * Time.deltaTime;
-            _animator.SetFloat("MovementSpeed", (position - _lastPosition).magnitude / speed);
+
+            float movementDistance = (position - _lastPosition).magnitude;
+            float speed = movementDistance / _movementSpeed * Time.deltaTime;
+            _animator.SetFloat(MOVEMENT_SPEED, speed);
+
             _lastPosition = position;
         }
 
-        private void TryAttack(BaseUnit enemy) // TODO optimize "Attack"
+        private void TryAttack(BaseUnit enemy)
         {
             if (CanAttack(enemy))
             {
                 _timeSinceLastAttack = 0f;
-                _animator.SetTrigger("Attack");
+                _animator.SetTrigger(ATTACK);
 
                 PerformAttack(enemy);
             }
@@ -167,21 +176,31 @@ namespace MassBattle.Logic.Units
 
         protected abstract void PerformAttack(BaseUnit enemy);
 
-        public void TakeDamage(IAttack attacker) // TODO Optimize & Refactor & Convert to interface !!!
+        public void TakeDamage(IAttack attacker)
         {
-            _health -= Mathf.Max(attacker.AttackValue - _defense, 0);
+            int animationTriggerToSet = HIT;
+            _health = CalculateNewHealth(attacker);
 
-            if (IsUnitAlive())
+            if (IsUnitAlive() == false)
             {
-                _animator.SetTrigger("Hit");
-            }
-            else
-            {
-                transform.forward = attacker.AttackPosition - transform.position;
+                animationTriggerToSet = DEATH;
+
+                TurnUnitTo(attacker);
                 ArmyData.RemoveUnit(this);
-
-                _animator.SetTrigger("Death");
             }
+
+            _animator.SetTrigger(animationTriggerToSet);
+        }
+
+        private float CalculateNewHealth(IAttack attacker)
+        {
+            float damage = attacker.AttackValue - _defense;
+            return _health - Mathf.Max(damage, 0);
+        }
+
+        private void TurnUnitTo(IAttack attacker)
+        {
+            transform.forward = attacker.AttackPosition - transform.position;
         }
 
         public void OnDeathAnimFinished() // TODO rename
