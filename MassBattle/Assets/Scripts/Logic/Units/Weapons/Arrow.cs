@@ -1,20 +1,21 @@
 using System;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Units;
 using UnityEngine;
 
-namespace MassBattle.Logic.Weapons
+namespace MassBattle.Logic.Units.Weapons
 {
-    public class Arrow : MonoBehaviour // TODO refactor
+    public class Arrow : MonoBehaviour, IAttack // TODO refactor
     {
         public float speed;
 
-        
         [NonSerialized]
         public float attack;
 
         private ArmyData _armyData;
         private Vector3 _target;
+
+        public float AttackValue => attack;
+        public Vector3 AttackPosition => transform.position;
 
         public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
         {
@@ -38,7 +39,7 @@ namespace MassBattle.Logic.Weapons
 
                 if (dist < speed)
                 {
-                    unit.Hit(gameObject);
+                    unit.TakeDamage(this);
                     Destroy(gameObject);
                     return;
                 }

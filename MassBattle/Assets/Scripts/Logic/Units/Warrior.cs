@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public class Warrior : BaseUnit
+    public class Warrior : BaseUnit, IAttack
     {
+        public Vector3 AttackPosition => transform.position;
+
         protected override IStrategy CreateStrategy(StrategyType strategyType)
         {
             return strategyType switch
@@ -24,7 +26,7 @@ namespace MassBattle.Logic.Units
 
         protected override void PerformAttack(BaseUnit enemy)
         {
-            enemy.Hit(gameObject);
+            enemy.TakeDamage(this);
         }
     }
 }

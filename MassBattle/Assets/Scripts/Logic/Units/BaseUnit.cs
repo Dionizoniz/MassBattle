@@ -2,8 +2,8 @@
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Strategies;
+using MassBattle.Logic.Units.Weapons;
 using MassBattle.Logic.Utilities;
-using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -168,42 +168,20 @@ namespace MassBattle.Logic.Units
 
         protected abstract void PerformAttack(BaseUnit enemy);
 
-        public void Hit(GameObject sourceGo) // TODO Optimize & Refactor & Convert to interface !!!
+        public void TakeDamage(IAttack attacker) // TODO Optimize & Refactor & Convert to interface !!!
         {
-            BaseUnit source = sourceGo.GetComponent<BaseUnit>();
-            float sourceAttack = 0;
+            _health -= Mathf.Max(attacker.AttackValue - _defense, 0);
 
-            if (source != null)
-            {
-                sourceAttack = source.AttackValue;
-            }
-            else
-            {
-                Arrow arrow = sourceGo.GetComponent<Arrow>();
-                sourceAttack = arrow.attack;
-            }
-
-            _health -= Mathf.Max(sourceAttack - _defense, 0);
-
-            if (_health < 0)
-            {
-                transform.forward = sourceGo.transform.position - transform.position;
-
-                switch (this) // TODO convert to send to provider instead of manually removing elements
-                {
-                    case Warrior:
-                        ArmyData.RemoveWarrior(this as Warrior);
-                        break;
-                    case Archer:
-                        ArmyData.RemoveArcher(this as Archer);
-                        break;
-                }
-
-                _animator.SetTrigger("Death");
-            }
-            else
+            if (IsUnitAlive())
             {
                 _animator.SetTrigger("Hit");
+            }
+            else
+            {
+                transform.forward = attacker.AttackPosition - transform.position;
+                ArmyData.RemoveUnit(this);
+
+                _animator.SetTrigger("Death");
             }
         }
 
