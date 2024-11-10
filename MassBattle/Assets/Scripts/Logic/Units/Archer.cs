@@ -16,7 +16,7 @@ namespace MassBattle.Logic.Units
             spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
         }
 
-        protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
+        protected override void UpdateDefensive(List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
             float distToEnemyX = Mathf.Abs(enemyCenter.x - transform.position.x);
@@ -54,7 +54,7 @@ namespace MassBattle.Logic.Units
             }
         }
 
-        protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
+        protected override void UpdateBasic(List<BaseUnit> enemies)
         {
             PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 

@@ -11,7 +11,7 @@ namespace MassBattle.Logic.Units
             enemy.Hit(gameObject);
         }
 
-        protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
+        protected override void UpdateDefensive(List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
 
@@ -42,7 +42,7 @@ namespace MassBattle.Logic.Units
             }
         }
 
-        protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
+        protected override void UpdateBasic(List<BaseUnit> enemies)
         {
             PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 

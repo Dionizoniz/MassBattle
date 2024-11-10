@@ -42,8 +42,8 @@ namespace MassBattle.Logic.Units
         protected float _timeSinceLastAttack;
         private Vector3 _lastUnitPosition;
 
-        protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
-        protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
+        protected abstract void UpdateDefensive(List<BaseUnit> enemies);
+        protected abstract void UpdateBasic(List<BaseUnit> enemies);
 
         public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
@@ -116,7 +116,6 @@ namespace MassBattle.Logic.Units
         {
             if (_health > 0)
             {
-                List<BaseUnit> allies = ArmyData.FindAllUnits();
                 List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
 
                 // TODO NEW UPDATE APPROACH
@@ -137,10 +136,10 @@ namespace MassBattle.Logic.Units
                 switch (ArmyData.ArmySetup.StrategyType)
                 {
                     case StrategyType.Defensive:
-                        UpdateDefensive(allies, enemies);
+                        UpdateDefensive(enemies);
                         break;
                     case StrategyType.Basic:
-                        UpdateBasic(allies, enemies);
+                        UpdateBasic(enemies);
                         break;
                 }
 
