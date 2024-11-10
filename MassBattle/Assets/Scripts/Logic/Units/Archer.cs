@@ -18,21 +18,6 @@ namespace MassBattle.Logic.Units
 
         protected override void UpdateDefensive(List<BaseUnit> enemies)
         {
-            Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
-            float distToEnemyX = Mathf.Abs(enemyCenter.x - transform.position.x);
-
-            if (distToEnemyX > _attackRange)
-            {
-                if (enemyCenter.x < transform.position.x)
-                {
-                    Move(Vector3.left);
-                }
-                else if (enemyCenter.x > transform.position.x)
-                {
-                    Move(Vector3.right);
-                }
-            }
-
             float distToNearest = PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
             if (nearestEnemy != null)
