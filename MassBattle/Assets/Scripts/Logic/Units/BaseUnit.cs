@@ -12,16 +12,16 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         protected float _health = 50f;
         [SerializeField]
-        protected float _speed = 0.1f;
-        [SerializeField]
         protected float _defense;
+        [SerializeField]
+        protected float _speed = 2f;
 
         [Space, SerializeField]
-        protected float _attack = 20f;
+        protected float _attackValue = 20f;
         [SerializeField]
         protected float _attackRange = 2.5f;
         [SerializeField]
-        protected float _maxAttackCooldown = 1f;
+        protected float _attackCooldown = 1f;
         [SerializeField]
         protected float _postAttackDelay;
 
@@ -30,7 +30,7 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         private Renderer _renderer;
 
-        public float AttackValue => _attack;
+        public float AttackValue => _attackValue;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
         private IArmyProvider _armyProvider;
@@ -38,7 +38,7 @@ namespace MassBattle.Logic.Units
         private string _armyId;
 
         protected float _timeSinceLastAttack;
-        private Vector3 _lastUnitPosition;
+        private Vector3 _lastPosition;
 
         public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
@@ -63,39 +63,39 @@ namespace MassBattle.Logic.Units
 
         private void Update()
         {
-            if (_health > 0)
+            if (IsUnitAlive())
             {
                 BaseUnit nearestEnemy = FindNearestEnemy();
-
                 UpdateCooldown();
-                Move(nearestEnemy);
+                TryMove(nearestEnemy);
                 TryAttack(nearestEnemy);
             }
         }
 
-        private BaseUnit FindNearestEnemy()
-        {
-            return PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
-        }
+        private bool IsUnitAlive() => _health > 0;
+        private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
 
         private void UpdateCooldown()
         {
             _timeSinceLastAttack += Time.deltaTime;
         }
 
-        private void Move(BaseUnit enemy)
+        private void TryMove(BaseUnit enemy)
         {
-            if (_timeSinceLastAttack >= _postAttackDelay)
+            if (CanMove())
             {
                 Vector3 moveDirection = FindMoveDirection(enemy);
                 Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
 
                 Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
-                transform.position += averageMoveDirection * _speed; // TODO improve calculation
+                float speed = _speed * Time.deltaTime;
+                transform.position += averageMoveDirection * speed;
             }
 
             UpdateAnimatorMovementSpeed();
         }
+
+        private bool CanMove() => _timeSinceLastAttack >= _postAttackDelay;
 
         private Vector3 FindMoveDirection(BaseUnit enemy)
         {
@@ -144,9 +144,10 @@ namespace MassBattle.Logic.Units
 
         private void UpdateAnimatorMovementSpeed()
         {
-            var position = transform.position;
-            _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
-            _lastUnitPosition = position;
+            Vector3 position = transform.position;
+            float speed = _speed * Time.deltaTime;
+            _animator.SetFloat("MovementSpeed", (position - _lastPosition).magnitude / speed);
+            _lastPosition = position;
         }
 
         private void TryAttack(BaseUnit enemy)
@@ -162,7 +163,7 @@ namespace MassBattle.Logic.Units
 
         private bool CanAttack(BaseUnit enemy)
         {
-            return _timeSinceLastAttack >= _maxAttackCooldown &&
+            return _timeSinceLastAttack >= _attackCooldown &&
                    Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
         }
 
@@ -177,7 +178,7 @@ namespace MassBattle.Logic.Units
 
             if (source != null)
             {
-                sourceAttack = source._attack;
+                sourceAttack = source.AttackValue;
             }
             else
             {

@@ -15,7 +15,7 @@ namespace MassBattle.Logic.Units
 
             if (enemy != null)
             {
-                if (_timeSinceLastAttack >= _maxAttackCooldown)
+                if (_timeSinceLastAttack >= _attackCooldown)
                 {
                     moveDirection = (enemy.transform.position - transform.position).normalized;
                 }

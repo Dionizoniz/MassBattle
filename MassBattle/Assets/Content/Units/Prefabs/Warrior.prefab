@@ -155,7 +155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852343380689631797, guid: f5f2193116d55a644bb75e6002deb177, type: 3}
       propertyPath: m_Name
-      value: WarriorNew
+      value: Warrior
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 50
-  _speed: 0.1
+  _speed: 2
   _defense: 5
   _attack: 20
   _attackRange: 2.5

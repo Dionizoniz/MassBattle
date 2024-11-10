@@ -157,7 +157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852343380689631797, guid: f5f2193116d55a644bb75e6002deb177, type: 3}
       propertyPath: m_Name
-      value: ArcherNew
+      value: Archer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -198,11 +198,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 5
-  _speed: 0.1
+  _speed: 2
   _defense: 0
-  _attack: 10
+  _attackValue: 10
   _attackRange: 20
-  _maxAttackCooldown: 5
+  _attackCooldown: 5
   _postAttackDelay: 1
   _animator: {fileID: 6470549991883160123}
   _renderer: {fileID: 6052963729779936583}
