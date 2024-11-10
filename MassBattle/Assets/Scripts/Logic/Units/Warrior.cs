@@ -10,7 +10,7 @@ namespace MassBattle.Logic.Units
         {
             if (CanAttack(enemy))
             {
-                _attackCooldown = _maxAttackCooldown;
+                _timeSinceLastAttack = 0f;
                 _animator.SetTrigger("Attack");
 
                 enemy.Hit(gameObject);
@@ -19,7 +19,7 @@ namespace MassBattle.Logic.Units
 
         private bool CanAttack(BaseUnit enemy)
         {
-            return _attackCooldown <= 0 &&
+            return _timeSinceLastAttack >= _maxAttackCooldown &&
                    Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
         }
 
@@ -48,9 +48,8 @@ namespace MassBattle.Logic.Units
             PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestObject);
 
             if (nearestObject != null)
-
             {
-                if (_attackCooldown <= 0)
+                if (_timeSinceLastAttack >= _maxAttackCooldown)
                 {
                     Move((nearestObject.transform.position - transform.position).normalized);
                 }

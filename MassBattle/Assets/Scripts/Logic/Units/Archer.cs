@@ -14,7 +14,7 @@ namespace MassBattle.Logic.Units
         {
             if (CanAttack(enemy))
             {
-                _attackCooldown = _maxAttackCooldown;
+                _timeSinceLastAttack = 0f;
                 Arrow spawnedArrow = Instantiate(_arrowPrefab);
                 spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
 
@@ -24,7 +24,7 @@ namespace MassBattle.Logic.Units
 
         private bool CanAttack(BaseUnit enemy)
         {
-            return _attackCooldown <= 0 &&
+            return _timeSinceLastAttack >= _maxAttackCooldown &&
                    Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
         }
 

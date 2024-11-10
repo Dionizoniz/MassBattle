@@ -39,7 +39,7 @@ namespace MassBattle.Logic.Units
         private ArmyData _cachedArmyData;
         private string _armyId;
 
-        protected float _attackCooldown;
+        protected float _timeSinceLastAttack;
         private Vector3 _lastUnitPosition;
 
         public abstract void Attack(BaseUnit enemy);
@@ -64,7 +64,7 @@ namespace MassBattle.Logic.Units
 
         protected void Move(Vector3 delta)
         {
-            if (_attackCooldown < _maxAttackCooldown - _postAttackDelay)
+            if (_timeSinceLastAttack >= _postAttackDelay)
             {
                 transform.position += delta * _speed;
             }
@@ -111,20 +111,22 @@ namespace MassBattle.Logic.Units
 
         private void Update()
         {
-            // TODO NEW UPDATE APPROACH
-            // update each cooldown
-            // calculate new target - from strategy (nearest) - all in first frame after that X per frame
-            // calculate new position - from strategy (base/defence)
-            // calculate evade offset
-            // apply position + direction * speed * deltaTime
-            // try attack if in range
-
             if (_health > 0)
             {
+                // TODO NEW UPDATE APPROACH
+                // update cooldown
+                UpdateCooldown();
+
+                // calculate new target - from strategy (nearest) - all in first frame after that X per frame
+                // calculate new position - from strategy (base/defence)
+                // calculate evade offset
+                EvadeOtherUnits();
+
+                // apply position + direction * speed * deltaTime
+                // try attack if in range
+
                 List<BaseUnit> allies = ArmyData.FindAllUnits();
                 List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
-
-                UpdateBasicRules(allies, enemies);
 
                 switch (ArmyData.ArmySetup.StrategyType)
                 {
@@ -142,13 +144,12 @@ namespace MassBattle.Logic.Units
             }
         }
 
-        private void UpdateBasicRules(List<BaseUnit> allies, List<BaseUnit> enemies)
+        private void UpdateCooldown()
         {
-            _attackCooldown -= Time.deltaTime;
-            EvadeAllies(allies);
+            _timeSinceLastAttack += Time.deltaTime;
         }
 
-        private void EvadeAllies(List<BaseUnit> allies)
+        private void EvadeOtherUnits() // TODO refactor
         {
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
             Vector3 center = PositionFinder.FindCenterOf(allUnits);
