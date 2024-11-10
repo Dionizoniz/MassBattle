@@ -53,6 +53,11 @@ namespace MassBattle.Logic.Units
             UpdateColor(armySetup.ArmyColor);
         }
 
+        public void OnDeathAnimFinished()
+        {
+            Destroy(gameObject);
+        }
+
         private void UpdateColor(Color color)
         {
             MaterialPropertyBlock propertyBlock = new();

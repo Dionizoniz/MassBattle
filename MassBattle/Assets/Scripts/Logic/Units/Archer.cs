@@ -16,11 +16,6 @@ namespace MassBattle.Logic.Units
             spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
         }
 
-        public void OnDeathAnimFinished()
-        {
-            Destroy(gameObject);
-        }
-
         protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);

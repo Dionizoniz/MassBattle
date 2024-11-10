@@ -11,11 +11,6 @@ namespace MassBattle.Logic.Units
             enemy.Hit(gameObject);
         }
 
-        public void OnDeathAnimFinished()
-        {
-            Destroy(gameObject);
-        }
-
         protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
         {
             Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
