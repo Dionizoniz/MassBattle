@@ -35,11 +35,11 @@ namespace MassBattle.Logic.Units
         public float AttackRange => _attackRange;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
-        private IArmyProvider _armyProvider;
         private ArmyData _cachedArmyData;
+        private IArmyProvider _armyProvider;
         private string _armyId;
-
         private IStrategy _strategy;
+
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
