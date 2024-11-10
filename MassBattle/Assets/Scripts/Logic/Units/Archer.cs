@@ -32,8 +32,7 @@ namespace MassBattle.Logic.Units
                 {
                     Move(Vector3.left);
                 }
-
-                if (enemyCenter.x > transform.position.x)
+                else if (enemyCenter.x > transform.position.x)
                 {
                     Move(Vector3.right);
                 }
