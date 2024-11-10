@@ -42,20 +42,18 @@ namespace MassBattle.Logic.Units
         protected float _timeSinceLastAttack;
         private Vector3 _lastUnitPosition;
 
-        protected abstract void UpdateDefensive(BaseUnit enemy);
-        protected abstract void UpdateBasic(BaseUnit enemy);
-
         public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
 
+            CalculateInitialTimeSinceLastAttack();
             UpdateColor(armySetup.ArmyColor);
         }
 
-        public void OnDeathAnimFinished()
+        private void CalculateInitialTimeSinceLastAttack()
         {
-            Destroy(gameObject);
+            _timeSinceLastAttack = _postAttackDelay;
         }
 
         private void UpdateColor(Color color)
@@ -63,53 +61,6 @@ namespace MassBattle.Logic.Units
             MaterialPropertyBlock propertyBlock = new();
             propertyBlock.SetColor("_Color", color);
             _renderer.SetPropertyBlock(propertyBlock);
-        }
-
-        protected void Move(Vector3 delta)
-        {
-            if (_timeSinceLastAttack >= _postAttackDelay)
-            {
-                transform.position += delta * _speed;
-            }
-        }
-
-        public void Hit(GameObject sourceGo) // TODO Convert to interface !!!
-        {
-            BaseUnit source = sourceGo.GetComponent<BaseUnit>();
-            float sourceAttack = 0;
-
-            if (source != null)
-            {
-                sourceAttack = source._attack;
-            }
-            else
-            {
-                Arrow arrow = sourceGo.GetComponent<Arrow>();
-                sourceAttack = arrow.attack;
-            }
-
-            _health -= Mathf.Max(sourceAttack - _defense, 0);
-
-            if (_health < 0)
-            {
-                transform.forward = sourceGo.transform.position - transform.position;
-
-                switch (this) // TODO convert to send to provider instead of manually removing elements
-                {
-                    case Warrior:
-                        ArmyData.RemoveWarrior(this as Warrior);
-                        break;
-                    case Archer:
-                        ArmyData.RemoveArcher(this as Archer);
-                        break;
-                }
-
-                _animator.SetTrigger("Death");
-            }
-            else
-            {
-                _animator.SetTrigger("Hit");
-            }
         }
 
         private void Update()
@@ -126,10 +77,12 @@ namespace MassBattle.Logic.Units
                 PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
 
                 // calculate new position - from strategy (base/defence)
+
                 // calculate evade offset
                 EvadeOtherUnits();
 
                 // apply position + direction * speed * deltaTime
+
                 // try attack if in range
                 TryAttack(nearestEnemy);
 
@@ -180,6 +133,14 @@ namespace MassBattle.Logic.Units
             }
         }
 
+        protected void Move(Vector3 delta)
+        {
+            if (_timeSinceLastAttack >= _postAttackDelay)
+            {
+                transform.position += delta * _speed;
+            }
+        }
+
         private void TryAttack(BaseUnit enemy)
         {
             if (enemy != null && CanAttack(enemy))
@@ -198,5 +159,51 @@ namespace MassBattle.Logic.Units
         }
 
         protected abstract void PerformAttack(BaseUnit enemy);
+        protected abstract void UpdateDefensive(BaseUnit enemy); // TODO move to strategy
+        protected abstract void UpdateBasic(BaseUnit enemy); // TODO move to strategy
+
+        public void Hit(GameObject sourceGo) // TODO Refactor & Convert to interface !!!
+        {
+            BaseUnit source = sourceGo.GetComponent<BaseUnit>();
+            float sourceAttack = 0;
+
+            if (source != null)
+            {
+                sourceAttack = source._attack;
+            }
+            else
+            {
+                Arrow arrow = sourceGo.GetComponent<Arrow>();
+                sourceAttack = arrow.attack;
+            }
+
+            _health -= Mathf.Max(sourceAttack - _defense, 0);
+
+            if (_health < 0)
+            {
+                transform.forward = sourceGo.transform.position - transform.position;
+
+                switch (this) // TODO convert to send to provider instead of manually removing elements
+                {
+                    case Warrior:
+                        ArmyData.RemoveWarrior(this as Warrior);
+                        break;
+                    case Archer:
+                        ArmyData.RemoveArcher(this as Archer);
+                        break;
+                }
+
+                _animator.SetTrigger("Death");
+            }
+            else
+            {
+                _animator.SetTrigger("Hit");
+            }
+        }
+
+        public void OnDeathAnimFinished() // TODO rename
+        {
+            Destroy(gameObject);
+        }
     }
 }
