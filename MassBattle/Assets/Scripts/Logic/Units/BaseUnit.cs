@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Utilities;
@@ -66,22 +65,17 @@ namespace MassBattle.Logic.Units
         {
             if (_health > 0)
             {
-                UpdateCooldown();
-
                 BaseUnit nearestEnemy = FindNearestEnemy();
-                Vector3 moveDirection = FindMoveDirection(nearestEnemy);
-                Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
 
-                Vector3 finalMoveDirection = (moveDirection + evadeDirection) / 2;
-                Move(finalMoveDirection);
-
-                // try attack if in range
+                UpdateCooldown();
+                Move(nearestEnemy);
                 TryAttack(nearestEnemy);
-
-                var position = transform.position;
-                _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
-                _lastUnitPosition = position;
             }
+        }
+
+        private BaseUnit FindNearestEnemy()
+        {
+            return PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
         }
 
         private void UpdateCooldown()
@@ -89,9 +83,18 @@ namespace MassBattle.Logic.Units
             _timeSinceLastAttack += Time.deltaTime;
         }
 
-        private BaseUnit FindNearestEnemy()
+        private void Move(BaseUnit enemy)
         {
-            return PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
+            if (_timeSinceLastAttack >= _postAttackDelay)
+            {
+                Vector3 moveDirection = FindMoveDirection(enemy);
+                Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
+
+                Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
+                transform.position += averageMoveDirection * _speed; // TODO improve calculation
+            }
+
+            UpdateAnimatorMovementSpeed();
         }
 
         private Vector3 FindMoveDirection(BaseUnit enemy)
@@ -115,7 +118,6 @@ namespace MassBattle.Logic.Units
             var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
             Vector3 center = PositionFinder.FindCenterOf(allUnits);
             float centerDist = Vector3.Distance(gameObject.transform.position, center);
-
             Vector3 evadeOffset = Vector3.zero;
 
             if (centerDist > 80.0f)
@@ -140,12 +142,11 @@ namespace MassBattle.Logic.Units
             return evadeOffset.normalized;
         }
 
-        private void Move(Vector3 delta)
+        private void UpdateAnimatorMovementSpeed()
         {
-            if (_timeSinceLastAttack >= _postAttackDelay)
-            {
-                transform.position += delta * _speed;
-            }
+            var position = transform.position;
+            _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
+            _lastUnitPosition = position;
         }
 
         private void TryAttack(BaseUnit enemy)
