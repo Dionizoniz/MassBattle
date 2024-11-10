@@ -3,7 +3,7 @@ using MassBattle.Logic.Units;
 
 namespace MassBattle.Logic.Strategies
 {
-    public class SimpleWarriorStrategy : BaseWarriorStrategy
+    public class SimpleStrategy : BaseStrategy
     {
         public override Vector3 FindMoveDirection(BaseUnit owner, BaseUnit enemy)
         {

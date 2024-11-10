@@ -14,7 +14,7 @@ namespace MassBattle.Logic.Units
         {
             return strategyType switch
             {
-                    StrategyType.Basic => new SimpleArcherStrategy(),
+                    StrategyType.Basic => new SimpleStrategy(),
                     StrategyType.Defensive => new DefenceArcherStrategy(),
                     _ => FindDefaultStrategy()
             };
@@ -22,7 +22,7 @@ namespace MassBattle.Logic.Units
             IStrategy FindDefaultStrategy()
             {
                 Debug.LogError("Create default strategy instead for missing StrategyType in Archer.cs");
-                return new SimpleArcherStrategy();
+                return new SimpleStrategy();
             }
         }
 
