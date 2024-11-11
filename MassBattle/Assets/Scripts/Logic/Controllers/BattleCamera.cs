@@ -1,8 +1,6 @@
-﻿using System;
-using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
-using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.Controllers
@@ -12,7 +10,7 @@ namespace MassBattle.Logic.Controllers
         [SerializeField]
         private Camera _camera;
         [SerializeField]
-        private float _adjustPositionSpeed = 2f;
+        private float _adjustPositionSpeed = 0.1f;
 
         private IArmyProvider _armyProvider;
         private IUpdateProvider _updateProvider;
@@ -31,7 +29,8 @@ namespace MassBattle.Logic.Controllers
             Vector3 armiesCenter = _armyProvider.FindCenterOfArmies();
             Vector3 newForward = armiesCenter - cameraTransform.position;
 
-            cameraTransform.forward = newForward; // TODO lerp
+            float speed = _adjustPositionSpeed * Time.deltaTime;
+            cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
         }
 
         private void OnDestroy()

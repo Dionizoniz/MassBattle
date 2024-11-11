@@ -109,4 +109,4 @@ MonoBehaviour:
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
   _camera: {fileID: 5198965635676994205}
-  _adjustPositionSpeed: 2
+  _adjustPositionSpeed: 0.1
