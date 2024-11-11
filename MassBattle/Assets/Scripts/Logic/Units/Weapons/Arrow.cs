@@ -50,6 +50,7 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void AttachToEvents()
         {
+            _updateProvider.OnEarlyUpdate += CachePosition;
             _updateProvider.OnUpdate += ManualUpdate;
         }
 
@@ -107,6 +108,7 @@ namespace MassBattle.Logic.Units.Weapons
         {
             if (_updateProvider != null)
             {
+                _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
             }
         }

@@ -9,6 +9,13 @@ namespace MassBattle.Core.Entities.Engine
         [HideInInspector]
         public Transform _transform;
 
+        public Vector3 cachedPosition;
+
+        protected void CachePosition()
+        {
+            cachedPosition = _transform.position;
+        }
+
         private void Awake()
         {
             CacheReferences();

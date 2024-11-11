@@ -20,7 +20,7 @@ namespace MassBattle.Logic.Utilities
         public static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData)
         {
             List<BaseUnit> targets = targetArmyData.FindAllUnits();
-            Vector3 sourcePosition = source._transform.position;
+            Vector3 sourcePosition = source.cachedPosition;
 
             BaseUnit nearestUnits = null;
             float minSquareMagnitude = float.MaxValue;
@@ -28,7 +28,7 @@ namespace MassBattle.Logic.Utilities
             for (var index = 0; index < targets.Count; index++)
             {
                 BaseUnit target = targets[index];
-                float squareMagnitude = (sourcePosition - target._transform.position).sqrMagnitude;
+                float squareMagnitude = (sourcePosition - target.cachedPosition).sqrMagnitude;
 
                 if (squareMagnitude < minSquareMagnitude)
                 {
@@ -42,14 +42,14 @@ namespace MassBattle.Logic.Utilities
 
         public static Vector3 FindCenterOfUnitsInRange(BaseUnit source, List<BaseUnit> units, float range)
         {
-            Vector3 sourcePosition = source._transform.position;
+            Vector3 sourcePosition = source.cachedPosition;
             float squareRange = range * range;
             Vector3 centerOfUnits = Vector3.zero;
             int unitsInRange = 0;
 
             for (int i = 0; i < units.Count; i++)
             {
-                Vector3 unitPosition = units[i]._transform.position;
+                Vector3 unitPosition = units[i].cachedPosition;
                 float squareMagnitude = (sourcePosition - unitPosition).sqrMagnitude;
 
                 if (squareMagnitude <= squareRange)

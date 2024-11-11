@@ -82,6 +82,7 @@ namespace MassBattle.Logic.Units
 
         private void AttachToEvents()
         {
+            _updateProvider.OnEarlyUpdate += CachePosition;
             _updateProvider.OnUpdate += ManualUpdate;
         }
 
@@ -228,6 +229,7 @@ namespace MassBattle.Logic.Units
         {
             if (_updateProvider != null)
             {
+                _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
             }
         }
