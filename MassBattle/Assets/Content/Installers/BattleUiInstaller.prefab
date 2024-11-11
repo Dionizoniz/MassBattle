@@ -48,4 +48,5 @@ MonoBehaviour:
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
   _spawnedBattleInstaller: {fileID: 0}
+  _endBattlePanelControllerToSpawn: {fileID: 6167750713902947337, guid: 234b5098d9f80e140928f2c6b271bf91, type: 3}
   _eventSystemToSpawn: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}

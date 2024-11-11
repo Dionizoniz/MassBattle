@@ -405,6 +405,7 @@ MonoBehaviour:
   _gameObject: {fileID: 0}
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
+  _contentPanel: {fileID: 7426355354891830464}
 --- !u!114 &8291798819359769063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +469,7 @@ GameObject:
   - component: {fileID: 1166485137867011343}
   - component: {fileID: 2696120323079376197}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: ContentPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
