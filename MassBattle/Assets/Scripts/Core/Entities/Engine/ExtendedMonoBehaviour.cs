@@ -8,7 +8,7 @@ namespace MassBattle.Core.Entities.Engine
         public GameObject _gameObject;
         [HideInInspector]
         public Transform _transform;
-
+        [HideInInspector]
         public Vector3 cachedPosition;
 
         protected void CachePosition()
