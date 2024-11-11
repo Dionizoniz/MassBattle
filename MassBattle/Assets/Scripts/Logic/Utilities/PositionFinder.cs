@@ -17,36 +17,22 @@ namespace MassBattle.Logic.Utilities
             return position;
         }
 
-        public static Vector3 FindCenterOf<T>(List<T> elements) where T : Component
-        {
-            Vector3 result = Vector3.zero;
-
-            foreach (var element in elements)
-            {
-                result += element.transform.position;
-            }
-
-            result /= elements.Count;
-
-            return result;
-        }
-
         public static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData)
         {
             List<BaseUnit> targets = targetArmyData.FindAllUnits();
             Vector3 sourcePosition = source.transform.position;
 
             BaseUnit nearestUnits = null;
-            float minDistance = float.MaxValue;
+            float minSquareMagnitude = float.MaxValue;
 
             for (var index = 0; index < targets.Count; index++)
             {
                 BaseUnit target = targets[index];
-                float distance = Vector3.Distance(sourcePosition, target.transform.position);
+                float squareMagnitude = (sourcePosition - target.transform.position).sqrMagnitude;
 
-                if (distance < minDistance)
+                if (squareMagnitude < minSquareMagnitude)
                 {
-                    minDistance = distance;
+                    minSquareMagnitude = squareMagnitude;
                     nearestUnits = target;
                 }
             }
