@@ -1,5 +1,6 @@
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Providers;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units.Weapons
@@ -21,20 +22,19 @@ namespace MassBattle.Logic.Units.Weapons
 
         private ArmyData _armyData;
         private Vector3 _target;
+        private ILifeCycleProvider _lifeCycleProvider;
 
-        public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
+        public void Initialize(
+                BaseUnit sourceUnit, BaseUnit targetUnit, Color color, ILifeCycleProvider lifeCycleProvider)
         {
             _armyData = sourceUnit.ArmyData;
             _target = targetUnit._transform.position;
+            _lifeCycleProvider = lifeCycleProvider;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
             UpdateInitialPosition(sourceUnit);
-        }
-
-        private void UpdateInitialPosition(BaseUnit sourceUnit)
-        {
-            _transform.position = sourceUnit._transform.position;
+            AttachToEvents();
         }
 
         private void UpdateColor(Color color)
@@ -44,7 +44,17 @@ namespace MassBattle.Logic.Units.Weapons
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        private void Update()
+        private void UpdateInitialPosition(BaseUnit sourceUnit)
+        {
+            _transform.position = sourceUnit._transform.position;
+        }
+
+        private void AttachToEvents()
+        {
+            _lifeCycleProvider.OnUpdate += ManualUpdate;
+        }
+
+        private void ManualUpdate()
         {
             Move();
             TryAttack();
@@ -86,6 +96,19 @@ namespace MassBattle.Logic.Units.Weapons
             if (Vector3.Distance(_transform.position, _target) < _attackRange)
             {
                 Destroy(_gameObject);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            DetachFromEvents();
+        }
+
+        private void DetachFromEvents()
+        {
+            if (_lifeCycleProvider != null)
+            {
+                _lifeCycleProvider.OnUpdate -= ManualUpdate;
             }
         }
     }

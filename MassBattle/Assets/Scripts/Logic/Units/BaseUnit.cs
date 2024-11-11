@@ -1,5 +1,7 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using System;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Providers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
@@ -45,19 +47,23 @@ namespace MassBattle.Logic.Units
         private ArmyData _cachedArmyData;
         private IArmyProvider _armyProvider;
         private string _armyId;
+
+        protected ILifeCycleProvider _lifeCycleProvider;
         private IStrategy _strategy;
 
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
-        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
+        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup, ILifeCycleProvider lifeCycleProvider)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
+            _lifeCycleProvider = lifeCycleProvider;
             _strategy = CreateStrategy(armySetup.StrategyType);
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(armySetup.ArmyColor);
+            AttachToEvents();
         }
 
         protected abstract IStrategy CreateStrategy(StrategyType strategyType);
@@ -74,7 +80,12 @@ namespace MassBattle.Logic.Units
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        private void Update()
+        private void AttachToEvents()
+        {
+            _lifeCycleProvider.OnUpdate += ManualUpdate;
+        }
+
+        private void ManualUpdate()
         {
             if (IsUnitAlive())
             {
@@ -206,6 +217,19 @@ namespace MassBattle.Logic.Units
         public void OnDeathAnimFinished() // TODO rename
         {
             Destroy(_gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            DetachFromEvents();
+        }
+
+        private void DetachFromEvents()
+        {
+            if (_lifeCycleProvider != null)
+            {
+                _lifeCycleProvider.OnUpdate -= ManualUpdate;
+            }
         }
     }
 }

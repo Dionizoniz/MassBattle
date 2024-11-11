@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Providers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -22,12 +23,15 @@ namespace MassBattle.Logic.BattleCreator
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
+        private ILifeCycleProvider _lifeCycleProvider;
         private Transform _unitsRoot;
 
         private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
-        public void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider)
+        public void Initialize(
+                IBattleSetup battleSetup, IArmyProvider armyProvider, ILifeCycleProvider lifeCycleProvider)
         {
+            _lifeCycleProvider = lifeCycleProvider;
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;
 
@@ -87,7 +91,7 @@ namespace MassBattle.Logic.BattleCreator
         {
             T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
 
-            spawnedUnit.Initialize(_armyProvider, armySetup);
+            spawnedUnit.Initialize(_armyProvider, armySetup, _lifeCycleProvider);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;

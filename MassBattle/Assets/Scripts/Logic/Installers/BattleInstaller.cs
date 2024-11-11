@@ -37,7 +37,7 @@ namespace MassBattle.Logic.Installers
 
         private void Start()
         {
-            _battleSpawner.Initialize(_battleSetup, _armyProvider);
+            _battleSpawner.Initialize(_battleSetup, _armyProvider, _lifeCycleProvider);
         }
     }
 }
