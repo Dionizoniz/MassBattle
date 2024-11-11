@@ -5,8 +5,7 @@ namespace MassBattle.Logic.Providers
 {
     public class UpdateProvider : ExtendedMonoBehaviour, IUpdateProvider
     {
-        public event Action OnUpdate = delegate
-                                       { };
+        public event Action OnUpdate = delegate { };
 
         private void Update()
         {
