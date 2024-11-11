@@ -23,15 +23,14 @@ namespace MassBattle.Logic.BattleCreator
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
-        private ILifeCycleProvider _lifeCycleProvider;
+        private IUpdateProvider _updateProvider;
         private Transform _unitsRoot;
 
         private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
-        public void Initialize(
-                IBattleSetup battleSetup, IArmyProvider armyProvider, ILifeCycleProvider lifeCycleProvider)
+        public void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider)
         {
-            _lifeCycleProvider = lifeCycleProvider;
+            _updateProvider = updateProvider;
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;
 
@@ -91,7 +90,7 @@ namespace MassBattle.Logic.BattleCreator
         {
             T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
 
-            spawnedUnit.Initialize(_armyProvider, armySetup, _lifeCycleProvider);
+            spawnedUnit.Initialize(_armyProvider, armySetup, _updateProvider);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;

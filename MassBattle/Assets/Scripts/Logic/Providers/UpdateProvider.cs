@@ -3,7 +3,7 @@ using MassBattle.Core.Entities.Engine;
 
 namespace MassBattle.Logic.Providers
 {
-    public class LifeCycleProvider : ExtendedMonoBehaviour, ILifeCycleProvider
+    public class UpdateProvider : ExtendedMonoBehaviour, IUpdateProvider
     {
         public event Action OnUpdate = delegate
                                        { };

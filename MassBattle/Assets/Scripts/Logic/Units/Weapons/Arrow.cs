@@ -22,14 +22,13 @@ namespace MassBattle.Logic.Units.Weapons
 
         private ArmyData _armyData;
         private Vector3 _target;
-        private ILifeCycleProvider _lifeCycleProvider;
+        private IUpdateProvider _updateProvider;
 
-        public void Initialize(
-                BaseUnit sourceUnit, BaseUnit targetUnit, Color color, ILifeCycleProvider lifeCycleProvider)
+        public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color, IUpdateProvider updateProvider)
         {
             _armyData = sourceUnit.ArmyData;
             _target = targetUnit._transform.position;
-            _lifeCycleProvider = lifeCycleProvider;
+            _updateProvider = updateProvider;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
@@ -51,7 +50,7 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void AttachToEvents()
         {
-            _lifeCycleProvider.OnUpdate += ManualUpdate;
+            _updateProvider.OnUpdate += ManualUpdate;
         }
 
         private void ManualUpdate()
@@ -106,9 +105,9 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void DetachFromEvents()
         {
-            if (_lifeCycleProvider != null)
+            if (_updateProvider != null)
             {
-                _lifeCycleProvider.OnUpdate -= ManualUpdate;
+                _updateProvider.OnUpdate -= ManualUpdate;
             }
         }
     }

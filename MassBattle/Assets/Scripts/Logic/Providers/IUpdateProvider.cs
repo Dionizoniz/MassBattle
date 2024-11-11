@@ -2,7 +2,7 @@
 
 namespace MassBattle.Logic.Providers
 {
-    public interface ILifeCycleProvider
+    public interface IUpdateProvider
     {
         event Action OnUpdate;
     }

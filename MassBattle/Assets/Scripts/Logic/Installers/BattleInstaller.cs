@@ -12,32 +12,35 @@ namespace MassBattle.Logic.Installers
         [SerializeField]
         private BattleSpawner _battleSpawnerToSpawn;
         [SerializeField]
-        private LifeCycleProvider _lifeCycleProviderToSpawn;
+        private UpdateProvider _updateProviderToSpawn;
 
         [Space, SerializeField]
         private BattleSetup _battleSetup;
 
         private IBattleSpawner _battleSpawner;
         private IArmyProvider _armyProvider;
-        private ILifeCycleProvider _lifeCycleProvider;
+        private IUpdateProvider _updateProvider;
 
         private void Awake()
         {
-            _battleSpawner = Instantiate(_battleSpawnerToSpawn);
-            _lifeCycleProvider = Instantiate(_lifeCycleProviderToSpawn);
-
-            _armyProvider = new ArmyProvider();
+            InstantiateElementsToSpawn();
+            CreateInstances();
         }
 
         private void InstantiateElementsToSpawn()
         {
             _battleSpawner = Instantiate(_battleSpawnerToSpawn);
-            _lifeCycleProvider = Instantiate(_lifeCycleProviderToSpawn);
+            _updateProvider = Instantiate(_updateProviderToSpawn);
+        }
+
+        private void CreateInstances()
+        {
+            _armyProvider = new ArmyProvider();
         }
 
         private void Start()
         {
-            _battleSpawner.Initialize(_battleSetup, _armyProvider, _lifeCycleProvider);
+            _battleSpawner.Initialize(_battleSetup, _armyProvider, _updateProvider);
         }
     }
 }

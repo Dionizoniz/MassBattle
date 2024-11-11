@@ -48,17 +48,17 @@ namespace MassBattle.Logic.Units
         private IArmyProvider _armyProvider;
         private string _armyId;
 
-        protected ILifeCycleProvider _lifeCycleProvider;
+        protected IUpdateProvider _updateProvider;
         private IStrategy _strategy;
 
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
-        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup, ILifeCycleProvider lifeCycleProvider)
+        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup, IUpdateProvider updateProvider)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
-            _lifeCycleProvider = lifeCycleProvider;
+            _updateProvider = updateProvider;
             _strategy = CreateStrategy(armySetup.StrategyType);
 
             CalculateInitialTimeSinceLastAttack();
@@ -82,7 +82,7 @@ namespace MassBattle.Logic.Units
 
         private void AttachToEvents()
         {
-            _lifeCycleProvider.OnUpdate += ManualUpdate;
+            _updateProvider.OnUpdate += ManualUpdate;
         }
 
         private void ManualUpdate()
@@ -226,9 +226,9 @@ namespace MassBattle.Logic.Units
 
         private void DetachFromEvents()
         {
-            if (_lifeCycleProvider != null)
+            if (_updateProvider != null)
             {
-                _lifeCycleProvider.OnUpdate -= ManualUpdate;
+                _updateProvider.OnUpdate -= ManualUpdate;
             }
         }
     }

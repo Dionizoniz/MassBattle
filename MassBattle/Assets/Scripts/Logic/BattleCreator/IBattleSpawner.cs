@@ -6,6 +6,6 @@ namespace MassBattle.Logic.BattleCreator
 {
     public interface IBattleSpawner
     {
-        void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider, ILifeCycleProvider lifeCycleProvider);
+        void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider);
     }
 }
