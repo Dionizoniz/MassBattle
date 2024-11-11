@@ -8,28 +8,27 @@ namespace MassBattle.Logic.Units.Weapons
         private static readonly int COLOR = Shader.PropertyToID("_Color");
 
         [SerializeField]
-        private float _speed = 50f;
+        private float _movementSpeed = 50f;
         [SerializeField]
-        protected float _attackRange = 0.5f;
+        protected float _attackRange = 1f;
 
         [Space, SerializeField]
         private Renderer _renderer;
 
-        private ArmyData _armyData;
-        private Vector3 _target;
-
         public float AttackValue { get; private set; }
         public Vector3 AttackPosition => transform.position;
 
+        private ArmyData _armyData;
+        private Vector3 _target;
+
         public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
         {
-            UpdateInitialPosition(sourceUnit);
-
             _armyData = sourceUnit.ArmyData;
             _target = targetUnit.transform.position;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
+            UpdateInitialPosition(sourceUnit);
         }
 
         private void UpdateInitialPosition(BaseUnit sourceUnit)
@@ -44,24 +43,45 @@ namespace MassBattle.Logic.Units.Weapons
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        public void Update()
+        private void Update()
         {
+            Move();
+            TryAttack();
+            TryDestroyAfterReachTarget();
+        }
+
+        private void Move()
+        {
+            float speed = _movementSpeed * Time.deltaTime;
             Vector3 direction = (_target - transform.position).normalized;
-            transform.position += direction * (_speed * Time.deltaTime);
+            transform.position += direction * speed;
             transform.forward = direction;
+        }
 
-            foreach (var unit in _armyData.enemyArmyData.FindAllUnits())
+        private void TryAttack()
+        {
+            Vector3 position = transform.position;
+
+            foreach (BaseUnit unit in _armyData.enemyArmyData.FindAllUnits())
             {
-                float dist = Vector3.Distance(unit.transform.position, transform.position);
+                Vector3 offset = unit.transform.position - position;
 
-                if (dist < _attackRange)
+                if (offset.magnitude <= _attackRange)
                 {
-                    unit.TakeDamage(this);
-                    Destroy(gameObject);
-                    return;
+                    AttackUnit(unit);
+                    break;
                 }
             }
+        }
 
+        private void AttackUnit(BaseUnit unit)
+        {
+            unit.TakeDamage(this);
+            Destroy(gameObject);
+        }
+
+        private void TryDestroyAfterReachTarget()
+        {
             if (Vector3.Distance(transform.position, _target) < _attackRange)
             {
                 Destroy(gameObject);
