@@ -617,10 +617,12 @@ GameObject:
   - component: {fileID: 1714358168}
   - component: {fileID: 1714358167}
   - component: {fileID: 1714358166}
-  - component: {fileID: 1714358169}
   - component: {fileID: 1714358165}
+  - component: {fileID: 1714358169}
+  - component: {fileID: 1714358171}
+  - component: {fileID: 1714358170}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameOverPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,8 +727,38 @@ MonoBehaviour:
   _gameObject: {fileID: 0}
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
-  armyWins: {fileID: 584733685}
-  goToMenu: {fileID: 87333000}
+  _model: {fileID: 1714358170}
+  _view: {fileID: 1714358171}
+--- !u!114 &1714358170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714358164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5482c6473759450db7e58c34214f02f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1714358171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714358164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812a93344d424529804073c0668e7c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &2827420444990579853
 PrefabInstance:
   m_ObjectHideFlags: 0
