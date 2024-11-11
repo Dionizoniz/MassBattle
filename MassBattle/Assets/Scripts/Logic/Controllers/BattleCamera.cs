@@ -1,5 +1,7 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using System;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Providers;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
 
@@ -13,15 +15,14 @@ namespace MassBattle.Logic.Controllers
         private float _adjustPositionSpeed = 2f;
 
         private IArmyProvider _armyProvider;
+        private IUpdateProvider _updateProvider;
 
-        public void Initialize(IArmyProvider armyProvider)
+        public void Initialize(IArmyProvider armyProvider, IUpdateProvider updateProvider)
         {
             _armyProvider = armyProvider;
-        }
+            _updateProvider = updateProvider;
 
-        private void Update() // TODO move to update provider
-        {
-            UpdateCameraTransform();
+            _updateProvider.OnUpdate += UpdateCameraTransform;
         }
 
         private void UpdateCameraTransform()
@@ -31,6 +32,14 @@ namespace MassBattle.Logic.Controllers
             Vector3 newForward = armiesCenter - cameraTransform.position;
 
             cameraTransform.forward = newForward; // TODO lerp
+        }
+
+        private void OnDestroy()
+        {
+            if (_updateProvider != null)
+            {
+                _updateProvider.OnUpdate -= UpdateCameraTransform;
+            }
         }
     }
 }

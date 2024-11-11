@@ -56,7 +56,7 @@ namespace MassBattle.Logic.Installers
         private void Start()
         {
             _battleSpawner.Initialize(_battleSetup, _armyProvider, _updateProvider, _unitsFactory);
-            _battleCamera.Initialize(_armyProvider);
+            _battleCamera.Initialize(_armyProvider, _updateProvider);
         }
     }
 }
