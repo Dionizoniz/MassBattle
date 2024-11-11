@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Logic.Utilities;
+using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
@@ -39,6 +41,18 @@ namespace MassBattle.Logic.Armies
                     }
                 }
             }
+        }
+
+        public Vector3 FindCenterOfArmies()
+        {
+            Vector3 center = Vector3.zero;
+
+            foreach (var armyData in _armiesData)
+            {
+                center += PositionFinder.FindCenterOf(armyData.FindAllUnits());
+            }
+
+            return center / _armiesData.Count;
         }
     }
 }

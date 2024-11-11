@@ -40,6 +40,18 @@ namespace MassBattle.Logic.Utilities
             return nearestUnits;
         }
 
+        public static Vector3 FindCenterOf(List<BaseUnit> units)
+        {
+            Vector3 center = Vector3.zero;
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                center += units[i].cachedPosition;
+            }
+
+            return center / units.Count;
+        }
+
         public static Vector3 FindCenterOfUnitsInRange(BaseUnit source, List<BaseUnit> units, float range)
         {
             Vector3 sourcePosition = source.cachedPosition;

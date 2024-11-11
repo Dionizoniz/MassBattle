@@ -1,5 +1,6 @@
 ﻿using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.Controllers
@@ -19,6 +20,17 @@ namespace MassBattle.Logic.Controllers
         }
 
         private void Update()
-        { }
+        {
+            UpdateCameraTransform();
+        }
+
+        private void UpdateCameraTransform()
+        {
+            Transform cameraTransform = _camera.transform;
+            Vector3 armiesCenter = _armyProvider.FindCenterOfArmies();
+            Vector3 newForward = armiesCenter - cameraTransform.position;
+
+            cameraTransform.forward = newForward; // TODO lerp
+        }
     }
 }
