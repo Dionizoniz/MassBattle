@@ -1,29 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MassBattle.Logic.Armies;
-using MassBattle.Logic.Installers;
+﻿using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
-using MassBattle.Logic.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public abstract class BaseUnit : MonoBehaviour, IInitialize
+    public abstract class BaseUnit : MonoBehaviour
     {
+        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int ATTACK = Animator.StringToHash("Attack");
+        private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
+        private static readonly int HIT = Animator.StringToHash("Hit");
+        private static readonly int DEATH = Animator.StringToHash("Death");
+
         [SerializeField]
         protected float _health = 50f;
         [SerializeField]
-        protected float _speed = 0.1f;
-        [SerializeField]
         protected float _defense;
+        [SerializeField]
+        protected float _movementSpeed = 2f;
+        [SerializeField]
+        private float _avoidUnitsRadius = 2f;
 
         [Space, SerializeField]
-        protected float _attack = 20f;
+        protected float _attackValue = 20f;
         [SerializeField]
         protected float _attackRange = 2.5f;
         [SerializeField]
-        protected float _maxAttackCooldown = 1f;
+        protected float _attackCooldown = 1f;
         [SerializeField]
         protected float _postAttackDelay;
 
@@ -32,135 +37,174 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         private Renderer _renderer;
 
-        public float AttackValue => _attack;
-        public ArmyData ArmyData => _cachedArmyData ??= _battleInstaller.ArmyProvider.FindArmyBy(armyId);
+        public float AttackValue => _attackValue;
+        public float AttackRange => _attackRange;
+        public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
 
-        protected float _attackCooldown;
         private ArmyData _cachedArmyData;
-        private IBattleInstaller _battleInstaller;
-        private Vector3 _lastUnitPosition;
+        private IArmyProvider _armyProvider;
+        private string _armyId;
+        private IStrategy _strategy;
 
-        public string armyId; // TODO improve access
+        private float _timeSinceLastAttack;
+        private Vector3 _lastPosition;
 
-        public abstract void Attack(BaseUnit enemy);
-
-        protected abstract void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies);
-        protected abstract void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies);
-
-        public void Initialize(IBattleInstaller battleInstaller)
+        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
         {
-            _battleInstaller = battleInstaller;
+            _armyProvider = armyProvider;
+            _armyId = armySetup.ArmyId;
+            _strategy = CreateStrategy(armySetup.StrategyType);
+
+            CalculateInitialTimeSinceLastAttack();
+            UpdateColor(armySetup.ArmyColor);
         }
 
-        public void SetColor(Color color) // TODO Update to use ArmyData 
+        protected abstract IStrategy CreateStrategy(StrategyType strategyType);
+
+        private void CalculateInitialTimeSinceLastAttack()
+        {
+            _timeSinceLastAttack = _postAttackDelay;
+        }
+
+        private void UpdateColor(Color color)
         {
             MaterialPropertyBlock propertyBlock = new();
-            propertyBlock.SetColor("_Color", color);
+            propertyBlock.SetColor(COLOR, color);
             _renderer.SetPropertyBlock(propertyBlock);
-        }
-
-        protected void Move(Vector3 delta)
-        {
-            if (_attackCooldown < _maxAttackCooldown - _postAttackDelay)
-            {
-                transform.position += delta * _speed;
-            }
-        }
-
-        public void Hit(GameObject sourceGo) // TODO Convert to interface !!!
-        {
-            BaseUnit source = sourceGo.GetComponent<BaseUnit>();
-            float sourceAttack = 0;
-
-            if (source != null)
-            {
-                sourceAttack = source._attack;
-            }
-            else
-            {
-                Arrow arrow = sourceGo.GetComponent<Arrow>();
-                sourceAttack = arrow.attack;
-            }
-
-            _health -= Mathf.Max(sourceAttack - _defense, 0);
-
-            if (_health < 0)
-            {
-                transform.forward = sourceGo.transform.position - transform.position;
-
-                switch (this) // TODO convert to send to provider instead of manually removing elements
-                {
-                    case Warrior:
-                        ArmyData.warriors.Remove(this as Warrior);
-                        break;
-                    case Archer:
-                        ArmyData.archers.Remove(this as Archer);
-                        break;
-                }
-
-                _animator.SetTrigger("Death");
-            }
-            else
-            {
-                _animator.SetTrigger("Hit");
-            }
         }
 
         private void Update()
         {
-            if (_health > 0)
+            if (IsUnitAlive())
             {
-                List<BaseUnit> allies = ArmyData.FindAllUnits();
-                List<BaseUnit> enemies = ArmyData.enemyArmyData.FindAllUnits();
-
-                UpdateBasicRules(allies, enemies);
-
-                switch (ArmyData.ArmySetup.StrategyType)
-                {
-                    case StrategyType.Defensive:
-                        UpdateDefensive(allies, enemies);
-                        break;
-                    case StrategyType.Basic:
-                        UpdateBasic(allies, enemies);
-                        break;
-                }
-
-                var position = transform.position;
-                _animator.SetFloat("MovementSpeed", (position - _lastUnitPosition).magnitude / _speed);
-                _lastUnitPosition = position;
+                BaseUnit nearestEnemy = FindNearestEnemy();
+                UpdateCooldown();
+                TryMove(nearestEnemy);
+                TryAttack(nearestEnemy);
             }
         }
 
-        private void UpdateBasicRules(List<BaseUnit> allies, List<BaseUnit> enemies)
+        private bool IsUnitAlive() => _health > 0;
+        private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
+
+        private void UpdateCooldown()
         {
-            _attackCooldown -= Time.deltaTime;
-            EvadeAllies(allies);
+            _timeSinceLastAttack += Time.deltaTime;
         }
 
-        private void EvadeAllies(List<BaseUnit> allies)
+        private void TryMove(BaseUnit enemy)
         {
-            var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
-            Vector3 center = PositionFinder.FindCenterOf(allUnits);
-            float centerDist = Vector3.Distance(gameObject.transform.position, center);
-
-            if (centerDist > 80.0f)
+            if (CanMove(enemy))
             {
-                Vector3 toNearest = (center - transform.position).normalized;
-                transform.position -= toNearest * (80.0f - centerDist);
+                Vector3 moveDirection = FindMoveDirection(enemy);
+                Vector3 evadeDirection = FindEvadeOtherUnitsDirection(enemy);
+
+                Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
+                float speed = _movementSpeed * Time.deltaTime;
+                transform.position += averageMoveDirection * speed;
+            }
+
+            UpdateAnimatorMovementSpeed();
+        }
+
+        private bool CanMove(BaseUnit enemy) => enemy != null && _timeSinceLastAttack >= _postAttackDelay;
+        private Vector3 FindMoveDirection(BaseUnit enemy) => _strategy.FindMoveDirection(enemy);
+
+        private Vector3 FindEvadeOtherUnitsDirection(BaseUnit enemy)
+        {
+            Vector3 unitPosition = gameObject.transform.position;
+            Vector3 alliesCenter = FindCenterOfAlliesInRange();
+
+            Vector3 offsetToAllies = unitPosition - alliesCenter;
+            Vector3 offsetToEnemy = unitPosition - enemy.transform.position;
+
+            Vector3 evadeOffset;
+
+            if (offsetToEnemy.magnitude <= _avoidUnitsRadius)
+            {
+                evadeOffset = (offsetToAllies + offsetToEnemy) * 0.5f;
             }
             else
             {
-                foreach (var obj in allUnits)
-                {
-                    float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
-
-                    if (dist < 2f)
-                    {
-                        Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                        transform.position -= toNearest * (2.0f - dist);
-                    }
-                }
+                evadeOffset = offsetToAllies;
             }
+
+            return evadeOffset.normalized;
+        }
+
+        private Vector3 FindCenterOfAlliesInRange()
+        {
+            return PositionFinder.FindCenterOfUnitsInRange(this, ArmyData.FindAllUnits(), _avoidUnitsRadius);
+        }
+
+        private void UpdateAnimatorMovementSpeed()
+        {
+            Vector3 position = transform.position;
+
+            float movementDistance = (position - _lastPosition).magnitude;
+            float speed = movementDistance / (_movementSpeed * Time.deltaTime);
+            _animator.SetFloat(MOVEMENT_SPEED, speed);
+
+            _lastPosition = position;
+        }
+
+        private void TryAttack(BaseUnit enemy)
+        {
+            if (CanAttack(enemy))
+            {
+                _timeSinceLastAttack = 0f;
+                _animator.SetTrigger(ATTACK);
+
+                PerformAttack(enemy);
+            }
+        }
+
+        private bool CanAttack(BaseUnit enemy)
+        {
+            bool isEnemyInAttackRange = false;
+
+            if (enemy != null)
+            {
+                isEnemyInAttackRange = Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+            }
+
+            return IsEnoughTimeSinceLastAttack() && isEnemyInAttackRange;
+        }
+
+        public bool IsEnoughTimeSinceLastAttack() => _timeSinceLastAttack >= _attackCooldown;
+
+        protected abstract void PerformAttack(BaseUnit enemy);
+
+        public void TakeDamage(IAttack attacker)
+        {
+            int animationTriggerToSet = HIT;
+            _health = CalculateNewHealth(attacker);
+
+            if (IsUnitAlive() == false)
+            {
+                animationTriggerToSet = DEATH;
+
+                TurnUnitTo(attacker);
+                ArmyData.RemoveUnit(this);
+            }
+
+            _animator.SetTrigger(animationTriggerToSet);
+        }
+
+        private float CalculateNewHealth(IAttack attacker)
+        {
+            float damage = attacker.AttackValue - _defense;
+            return _health - Mathf.Max(damage, 0);
+        }
+
+        private void TurnUnitTo(IAttack attacker)
+        {
+            transform.forward = attacker.AttackPosition - transform.position;
+        }
+
+        public void OnDeathAnimFinished() // TODO rename
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using MassBattle.Logic.Utilities;
-using MassBattle.Logic.Weapons;
+﻿using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
+using MassBattle.Logic.Units.Weapons;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -10,82 +10,26 @@ namespace MassBattle.Logic.Units
         [Space, SerializeField]
         private Arrow _arrowPrefab;
 
-        public override void Attack(BaseUnit enemy)
+        protected override IStrategy CreateStrategy(StrategyType strategyType)
         {
-            if (CanAttack(enemy))
+            return strategyType switch
             {
-                _attackCooldown = _maxAttackCooldown;
-                Arrow spawnedArrow = Instantiate(_arrowPrefab);
-                spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
+                    StrategyType.Basic => new SimpleStrategy(this),
+                    StrategyType.Defensive => new DefenceArcherStrategy(this),
+                    _ => FindDefaultStrategy()
+            };
 
-                _animator.SetTrigger("Attack");
+            IStrategy FindDefaultStrategy()
+            {
+                Debug.LogError("Create default strategy instead for missing StrategyType in Archer.cs");
+                return new SimpleStrategy(this);
             }
         }
 
-        private bool CanAttack(BaseUnit enemy)
+        protected override void PerformAttack(BaseUnit enemy)
         {
-            return _attackCooldown <= 0 &&
-                   Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
-        }
-
-        public void OnDeathAnimFinished()
-        {
-            Destroy(gameObject);
-        }
-
-        protected override void UpdateDefensive(List<BaseUnit> allies, List<BaseUnit> enemies)
-        {
-            Vector3 enemyCenter = PositionFinder.FindCenterOf(enemies);
-            float distToEnemyX = Mathf.Abs(enemyCenter.x - transform.position.x);
-
-            if (distToEnemyX > _attackRange)
-            {
-                if (enemyCenter.x < transform.position.x)
-                {
-                    Move(Vector3.left);
-                }
-
-                if (enemyCenter.x > transform.position.x)
-                {
-                    Move(Vector3.right);
-                }
-            }
-
-            float distToNearest = PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
-
-            if (nearestEnemy != null)
-            {
-                if (distToNearest < _attackRange)
-                {
-                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-                    toNearest.Scale(new Vector3(1, 0, 1));
-
-                    Vector3 flank = Quaternion.Euler(0, 90, 0) * toNearest;
-                    Move(-(toNearest + flank).normalized);
-                }
-                else
-                {
-                    Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-                    toNearest.Scale(new Vector3(1, 0, 1));
-                    Move(toNearest.normalized);
-                }
-
-                Attack(nearestEnemy);
-            }
-        }
-
-        protected override void UpdateBasic(List<BaseUnit> allies, List<BaseUnit> enemies)
-        {
-            PositionFinder.FindNearestUnit(this, enemies, out BaseUnit nearestEnemy);
-
-            if (nearestEnemy != null)
-            {
-                Vector3 toNearest = (nearestEnemy.transform.position - transform.position).normalized;
-                toNearest.Scale(new Vector3(1, 0, 1));
-                Move(toNearest.normalized);
-
-                Attack(nearestEnemy);
-            }
+            Arrow spawnedArrow = Instantiate(_arrowPrefab);
+            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
         }
     }
 }

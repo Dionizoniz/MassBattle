@@ -8,27 +8,52 @@ namespace MassBattle.Logic.Armies
     {
         public ArmySetup ArmySetup { get; private set; }
 
-        public readonly List<Warrior> warriors; // TODO change access
-        public readonly List<Archer> archers; // TODO change access
+        private readonly List<Warrior> _warriors;
+        private readonly List<Archer> _archers;
+        private List<BaseUnit> _allUnits;
 
         public ArmyData enemyArmyData;
 
         public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
             ArmySetup = armySetup;
-            this.warriors = warriors;
-            this.archers = archers;
+            _warriors = warriors;
+            _archers = archers;
+
+            CacheAllUnits();
         }
 
-        public int CalculateUnitsCount() => warriors.Count + archers.Count;
-
-        public List<BaseUnit> FindAllUnits() // TODO Optimize
+        private void CacheAllUnits()
         {
-            List<BaseUnit> units = new();
-            units.AddRange(warriors);
-            units.AddRange(archers);
+            _allUnits = new List<BaseUnit>();
+            _allUnits.AddRange(_warriors);
+            _allUnits.AddRange(_archers);
+        }
 
-            return units;
+        public List<BaseUnit> FindAllUnits() => _allUnits;
+
+        public void RemoveUnit(BaseUnit unit)
+        {
+            if (unit is Warrior warrior)
+            {
+                RemoveWarrior(warrior);
+            }
+            else
+            {
+                RemoveArcher(unit as Archer);
+            }
+        }
+
+        private void RemoveWarrior(Warrior warrior)
+        {
+            _warriors.Remove(warrior);
+            _allUnits.Remove(warrior);
+        }
+
+        private void RemoveArcher(Archer archer)
+        {
+            _archers.Remove(archer);
+            _allUnits.Remove(archer);
         }
     }
 }
