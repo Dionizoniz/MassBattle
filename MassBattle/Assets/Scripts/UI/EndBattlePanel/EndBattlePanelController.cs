@@ -1,9 +1,9 @@
 using MassBattle.Core.Entities.MVC;
 using UnityEngine.SceneManagement;
 
-namespace MassBattle.UI.GameOverMenu
+namespace MassBattle.UI.EndBattlePanel
 {
-    public class GameOverPanelController : Controller<GameOverPanelModel, GameOverPanelView>
+    public class EndBattlePanelController : Controller<EndBattlePanelModel, EndBattlePanelView>
     {
         public void GoToMenu()
         {

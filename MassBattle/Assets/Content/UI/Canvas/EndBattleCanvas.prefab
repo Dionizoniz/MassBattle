@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 2119607059217998723}
   - component: {fileID: 8291798819359769063}
   m_Layer: 5
-  m_Name: GameOverCanvas
+  m_Name: EndBattleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
