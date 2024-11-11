@@ -51,7 +51,7 @@ MeshRenderer:
   m_GameObject: {fileID: 6137287872916697744}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -191,11 +191,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 50
-  _speed: 2
   _defense: 5
-  _attack: 20
+  _movementSpeed: 2
+  _avoidUnitsRadius: 2
+  _attackValue: 20
   _attackRange: 2.5
-  _maxAttackCooldown: 1
+  _attackCooldown: 1
   _postAttackDelay: 0
   _animator: {fileID: 4225873393263677960}
   _renderer: {fileID: 2764735260110965974}
