@@ -22,23 +22,29 @@ namespace MassBattle.Logic.Units.Weapons
         public Vector3 AttackPosition => _transform.position;
 
         private ArmyData _armyData;
-        private Vector3 _target;
+        private Vector3 _targetPosition;
         private IUpdateProvider _updateProvider;
         private IUnitsFactory _unitsFactory;
+
+        private Vector3 _moveDirection;
+        private bool _isInitialized;
 
         public void Initialize(
                 BaseUnit sourceUnit, BaseUnit targetUnit, Color color, IUpdateProvider updateProvider,
                 IUnitsFactory unitsFactory)
         {
             _armyData = sourceUnit.ArmyData;
-            _target = targetUnit._transform.position;
+            _targetPosition = targetUnit._transform.position;
             _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
-            UpdateInitialPosition(sourceUnit);
+            CacheMoveDirection(sourceUnit);
+            InitializeTransform(sourceUnit);
             AttachToEvents();
+
+            _isInitialized = true;
         }
 
         private void UpdateColor(Color color)
@@ -48,9 +54,15 @@ namespace MassBattle.Logic.Units.Weapons
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        private void UpdateInitialPosition(BaseUnit sourceUnit)
+        private void CacheMoveDirection(BaseUnit sourceUnit)
+        {
+            _moveDirection = (_targetPosition - sourceUnit._transform.position).normalized;
+        }
+
+        private void InitializeTransform(BaseUnit sourceUnit)
         {
             _transform.position = sourceUnit._transform.position;
+            _transform.forward = _moveDirection;
         }
 
         private void AttachToEvents()
@@ -66,12 +78,10 @@ namespace MassBattle.Logic.Units.Weapons
             TryDestroyAfterReachTarget();
         }
 
-        private void Move() // TODO simplify, we can cache direction and forward during initialization
+        private void Move()
         {
             float speed = _movementSpeed * Time.deltaTime;
-            Vector3 direction = (_target - cachedPosition).normalized;
-            _transform.position += direction * speed;
-            _transform.forward = direction;
+            _transform.position += _moveDirection * speed;
         }
 
         private void TryAttack()
@@ -98,13 +108,12 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void ReturnToPool()
         {
-            Dispose();
-            _unitsFactory.ReturnArrowInstance(this);
-        }
-
-        private void Dispose()
-        {
-            DetachFromEvents();
+            if (_isInitialized)
+            {
+                DetachFromEvents();
+                _unitsFactory.ReturnArrowInstance(this);
+                _isInitialized = false;
+            }
         }
 
         private void DetachFromEvents()
@@ -118,7 +127,7 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void TryDestroyAfterReachTarget()
         {
-            if (Vector3.Distance(_transform.position, _target) < _attackRange)
+            if (Vector3.Distance(_transform.position, _targetPosition) < _attackRange)
             {
                 ReturnToPool();
             }
@@ -126,7 +135,7 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void OnDestroy()
         {
-            Dispose();
+            DetachFromEvents();
         }
     }
 }
