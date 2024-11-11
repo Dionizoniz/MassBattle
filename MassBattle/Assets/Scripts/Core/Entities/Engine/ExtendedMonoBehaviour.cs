@@ -4,8 +4,8 @@ namespace MassBattle.Core.Entities.Engine
 {
     public class ExtendedMonoBehaviour : MonoBehaviour
     {
-        private GameObject _gameObject;
-        private Transform _transform;
+        public GameObject _gameObject;
+        public Transform _transform;
 
         private void Awake()
         {
