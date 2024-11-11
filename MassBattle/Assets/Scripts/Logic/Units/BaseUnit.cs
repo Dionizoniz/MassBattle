@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
+using Unity.Collections;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
@@ -22,7 +24,7 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         protected float _movementSpeed = 2f;
         [SerializeField]
-        private float _radiusToAvoidUnits = 2f;
+        private float _avoidUnitsRadius = 2f;
 
         [Space, SerializeField]
         protected float _attackValue = 20f;
@@ -98,7 +100,7 @@ namespace MassBattle.Logic.Units
             if (CanMove(enemy))
             {
                 Vector3 moveDirection = FindMoveDirection(enemy);
-                Vector3 evadeDirection = FindEvadeOtherUnitsDirection();
+                Vector3 evadeDirection = FindEvadeOtherUnitsDirection(enemy);
 
                 Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
                 float speed = _movementSpeed * Time.deltaTime;
@@ -111,23 +113,31 @@ namespace MassBattle.Logic.Units
         private bool CanMove(BaseUnit enemy) => enemy != null && _timeSinceLastAttack >= _postAttackDelay;
         private Vector3 FindMoveDirection(BaseUnit enemy) => _strategy.FindMoveDirection(enemy);
 
-        private Vector3 FindEvadeOtherUnitsDirection() // TODO refactor
+        private Vector3 FindEvadeOtherUnitsDirection(BaseUnit enemy)
         {
-            var allUnits = ArmyData.FindAllUnits().Union(ArmyData.enemyArmyData.FindAllUnits()).ToList();
-            Vector3 evadeOffset = Vector3.zero;
+            Vector3 unitPosition = gameObject.transform.position;
+            Vector3 alliesCenter = FindCenterOfAlliesInRange();
 
-            foreach (var obj in allUnits)
+            Vector3 offsetToAllies = unitPosition - alliesCenter;
+            Vector3 offsetToEnemy = unitPosition - enemy.transform.position;
+
+            Vector3 evadeOffset;
+
+            if (offsetToEnemy.magnitude <= _avoidUnitsRadius)
             {
-                float dist = Vector3.Distance(gameObject.transform.position, obj.transform.position);
-
-                if (dist < _radiusToAvoidUnits)
-                {
-                    Vector3 toNearest = (obj.transform.position - transform.position).normalized;
-                    evadeOffset -= toNearest * (_radiusToAvoidUnits - dist);
-                }
+                evadeOffset = (offsetToAllies + offsetToEnemy) * 0.5f;
+            }
+            else
+            {
+                evadeOffset = offsetToAllies;
             }
 
             return evadeOffset.normalized;
+        }
+
+        private Vector3 FindCenterOfAlliesInRange()
+        {
+            return PositionFinder.FindCenterOfUnitsInRange(this, ArmyData.FindAllUnits(), _avoidUnitsRadius);
         }
 
         private void UpdateAnimatorMovementSpeed()

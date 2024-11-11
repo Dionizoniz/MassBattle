@@ -53,5 +53,27 @@ namespace MassBattle.Logic.Utilities
 
             return nearestUnits;
         }
+
+        public static Vector3 FindCenterOfUnitsInRange(BaseUnit source, List<BaseUnit> units, float range)
+        {
+            Vector3 sourcePosition = source.transform.position;
+            float squareRange = range * range;
+            Vector3 centerOfUnits = Vector3.zero;
+            int unitsInRange = 0;
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                Vector3 unitPosition = units[i].transform.position;
+                float squareMagnitude = (sourcePosition - unitPosition).sqrMagnitude;
+
+                if (squareMagnitude <= squareRange)
+                {
+                    centerOfUnits += unitPosition;
+                    unitsInRange++;
+                }
+            }
+
+            return centerOfUnits / unitsInRange;
+        }
     }
 }
