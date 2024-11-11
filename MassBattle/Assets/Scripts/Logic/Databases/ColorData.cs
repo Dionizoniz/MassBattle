@@ -1,5 +1,4 @@
 ﻿using System;
-using MassBattle.Core.Entities;
 using MassBattle.Core.Entities.Database;
 using UnityEngine;
 
@@ -9,11 +8,11 @@ namespace MassBattle.Logic.Databases
     public class ColorData : IId
     {
         [SerializeField]
-        private string id;
+        private string _id;
         [SerializeField]
         private Color color = Color.white;
 
-        public string Id { get; }
+        public string Id => _id;
         public Color Color => color;
     }
 }
