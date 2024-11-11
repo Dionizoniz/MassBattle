@@ -8,7 +8,9 @@ namespace MassBattle.Core.Entities.Engine
         private Transform _transform;
 
         private void Awake()
-        { }
+        {
+            CacheReferences();
+        }
 
         private void CacheReferences()
         {
