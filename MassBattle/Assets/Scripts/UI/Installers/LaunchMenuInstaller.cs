@@ -1,3 +1,4 @@
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Setup;
 using MassBattle.UI.LaunchMenu;
@@ -6,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace MassBattle.UI.Installers
 {
-    public class LaunchMenuInstaller : MonoBehaviour, ILaunchMenuInstaller
+    public class LaunchMenuInstaller : ExtendedMonoBehaviour, ILaunchMenuInstaller
     {
         [SerializeField]
         private LaunchMenuController _launchMenuControllerToSpawn;

@@ -5,7 +5,7 @@ namespace MassBattle.UI.LaunchMenu
 {
     public interface ILaunchMenuController
     {
-        void InjectData(BattleSetup battleSetup, ColorDatabase colorDatabase);
+        void InjectData(IBattleSetup battleSetup, ColorDatabase colorDatabase);
         void StartBattle();
     }
 }
