@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Logic.Setup
+﻿namespace MassBattle.Logic.Strategies
 {
     public enum StrategyType
     {
