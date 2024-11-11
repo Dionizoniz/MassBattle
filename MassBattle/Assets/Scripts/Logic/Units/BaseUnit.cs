@@ -47,16 +47,20 @@ namespace MassBattle.Logic.Units
         private string _armyId;
 
         protected IUpdateProvider _updateProvider;
+        protected IUnitsFactory _unitsFactory;
         private IStrategy _strategy;
 
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
-        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup, IUpdateProvider updateProvider)
+        public void Initialize(
+                IArmyProvider armyProvider, ArmySetup armySetup, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
             _updateProvider = updateProvider;
+            _unitsFactory = unitsFactory;
             _strategy = CreateStrategy(armySetup.StrategyType);
 
             CalculateInitialTimeSinceLastAttack();

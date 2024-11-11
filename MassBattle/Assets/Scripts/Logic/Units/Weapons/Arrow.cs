@@ -1,3 +1,4 @@
+using System;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
@@ -23,12 +24,16 @@ namespace MassBattle.Logic.Units.Weapons
         private ArmyData _armyData;
         private Vector3 _target;
         private IUpdateProvider _updateProvider;
+        private IUnitsFactory _unitsFactory;
 
-        public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color, IUpdateProvider updateProvider)
+        public void Initialize(
+                BaseUnit sourceUnit, BaseUnit targetUnit, Color color, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory)
         {
             _armyData = sourceUnit.ArmyData;
             _target = targetUnit._transform.position;
             _updateProvider = updateProvider;
+            _unitsFactory = unitsFactory;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
@@ -61,11 +66,11 @@ namespace MassBattle.Logic.Units.Weapons
             TryDestroyAfterReachTarget();
         }
 
-        private void Move()
+        private void Move() // TODO simplify, we can cache direction and forward during initialization
         {
             float speed = _movementSpeed * Time.deltaTime;
-            Vector3 direction = (_target - _transform.position).normalized;
-            _transform.position += direction * speed; // TODO ??
+            Vector3 direction = (_target - cachedPosition).normalized;
+            _transform.position += direction * speed;
             _transform.forward = direction;
         }
 
@@ -88,18 +93,16 @@ namespace MassBattle.Logic.Units.Weapons
         private void AttackUnit(BaseUnit unit)
         {
             unit.TakeDamage(this);
-            Destroy(_gameObject);
+            ReturnToPool();
         }
 
-        private void TryDestroyAfterReachTarget()
+        private void ReturnToPool()
         {
-            if (Vector3.Distance(_transform.position, _target) < _attackRange)
-            {
-                Destroy(_gameObject);
-            }
+            Dispose();
+            _unitsFactory.ReturnArrowInstance(this);
         }
 
-        public void Dispose()
+        private void Dispose()
         {
             DetachFromEvents();
         }
@@ -111,6 +114,19 @@ namespace MassBattle.Logic.Units.Weapons
                 _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
             }
+        }
+
+        private void TryDestroyAfterReachTarget()
+        {
+            if (Vector3.Distance(_transform.position, _target) < _attackRange)
+            {
+                ReturnToPool();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
         }
     }
 }

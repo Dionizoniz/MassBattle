@@ -27,8 +27,8 @@ namespace MassBattle.Logic.Units
 
         protected override void PerformAttack(BaseUnit enemy)
         {
-            Arrow spawnedArrow = Instantiate(_arrowPrefab);
-            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor, _updateProvider);
+            Arrow spawnedArrow = _unitsFactory.CreateArrowInstance(_arrowPrefab);
+            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor, _updateProvider, _unitsFactory);
         }
     }
 }

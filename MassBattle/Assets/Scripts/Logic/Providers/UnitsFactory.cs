@@ -11,7 +11,7 @@ namespace MassBattle.Logic.Providers
         private Transform _arrowsRoot;
         private readonly Stack<Arrow> _arrowsPool = new();
 
-        public void Initialize()
+        public UnitsFactory()
         {
             CreateArrowsRoot();
         }
@@ -23,7 +23,7 @@ namespace MassBattle.Logic.Providers
 
         public Arrow CreateArrowInstance(Arrow arrowPrefab)
         {
-            Arrow arrow = _arrowsPool.Count > 0 ? _arrowsPool.Pop() : Object.Instantiate(arrowPrefab);
+            Arrow arrow = _arrowsPool.Count > 0 ? _arrowsPool.Pop() : Object.Instantiate(arrowPrefab, _arrowsRoot);
             arrow._gameObject.SetActive(true);
 
             return arrow;
@@ -31,9 +31,7 @@ namespace MassBattle.Logic.Providers
 
         public void ReturnArrowInstance(Arrow arrow)
         {
-            arrow.Dispose();
             arrow._gameObject.SetActive(false);
-
             _arrowsPool.Push(arrow);
         }
     }

@@ -17,8 +17,9 @@ namespace MassBattle.Logic.Installers
         private BattleSetup _battleSetup;
 
         private IBattleSpawner _battleSpawner;
-        private IArmyProvider _armyProvider;
         private IUpdateProvider _updateProvider;
+        private IArmyProvider _armyProvider;
+        private IUnitsFactory _unitsFactory;
 
         private void Awake()
         {
@@ -35,11 +36,12 @@ namespace MassBattle.Logic.Installers
         private void CreateInstances()
         {
             _armyProvider = new ArmyProvider();
+            _unitsFactory = new UnitsFactory();
         }
 
         private void Start()
         {
-            _battleSpawner.Initialize(_battleSetup, _armyProvider, _updateProvider);
+            _battleSpawner.Initialize(_battleSetup, _armyProvider, _updateProvider, _unitsFactory);
         }
     }
 }
