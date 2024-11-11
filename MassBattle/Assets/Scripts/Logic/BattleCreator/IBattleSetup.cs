@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using MassBattle.Logic.Armies;
 
-namespace MassBattle.Logic.Setup
+namespace MassBattle.Logic.BattleCreator
 {
     public interface IBattleSetup
     {

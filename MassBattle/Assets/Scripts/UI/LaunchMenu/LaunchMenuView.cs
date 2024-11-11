@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.Armies;
+using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu

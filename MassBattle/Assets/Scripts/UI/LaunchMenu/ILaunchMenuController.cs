@@ -1,5 +1,5 @@
-﻿using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
+﻿using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases;
 
 namespace MassBattle.UI.LaunchMenu
 {

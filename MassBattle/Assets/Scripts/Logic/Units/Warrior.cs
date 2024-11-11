@@ -1,5 +1,4 @@
-﻿using MassBattle.Logic.Setup;
-using MassBattle.Logic.Strategies;
+﻿using MassBattle.Logic.Strategies;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units

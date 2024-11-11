@@ -1,5 +1,6 @@
 ﻿using MassBattle.Core.Entities.MVC;
-using MassBattle.Logic.Setup;
+using MassBattle.Logic.Armies;
+using MassBattle.Logic.BattleCreator;
 using UnityEngine.SceneManagement;
 
 namespace MassBattle.UI.LaunchMenu

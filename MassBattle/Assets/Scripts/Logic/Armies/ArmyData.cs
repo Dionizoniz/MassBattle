@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
 
 namespace MassBattle.Logic.Armies

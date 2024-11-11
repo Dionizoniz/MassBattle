@@ -1,8 +1,6 @@
-﻿using System;
-using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
-using MassBattle.Logic.Setup;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
 using UnityEngine;

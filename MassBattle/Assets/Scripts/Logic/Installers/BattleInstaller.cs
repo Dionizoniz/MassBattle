@@ -2,7 +2,6 @@
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Providers;
-using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.Logic.Installers

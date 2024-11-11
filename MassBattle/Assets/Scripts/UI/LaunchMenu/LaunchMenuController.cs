@@ -1,6 +1,6 @@
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
 
 namespace MassBattle.UI.LaunchMenu
 {
