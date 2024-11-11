@@ -99,7 +99,7 @@ namespace MassBattle.Logic.Units.Weapons
             }
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             DetachFromEvents();
         }
