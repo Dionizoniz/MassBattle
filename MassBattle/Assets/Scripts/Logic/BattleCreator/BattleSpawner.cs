@@ -26,8 +26,6 @@ namespace MassBattle.Logic.BattleCreator
         private IUnitsFactory _unitsFactory;
         private Transform _unitsRoot;
 
-        private Vector3 _forwardTarget; // TODO improve solution - now is moved only
-
         public void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
                 IUnitsFactory unitsFactory)
@@ -107,15 +105,6 @@ namespace MassBattle.Logic.BattleCreator
                 // gameOverMenu.gameObject.SetActive(true); 
                 // gameOverMenu.Populate();
             }
-
-            // Vector3 mainCenter = Utils.GetCenter(ArmyProvider.Army1.FindAllUnits()) +
-            //                      Utils.GetCenter(ArmyProvider.Army2.FindAllUnits());
-            //
-            // mainCenter *= 0.5f;
-            //
-            // _forwardTarget = (mainCenter - Camera.main.transform.position).normalized;
-            //
-            // Camera.main.transform.forward += (_forwardTarget - Camera.main.transform.forward) * 0.1f;
         }
     }
 }

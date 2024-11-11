@@ -19,7 +19,7 @@ namespace MassBattle.Logic.Controllers
             _armyProvider = armyProvider;
         }
 
-        private void Update()
+        private void Update() // TODO move to update provider
         {
             UpdateCameraTransform();
         }
