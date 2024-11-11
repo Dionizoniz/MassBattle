@@ -1,11 +1,11 @@
-﻿using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
+﻿using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases;
 
 namespace MassBattle.UI.LaunchMenu
 {
     public interface ILaunchMenuController
     {
-        void InjectData(BattleSetup battleSetup, ColorDatabase colorDatabase);
+        void InjectData(IBattleSetup battleSetup, ColorDatabase colorDatabase);
         void StartBattle();
     }
 }

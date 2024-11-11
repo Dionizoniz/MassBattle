@@ -1,12 +1,11 @@
-﻿using MassBattle.Logic.Setup;
-using MassBattle.Logic.Strategies;
+﻿using MassBattle.Logic.Strategies;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit, IAttack
     {
-        public Vector3 AttackPosition => transform.position;
+        public Vector3 AttackPosition => _transform.position;
 
         protected override IStrategy CreateStrategy(StrategyType strategyType)
         {

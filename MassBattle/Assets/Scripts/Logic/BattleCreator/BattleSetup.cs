@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Logic.Armies;
 using UnityEngine;
 
-namespace MassBattle.Logic.Setup
+namespace MassBattle.Logic.BattleCreator
 {
     [CreateAssetMenu(menuName = "Create BattleSetup", fileName = "BattleSetup", order = 0)]
     public class BattleSetup : ScriptableObject, IBattleSetup

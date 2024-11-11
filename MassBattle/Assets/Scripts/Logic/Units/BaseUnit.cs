@@ -1,12 +1,13 @@
-﻿using MassBattle.Logic.Armies;
-using MassBattle.Logic.Setup;
+﻿using MassBattle.Core.Entities.Engine;
+using MassBattle.Logic.Armies;
+using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public abstract class BaseUnit : MonoBehaviour
+    public abstract class BaseUnit : ExtendedMonoBehaviour
     {
         private static readonly int COLOR = Shader.PropertyToID("_Color");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
@@ -44,19 +45,27 @@ namespace MassBattle.Logic.Units
         private ArmyData _cachedArmyData;
         private IArmyProvider _armyProvider;
         private string _armyId;
+
+        protected IUpdateProvider _updateProvider;
+        protected IUnitsFactory _unitsFactory;
         private IStrategy _strategy;
 
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
-        public void Initialize(IArmyProvider armyProvider, ArmySetup armySetup)
+        public void Initialize(
+                IArmyProvider armyProvider, ArmySetup armySetup, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory)
         {
             _armyProvider = armyProvider;
             _armyId = armySetup.ArmyId;
+            _updateProvider = updateProvider;
+            _unitsFactory = unitsFactory;
             _strategy = CreateStrategy(armySetup.StrategyType);
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(armySetup.ArmyColor);
+            AttachToEvents();
         }
 
         protected abstract IStrategy CreateStrategy(StrategyType strategyType);
@@ -73,7 +82,13 @@ namespace MassBattle.Logic.Units
             _renderer.SetPropertyBlock(propertyBlock);
         }
 
-        private void Update()
+        private void AttachToEvents()
+        {
+            _updateProvider.OnEarlyUpdate += CachePosition;
+            _updateProvider.OnUpdate += ManualUpdate;
+        }
+
+        private void ManualUpdate()
         {
             if (IsUnitAlive())
             {
@@ -101,7 +116,7 @@ namespace MassBattle.Logic.Units
 
                 Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
                 float speed = _movementSpeed * Time.deltaTime;
-                transform.position += averageMoveDirection * speed;
+                _transform.position += averageMoveDirection * speed;
             }
 
             UpdateAnimatorMovementSpeed();
@@ -112,11 +127,11 @@ namespace MassBattle.Logic.Units
 
         private Vector3 FindEvadeOtherUnitsDirection(BaseUnit enemy)
         {
-            Vector3 unitPosition = gameObject.transform.position;
+            Vector3 unitPosition = _transform.position;
             Vector3 alliesCenter = FindCenterOfAlliesInRange();
 
             Vector3 offsetToAllies = unitPosition - alliesCenter;
-            Vector3 offsetToEnemy = unitPosition - enemy.transform.position;
+            Vector3 offsetToEnemy = unitPosition - enemy._transform.position;
 
             Vector3 evadeOffset;
 
@@ -139,7 +154,7 @@ namespace MassBattle.Logic.Units
 
         private void UpdateAnimatorMovementSpeed()
         {
-            Vector3 position = transform.position;
+            Vector3 position = _transform.position;
 
             float movementDistance = (position - _lastPosition).magnitude;
             float speed = movementDistance / (_movementSpeed * Time.deltaTime);
@@ -165,7 +180,7 @@ namespace MassBattle.Logic.Units
 
             if (enemy != null)
             {
-                isEnemyInAttackRange = Vector3.Distance(transform.position, enemy.transform.position) < _attackRange;
+                isEnemyInAttackRange = Vector3.Distance(_transform.position, enemy._transform.position) < _attackRange;
             }
 
             return IsEnoughTimeSinceLastAttack() && isEnemyInAttackRange;
@@ -199,12 +214,26 @@ namespace MassBattle.Logic.Units
 
         private void TurnUnitTo(IAttack attacker)
         {
-            transform.forward = attacker.AttackPosition - transform.position;
+            _transform.forward = attacker.AttackPosition - _transform.position;
         }
 
         public void OnDeathAnimFinished() // TODO rename
         {
-            Destroy(gameObject);
+            Destroy(_gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            DetachFromEvents();
+        }
+
+        private void DetachFromEvents()
+        {
+            if (_updateProvider != null)
+            {
+                _updateProvider.OnEarlyUpdate -= CachePosition;
+                _updateProvider.OnUpdate -= ManualUpdate;
+            }
         }
     }
 }

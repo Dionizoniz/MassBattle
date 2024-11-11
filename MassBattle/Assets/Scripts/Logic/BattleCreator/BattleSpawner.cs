@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Installers;
-using MassBattle.Logic.Setup;
+using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    public class BattleSpawner : MonoBehaviour, IBattleSpawner
+    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
 
@@ -18,18 +18,24 @@ namespace MassBattle.Logic.BattleCreator
         private Archer _archerPrefab;
 
         [Space, SerializeField]
-        private List<BoxCollider> _spawnArmyBounds = new(); // TODO check that size is same as colors
+        private List<BoxCollider> _spawnArmyBounds = new();
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
+        private IUpdateProvider _updateProvider;
+        private IUnitsFactory _unitsFactory;
         private Transform _unitsRoot;
 
         private Vector3 _forwardTarget; // TODO improve solution - now is moved only
 
-        public void Initialize(IBattleSetup battleSetup, IArmyProvider armyProvider)
+        public void Initialize(
+                IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory)
         {
+            _updateProvider = updateProvider;
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;
+            _unitsFactory = unitsFactory;
 
             CreateUnitsRoot();
             SpawnArmies();
@@ -87,8 +93,8 @@ namespace MassBattle.Logic.BattleCreator
         {
             T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
 
-            spawnedUnit.Initialize(_armyProvider, armySetup);
-            spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
+            spawnedUnit.Initialize(_armyProvider, armySetup, _updateProvider, _unitsFactory);
+            spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;
         }

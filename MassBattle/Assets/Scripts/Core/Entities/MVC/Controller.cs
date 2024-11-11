@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using MassBattle.Core.Entities.Engine;
+using UnityEngine;
 
 namespace MassBattle.Core.Entities.MVC
 {
-    public abstract class Controller<TModel, TView> : MonoBehaviour, IController
+    public abstract class Controller<TModel, TView> : ExtendedMonoBehaviour, IController
             where TModel : IModel<TView>
             where TView : IView
     {

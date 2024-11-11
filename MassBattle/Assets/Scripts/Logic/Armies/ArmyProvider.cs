@@ -5,37 +5,37 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyProvider : IArmyProvider
     {
-        private readonly List<ArmyData> _armies = new(); // TODO new name???
+        private readonly List<ArmyData> _armiesData = new();
 
         public void ClearArmies()
         {
-            _armies.Clear();
+            _armiesData.Clear();
         }
 
         public void RegisterArmy(ArmyData armyData)
         {
-            if (_armies.Contains(armyData))
+            if (_armiesData.Contains(armyData))
             {
-                _armies.Remove(armyData);
+                _armiesData.Remove(armyData);
             }
 
-            _armies.Add(armyData);
+            _armiesData.Add(armyData);
         }
 
         public ArmyData FindArmyBy(string armyId)
         {
-            return _armies.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
+            return _armiesData.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
         }
 
         public void FillUpEnemiesForRegisteredArmies() // TODO simplify logic ???
         {
-            for (int armyIndex = 0; armyIndex < _armies.Count; armyIndex++)
+            for (int armyIndex = 0; armyIndex < _armiesData.Count; armyIndex++)
             {
-                for (int enemyIndex = 0; enemyIndex < _armies.Count; enemyIndex++)
+                for (int enemyIndex = 0; enemyIndex < _armiesData.Count; enemyIndex++)
                 {
                     if (armyIndex != enemyIndex) // TODO improve logic and make it as a list
                     {
-                        _armies[armyIndex].enemyArmyData = _armies[enemyIndex];
+                        _armiesData[armyIndex].enemyArmyData = _armiesData[enemyIndex];
                     }
                 }
             }

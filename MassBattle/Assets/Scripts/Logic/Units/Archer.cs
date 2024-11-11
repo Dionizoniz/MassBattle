@@ -1,5 +1,4 @@
-﻿using MassBattle.Logic.Setup;
-using MassBattle.Logic.Strategies;
+﻿using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Units.Weapons;
 using UnityEngine;
 
@@ -28,8 +27,8 @@ namespace MassBattle.Logic.Units
 
         protected override void PerformAttack(BaseUnit enemy)
         {
-            Arrow spawnedArrow = Instantiate(_arrowPrefab);
-            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor);
+            Arrow spawnedArrow = _unitsFactory.CreateArrowInstance(_arrowPrefab);
+            spawnedArrow.Initialize(this, enemy, ArmyData.ArmySetup.ArmyColor, _updateProvider, _unitsFactory);
         }
     }
 }

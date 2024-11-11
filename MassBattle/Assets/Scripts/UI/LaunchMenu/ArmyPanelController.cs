@@ -1,13 +1,15 @@
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
+using MassBattle.Logic.Strategies;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MassBattle.UI.LaunchMenu
 {
-    public class ArmyPanelController : MonoBehaviour
+    public class ArmyPanelController : ExtendedMonoBehaviour
     {
         [SerializeField]
         private TextMeshProUGUI _armyIdLabel;

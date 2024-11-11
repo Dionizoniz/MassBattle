@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.Armies;
+using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
@@ -16,7 +16,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
-        public void SpawnPanels(BattleSetup battleSetup, IColorDatabase colorDatabase)
+        public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
         {
             foreach (var armyId in battleSetup.FindAllArmySetupIds())
             {
@@ -46,7 +46,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             foreach (var panel in ArmyPanels)
             {
-                Destroy(panel.gameObject);
+                Destroy(panel._gameObject);
             }
 
             ArmyPanels.Clear();

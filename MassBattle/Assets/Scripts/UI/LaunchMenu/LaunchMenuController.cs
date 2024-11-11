@@ -1,18 +1,15 @@
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
-using MassBattle.Logic.Setup;
-using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>, ILaunchMenuController
     {
-        [SerializeField]
-        private BattleSetup _battleSetup;
-
+        private IBattleSetup _battleSetup;
         private ColorDatabase _colorDatabase;
 
-        public void InjectData(BattleSetup battleSetup, ColorDatabase colorDatabase)
+        public void InjectData(IBattleSetup battleSetup, ColorDatabase colorDatabase)
         {
             _battleSetup = battleSetup;
             _colorDatabase = colorDatabase;

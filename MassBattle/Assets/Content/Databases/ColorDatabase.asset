@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ColorDatabase
   m_EditorClassIdentifier: 
   _elements:
-  - id: Blue
+  - _id: Blue
     color: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
-  - id: Green
+  - _id: Green
     color: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
