@@ -30,6 +30,8 @@ namespace MassBattle.Logic.Armies
             _allUnits.AddRange(_archers);
         }
 
+        public List<BaseUnit> FindAllUnits() => _allUnits;
+
         public void RemoveUnit(BaseUnit unit)
         {
             if (unit is Warrior warrior)
@@ -42,19 +44,16 @@ namespace MassBattle.Logic.Armies
             }
         }
 
-        public void RemoveWarrior(Warrior warrior)
+        private void RemoveWarrior(Warrior warrior)
         {
             _warriors.Remove(warrior);
             _allUnits.Remove(warrior);
         }
 
-        public void RemoveArcher(Archer archer)
+        private void RemoveArcher(Archer archer)
         {
             _archers.Remove(archer);
             _allUnits.Remove(archer);
         }
-
-        public int CalculateUnitsCount() => _allUnits.Count;
-        public List<BaseUnit> FindAllUnits() => _allUnits;
     }
 }
