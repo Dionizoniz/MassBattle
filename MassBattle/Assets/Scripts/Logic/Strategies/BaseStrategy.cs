@@ -7,7 +7,7 @@ namespace MassBattle.Logic.Strategies
     {
         protected readonly BaseUnit _owner;
 
-        protected Vector3 OwnerPosition => _owner.transform.position;
+        protected Vector3 OwnerPosition => _owner._transform.position;
 
         protected BaseStrategy(BaseUnit owner)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Installers;
 using MassBattle.Logic.Setup;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    public class BattleSpawner : MonoBehaviour, IBattleSpawner
+    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
 
@@ -18,7 +18,7 @@ namespace MassBattle.Logic.BattleCreator
         private Archer _archerPrefab;
 
         [Space, SerializeField]
-        private List<BoxCollider> _spawnArmyBounds = new(); // TODO check that size is same as colors
+        private List<BoxCollider> _spawnArmyBounds = new();
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
@@ -88,7 +88,7 @@ namespace MassBattle.Logic.BattleCreator
             T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
 
             spawnedUnit.Initialize(_armyProvider, armySetup);
-            spawnedUnit.transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
+            spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;
         }

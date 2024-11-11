@@ -10,7 +10,7 @@ namespace MassBattle.Logic.Strategies
 
         public override Vector3 FindMoveDirection(BaseUnit enemy)
         {
-            return (enemy.transform.position - OwnerPosition).normalized;
+            return (enemy._transform.position - OwnerPosition).normalized;
         }
     }
 }

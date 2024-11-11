@@ -1,9 +1,10 @@
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using UnityEngine;
 
 namespace MassBattle.Logic.Units.Weapons
 {
-    public class Arrow : MonoBehaviour, IAttack
+    public class Arrow : ExtendedMonoBehaviour, IAttack
     {
         private static readonly int COLOR = Shader.PropertyToID("_Color");
 
@@ -16,7 +17,7 @@ namespace MassBattle.Logic.Units.Weapons
         private Renderer _renderer;
 
         public float AttackValue { get; private set; }
-        public Vector3 AttackPosition => transform.position;
+        public Vector3 AttackPosition => _transform.position;
 
         private ArmyData _armyData;
         private Vector3 _target;
@@ -24,7 +25,7 @@ namespace MassBattle.Logic.Units.Weapons
         public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
         {
             _armyData = sourceUnit.ArmyData;
-            _target = targetUnit.transform.position;
+            _target = targetUnit._transform.position;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);
@@ -33,7 +34,7 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void UpdateInitialPosition(BaseUnit sourceUnit)
         {
-            transform.position = sourceUnit.transform.position;
+            _transform.position = sourceUnit._transform.position;
         }
 
         private void UpdateColor(Color color)
@@ -53,18 +54,18 @@ namespace MassBattle.Logic.Units.Weapons
         private void Move()
         {
             float speed = _movementSpeed * Time.deltaTime;
-            Vector3 direction = (_target - transform.position).normalized;
-            transform.position += direction * speed;
-            transform.forward = direction;
+            Vector3 direction = (_target - _transform.position).normalized;
+            _transform.position += direction * speed; // TODO ??
+            _transform.forward = direction;
         }
 
         private void TryAttack()
         {
-            Vector3 position = transform.position;
+            Vector3 position = _transform.position;
 
             foreach (BaseUnit unit in _armyData.enemyArmyData.FindAllUnits())
             {
-                Vector3 offset = unit.transform.position - position;
+                Vector3 offset = unit._transform.position - position;
 
                 if (offset.magnitude <= _attackRange)
                 {
@@ -77,14 +78,14 @@ namespace MassBattle.Logic.Units.Weapons
         private void AttackUnit(BaseUnit unit)
         {
             unit.TakeDamage(this);
-            Destroy(gameObject);
+            Destroy(_gameObject);
         }
 
         private void TryDestroyAfterReachTarget()
         {
-            if (Vector3.Distance(transform.position, _target) < _attackRange)
+            if (Vector3.Distance(_transform.position, _target) < _attackRange)
             {
-                Destroy(gameObject);
+                Destroy(_gameObject);
             }
         }
     }

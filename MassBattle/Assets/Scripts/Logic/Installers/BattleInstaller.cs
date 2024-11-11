@@ -1,11 +1,12 @@
-﻿using MassBattle.Logic.Armies;
+﻿using MassBattle.Core.Entities.Engine;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Setup;
 using UnityEngine;
 
 namespace MassBattle.Logic.Installers
 {
-    public class BattleInstaller : MonoBehaviour, IBattleInstaller
+    public class BattleInstaller : ExtendedMonoBehaviour, IBattleInstaller
     {
         [SerializeField]
         private BattleSpawner _battleSpawnerToSpawn;
