@@ -21,10 +21,11 @@ namespace MassBattle.Logic.Installers
         [Space, SerializeField]
         private BattleSetup _battleSetup;
 
+        public IArmyProvider ArmyProvider { get; private set; }
+
         private IBattleSpawner _battleSpawner;
         private IUpdateProvider _updateProvider;
         private IBattleCamera _battleCamera;
-        private IArmyProvider _armyProvider;
         private IUnitsFactory _unitsFactory;
 
         private void Awake()
@@ -49,14 +50,14 @@ namespace MassBattle.Logic.Installers
 
         private void CreateInstances()
         {
-            _armyProvider = new ArmyProvider();
+            ArmyProvider = new ArmyProvider();
             _unitsFactory = new UnitsFactory();
         }
 
         private void Start()
         {
-            _battleSpawner.Initialize(_battleSetup, _armyProvider, _updateProvider, _unitsFactory);
-            _battleCamera.Initialize(_armyProvider, _updateProvider);
+            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory);
+            _battleCamera.Initialize(ArmyProvider, _updateProvider);
         }
     }
 }
