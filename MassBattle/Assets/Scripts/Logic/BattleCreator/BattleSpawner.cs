@@ -65,7 +65,7 @@ namespace MassBattle.Logic.BattleCreator
             _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
         }
 
-        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
+        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds)
         {
             ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
