@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac03cfd196e482ca3461ea962737a1d, type: 3}
+  m_Name: SceneLoader
+  m_EditorClassIdentifier: 
+  _loadingSceneData:
+    _sceneName: Loading
+    _sceneAsset: {fileID: 102900000, guid: 5ee1a6973735a8848ab16b6e970814c8, type: 3}
+  _launchMenuSceneData:
+    _sceneName: LaunchMenu
+    _sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+  _battleSceneData:
+    _sceneName: Battle
+    _sceneAsset: {fileID: 102900000, guid: 1ead56edf1b82074ab9400505d23f23d, type: 3}
