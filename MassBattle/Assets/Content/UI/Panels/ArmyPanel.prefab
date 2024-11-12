@@ -228,6 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cbdb8cf8c54ec195b8878205ec145e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
   _armyIdLabel: {fileID: 3303197900529487914}
   _warriorsSlider: {fileID: 8018474987873002358}
   _warriorsCountLabel: {fileID: 2020103157221421735}
@@ -272,6 +275,10 @@ PrefabInstance:
       value: Warriors
       objectReference: {fileID: 0}
     - target: {fileID: 4076657266033503773, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076657266033503773, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -304,8 +311,16 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_SizeDelta.x
@@ -329,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.55
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMin.y
@@ -445,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7062038307166632208, guid: 02a17de4b86717546a44b789b8a2963f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.45
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7062038307166632208, guid: 02a17de4b86717546a44b789b8a2963f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -557,6 +572,10 @@ PrefabInstance:
       value: Archers
       objectReference: {fileID: 0}
     - target: {fileID: 4076657266033503773, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076657266033503773, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -589,8 +608,16 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4876136223260114794, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_SizeDelta.x
@@ -614,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.55
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5038482474120895185, guid: 1b9e5ad6fd2293b449a2c392714e2574, type: 3}
       propertyPath: m_AnchorMin.y
@@ -818,7 +845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7631308084019672385, guid: 9dacc675a6666aa479c8ef5eddf7ca7a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7631308084019672385, guid: 9dacc675a6666aa479c8ef5eddf7ca7a, type: 3}
       propertyPath: m_AnchorMin.y
