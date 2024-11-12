@@ -2,6 +2,7 @@
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Controllers;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace MassBattle.Logic.Installers
 
         [Space, SerializeField]
         private BattleSetup _battleSetup;
+        [SerializeField]
+        private ColorDatabase _colorDatabase;
 
         public IArmyProvider ArmyProvider { get; private set; }
 
@@ -56,7 +59,7 @@ namespace MassBattle.Logic.Installers
 
         private void Start()
         {
-            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory);
+            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             _battleCamera.Initialize(ArmyProvider, _updateProvider);
         }
     }

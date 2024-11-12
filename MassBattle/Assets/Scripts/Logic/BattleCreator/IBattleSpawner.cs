@@ -1,4 +1,5 @@
 ﻿using MassBattle.Logic.Armies;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
 
 namespace MassBattle.Logic.BattleCreator
@@ -7,6 +8,6 @@ namespace MassBattle.Logic.BattleCreator
     {
         void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory);
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase);
     }
 }
