@@ -40,6 +40,33 @@ namespace MassBattle.Logic.Utilities
             return nearestUnits;
         }
 
+        // TODO TEMPORARY CODE
+        public static BaseUnit FindNearestUnit(BaseUnit source, List<ArmyData> targetArmyData)
+        {
+            Vector3 sourcePosition = source.cachedPosition;
+            BaseUnit nearestUnits = null;
+            float minSquareMagnitude = float.MaxValue;
+
+            for (int i = 0; i < targetArmyData.Count; i++)
+            {
+                List<BaseUnit> targets = targetArmyData[i].AllUnits;
+
+                for (var index = 0; index < targets.Count; index++)
+                {
+                    BaseUnit target = targets[index];
+                    float squareMagnitude = (sourcePosition - target.cachedPosition).sqrMagnitude;
+
+                    if (squareMagnitude < minSquareMagnitude)
+                    {
+                        minSquareMagnitude = squareMagnitude;
+                        nearestUnits = target;
+                    }
+                }
+            }
+
+            return nearestUnits;
+        }
+
         public static Vector3 FindCenterOf(List<BaseUnit> units)
         {
             Vector3 center = Vector3.zero;

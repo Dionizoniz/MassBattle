@@ -92,14 +92,17 @@ namespace MassBattle.Logic.Units.Weapons
         {
             Vector3 position = _transform.position;
 
-            foreach (BaseUnit unit in _armyData.enemyArmyData.AllUnits)
+            foreach (var enemyArmyData in _armyData.EnemyArmiesData)
             {
-                Vector3 offset = unit._transform.position - position;
-
-                if (offset.magnitude <= _hitRange)
+                foreach (BaseUnit unit in enemyArmyData.AllUnits)
                 {
-                    AttackUnit(unit);
-                    break;
+                    Vector3 offset = unit._transform.position - position;
+
+                    if (offset.magnitude <= _hitRange)
+                    {
+                        AttackUnit(unit);
+                        break;
+                    }
                 }
             }
         }

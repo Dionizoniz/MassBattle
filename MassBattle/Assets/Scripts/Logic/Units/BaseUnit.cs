@@ -107,7 +107,7 @@ namespace MassBattle.Logic.Units
             }
         }
 
-        private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
+        private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
 
         private void UpdateCooldown()
         {

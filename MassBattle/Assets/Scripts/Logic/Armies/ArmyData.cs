@@ -6,16 +6,16 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyData
     {
-        public event Action OnUnitRemove = delegate { };
+        public event Action OnUnitRemove = delegate
+                                           { };
 
         public ArmySetup ArmySetup { get; private set; }
         public List<BaseUnit> AllUnits => _allUnits;
+        public List<ArmyData> EnemyArmiesData { get; private set; }
 
         private readonly List<Warrior> _warriors;
         private readonly List<Archer> _archers;
         private List<BaseUnit> _allUnits;
-
-        public ArmyData enemyArmyData; // TODO improve logic
 
         public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
@@ -31,6 +31,11 @@ namespace MassBattle.Logic.Armies
             _allUnits = new List<BaseUnit>();
             _allUnits.AddRange(_warriors);
             _allUnits.AddRange(_archers);
+        }
+
+        public void InjectEnemyArmies(List<ArmyData> enemyArmiesData)
+        {
+            EnemyArmiesData = enemyArmiesData;
         }
 
         public void RemoveUnit(BaseUnit unit)
