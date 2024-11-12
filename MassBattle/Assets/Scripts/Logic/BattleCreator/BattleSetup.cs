@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    [CreateAssetMenu(menuName = "Create BattleSetup", fileName = "BattleSetup", order = 0)]
+    [CreateAssetMenu(menuName = "Create " + nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
     public class BattleSetup : ScriptableObject, IBattleSetup
     {
         [SerializeField]
