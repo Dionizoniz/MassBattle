@@ -1,5 +1,6 @@
 ﻿using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
@@ -41,30 +42,38 @@ namespace MassBattle.Logic.Units
         public float AttackValue => _attackValue;
         public float AttackRange => _attackRange;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
+        private bool IsUnitAlive => _health > 0;
 
-        private ArmyData _cachedArmyData;
         private IArmyProvider _armyProvider;
-        private string _armyId;
-
         protected IUpdateProvider _updateProvider;
         protected IUnitsFactory _unitsFactory;
+        private ColorDatabase _colorDatabase;
+
+        private string _armyId;
+        private ArmyData _cachedArmyData;
+        private Color _armyColor;
         private IStrategy _strategy;
+        private MaterialPropertyBlock _materialPropertyBlock;
 
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
         public void Initialize(
-                IArmyProvider armyProvider, ArmySetup armySetup, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory)
+                ArmySetup armySetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory, ColorDatabase colorDatabase)
         {
             _armyProvider = armyProvider;
-            _armyId = armySetup.ArmyId;
             _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
+            _colorDatabase = colorDatabase;
+
+            _armyId = armySetup.ArmyId;
+            _armyColor = armySetup.ArmyColor;
             _strategy = CreateStrategy(armySetup.StrategyType);
+            _materialPropertyBlock = new MaterialPropertyBlock();
 
             CalculateInitialTimeSinceLastAttack();
-            UpdateColor(armySetup.ArmyColor);
+            UpdateColor(_armyColor);
             AttachToEvents();
         }
 
@@ -77,9 +86,8 @@ namespace MassBattle.Logic.Units
 
         private void UpdateColor(Color color)
         {
-            MaterialPropertyBlock propertyBlock = new();
-            propertyBlock.SetColor(COLOR, color);
-            _renderer.SetPropertyBlock(propertyBlock);
+            _materialPropertyBlock.SetColor(COLOR, color);
+            _renderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
         private void AttachToEvents()
@@ -90,7 +98,7 @@ namespace MassBattle.Logic.Units
 
         private void ManualUpdate()
         {
-            if (IsUnitAlive())
+            if (IsUnitAlive)
             {
                 BaseUnit nearestEnemy = FindNearestEnemy();
                 UpdateCooldown();
@@ -99,7 +107,6 @@ namespace MassBattle.Logic.Units
             }
         }
 
-        private bool IsUnitAlive() => _health > 0;
         private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.enemyArmyData);
 
         private void UpdateCooldown()
@@ -195,7 +202,7 @@ namespace MassBattle.Logic.Units
             int animationTriggerToSet = TAKE_DAMAGE;
             _health = CalculateNewHealth(attacker);
 
-            if (IsUnitAlive() == false)
+            if (IsUnitAlive == false)
             {
                 animationTriggerToSet = DEATH;
 
@@ -217,10 +224,10 @@ namespace MassBattle.Logic.Units
             _transform.forward = attacker.AttackerPosition - _transform.position;
         }
 
-        public void OnDeathAnimFinished() // TODO rename
-        {
-            Destroy(_gameObject);
-        }
+        public void TakeDamageAnimationStart() => UpdateColor(_colorDatabase.DamageColor);
+        public void TakeDamageAnimationFinish() => UpdateColor(_armyColor);
+        public void DeathAnimationStart() => UpdateColor(_colorDatabase.DeathColor);
+        public void DeathAnimationFinish() => Destroy(_gameObject);
 
         private void OnDestroy()
         {
