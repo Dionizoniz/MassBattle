@@ -6,8 +6,8 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyData
     {
-        public event Action OnUnitRemove = delegate
-                                           { };
+        public event Action OnUnitRemove = delegate { };
+
         public ArmySetup ArmySetup { get; private set; }
         public List<BaseUnit> AllUnits => _allUnits;
 

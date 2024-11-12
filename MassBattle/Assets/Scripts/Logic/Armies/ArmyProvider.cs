@@ -9,8 +9,7 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyProvider : IArmyProvider
     {
-        public event Action<ArmyData> OnLastArmyStay = delegate
-                                                       { };
+        public event Action<ArmyData> OnLastArmyStay = delegate { };
 
         private readonly List<ArmyData> _armiesData = new();
 
@@ -41,23 +40,13 @@ namespace MassBattle.Logic.Armies
             _armiesData.Add(armyData);
         }
 
-        private void TryNotifyOnLastArmyStay() // TODO improve
+        private void TryNotifyOnLastArmyStay()
         {
-            int armiesWithUnitsCount = 0;
-            ArmyData lastArmyStay = null;
+            List<ArmyData> armiesWithUnits = _armiesData.FindAll(army => army.AllUnits.Count > 0);
 
-            foreach (var armyData in _armiesData)
+            if (armiesWithUnits.Count == 1)
             {
-                if (armyData.AllUnits.Count > 0)
-                {
-                    armiesWithUnitsCount++;
-                    lastArmyStay = armyData;
-                }
-            }
-
-            if (armiesWithUnitsCount == 1)
-            {
-                OnLastArmyStay.Invoke(lastArmyStay);
+                OnLastArmyStay.Invoke(armiesWithUnits.First());
             }
         }
 
