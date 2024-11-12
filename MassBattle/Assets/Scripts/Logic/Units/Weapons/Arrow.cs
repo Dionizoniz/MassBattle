@@ -13,7 +13,9 @@ namespace MassBattle.Logic.Units.Weapons
         [SerializeField]
         private float _movementSpeed = 50f;
         [SerializeField]
-        protected float _attackRange = 1f;
+        protected float _hitRange = 1f;
+        [SerializeField]
+        protected float _flightDistance = 50f;
 
         [Space, SerializeField]
         private Renderer _renderer;
@@ -22,6 +24,7 @@ namespace MassBattle.Logic.Units.Weapons
         public Vector3 AttackPosition => _transform.position;
 
         private ArmyData _armyData;
+        private Vector3 _initialPosition;
         private Vector3 _targetPosition;
         private IUpdateProvider _updateProvider;
         private IUnitsFactory _unitsFactory;
@@ -34,6 +37,7 @@ namespace MassBattle.Logic.Units.Weapons
                 IUnitsFactory unitsFactory)
         {
             _armyData = sourceUnit.ArmyData;
+            _initialPosition = sourceUnit._transform.position;
             _targetPosition = targetUnit._transform.position;
             _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
@@ -75,7 +79,7 @@ namespace MassBattle.Logic.Units.Weapons
         {
             Move();
             TryAttack();
-            TryDestroyAfterReachTarget();
+            TryDestroyAfterReachDistance();
         }
 
         private void Move()
@@ -92,7 +96,7 @@ namespace MassBattle.Logic.Units.Weapons
             {
                 Vector3 offset = unit._transform.position - position;
 
-                if (offset.magnitude <= _attackRange)
+                if (offset.magnitude <= _hitRange)
                 {
                     AttackUnit(unit);
                     break;
@@ -125,9 +129,9 @@ namespace MassBattle.Logic.Units.Weapons
             }
         }
 
-        private void TryDestroyAfterReachTarget()
+        private void TryDestroyAfterReachDistance()
         {
-            if (Vector3.Distance(_transform.position, _targetPosition) < _attackRange)
+            if (Vector3.Distance(_initialPosition, _transform.position) > _flightDistance)
             {
                 ReturnToPool();
             }
