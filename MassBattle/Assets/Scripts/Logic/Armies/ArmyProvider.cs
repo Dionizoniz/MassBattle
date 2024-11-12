@@ -92,5 +92,21 @@ namespace MassBattle.Logic.Armies
 
             return center / armiesCount;
         }
+
+        public bool IsAnyArmyWithUnits()
+        {
+            bool result = false;
+
+            foreach (var armyData in _armiesData)
+            {
+                if (armyData.AllUnits.Count > 0)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
     }
 }

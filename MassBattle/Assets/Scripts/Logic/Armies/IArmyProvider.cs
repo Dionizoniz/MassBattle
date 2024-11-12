@@ -10,8 +10,11 @@ namespace MassBattle.Logic.Armies
 
         void ClearArmies();
         void RegisterArmy(ArmyData armyData);
+
         ArmyData FindArmyBy(string armyId);
         void FillUpEnemiesForRegisteredArmies();
         Vector3 FindCenterOfArmies();
+
+        bool IsAnyArmyWithUnits();
     }
 }
