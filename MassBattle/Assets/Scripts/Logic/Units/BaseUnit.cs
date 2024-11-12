@@ -12,7 +12,7 @@ namespace MassBattle.Logic.Units
         private static readonly int COLOR = Shader.PropertyToID("_Color");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
         private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
-        private static readonly int HIT = Animator.StringToHash("Hit");
+        private static readonly int TAKE_DAMAGE = Animator.StringToHash("TakeDamage");
         private static readonly int DEATH = Animator.StringToHash("Death");
 
         [SerializeField]
@@ -192,7 +192,7 @@ namespace MassBattle.Logic.Units
 
         public void TakeDamage(IAttack attacker)
         {
-            int animationTriggerToSet = HIT;
+            int animationTriggerToSet = TAKE_DAMAGE;
             _health = CalculateNewHealth(attacker);
 
             if (IsUnitAlive() == false)
