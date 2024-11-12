@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -8,10 +9,22 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyProvider : IArmyProvider
     {
+        public event Action<ArmyData> OnLastArmyStay = delegate { };
+
         private readonly List<ArmyData> _armiesData = new();
+
+        ~ArmyProvider()
+        {
+            ClearArmies();
+        }
 
         public void ClearArmies()
         {
+            foreach (ArmyData armyData in _armiesData)
+            {
+                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
+            }
+
             _armiesData.Clear();
         }
 
@@ -19,10 +32,22 @@ namespace MassBattle.Logic.Armies
         {
             if (_armiesData.Contains(armyData))
             {
+                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
                 _armiesData.Remove(armyData);
             }
 
+            armyData.OnUnitRemove += TryNotifyOnLastArmyStay;
             _armiesData.Add(armyData);
+        }
+
+        private void TryNotifyOnLastArmyStay()
+        {
+            List<ArmyData> armiesWithUnits = _armiesData.FindAll(army => army.AllUnits.Count > 0);
+
+            if (armiesWithUnits.Count == 1)
+            {
+                OnLastArmyStay.Invoke(armiesWithUnits.First());
+            }
         }
 
         public ArmyData FindArmyBy(string armyId)
@@ -51,7 +76,7 @@ namespace MassBattle.Logic.Armies
 
             foreach (var armyData in _armiesData)
             {
-                List<BaseUnit> units = armyData.FindAllUnits();
+                List<BaseUnit> units = armyData.AllUnits;
 
                 if (units != null && units.Count > 0)
                 {

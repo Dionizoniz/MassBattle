@@ -1,0 +1,9 @@
+﻿using MassBattle.Logic.Armies;
+
+namespace MassBattle.UI.EndBattlePanel
+{
+    public interface IEndBattlePanelController
+    {
+        void InjectData(IArmyProvider armyProvider);
+    }
+}
