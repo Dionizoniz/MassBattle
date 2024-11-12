@@ -2,6 +2,7 @@
 {
     public interface ISceneLoader
     {
-        
+        void LoadLaunchMenuScene();
+        void LoadBattleScene();
     }
 }

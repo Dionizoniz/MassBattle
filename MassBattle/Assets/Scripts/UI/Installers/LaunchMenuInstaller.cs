@@ -1,4 +1,5 @@
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
 using MassBattle.UI.LaunchMenu;
@@ -18,6 +19,10 @@ namespace MassBattle.UI.Installers
         private BattleSetup _battleSetup;
         [SerializeField]
         private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private SceneLoader _sceneLoader;
+
+        private ILaunchMenuController _launchMenuController;
 
         private void Awake()
         {
@@ -27,13 +32,22 @@ namespace MassBattle.UI.Installers
 
         private void SpawnLaunchMenuController()
         {
-            ILaunchMenuController launchMenu = Instantiate(_launchMenuControllerToSpawn);
-            launchMenu.InjectData(_battleSetup, _colorDatabase);
+            _launchMenuController = Instantiate(_launchMenuControllerToSpawn);
         }
 
         private void SpawnEventSystem()
         {
             Instantiate(_eventSystemToSpawn);
+        }
+
+        private void Start()
+        {
+            InjectData();
+        }
+
+        private void InjectData()
+        {
+            _launchMenuController.InjectData(_battleSetup, _colorDatabase, _sceneLoader);
         }
     }
 }

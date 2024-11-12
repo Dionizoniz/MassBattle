@@ -51,3 +51,4 @@ MonoBehaviour:
   _eventSystemToSpawn: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
   _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
+  _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}
