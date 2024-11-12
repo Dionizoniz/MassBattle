@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
@@ -90,17 +91,21 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void TryAttack()
         {
-            Vector3 position = _transform.position;
+            float squaredHitRange = _hitRange * _hitRange;
+            cachedPosition = _transform.position;
 
-            foreach (var enemyArmyData in _armyData.EnemyArmiesData)
+            for (var armyIndex = 0; armyIndex < _armyData.EnemyArmiesData.Count; armyIndex++)
             {
-                foreach (BaseUnit unit in enemyArmyData.AllUnits)
-                {
-                    Vector3 offset = unit._transform.position - position;
+                List<BaseUnit> enemyUnits = _armyData.EnemyArmiesData[armyIndex].AllUnits;
 
-                    if (offset.magnitude <= _hitRange)
+                for (var unitIndex = 0; unitIndex < enemyUnits.Count; unitIndex++)
+                {
+                    BaseUnit enemyUnit = enemyUnits[unitIndex];
+                    Vector3 offset = enemyUnit.cachedPosition - cachedPosition;
+
+                    if (offset.sqrMagnitude <= squaredHitRange)
                     {
-                        AttackUnit(unit);
+                        AttackUnit(enemyUnit);
                         break;
                     }
                 }
