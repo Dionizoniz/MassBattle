@@ -406,6 +406,7 @@ MonoBehaviour:
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
   _contentPanel: {fileID: 7426355354891830464}
+  _winnerArmyNameLabel: {fileID: 90831311840823303}
 --- !u!114 &8291798819359769063
 MonoBehaviour:
   m_ObjectHideFlags: 0
