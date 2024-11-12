@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
+using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -24,12 +25,14 @@ namespace MassBattle.Logic.BattleCreator
         private IArmyProvider _armyProvider;
         private IUpdateProvider _updateProvider;
         private IUnitsFactory _unitsFactory;
+        private ColorDatabase _colorDatabase;
         private Transform _unitsRoot;
 
         public void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory)
+                IUnitsFactory unitsFactory, ColorDatabase colorDatabase)
         {
+            _colorDatabase = colorDatabase;
             _updateProvider = updateProvider;
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;

@@ -84,3 +84,4 @@ MonoBehaviour:
   _battleCameraToSpawn: {fileID: 5013470841226714775, guid: 0d2cbf27547d47942a065aa39eb57b02, type: 3}
   _cameraControllerRoot: {fileID: 7259789909605657368}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
+  _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
