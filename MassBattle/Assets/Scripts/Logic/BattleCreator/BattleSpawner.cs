@@ -46,9 +46,15 @@ namespace MassBattle.Logic.BattleCreator
 
             for (int i = 0; i < armyIds.Count; i++)
             {
-                // TODO add index protections
-                ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
-                _armyProvider.RegisterArmy(armyData);
+                if (i < _spawnArmyBounds.Count)
+                {
+                    ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
+                    _armyProvider.RegisterArmy(armyData);
+                }
+                else
+                {
+                    Debug.LogError("Not enough army bounds in BattleSpawner. Army can not be spawned.");
+                }
             }
 
             _armyProvider.InitializedRegisteredArmies();
