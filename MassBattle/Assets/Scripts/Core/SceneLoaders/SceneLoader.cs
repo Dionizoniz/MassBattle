@@ -16,7 +16,7 @@ namespace MassBattle.Core.SceneLoaders
         [SerializeField]
         private SceneData _battleSceneData;
 
-        public string CachedSceneNameToLoad { get; private set; }
+        public string TargetSceneNameToLoad { get; private set; }
 
         public void LoadLaunchMenuScene()
         {
@@ -25,7 +25,7 @@ namespace MassBattle.Core.SceneLoaders
 
         private void LoadScene(SceneData sceneData)
         {
-            CachedSceneNameToLoad = sceneData.SceneName;
+            TargetSceneNameToLoad = sceneData.SceneName;
 
             SceneManager.LoadScene(_loadingSceneData.SceneName);
         }
