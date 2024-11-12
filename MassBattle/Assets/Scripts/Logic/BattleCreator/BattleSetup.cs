@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Armies;
 using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
     [CreateAssetMenu(menuName = "Create " + nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
-    public class BattleSetup : ScriptableObject, IBattleSetup
+    public class BattleSetup : ExtendedScriptableObject, IBattleSetup
     {
         [SerializeField]
         private List<ArmySetup> _defaultArmySetups = new();

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Entities.Engine;
 using UnityEngine;
 
 namespace MassBattle.Core.Entities.Database
 {
-    public class BaseDatabase<T> : ScriptableObject, IBaseDatabase<T> where T : IId
+    public class BaseDatabase<T> : ExtendedScriptableObject, IBaseDatabase<T> where T : IId
     {
         [SerializeField]
         protected List<T> _elements = new();
