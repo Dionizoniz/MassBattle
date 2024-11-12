@@ -23,7 +23,7 @@ namespace MassBattle.Logic.Armies
         {
             foreach (ArmyData armyData in _armiesData)
             {
-                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
+                armyData.OnUnitRemove -= TryNotifyBattleResult;
             }
 
             _armiesData.Clear();
@@ -33,15 +33,15 @@ namespace MassBattle.Logic.Armies
         {
             if (_armiesData.Contains(armyData))
             {
-                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
+                armyData.OnUnitRemove -= TryNotifyBattleResult;
                 _armiesData.Remove(armyData);
             }
 
-            armyData.OnUnitRemove += TryNotifyOnLastArmyStay;
+            armyData.OnUnitRemove += TryNotifyBattleResult;
             _armiesData.Add(armyData);
         }
 
-        private void TryNotifyOnLastArmyStay()
+        private void TryNotifyBattleResult()
         {
             List<ArmyData> armiesWithUnits = _armiesData.FindAll(army => army.AllUnits.Count > 0);
 
