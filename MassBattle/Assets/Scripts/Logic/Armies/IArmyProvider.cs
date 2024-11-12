@@ -12,7 +12,7 @@ namespace MassBattle.Logic.Armies
         void RegisterArmy(ArmyData armyData);
 
         ArmyData FindArmyBy(string armyId);
-        void FillUpEnemiesForRegisteredArmies();
+        void InitializedRegisteredArmies();
         Vector3 FindCenterOfArmies();
 
         bool IsAnyArmyWithUnits();

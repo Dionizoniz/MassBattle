@@ -60,7 +60,13 @@ namespace MassBattle.Logic.Armies
             return _armiesData.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
         }
 
-        public void FillUpEnemiesForRegisteredArmies() // TODO simplify logic ???
+        public void InitializedRegisteredArmies()
+        {
+            FillUpEnemiesForRegisteredArmies();
+            TryNotifyBattleResult();
+        }
+
+        private void FillUpEnemiesForRegisteredArmies()
         {
             for (int armyIndex = 0; armyIndex < _armiesData.Count; armyIndex++)
             {

@@ -51,7 +51,7 @@ namespace MassBattle.Logic.BattleCreator
                 _armyProvider.RegisterArmy(armyData);
             }
 
-            _armyProvider.FillUpEnemiesForRegisteredArmies();
+            _armyProvider.InitializedRegisteredArmies();
         }
 
         private void CreateUnitsRoot()
