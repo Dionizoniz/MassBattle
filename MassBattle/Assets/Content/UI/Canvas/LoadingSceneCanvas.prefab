@@ -152,7 +152,8 @@ MonoBehaviour:
   _gameObject: {fileID: 0}
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
-  _sceneLoader: {fileID: 0}
+  _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}
+  _minLoadingTime: 1.5
 --- !u!1 &4196776489758921672
 GameObject:
   m_ObjectHideFlags: 0
