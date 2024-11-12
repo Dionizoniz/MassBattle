@@ -1,4 +1,5 @@
 ﻿using System;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace MassBattle.Core.SceneLoaders
 {
     [CreateAssetMenu(menuName = "Create " + nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
-    public class SceneLoader : ScriptableObject, ISceneLoader
+    public class SceneLoader : ExtendedScriptableObject, ISceneLoader
     {
         [SerializeField]
         private SceneData _loadingSceneData;
