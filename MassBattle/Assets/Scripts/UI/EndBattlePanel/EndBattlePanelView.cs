@@ -1,4 +1,5 @@
 ﻿using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.Armies;
 using UnityEngine;
 
 namespace MassBattle.UI.EndBattlePanel
@@ -10,7 +11,17 @@ namespace MassBattle.UI.EndBattlePanel
 
         public void Initialize()
         {
+            HideContentPanel();
+        }
+
+        private void HideContentPanel()
+        {
             _contentPanel.SetActive(false);
+        }
+
+        public void ShowContentPanel(ArmyData armyData)
+        {
+            _contentPanel.SetActive(true);
         }
     }
 }

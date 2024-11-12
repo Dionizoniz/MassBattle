@@ -19,8 +19,7 @@ namespace MassBattle.UI.EndBattlePanel
             base.Initialize();
 
             _view.Initialize();
-
-            // TODO model inject data
+            _model.InjectData(_armyProvider);
         }
 
         public void LoadLaunchMenuScene()

@@ -1,4 +1,5 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using System;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private EventSystem _eventSystemToSpawn;
 
+        private IEndBattlePanelController _endBattlePanel;
+
         private void Awake()
         {
             SpawnEndBattlePanelController();
@@ -24,13 +27,22 @@ namespace MassBattle.UI.Installers
 
         private void SpawnEndBattlePanelController()
         {
-            IEndBattlePanelController endBattlePanel = Instantiate(_endBattlePanelControllerToSpawn);
-            endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider);
+            _endBattlePanel = Instantiate(_endBattlePanelControllerToSpawn);
         }
 
         private void SpawnEventSystem()
         {
             Instantiate(_eventSystemToSpawn);
+        }
+
+        private void Start()
+        {
+            InjectData();
+        }
+
+        private void InjectData()
+        {
+            _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider);
         }
     }
 }
