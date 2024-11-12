@@ -8,6 +8,6 @@ namespace MassBattle.Logic.BattleCreator
     {
         void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, ColorDatabase colorDatabase);
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase);
     }
 }

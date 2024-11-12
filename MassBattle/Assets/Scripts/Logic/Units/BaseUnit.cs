@@ -47,7 +47,7 @@ namespace MassBattle.Logic.Units
         private IArmyProvider _armyProvider;
         protected IUpdateProvider _updateProvider;
         protected IUnitsFactory _unitsFactory;
-        private ColorDatabase _colorDatabase;
+        private IColorDatabase _colorDatabase;
 
         private string _armyId;
         private ArmyData _cachedArmyData;
@@ -60,7 +60,7 @@ namespace MassBattle.Logic.Units
 
         public void Initialize(
                 ArmySetup armySetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, ColorDatabase colorDatabase)
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;

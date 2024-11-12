@@ -25,12 +25,12 @@ namespace MassBattle.Logic.BattleCreator
         private IArmyProvider _armyProvider;
         private IUpdateProvider _updateProvider;
         private IUnitsFactory _unitsFactory;
-        private ColorDatabase _colorDatabase;
+        private IColorDatabase _colorDatabase;
         private Transform _unitsRoot;
 
         public void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, ColorDatabase colorDatabase)
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
             _colorDatabase = colorDatabase;
             _updateProvider = updateProvider;
