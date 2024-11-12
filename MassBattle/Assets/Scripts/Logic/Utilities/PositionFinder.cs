@@ -17,17 +17,35 @@ namespace MassBattle.Logic.Utilities
             return position;
         }
 
-        public static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData)
+        public static BaseUnit FindNearestUnit(BaseUnit source, List<ArmyData> targetArmyData)
         {
-            List<BaseUnit> targets = targetArmyData.AllUnits;
+            BaseUnit nearestUnits = null;
+            float minMagnitude = float.MaxValue;
+
+            foreach (ArmyData armyData in targetArmyData)
+            {
+                BaseUnit unit = FindNearestUnit(source, armyData, out var magnitude);
+
+                if (magnitude < minMagnitude)
+                {
+                    nearestUnits = unit;
+                }
+            }
+
+            return nearestUnits;
+        }
+
+        private static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData, out float distance)
+        {
             Vector3 sourcePosition = source.cachedPosition;
+            List<BaseUnit> targetUnits = targetArmyData.AllUnits;
 
             BaseUnit nearestUnits = null;
             float minSquareMagnitude = float.MaxValue;
 
-            for (var index = 0; index < targets.Count; index++)
+            for (var index = 0; index < targetUnits.Count; index++)
             {
-                BaseUnit target = targets[index];
+                BaseUnit target = targetUnits[index];
                 float squareMagnitude = (sourcePosition - target.cachedPosition).sqrMagnitude;
 
                 if (squareMagnitude < minSquareMagnitude)
@@ -37,32 +55,7 @@ namespace MassBattle.Logic.Utilities
                 }
             }
 
-            return nearestUnits;
-        }
-
-        // TODO TEMPORARY CODE
-        public static BaseUnit FindNearestUnit(BaseUnit source, List<ArmyData> targetArmyData)
-        {
-            Vector3 sourcePosition = source.cachedPosition;
-            BaseUnit nearestUnits = null;
-            float minSquareMagnitude = float.MaxValue;
-
-            for (int i = 0; i < targetArmyData.Count; i++)
-            {
-                List<BaseUnit> targets = targetArmyData[i].AllUnits;
-
-                for (var index = 0; index < targets.Count; index++)
-                {
-                    BaseUnit target = targets[index];
-                    float squareMagnitude = (sourcePosition - target.cachedPosition).sqrMagnitude;
-
-                    if (squareMagnitude < minSquareMagnitude)
-                    {
-                        minSquareMagnitude = squareMagnitude;
-                        nearestUnits = target;
-                    }
-                }
-            }
+            distance = Mathf.Sqrt(minSquareMagnitude);
 
             return nearestUnits;
         }
