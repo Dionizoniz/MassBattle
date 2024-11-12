@@ -10,6 +10,7 @@ namespace MassBattle.Logic.Armies
     public class ArmyProvider : IArmyProvider
     {
         public event Action<ArmyData> OnLastArmyStay = delegate { };
+        public event Action OnNoArmyStay = delegate { };
 
         private readonly List<ArmyData> _armiesData = new();
 
@@ -47,6 +48,10 @@ namespace MassBattle.Logic.Armies
             if (armiesWithUnits.Count == 1)
             {
                 OnLastArmyStay.Invoke(armiesWithUnits.First());
+            }
+            else if (armiesWithUnits.Count == 0)
+            {
+                OnNoArmyStay.Invoke();
             }
         }
 
