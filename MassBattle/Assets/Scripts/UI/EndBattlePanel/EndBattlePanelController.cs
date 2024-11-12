@@ -23,7 +23,7 @@ namespace MassBattle.UI.EndBattlePanel
             // TODO model inject data
         }
 
-        public void GoToMenu()
+        public void LoadLaunchMenuScene()
         {
             SceneManager.LoadScene(0);
         }

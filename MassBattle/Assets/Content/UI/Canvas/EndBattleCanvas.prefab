@@ -678,6 +678,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3191653384848208681}
     m_Modifications:
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6167750713902947337}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLaunchMenuScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MassBattle.UI.EndBattlePanel.EndBattlePanelController, MassBattle.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 718051028795968027, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1887171653864323322, guid: 0cf1f2ba338946b409f2beb6c4e6acc6, type: 3}
       propertyPath: m_Name
       value: ReturnToLaunchMenuButton
