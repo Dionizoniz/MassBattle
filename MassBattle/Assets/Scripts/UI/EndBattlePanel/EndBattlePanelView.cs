@@ -9,8 +9,14 @@ namespace MassBattle.UI.EndBattlePanel
     {
         [SerializeField]
         private GameObject _contentPanel;
+
+        [Space, SerializeField]
+        private GameObject _winnerArmyRoot;
         [SerializeField]
         private TextMeshProUGUI _winnerArmyNameLabel;
+
+        [Space, SerializeField]
+        private GameObject _drawBattleRoot;
 
         public void Initialize()
         {
@@ -22,9 +28,20 @@ namespace MassBattle.UI.EndBattlePanel
             _contentPanel.SetActive(false);
         }
 
-        public void ShowContentPanel(ArmyData armyData)
+        public void ShowContentPanelFor(ArmyData armyData)
         {
+            _winnerArmyRoot.SetActive(true);
+            _drawBattleRoot.SetActive(false);
+
             _winnerArmyNameLabel.text = armyData.ArmySetup.ArmyId;
+            _contentPanel.SetActive(true);
+        }
+
+        public void ShowContentPanelForDraw()
+        {
+            _winnerArmyRoot.SetActive(false);
+            _drawBattleRoot.SetActive(true);
+
             _contentPanel.SetActive(true);
         }
     }

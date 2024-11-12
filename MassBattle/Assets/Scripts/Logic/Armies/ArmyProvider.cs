@@ -10,6 +10,7 @@ namespace MassBattle.Logic.Armies
     public class ArmyProvider : IArmyProvider
     {
         public event Action<ArmyData> OnLastArmyStay = delegate { };
+        public event Action OnNoArmyStay = delegate { };
 
         private readonly List<ArmyData> _armiesData = new();
 
@@ -22,7 +23,7 @@ namespace MassBattle.Logic.Armies
         {
             foreach (ArmyData armyData in _armiesData)
             {
-                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
+                armyData.OnUnitRemove -= TryNotifyBattleResult;
             }
 
             _armiesData.Clear();
@@ -32,21 +33,25 @@ namespace MassBattle.Logic.Armies
         {
             if (_armiesData.Contains(armyData))
             {
-                armyData.OnUnitRemove -= TryNotifyOnLastArmyStay;
+                armyData.OnUnitRemove -= TryNotifyBattleResult;
                 _armiesData.Remove(armyData);
             }
 
-            armyData.OnUnitRemove += TryNotifyOnLastArmyStay;
+            armyData.OnUnitRemove += TryNotifyBattleResult;
             _armiesData.Add(armyData);
         }
 
-        private void TryNotifyOnLastArmyStay()
+        private void TryNotifyBattleResult()
         {
             List<ArmyData> armiesWithUnits = _armiesData.FindAll(army => army.AllUnits.Count > 0);
 
             if (armiesWithUnits.Count == 1)
             {
                 OnLastArmyStay.Invoke(armiesWithUnits.First());
+            }
+            else if (armiesWithUnits.Count == 0)
+            {
+                OnNoArmyStay.Invoke();
             }
         }
 
@@ -55,7 +60,13 @@ namespace MassBattle.Logic.Armies
             return _armiesData.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
         }
 
-        public void FillUpEnemiesForRegisteredArmies() // TODO simplify logic ???
+        public void InitializedRegisteredArmies()
+        {
+            FillUpEnemiesForRegisteredArmies();
+            TryNotifyBattleResult();
+        }
+
+        private void FillUpEnemiesForRegisteredArmies()
         {
             for (int armyIndex = 0; armyIndex < _armiesData.Count; armyIndex++)
             {
@@ -86,6 +97,22 @@ namespace MassBattle.Logic.Armies
             }
 
             return center / armiesCount;
+        }
+
+        public bool IsAnyArmyWithUnits()
+        {
+            bool result = false;
+
+            foreach (var armyData in _armiesData)
+            {
+                if (armyData.AllUnits.Count > 0)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
         }
     }
 }

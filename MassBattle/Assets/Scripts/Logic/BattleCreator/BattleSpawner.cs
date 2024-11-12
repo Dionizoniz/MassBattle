@@ -46,12 +46,18 @@ namespace MassBattle.Logic.BattleCreator
 
             for (int i = 0; i < armyIds.Count; i++)
             {
-                // TODO add index protections
-                ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
-                _armyProvider.RegisterArmy(armyData);
+                if (i < _spawnArmyBounds.Count)
+                {
+                    ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
+                    _armyProvider.RegisterArmy(armyData);
+                }
+                else
+                {
+                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {armyIds[i]} can not be spawned.");
+                }
             }
 
-            _armyProvider.FillUpEnemiesForRegisteredArmies();
+            _armyProvider.InitializedRegisteredArmies();
         }
 
         private void CreateUnitsRoot()
@@ -59,7 +65,7 @@ namespace MassBattle.Logic.BattleCreator
             _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
         }
 
-        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds) // TODO simplify code
+        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds)
         {
             ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyId);
             List<Warrior> warriors = new();
@@ -67,17 +73,8 @@ namespace MassBattle.Logic.BattleCreator
 
             if (armySetup != null)
             {
-                for (int i = 0; i < armySetup.WarriorsCount; i++)
-                {
-                    Warrior spawnedWarrior = SpawnUnit(_warriorPrefab, armySetup, spawnBounds);
-                    warriors.Add(spawnedWarrior);
-                }
-
-                for (int i = 0; i < armySetup.ArchersCount; i++)
-                {
-                    Archer spawnedArcher = SpawnUnit(_archerPrefab, armySetup, spawnBounds);
-                    archers.Add(spawnedArcher);
-                }
+                warriors = SpawnUnits(_warriorPrefab, armySetup.WarriorsCount, armySetup, spawnBounds);
+                archers = SpawnUnits(_archerPrefab, armySetup.ArchersCount, armySetup, spawnBounds);
             }
             else
             {
@@ -85,6 +82,20 @@ namespace MassBattle.Logic.BattleCreator
             }
 
             return new ArmyData(armySetup, warriors, archers);
+        }
+
+        private List<T> SpawnUnits<T>(T unitToSpawn, int unitsCount, ArmySetup armySetup, Bounds spawnBounds)
+                where T : BaseUnit
+        {
+            List<T> spawnedUnits = new();
+
+            for (int i = 0; i < unitsCount; i++)
+            {
+                T spawnUnit = SpawnUnit(unitToSpawn, armySetup, spawnBounds);
+                spawnedUnits.Add(spawnUnit);
+            }
+
+            return spawnedUnits;
         }
 
         private T SpawnUnit<T>(T unitToSpawn, ArmySetup armySetup, Bounds spawnBounds) where T : BaseUnit

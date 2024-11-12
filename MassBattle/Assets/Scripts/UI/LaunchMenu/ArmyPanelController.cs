@@ -43,15 +43,14 @@ namespace MassBattle.UI.LaunchMenu
 
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
+
+            ForceRefreshArmyCountLabels();
         }
 
-        public ArmySetup CreateArmySetup()
+        private void ForceRefreshArmyCountLabels() // INFO: if SetupValue is same as SliderValue - labels do not refresh
         {
-            int warriorsCount = (int)_warriorsSlider.value;
-            int archersCount = (int)_archerSlider.value;
-            StrategyType strategyType = _strategyTypeWrapper.Value();
-
-            return new ArmySetup(_armyIdLabel.text, warriorsCount, archersCount, strategyType, _armyColor.color);
+            RefreshWarriorsCountLabel(_warriorsSlider.value);
+            RefreshArchersCountLabel(_archerSlider.value);
         }
 
         public void RefreshWarriorsCountLabel(float value)
@@ -62,6 +61,15 @@ namespace MassBattle.UI.LaunchMenu
         public void RefreshArchersCountLabel(float value)
         {
             _archerCountLabel.text = value.ToString();
+        }
+
+        public ArmySetup CreateArmySetup()
+        {
+            int warriorsCount = (int)_warriorsSlider.value;
+            int archersCount = (int)_archerSlider.value;
+            StrategyType strategyType = _strategyTypeWrapper.Value();
+
+            return new ArmySetup(_armyIdLabel.text, warriorsCount, archersCount, strategyType, _armyColor.color);
         }
 
         public void ChangeArmyColorToNext()

@@ -25,12 +25,15 @@ namespace MassBattle.Logic.Controllers
 
         private void UpdateCameraTransform()
         {
-            Transform cameraTransform = _camera.transform;
-            Vector3 armiesCenter = _armyProvider.FindCenterOfArmies();
-            Vector3 newForward = armiesCenter - cameraTransform.position;
+            if (_armyProvider.IsAnyArmyWithUnits())
+            {
+                Transform cameraTransform = _camera.transform;
+                Vector3 armiesCenter = _armyProvider.FindCenterOfArmies();
+                Vector3 newForward = armiesCenter - cameraTransform.position;
 
-            float speed = _adjustPositionSpeed * Time.deltaTime;
-            cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
+                float speed = _adjustPositionSpeed * Time.deltaTime;
+                cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
+            }
         }
 
         private void OnDestroy()

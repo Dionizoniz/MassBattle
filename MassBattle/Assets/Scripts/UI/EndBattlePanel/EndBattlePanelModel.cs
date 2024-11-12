@@ -11,19 +11,25 @@ namespace MassBattle.UI.EndBattlePanel
         public void InjectData(IArmyProvider armyProvider)
         {
             _armyProvider = armyProvider;
-            _armyProvider.OnLastArmyStay += TryShowContentPanel;
+            _armyProvider.OnLastArmyStay += TryShowContentPanelForArmy;
+            _armyProvider.OnNoArmyStay += TryShowContentPanelForDraw;
         }
 
-        private void TryShowContentPanel(ArmyData armyData)
+        private void TryShowContentPanelForArmy(ArmyData armyData)
         {
-            _view.ShowContentPanel(armyData);
+            _view.ShowContentPanelFor(armyData);
+        }
+
+        private void TryShowContentPanelForDraw()
+        {
+            _view.ShowContentPanelForDraw();
         }
 
         private void OnDestroy()
         {
             if (_armyProvider != null)
             {
-                _armyProvider.OnLastArmyStay -= TryShowContentPanel;
+                _armyProvider.OnLastArmyStay -= TryShowContentPanelForArmy;
             }
         }
     }

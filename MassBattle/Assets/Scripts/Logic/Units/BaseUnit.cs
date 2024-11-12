@@ -214,7 +214,7 @@ namespace MassBattle.Logic.Units
 
         private void TurnUnitTo(IAttack attacker)
         {
-            _transform.forward = attacker.AttackPosition - _transform.position;
+            _transform.forward = attacker.AttackerPosition - _transform.position;
         }
 
         public void OnDeathAnimFinished() // TODO rename

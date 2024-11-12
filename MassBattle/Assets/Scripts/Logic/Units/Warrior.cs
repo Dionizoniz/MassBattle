@@ -5,7 +5,7 @@ namespace MassBattle.Logic.Units
 {
     public class Warrior : BaseUnit, IAttack
     {
-        public Vector3 AttackPosition => _transform.position;
+        public Vector3 AttackerPosition => _transform.position;
 
         protected override IStrategy CreateStrategy(StrategyType strategyType)
         {
