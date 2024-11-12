@@ -96,15 +96,5 @@ namespace MassBattle.Logic.BattleCreator
 
             return spawnedUnit;
         }
-
-        void Update()
-        {
-            //if (ArmyProvider.Army1.CalculateUnitsCount() == 0 || ArmyProvider.Army2.CalculateUnitsCount() == 0)
-            {
-                // TODO improve logic
-                // gameOverMenu.gameObject.SetActive(true); 
-                // gameOverMenu.Populate();
-            }
-        }
     }
 }
