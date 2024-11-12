@@ -120,9 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5417803459fd8c45a2efd61e84c8038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
   _model: {fileID: 7408683372009728387}
   _view: {fileID: 2575470813176336879}
-  _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
 --- !u!114 &2575470813176336879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7e0044315d43238daab796b56b477a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
   _armyPanelToSpawn: {fileID: 6058642899876836264, guid: a3fd236eed8313d40ada1e3bfc15b824, type: 3}
   _armyPanelsRoot: {fileID: 5834547225166759424}
 --- !u!114 &7408683372009728387
@@ -149,6 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36d992fa82a46f9ba6988a5ec90abbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &2941376402394918197
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,8 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 10
+    m_Right: 10
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
