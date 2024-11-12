@@ -1,12 +1,19 @@
 ﻿using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
-using UnityEngine.SceneManagement;
 
 namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
+        private SceneLoader _sceneLoader;
+
+        public void InjectData(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
+
         public void StartBattle(IBattleSetup battleSetup)
         {
             ClearRegisteredArmySetups(battleSetup);
@@ -28,9 +35,9 @@ namespace MassBattle.UI.LaunchMenu
             }
         }
 
-        private void LoadBattleScene() // TODO improve
+        private void LoadBattleScene()
         {
-            SceneManager.LoadScene(1);
+            _sceneLoader.LoadBattleScene();
         }
     }
 }

@@ -1,4 +1,5 @@
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,12 @@ namespace MassBattle.UI.EndBattlePanel
                                             IEndBattlePanelController
     {
         private IArmyProvider _armyProvider;
+        private SceneLoader _sceneLoader;
 
-        public void InjectData(IArmyProvider armyProvider)
+        public void InjectData(IArmyProvider armyProvider, SceneLoader sceneLoader)
         {
             _armyProvider = armyProvider;
+            _sceneLoader = sceneLoader;
         }
 
         protected override void Initialize()
@@ -24,7 +27,7 @@ namespace MassBattle.UI.EndBattlePanel
 
         public void LoadLaunchMenuScene()
         {
-            SceneManager.LoadScene(0);
+            _sceneLoader.LoadLaunchMenuScene();
         }
     }
 }

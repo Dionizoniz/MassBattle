@@ -1,5 +1,6 @@
 ﻿using System;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace MassBattle.UI.Installers
     {
         [SerializeField]
         private BattleInstaller _spawnedBattleInstaller;
+        [SerializeField]
+        private SceneLoader _sceneLoader;
 
         [SerializeField]
         private EndBattlePanelController _endBattlePanelControllerToSpawn;
@@ -42,7 +45,7 @@ namespace MassBattle.UI.Installers
 
         private void InjectData()
         {
-            _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider);
+            _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider, _sceneLoader);
         }
     }
 }
