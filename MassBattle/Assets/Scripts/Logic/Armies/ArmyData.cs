@@ -9,6 +9,7 @@ namespace MassBattle.Logic.Armies
         public event Action OnUnitRemove = delegate
                                            { };
         public ArmySetup ArmySetup { get; private set; }
+        public List<BaseUnit> AllUnits => _allUnits;
 
         private readonly List<Warrior> _warriors;
         private readonly List<Archer> _archers;
@@ -31,8 +32,6 @@ namespace MassBattle.Logic.Armies
             _allUnits.AddRange(_warriors);
             _allUnits.AddRange(_archers);
         }
-
-        public List<BaseUnit> FindAllUnits() => _allUnits;
 
         public void RemoveUnit(BaseUnit unit)
         {

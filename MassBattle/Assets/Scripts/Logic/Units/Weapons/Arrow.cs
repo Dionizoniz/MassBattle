@@ -88,7 +88,7 @@ namespace MassBattle.Logic.Units.Weapons
         {
             Vector3 position = _transform.position;
 
-            foreach (BaseUnit unit in _armyData.enemyArmyData.FindAllUnits())
+            foreach (BaseUnit unit in _armyData.enemyArmyData.AllUnits)
             {
                 Vector3 offset = unit._transform.position - position;
 

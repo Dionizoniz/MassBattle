@@ -48,7 +48,7 @@ namespace MassBattle.Logic.Armies
 
             foreach (var armyData in _armiesData)
             {
-                if (armyData.FindAllUnits().Count > 0)
+                if (armyData.AllUnits.Count > 0)
                 {
                     armiesWithUnitsCount++;
                     lastArmyStay = armyData;
@@ -87,7 +87,7 @@ namespace MassBattle.Logic.Armies
 
             foreach (var armyData in _armiesData)
             {
-                List<BaseUnit> units = armyData.FindAllUnits();
+                List<BaseUnit> units = armyData.AllUnits;
 
                 if (units != null && units.Count > 0)
                 {

@@ -19,7 +19,7 @@ namespace MassBattle.Logic.Utilities
 
         public static BaseUnit FindNearestUnit(BaseUnit source, ArmyData targetArmyData)
         {
-            List<BaseUnit> targets = targetArmyData.FindAllUnits();
+            List<BaseUnit> targets = targetArmyData.AllUnits;
             Vector3 sourcePosition = source.cachedPosition;
 
             BaseUnit nearestUnits = null;

@@ -149,7 +149,7 @@ namespace MassBattle.Logic.Units
 
         private Vector3 FindCenterOfAlliesInRange()
         {
-            return PositionFinder.FindCenterOfUnitsInRange(this, ArmyData.FindAllUnits(), _avoidUnitsRadius);
+            return PositionFinder.FindCenterOfUnitsInRange(this, ArmyData.AllUnits, _avoidUnitsRadius);
         }
 
         private void UpdateAnimatorMovementSpeed()
