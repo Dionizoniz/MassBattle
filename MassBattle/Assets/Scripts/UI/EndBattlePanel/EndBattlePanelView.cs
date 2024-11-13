@@ -34,6 +34,11 @@ namespace MassBattle.UI.EndBattlePanel
             _drawBattleRoot.SetActive(false);
 
             _winnerArmyNameLabel.text = armyData.ArmySetup.ArmyId;
+            ShowContentPanel();
+        }
+
+        private void ShowContentPanel()
+        {
             _contentPanel.SetActive(true);
         }
 
@@ -42,7 +47,7 @@ namespace MassBattle.UI.EndBattlePanel
             _winnerArmyRoot.SetActive(false);
             _drawBattleRoot.SetActive(true);
 
-            _contentPanel.SetActive(true);
+            ShowContentPanel();
         }
     }
 }
