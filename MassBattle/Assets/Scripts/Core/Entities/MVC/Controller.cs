@@ -1,9 +1,8 @@
-﻿using MassBattle.Core.Entities.Engine;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MassBattle.Core.Entities.MVC
 {
-    public abstract class Controller<TModel, TView> : ExtendedMonoBehaviour, IController
+    public abstract class Controller<TModel, TView> : BaseController, IController
             where TModel : IModel<TView>
             where TView : IView
     {
@@ -22,5 +21,7 @@ namespace MassBattle.Core.Entities.MVC
         {
             _model.Initialize(_view);
         }
+
+        public override bool IsSetupCorrect() => _model != null && _view != null;
     }
 }
