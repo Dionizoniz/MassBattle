@@ -1,4 +1,5 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using System;
+using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Core.UserInput;
 
@@ -13,6 +14,13 @@ namespace MassBattle.UI.PauseMenuPanel
         {
             _inputFacade = inputFacade;
             _sceneLoader = sceneLoader;
+
+            _inputFacade.OnExitButton += TogglePauseMenuPanel;
+        }
+
+        private void TogglePauseMenuPanel()
+        {
+            _view.ToggleContentPanel();
         }
 
         public void OpenPauseMenuPanel()
@@ -30,6 +38,15 @@ namespace MassBattle.UI.PauseMenuPanel
         public void ExitBattle()
         {
             // TODO unpause
+            _sceneLoader.LoadLaunchMenuScene();
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputFacade != null)
+            {
+                _inputFacade.OnExitButton -= TogglePauseMenuPanel;
+            }
         }
     }
 }
