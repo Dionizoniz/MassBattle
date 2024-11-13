@@ -41,6 +41,7 @@ namespace MassBattle.UI.LaunchMenu
             _colorDatabase = colorDatabase;
 
             _armyIdLabel.text = armySetup.ArmyId;
+            _isArmyActiveToggle.isOn = armySetup.IsArmyActive;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
             _armyColor.color = armySetup.ArmyColor;
@@ -69,11 +70,14 @@ namespace MassBattle.UI.LaunchMenu
 
         public ArmySetup CreateArmySetup()
         {
+            string armyId = _armyIdLabel.text;
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
             StrategyType strategyType = _strategyTypeWrapper.Value();
+            Color armyColor = _armyColor.color;
+            bool isArmyActive = _isArmyActiveToggle.isOn;
 
-            return new ArmySetup(_armyIdLabel.text, warriorsCount, archersCount, strategyType, _armyColor.color);
+            return new ArmySetup(armyId, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()

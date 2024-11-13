@@ -18,18 +18,22 @@ MonoBehaviour:
     _archersCount: 60
     _strategyType: 0
     _armyColor: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
+    _isArmyActive: 1
   - _armyId: Army 2
     _warriorsCount: 60
     _archersCount: 60
     _strategyType: 0
     _armyColor: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
+    _isArmyActive: 1
   - _armyId: Army 3
     _warriorsCount: 60
     _archersCount: 60
     _strategyType: 0
     _armyColor: {r: 0.8235294, g: 0.8784314, b: 0.08627451, a: 1}
+    _isArmyActive: 0
   - _armyId: Army 4
     _warriorsCount: 60
     _archersCount: 60
     _strategyType: 0
     _armyColor: {r: 0.98039216, g: 0.44705883, b: 0, a: 1}
+    _isArmyActive: 0

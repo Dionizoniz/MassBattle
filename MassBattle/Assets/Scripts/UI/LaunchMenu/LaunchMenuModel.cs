@@ -30,11 +30,8 @@ namespace MassBattle.UI.LaunchMenu
         {
             foreach (var panel in _view.ArmyPanels)
             {
-                if (panel.IsArmyActive)
-                {
-                    ArmySetup armySetup = panel.CreateArmySetup();
-                    battleSetup.SaveArmySetup(armySetup);
-                }
+                ArmySetup armySetup = panel.CreateArmySetup();
+                battleSetup.SaveArmySetup(armySetup);
             }
         }
 
