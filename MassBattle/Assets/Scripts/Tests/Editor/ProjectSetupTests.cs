@@ -8,6 +8,7 @@ using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using NUnit.Framework;
+using UnityEditor;
 
 namespace Tests.Editor
 {
@@ -85,6 +86,15 @@ namespace Tests.Editor
         {
             List<BaseController> assets = FindAssets<BaseController>();
             Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
+        [Test]
+        public void _08_TestSetup_ScenesInBuildSettings()
+        {
+            EditorBuildSettingsScene[] editorBuildSettingsScenes = EditorBuildSettings.scenes;
+            bool isNotEmptySceneCollection = editorBuildSettingsScenes.All(s => s.enabled);
+
+            Assert.True(isNotEmptySceneCollection);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
