@@ -28,6 +28,7 @@ namespace MassBattle.Logic.Utilities
 
                 if (magnitude < minMagnitude)
                 {
+                    minMagnitude = magnitude;
                     nearestUnits = unit;
                 }
             }
