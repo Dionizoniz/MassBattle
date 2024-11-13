@@ -13,6 +13,8 @@ namespace MassBattle.UI.LaunchMenu
     {
         [SerializeField]
         private TextMeshProUGUI _armyIdLabel;
+        [SerializeField]
+        private Toggle _isArmyActiveToggle;
 
         [Space, SerializeField]
         private Slider _warriorsSlider;
@@ -28,6 +30,8 @@ namespace MassBattle.UI.LaunchMenu
         private TMP_Dropdown _strategyDropdown;
         [SerializeField]
         private Image _armyColor;
+
+        public bool IsArmyActive => _isArmyActiveToggle.isOn;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
