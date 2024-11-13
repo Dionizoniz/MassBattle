@@ -21,9 +21,15 @@ namespace MassBattle.Logic.Controllers
         [SerializeField]
         private float _zoomSpeedMultiplier = 10f;
 
+        [Space, SerializeField]
+        private int _framesCountToRefreshArmiesCenter = 10;
+
         private IArmyProvider _armyProvider;
         private IUpdateProvider _updateProvider;
         private IInputFacade _inputFacade;
+
+        private Vector3 _cachedArmiesCenter;
+        private int _framesToRefreshArmiesCenterLeft;
 
         public void Initialize(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
         {
@@ -40,12 +46,25 @@ namespace MassBattle.Logic.Controllers
             if (_armyProvider.IsAnyArmyWithUnits())
             {
                 Transform cameraTransform = _camera.transform;
-                Vector3 armiesCenter = _armyProvider.FindCenterOfArmies();
+                Vector3 armiesCenter = FindArmiesCenter();
                 Vector3 newForward = armiesCenter - cameraTransform.position;
 
                 float speed = _adjustPositionSpeed * Time.deltaTime;
                 cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
             }
+        }
+
+        private Vector3 FindArmiesCenter()
+        {
+            _framesToRefreshArmiesCenterLeft--;
+
+            if (_framesToRefreshArmiesCenterLeft <= 0)
+            {
+                _cachedArmiesCenter = _armyProvider.FindCenterOfArmies();
+                _framesToRefreshArmiesCenterLeft = _framesCountToRefreshArmiesCenter;
+            }
+
+            return _cachedArmiesCenter;
         }
 
         private void AdjustCameraOffset(float scrollOffset)
