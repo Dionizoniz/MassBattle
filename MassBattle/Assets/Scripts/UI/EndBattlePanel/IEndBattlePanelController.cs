@@ -5,6 +5,6 @@ namespace MassBattle.UI.EndBattlePanel
 {
     public interface IEndBattlePanelController
     {
-        void InjectData(IArmyProvider armyProvider, SceneLoader sceneLoader);
+        void InjectData(IArmyProvider armyProvider, ISceneLoader sceneLoader);
     }
 }

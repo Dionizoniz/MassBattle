@@ -7,15 +7,17 @@ namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
 
-        public void InjectData(SceneLoader sceneLoader)
+        public void InjectData(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
         }
 
         public void StartBattle(IBattleSetup battleSetup)
         {
+            // TODO add test setup logic to avoid the same Army Names. 
+
             ClearRegisteredArmySetups(battleSetup);
             RegisterArmiesSetup(battleSetup);
             LoadBattleScene();

@@ -11,9 +11,8 @@ namespace MassBattle.Core.UserInput
         public event Action OnExitButton = delegate { };
 
         [SerializeField]
-        private string _mouseWheelAxis = "Mouse ScrollWheel";
-        [SerializeField]
         private KeyCode _exitButton = KeyCode.Escape;
+
         private IUpdateProvider _updateProvider;
 
         public void Initialize(IUpdateProvider updateProvider)

@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Entities.Tests;
 using MassBattle.Logic.Armies;
 using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    [CreateAssetMenu(menuName = "Create " + nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
-    public class BattleSetup : ExtendedScriptableObject, IBattleSetup
+    [CreateAssetMenu(menuName = nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
+    public class BattleSetup : ExtendedScriptableObject, IBattleSetup, ICheckSetup
     {
+        private const int MIN_ARMIES_COUNT = 2;
+        private const int MAX_ARMIES_COUNT = 4;
+
         [SerializeField]
         private List<ArmySetup> _defaultArmySetups = new();
 
@@ -48,6 +52,21 @@ namespace MassBattle.Logic.BattleCreator
         public void ClearSavedArmySetups()
         {
             _savedArmySetups.Clear();
+        }
+
+        public bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = true;
+
+            int defaultArmiesCount = _defaultArmySetups.Count;
+            isSetupCorrect &= defaultArmiesCount >= MIN_ARMIES_COUNT && defaultArmiesCount <= MAX_ARMIES_COUNT;
+
+            foreach (var armySetup in _defaultArmySetups)
+            {
+                isSetupCorrect &= armySetup.IsSetupCorrect();
+            }
+
+            return isSetupCorrect;
         }
     }
 }

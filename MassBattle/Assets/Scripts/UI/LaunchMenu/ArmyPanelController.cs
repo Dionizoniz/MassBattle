@@ -31,8 +31,6 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private Image _armyColor;
 
-        public bool IsArmyActive => _isArmyActiveToggle.isOn;
-
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
 

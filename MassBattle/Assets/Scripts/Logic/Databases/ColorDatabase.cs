@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MassBattle.Logic.Databases
 {
     [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = 0)]
-    public class ColorDatabase : BaseDatabase<ColorData>, IColorDatabase
+    public class ColorDatabase : Database<ColorData>, IColorDatabase
     {
         [Space, SerializeField]
         private Color _damageColor = Color.red;

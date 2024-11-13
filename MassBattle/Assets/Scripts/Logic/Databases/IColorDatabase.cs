@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Databases
 {
-    public interface IColorDatabase : IBaseDatabase<ColorData>
+    public interface IColorDatabase : IDatabase<ColorData>
     {
         Color DamageColor { get; }
         Color DeathColor { get; }

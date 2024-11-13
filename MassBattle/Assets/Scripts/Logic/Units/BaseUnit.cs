@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Units
 {
-    public abstract class BaseUnit : ExtendedMonoBehaviour
+    public abstract class BaseUnit : BaseSceneEntity
     {
         private static readonly int COLOR = Shader.PropertyToID("_Color");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
@@ -242,6 +242,17 @@ namespace MassBattle.Logic.Units
                 _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
             }
+        }
+
+        public override bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = _health > 0f;
+            isSetupCorrect &= _movementSpeed > 0f;
+            isSetupCorrect &= _attackCooldown > 0f;
+            isSetupCorrect &= _animator != null;
+            isSetupCorrect &= _renderer != null;
+
+            return isSetupCorrect;
         }
     }
 }

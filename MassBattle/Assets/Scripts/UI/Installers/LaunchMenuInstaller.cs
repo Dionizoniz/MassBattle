@@ -1,4 +1,4 @@
-using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace MassBattle.UI.Installers
 {
-    public class LaunchMenuInstaller : ExtendedMonoBehaviour, ILaunchMenuInstaller
+    public class LaunchMenuInstaller : BaseInstaller, ILaunchMenuInstaller
     {
         [SerializeField]
         private LaunchMenuController _launchMenuControllerToSpawn;
@@ -48,6 +48,19 @@ namespace MassBattle.UI.Installers
         private void InjectData()
         {
             _launchMenuController.InjectData(_battleSetup, _colorDatabase, _sceneLoader);
+        }
+
+        public override bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = true;
+
+            isSetupCorrect &= _launchMenuControllerToSpawn != null;
+            isSetupCorrect &= _eventSystemToSpawn != null;
+            isSetupCorrect &= _battleSetup != null;
+            isSetupCorrect &= _colorDatabase != null;
+            isSetupCorrect &= _sceneLoader != null;
+
+            return isSetupCorrect;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Providers;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Installers
 {
-    public class BattleInstaller : ExtendedMonoBehaviour, IBattleInstaller
+    public class BattleInstaller : BaseInstaller, IBattleInstaller
     {
         [SerializeField]
         private BattleSpawner _battleSpawnerToSpawn;
@@ -75,6 +75,20 @@ namespace MassBattle.Logic.Installers
             _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             _inputFacade.Initialize(_updateProvider);
             _battleCamera.Initialize(ArmyProvider, _updateProvider, _inputFacade);
+        }
+
+        public override bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = true;
+
+            isSetupCorrect &= _updateProviderToSpawn != null;
+            isSetupCorrect &= _inputFacadeToSpawn != null;
+            isSetupCorrect &= _battleCameraToSpawn != null;
+            isSetupCorrect &= _cameraControllerRoot != null;
+            isSetupCorrect &= _battleSetup != null;
+            isSetupCorrect &= _colorDatabase != null;
+
+            return isSetupCorrect;
         }
     }
 }

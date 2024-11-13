@@ -1,5 +1,6 @@
 ﻿using System;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -7,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 namespace MassBattle.Core.SceneLoaders
 {
-    [CreateAssetMenu(menuName = "Create " + nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
-    public class SceneLoader : ExtendedScriptableObject, ISceneLoader
+    [CreateAssetMenu(menuName = nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
+    public class SceneLoader : ExtendedScriptableObject, ISceneLoader, ICheckSetup
     {
         [SerializeField]
         private SceneData _loadingSceneData;
@@ -19,9 +20,16 @@ namespace MassBattle.Core.SceneLoaders
 
         public string TargetSceneNameToLoad { get; private set; }
 
-        public void LoadLaunchMenuScene()
+        public void LoadLaunchMenuScene(bool useLoadingScreen = true)
         {
-            LoadScene(_launchMenuSceneData);
+            if (useLoadingScreen)
+            {
+                LoadScene(_launchMenuSceneData);
+            }
+            else
+            {
+                LoadSceneInstant(_launchMenuSceneData);
+            }
         }
 
         private void LoadScene(SceneData sceneData)
@@ -31,9 +39,21 @@ namespace MassBattle.Core.SceneLoaders
             SceneManager.LoadScene(_loadingSceneData.SceneName);
         }
 
-        public void LoadBattleScene()
+        private void LoadSceneInstant(SceneData sceneData)
         {
-            LoadScene(_battleSceneData);
+            SceneManager.LoadScene(sceneData.SceneName);
+        }
+
+        public void LoadBattleScene(bool useLoadingScreen = true)
+        {
+            if (useLoadingScreen)
+            {
+                LoadScene(_battleSceneData);
+            }
+            else
+            {
+                LoadSceneInstant(_battleSceneData);
+            }
         }
 
         private void OnValidate()
@@ -44,7 +64,7 @@ namespace MassBattle.Core.SceneLoaders
         }
 
         [Serializable]
-        private class SceneData
+        private class SceneData : ICheckSetup
         {
             [SerializeField, ReadOnly]
             private string _sceneName;
@@ -65,6 +85,26 @@ namespace MassBattle.Core.SceneLoaders
                 }
 #endif
             }
+
+            public bool IsSetupCorrect()
+            {
+                bool isSetupCorrect = string.IsNullOrEmpty(_sceneName) == false;
+
+#if UNITY_EDITOR
+                isSetupCorrect &= _sceneAsset != null;
+#endif
+
+                return isSetupCorrect;
+            }
+        }
+
+        public bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = _loadingSceneData.IsSetupCorrect();
+            isSetupCorrect &= _launchMenuSceneData.IsSetupCorrect();
+            isSetupCorrect &= _battleSceneData.IsSetupCorrect();
+
+            return isSetupCorrect;
         }
     }
 }
