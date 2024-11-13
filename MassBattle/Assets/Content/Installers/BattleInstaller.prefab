@@ -81,6 +81,7 @@ MonoBehaviour:
   cachedPosition: {x: 0, y: 0, z: 0}
   _battleSpawnerToSpawn: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
   _updateProviderToSpawn: {fileID: 4670307037649405662, guid: 8d382c10d69715d45828ff1064898c28, type: 3}
+  _inputFacadeToSpawn: {fileID: 6876298667965141915, guid: ad1250f1825a30d40a7e2b7ed8fd4626, type: 3}
   _battleCameraToSpawn: {fileID: 5013470841226714775, guid: 0d2cbf27547d47942a065aa39eb57b02, type: 3}
   _cameraControllerRoot: {fileID: 7259789909605657368}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
