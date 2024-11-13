@@ -1,4 +1,5 @@
 ﻿using MassBattle.Core.Entities.Installers;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Installers;
@@ -23,6 +24,7 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private EventSystem _eventSystemToSpawn;
 
+        private IPauseGameProvider _pauseGameProvider;
         private IEndBattlePanelController _endBattlePanel;
         private IPauseMenuPanelController _pauseMenuPanel;
 
@@ -30,6 +32,7 @@ namespace MassBattle.UI.Installers
         {
             SpawnPanelControllers();
             SpawnEventSystem();
+            CreateInstances();
         }
 
         private void SpawnPanelControllers()
@@ -43,6 +46,11 @@ namespace MassBattle.UI.Installers
             Instantiate(_eventSystemToSpawn);
         }
 
+        private void CreateInstances()
+        {
+            _pauseGameProvider = new PauseGameProvider();
+        }
+
         private void Start()
         {
             InjectData();
@@ -51,7 +59,7 @@ namespace MassBattle.UI.Installers
         private void InjectData()
         {
             _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider, _sceneLoader);
-            _pauseMenuPanel.InjectData(_spawnedBattleInstaller.InputFacade, _sceneLoader);
+            _pauseMenuPanel.InjectData(_spawnedBattleInstaller.InputFacade, _sceneLoader, _pauseGameProvider);
         }
 
         public override bool IsSetupCorrect()

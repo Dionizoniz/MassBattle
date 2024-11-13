@@ -10,23 +10,11 @@ namespace MassBattle.UI.PauseMenuPanel
         [SerializeField]
         private GameObject _openPauseMenuButton;
 
-        private bool _isPanelVisible;
+        public bool IsPanelVisible { get; private set; }
 
         public void Initialize()
         {
             HideContentPanel();
-        }
-
-        public void ToggleContentPanel()
-        {
-            if (_isPanelVisible)
-            {
-                HideContentPanel();
-            }
-            else
-            {
-                ShowContentPanel();
-            }
         }
 
         public void HideContentPanel()
@@ -34,7 +22,7 @@ namespace MassBattle.UI.PauseMenuPanel
             _openPauseMenuButton.SetActive(true);
             _contentPanel.SetActive(false);
 
-            _isPanelVisible = false;
+            IsPanelVisible = false;
         }
 
         public void ShowContentPanel()
@@ -42,7 +30,7 @@ namespace MassBattle.UI.PauseMenuPanel
             _openPauseMenuButton.SetActive(false);
             _contentPanel.SetActive(true);
 
-            _isPanelVisible = true;
+            IsPanelVisible = true;
         }
     }
 }
