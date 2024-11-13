@@ -7,9 +7,9 @@ namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
 
-        public void InjectData(SceneLoader sceneLoader)
+        public void InjectData(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
         }

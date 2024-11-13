@@ -1,5 +1,4 @@
-﻿using System;
-using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;

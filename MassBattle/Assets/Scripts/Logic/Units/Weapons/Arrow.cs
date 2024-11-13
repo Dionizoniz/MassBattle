@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Providers;

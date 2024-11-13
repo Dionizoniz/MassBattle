@@ -9,9 +9,9 @@ namespace MassBattle.UI.EndBattlePanel
                                             IEndBattlePanelController
     {
         private IArmyProvider _armyProvider;
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
 
-        public void InjectData(IArmyProvider armyProvider, SceneLoader sceneLoader)
+        public void InjectData(IArmyProvider armyProvider, ISceneLoader sceneLoader)
         {
             _armyProvider = armyProvider;
             _sceneLoader = sceneLoader;
