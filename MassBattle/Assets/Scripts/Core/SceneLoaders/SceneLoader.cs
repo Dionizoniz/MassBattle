@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace MassBattle.Core.SceneLoaders
 {
-    [CreateAssetMenu(menuName = "Create " + nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
+    [CreateAssetMenu(menuName = nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
     public class SceneLoader : ExtendedScriptableObject, ISceneLoader, ICheckSetup
     {
         [SerializeField]

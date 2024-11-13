@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    [CreateAssetMenu(menuName = "Create " + nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
+    [CreateAssetMenu(menuName = nameof(BattleSetup), fileName = nameof(BattleSetup), order = 0)]
     public class BattleSetup : ExtendedScriptableObject, IBattleSetup, ICheckSetup
     {
         private const int MIN_ARMIES_COUNT = 2;
