@@ -10,7 +10,7 @@ using MassBattle.Logic.BattleCreator;
 using NUnit.Framework;
 using UnityEditor;
 
-namespace Tests.Editor
+namespace MassBattle.Tests.Editor
 {
     public class ProjectSetupTests : BaseTests
     {
