@@ -20,9 +20,16 @@ namespace MassBattle.Core.SceneLoaders
 
         public string TargetSceneNameToLoad { get; private set; }
 
-        public void LoadLaunchMenuScene()
+        public void LoadLaunchMenuScene(bool useLoadingScreen = true)
         {
-            LoadScene(_launchMenuSceneData);
+            if (useLoadingScreen)
+            {
+                LoadScene(_launchMenuSceneData);
+            }
+            else
+            {
+                LoadSceneInstant(_launchMenuSceneData);
+            }
         }
 
         private void LoadScene(SceneData sceneData)
@@ -32,9 +39,21 @@ namespace MassBattle.Core.SceneLoaders
             SceneManager.LoadScene(_loadingSceneData.SceneName);
         }
 
-        public void LoadBattleScene()
+        private void LoadSceneInstant(SceneData sceneData)
         {
-            LoadScene(_battleSceneData);
+            SceneManager.LoadScene(sceneData.SceneName);
+        }
+
+        public void LoadBattleScene(bool useLoadingScreen = true)
+        {
+            if (useLoadingScreen)
+            {
+                LoadScene(_battleSceneData);
+            }
+            else
+            {
+                LoadSceneInstant(_battleSceneData);
+            }
         }
 
         private void OnValidate()

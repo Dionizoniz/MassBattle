@@ -2,7 +2,7 @@
 {
     public interface ISceneLoader
     {
-        void LoadLaunchMenuScene();
-        void LoadBattleScene();
+        void LoadLaunchMenuScene(bool useLoadingScreen = true);
+        void LoadBattleScene(bool useLoadingScreen = true);
     }
 }
