@@ -33,20 +33,20 @@ namespace MassBattle.Logic.Installers
 
         private void Awake()
         {
-            InstantiateElementsToSpawn();
+            SpawnSystems();
             CreateInstances();
         }
 
-        private void InstantiateElementsToSpawn()
+        private void SpawnSystems()
         {
             _battleSpawner = Instantiate(_battleSpawnerToSpawn);
             _updateProvider = Instantiate(_updateProviderToSpawn);
 
             _battleCamera = Instantiate(_battleCameraToSpawn, _cameraControllerRoot);
-            ClearCameraControllerRootParent();
+            AdjustCameraControllerRoot();
         }
 
-        private void ClearCameraControllerRootParent()
+        private void AdjustCameraControllerRoot()
         {
             _cameraControllerRoot.transform.SetParent(null);
         }
@@ -58,6 +58,11 @@ namespace MassBattle.Logic.Installers
         }
 
         private void Start()
+        {
+            InitializeSystems();
+        }
+
+        private void InitializeSystems()
         {
             _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             _battleCamera.Initialize(ArmyProvider, _updateProvider);
