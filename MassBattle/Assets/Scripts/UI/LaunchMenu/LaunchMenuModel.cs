@@ -16,6 +16,8 @@ namespace MassBattle.UI.LaunchMenu
 
         public void StartBattle(IBattleSetup battleSetup)
         {
+            // TODO add test setup logic to avoid the same Army Names. 
+
             ClearRegisteredArmySetups(battleSetup);
             RegisterArmiesSetup(battleSetup);
             LoadBattleScene();
