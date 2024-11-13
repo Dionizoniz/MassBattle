@@ -13,7 +13,7 @@ namespace Tests.Editor
     public class ProjectSetupTests : BaseTests
     {
         [Test]
-        public void _00_TestSetup_BattleSetup()
+        public void _00_TestSetup_BattleSetups()
         {
             List<BattleSetup> assets = FindAssets<BattleSetup>();
             Assert.True(IsCorrectAssetsSetup(assets));
@@ -47,21 +47,21 @@ namespace Tests.Editor
         }
 
         [Test]
-        public void _03_TestSetup_SceneLoader()
+        public void _03_TestSetup_SceneLoaders()
         {
             List<SceneLoader> assets = FindAssets<SceneLoader>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _04_TestSetup_BattleSpawner()
+        public void _04_TestSetup_BattleSpawners()
         {
             List<BattleSpawner> assets = FindAssets<BattleSpawner>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _05_TestSetup_BattleSpawnerHasEnoughSpawnAreas()
+        public void _05_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
             List<BattleSetup> setups = FindAssets<BattleSetup>();
