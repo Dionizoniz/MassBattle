@@ -59,12 +59,12 @@ namespace MassBattle.Core.Entities.Database
 
         public override bool IsSetupCorrect()
         {
-            List<string> duplicateKeys = _elements.GroupBy(element => element.Id)
-                                                  .Where(group => group.Count() > 1)
-                                                  .Select(group => group.Key)
-                                                  .ToList();
+            List<string> duplicateIds = _elements.GroupBy(element => element.Id)
+                                                 .Where(group => group.Count() > 1)
+                                                 .Select(group => group.Key)
+                                                 .ToList();
 
-            return duplicateKeys.Count == 0;
+            return duplicateIds.Count == 0;
         }
     }
 }
