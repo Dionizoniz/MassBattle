@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Logic.BattleCreator;
@@ -33,6 +34,13 @@ namespace Tests.Editor
         public void _01_TestSetup_Installers()
         {
             List<BaseInstaller> installers = FindAssets<BaseInstaller>();
+            Assert.True(IsCorrectAssetsSetup(installers));
+        }
+
+        [Test]
+        public void _02_TestSetup_Databases()
+        {
+            List<BaseDatabase> installers = FindAssets<BaseDatabase>();
             Assert.True(IsCorrectAssetsSetup(installers));
         }
 
