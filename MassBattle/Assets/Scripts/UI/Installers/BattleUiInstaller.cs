@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;
@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace MassBattle.UI.Installers
 {
-    public class BattleUiInstaller : ExtendedMonoBehaviour, IBattleUiInstaller
+    public class BattleUiInstaller : BaseInstaller, IBattleUiInstaller
     {
         [SerializeField]
         private BattleInstaller _spawnedBattleInstaller;
@@ -45,6 +45,18 @@ namespace MassBattle.UI.Installers
         private void InjectData()
         {
             _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider, _sceneLoader);
+        }
+
+        public override bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = true;
+
+            isSetupCorrect &= _spawnedBattleInstaller != null;
+            isSetupCorrect &= _sceneLoader != null;
+            isSetupCorrect &= _endBattlePanelControllerToSpawn != null;
+            isSetupCorrect &= _eventSystemToSpawn != null;
+
+            return isSetupCorrect;
         }
     }
 }
