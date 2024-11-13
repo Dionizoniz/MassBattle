@@ -1,6 +1,6 @@
 {
     "name": "MassBattle.Core.Utilities.Editor",
-    "rootNamespace": "MassBattle.Core.Utilities.Editor",
+    "rootNamespace": "MassBattle",
     "references": [
         "GUID:a12dca627f400e147b2bbc36b3a017e4"
     ],

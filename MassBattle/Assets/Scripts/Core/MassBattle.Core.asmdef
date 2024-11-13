@@ -1,6 +1,6 @@
 {
     "name": "MassBattle.Core",
-    "rootNamespace": "MassBattle.Core",
+    "rootNamespace": "MassBattle",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
