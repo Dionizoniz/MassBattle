@@ -9,10 +9,8 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyProvider : IArmyProvider
     {
-        public event Action<ArmyData> OnLastArmyStay = delegate
-                                                       { };
-        public event Action OnNoArmyStay = delegate
-                                           { };
+        public event Action<ArmyData> OnLastArmyStay = delegate { };
+        public event Action OnNoArmyStay = delegate { };
 
         private readonly List<ArmyData> _armiesData = new();
 
