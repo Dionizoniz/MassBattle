@@ -1,11 +1,12 @@
 using System;
+using MassBattle.Core.Entities.Tests;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
     [Serializable]
-    public class ArmySetup
+    public class ArmySetup : ICheckSetup
     {
         [SerializeField]
         private string _armyId;
@@ -38,6 +39,15 @@ namespace MassBattle.Logic.Armies
             _strategyType = strategyType;
             _armyColor = armyColor;
             _isArmyActive = isArmyActive;
+        }
+
+        public bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = true;
+
+            isSetupCorrect &= string.IsNullOrEmpty(_armyId) == false;
+
+            return isSetupCorrect;
         }
     }
 }
