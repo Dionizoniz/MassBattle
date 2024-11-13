@@ -6,6 +6,8 @@ namespace MassBattle.Logic.Armies
 {
     public class ArmyData
     {
+        private const int FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY = 5;
+
         public event Action OnUnitRemove = delegate { };
 
         public ArmySetup ArmySetup { get; private set; }
@@ -14,6 +16,8 @@ namespace MassBattle.Logic.Armies
 
         private readonly List<Warrior> _warriors;
         private readonly List<Archer> _archers;
+
+        private int _lastUpdatedIndex;
 
         public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
@@ -74,6 +78,11 @@ namespace MassBattle.Logic.Armies
 
         public void UpdateArmy()
         {
+            for (int i = 0; i < AllUnits.Count; i++)
+            {
+                AllUnits[i].CacheNearestEnemy();
+            }
+
             for (int i = 0; i < AllUnits.Count; i++)
             {
                 AllUnits[i].ManualUpdate();

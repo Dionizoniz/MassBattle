@@ -56,6 +56,7 @@ namespace MassBattle.Logic.Units
         private IStrategy _strategy;
         private MaterialPropertyBlock _materialPropertyBlock;
 
+        private BaseUnit _cachedNearestEnemy;
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
 
@@ -94,15 +95,26 @@ namespace MassBattle.Logic.Units
         {
             if (IsUnitAlive)
             {
-                BaseUnit nearestEnemy = FindNearestEnemy();
+                if (_cachedNearestEnemy == null)
+                {
+                    //          CacheNearestEnemy();
+                }
+
                 UpdateCooldown();
-                TryMove(nearestEnemy);
-                TryAttack(nearestEnemy);
+                TryMove(_cachedNearestEnemy);
+                TryAttack(_cachedNearestEnemy);
             }
         }
 
-        // ====================================================
-        private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
+        public void CacheNearestEnemy()
+        {
+            _cachedNearestEnemy = FindNearestEnemy();
+        }
+
+        private BaseUnit FindNearestEnemy()
+        {
+            return PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
+        }
 
         private void UpdateCooldown()
         {
