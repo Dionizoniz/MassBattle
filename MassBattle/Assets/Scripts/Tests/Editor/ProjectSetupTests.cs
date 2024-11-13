@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Logic.BattleCreator;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace Tests.Editor
 {
@@ -27,6 +27,13 @@ namespace Tests.Editor
             }
 
             return isCorrectSetup && isAnySetup;
+        }
+
+        [Test]
+        public void _01_TestSetup_Installers()
+        {
+            List<BaseInstaller> installers = FindAssets<BaseInstaller>();
+            Assert.True(IsCorrectAssetsSetup(installers));
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
