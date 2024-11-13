@@ -12,7 +12,7 @@ namespace MassBattle.UI.LaunchMenu
     public class ArmyPanelController : ExtendedMonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI _armyIdLabel;
+        private TMP_InputField _armyIdInputField;
         [SerializeField]
         private Toggle _isArmyActiveToggle;
 
@@ -40,7 +40,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             _colorDatabase = colorDatabase;
 
-            _armyIdLabel.text = armySetup.ArmyId;
+            _armyIdInputField.text = armySetup.ArmyId;
             _isArmyActiveToggle.isOn = armySetup.IsArmyActive;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
@@ -70,7 +70,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public ArmySetup CreateArmySetup()
         {
-            string armyId = _armyIdLabel.text;
+            string armyId = _armyIdInputField.text;
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
             StrategyType strategyType = _strategyTypeWrapper.Value();
