@@ -43,15 +43,12 @@ namespace MassBattle.Logic.Controllers
 
         private void UpdateCameraTransform()
         {
-            if (_armyProvider.IsAnyArmyWithUnits())
-            {
-                Transform cameraTransform = _camera.transform;
-                Vector3 armiesCenter = FindArmiesCenter();
-                Vector3 newForward = armiesCenter - cameraTransform.position;
+            Transform cameraTransform = _camera.transform;
+            Vector3 armiesCenter = FindArmiesCenter();
+            Vector3 newForward = armiesCenter - cameraTransform.position;
 
-                float speed = _adjustPositionSpeed * Time.deltaTime;
-                cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
-            }
+            float speed = _adjustPositionSpeed * Time.deltaTime;
+            cameraTransform.forward = Vector3.Lerp(cameraTransform.forward, newForward, speed);
         }
 
         private Vector3 FindArmiesCenter()
@@ -60,7 +57,11 @@ namespace MassBattle.Logic.Controllers
 
             if (_framesToRefreshArmiesCenterLeft <= 0)
             {
-                _cachedArmiesCenter = _armyProvider.FindCenterOfArmies();
+                if (_armyProvider.IsAnyArmyWithUnits())
+                {
+                    _cachedArmiesCenter = _armyProvider.FindCenterOfArmies();
+                }
+
                 _framesToRefreshArmiesCenterLeft = _framesCountToRefreshArmiesCenter;
             }
 
