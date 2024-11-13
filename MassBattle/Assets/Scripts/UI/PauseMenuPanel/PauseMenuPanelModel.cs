@@ -15,10 +15,21 @@ namespace MassBattle.UI.PauseMenuPanel
             _sceneLoader = sceneLoader;
         }
 
+        public void OpenPauseMenuPanel()
+        {
+            // TODO pause
+            _view.ShowContentPanel();
+        }
+
         public void Continue()
-        { }
+        {
+            // TODO unpause
+            _view.HideContentPanel();
+        }
 
         public void ExitBattle()
-        { }
+        {
+            // TODO unpause
+        }
     }
 }

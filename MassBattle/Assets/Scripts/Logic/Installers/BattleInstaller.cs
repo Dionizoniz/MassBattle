@@ -30,10 +30,10 @@ namespace MassBattle.Logic.Installers
         private ColorDatabase _colorDatabase;
 
         public IArmyProvider ArmyProvider { get; private set; }
+        public IInputFacade InputFacade { get; private set; }
 
         private IBattleSpawner _battleSpawner;
         private IUpdateProvider _updateProvider;
-        private IInputFacade _inputFacade;
         private IBattleCamera _battleCamera;
 
         private IUnitsFactory _unitsFactory;
@@ -48,7 +48,7 @@ namespace MassBattle.Logic.Installers
         {
             _battleSpawner = Instantiate(_battleSpawnerToSpawn);
             _updateProvider = Instantiate(_updateProviderToSpawn);
-            _inputFacade = Instantiate(_inputFacadeToSpawn);
+            InputFacade = Instantiate(_inputFacadeToSpawn);
 
             _battleCamera = Instantiate(_battleCameraToSpawn, _cameraControllerRoot);
             AdjustCameraControllerRoot();
@@ -73,8 +73,8 @@ namespace MassBattle.Logic.Installers
         private void InitializeSystems()
         {
             _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
-            _inputFacade.Initialize(_updateProvider);
-            _battleCamera.Initialize(ArmyProvider, _updateProvider, _inputFacade);
+            InputFacade.Initialize(_updateProvider);
+            _battleCamera.Initialize(ArmyProvider, _updateProvider, InputFacade);
         }
 
         public override bool IsSetupCorrect()

@@ -24,6 +24,11 @@ namespace MassBattle.UI.PauseMenuPanel
             _model.InjectData(_inputFacade, _sceneLoader);
         }
 
+        public void OpenPauseMenuPanel()
+        {
+            _model.OpenPauseMenuPanel();
+        }
+
         public void Continue()
         {
             _model.Continue();

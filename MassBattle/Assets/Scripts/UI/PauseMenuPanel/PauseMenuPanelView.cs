@@ -7,6 +7,8 @@ namespace MassBattle.UI.PauseMenuPanel
     {
         [SerializeField]
         private GameObject _contentPanel;
+        [SerializeField]
+        private GameObject _openPauseMenuButton;
 
         public void Initialize()
         {
@@ -15,11 +17,13 @@ namespace MassBattle.UI.PauseMenuPanel
 
         public void ShowContentPanel()
         {
+            _openPauseMenuButton.SetActive(false);
             _contentPanel.SetActive(true);
         }
 
-        private void HideContentPanel()
+        public void HideContentPanel()
         {
+            _openPauseMenuButton.SetActive(true);
             _contentPanel.SetActive(false);
         }
     }
