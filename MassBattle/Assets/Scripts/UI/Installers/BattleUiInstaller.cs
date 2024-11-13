@@ -51,7 +51,7 @@ namespace MassBattle.UI.Installers
         {
             bool isSetupCorrect = true;
 
-            isSetupCorrect &= _spawnedBattleInstaller != null;
+            isSetupCorrect &= _spawnedBattleInstaller == null; // INFO: we referenced in on scene to avoid FindObject
             isSetupCorrect &= _sceneLoader != null;
             isSetupCorrect &= _endBattlePanelControllerToSpawn != null;
             isSetupCorrect &= _eventSystemToSpawn != null;
