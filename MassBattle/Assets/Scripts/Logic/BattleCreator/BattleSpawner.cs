@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
@@ -42,49 +43,57 @@ namespace MassBattle.Logic.BattleCreator
             SpawnArmies();
         }
 
+        private void CreateUnitsRoot()
+        {
+            _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
+        }
+
         private void SpawnArmies()
         {
             List<string> armyIds = _battleSetup.FindAllArmySetupIds();
             _armyProvider.ClearArmies();
 
-            for (int i = 0; i < armyIds.Count; i++)
+            for (int armyIndex = 0, boundsIndex = 0; armyIndex < armyIds.Count; armyIndex++)
             {
-                if (i < _spawnArmyBounds.Count)
+                if (boundsIndex < _spawnArmyBounds.Count)
                 {
-                    ArmyData armyData = SpawnArmy(armyIds[i], _spawnArmyBounds[i].bounds);
-                    _armyProvider.RegisterArmy(armyData);
+                    ArmyData armyData = TrySpawnArmy(armyIds[armyIndex], _spawnArmyBounds[boundsIndex].bounds);
+
+                    if (armyData != null)
+                    {
+                        _armyProvider.RegisterArmy(armyData);
+                        boundsIndex++;
+                    }
                 }
                 else
                 {
-                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {armyIds[i]} can not be spawned.");
+                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {armyIds[armyIndex]} can not be spawned.");
                 }
             }
 
             _armyProvider.InitializedRegisteredArmies();
         }
 
-        private void CreateUnitsRoot()
+        private ArmyData TrySpawnArmy(string armyId, Bounds spawnBounds)
         {
-            _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
-        }
+            ArmySetup setup = _battleSetup.TryFindArmySetupBy(armyId);
+            ArmyData armyData = null;
 
-        private ArmyData SpawnArmy(string armyId, Bounds spawnBounds)
-        {
-            ArmySetup armySetup = _battleSetup.TryFindArmySetupBy(armyId);
-            List<Warrior> warriors = new();
-            List<Archer> archers = new();
-
-            if (armySetup != null)
+            if (setup != null)
             {
-                warriors = SpawnUnits(_warriorPrefab, armySetup.WarriorsCount, armySetup, spawnBounds);
-                archers = SpawnUnits(_archerPrefab, armySetup.ArchersCount, armySetup, spawnBounds);
+                if (setup.IsArmyActive)
+                {
+                    List<Warrior> warriors = SpawnUnits(_warriorPrefab, setup.WarriorsCount, setup, spawnBounds);
+                    List<Archer> archers = SpawnUnits(_archerPrefab, setup.ArchersCount, setup, spawnBounds);
+                    armyData = new ArmyData(setup, warriors, archers);
+                }
             }
             else
             {
                 Debug.LogError("Army Setup could not be found. Can not spawn army.");
             }
 
-            return new ArmyData(armySetup, warriors, archers);
+            return armyData;
         }
 
         private List<T> SpawnUnits<T>(T unitToSpawn, int unitsCount, ArmySetup armySetup, Bounds spawnBounds)

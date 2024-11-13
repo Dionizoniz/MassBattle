@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -17,3 +17,19 @@ MonoBehaviour:
     color: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
   - _id: Green
     color: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
+  - _id: Yellow
+    color: {r: 0.82529044, g: 0.8773585, b: 0.086908154, a: 1}
+  - _id: Orange
+    color: {r: 0.9811321, g: 0.44843924, b: 0, a: 1}
+  - _id: Brown
+    color: {r: 0.5283019, g: 0.19897084, b: 0, a: 1}
+  - _id: Gray
+    color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  - _id: DarkBlue
+    color: {r: 0, g: 0.02951169, b: 1, a: 1}
+  - _id: Purple
+    color: {r: 0.6981132, g: 0, b: 0.28237548, a: 1}
+  - _id: White
+    color: {r: 0.9013884, g: 0.9056604, b: 0.9021289, a: 1}
+  _damageColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
+  _deathColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}

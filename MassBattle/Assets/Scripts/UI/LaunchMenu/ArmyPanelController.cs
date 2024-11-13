@@ -12,7 +12,9 @@ namespace MassBattle.UI.LaunchMenu
     public class ArmyPanelController : ExtendedMonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI _armyIdLabel;
+        private TMP_InputField _armyIdInputField;
+        [SerializeField]
+        private Toggle _isArmyActiveToggle;
 
         [Space, SerializeField]
         private Slider _warriorsSlider;
@@ -29,6 +31,8 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private Image _armyColor;
 
+        public bool IsArmyActive => _isArmyActiveToggle.isOn;
+
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
 
@@ -36,7 +40,8 @@ namespace MassBattle.UI.LaunchMenu
         {
             _colorDatabase = colorDatabase;
 
-            _armyIdLabel.text = armySetup.ArmyId;
+            _armyIdInputField.text = armySetup.ArmyId;
+            _isArmyActiveToggle.isOn = armySetup.IsArmyActive;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
             _armyColor.color = armySetup.ArmyColor;
@@ -65,11 +70,14 @@ namespace MassBattle.UI.LaunchMenu
 
         public ArmySetup CreateArmySetup()
         {
+            string armyId = _armyIdInputField.text;
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
             StrategyType strategyType = _strategyTypeWrapper.Value();
+            Color armyColor = _armyColor.color;
+            bool isArmyActive = _isArmyActiveToggle.isOn;
 
-            return new ArmySetup(_armyIdLabel.text, warriorsCount, archersCount, strategyType, _armyColor.color);
+            return new ArmySetup(armyId, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()

@@ -68,16 +68,18 @@ namespace MassBattle.Logic.Armies
 
         private void FillUpEnemiesForRegisteredArmies()
         {
-            for (int armyIndex = 0; armyIndex < _armiesData.Count; armyIndex++)
+            for (int i = 0; i < _armiesData.Count; i++)
             {
-                for (int enemyIndex = 0; enemyIndex < _armiesData.Count; enemyIndex++)
-                {
-                    if (armyIndex != enemyIndex) // TODO improve logic and make it as a list
-                    {
-                        _armiesData[armyIndex].enemyArmyData = _armiesData[enemyIndex];
-                    }
-                }
+                ArmyData currentArmy = _armiesData[i];
+                List<ArmyData> enemies = FindEnemiesForArmyId(currentArmy.ArmySetup.ArmyId);
+
+                currentArmy.InjectEnemyArmies(enemies);
             }
+        }
+
+        private List<ArmyData> FindEnemiesForArmyId(string armyId)
+        {
+            return _armiesData.FindAll(army => army.ArmySetup.ArmyId != armyId);
         }
 
         public Vector3 FindCenterOfArmies()

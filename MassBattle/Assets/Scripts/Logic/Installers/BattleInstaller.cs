@@ -1,4 +1,6 @@
 ﻿using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Providers;
+using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Controllers;
@@ -15,6 +17,9 @@ namespace MassBattle.Logic.Installers
         [SerializeField]
         private UpdateProvider _updateProviderToSpawn;
         [SerializeField]
+        private InputFacade _inputFacadeToSpawn;
+
+        [Space, SerializeField]
         private BattleCamera _battleCameraToSpawn;
         [SerializeField]
         private Transform _cameraControllerRoot;
@@ -28,25 +33,28 @@ namespace MassBattle.Logic.Installers
 
         private IBattleSpawner _battleSpawner;
         private IUpdateProvider _updateProvider;
+        private IInputFacade _inputFacade;
         private IBattleCamera _battleCamera;
+
         private IUnitsFactory _unitsFactory;
 
         private void Awake()
         {
-            InstantiateElementsToSpawn();
+            SpawnSystems();
             CreateInstances();
         }
 
-        private void InstantiateElementsToSpawn()
+        private void SpawnSystems()
         {
             _battleSpawner = Instantiate(_battleSpawnerToSpawn);
             _updateProvider = Instantiate(_updateProviderToSpawn);
+            _inputFacade = Instantiate(_inputFacadeToSpawn);
 
             _battleCamera = Instantiate(_battleCameraToSpawn, _cameraControllerRoot);
-            ClearCameraControllerRootParent();
+            AdjustCameraControllerRoot();
         }
 
-        private void ClearCameraControllerRootParent()
+        private void AdjustCameraControllerRoot()
         {
             _cameraControllerRoot.transform.SetParent(null);
         }
@@ -59,8 +67,14 @@ namespace MassBattle.Logic.Installers
 
         private void Start()
         {
+            InitializeSystems();
+        }
+
+        private void InitializeSystems()
+        {
             _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
-            _battleCamera.Initialize(ArmyProvider, _updateProvider);
+            _inputFacade.Initialize(_updateProvider);
+            _battleCamera.Initialize(ArmyProvider, _updateProvider, _inputFacade);
         }
     }
 }
