@@ -3,6 +3,7 @@ using System.Linq;
 using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using NUnit.Framework;
 
@@ -13,8 +14,8 @@ namespace Tests.Editor
         [Test]
         public void _00_TestSetup_BattleSetup()
         {
-            List<BattleSetup> battleSetups = FindAssets<BattleSetup>();
-            Assert.True(IsCorrectAssetsSetup(battleSetups));
+            List<BattleSetup> assets = FindAssets<BattleSetup>();
+            Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         private bool IsCorrectAssetsSetup<T>(List<T> assets) where T : ICheckSetup
@@ -33,15 +34,41 @@ namespace Tests.Editor
         [Test]
         public void _01_TestSetup_Installers()
         {
-            List<BaseInstaller> installers = FindAssets<BaseInstaller>();
-            Assert.True(IsCorrectAssetsSetup(installers));
+            List<BaseInstaller> assets = FindAssets<BaseInstaller>();
+            Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
         public void _02_TestSetup_Databases()
         {
-            List<BaseDatabase> installers = FindAssets<BaseDatabase>();
-            Assert.True(IsCorrectAssetsSetup(installers));
+            List<BaseDatabase> assets = FindAssets<BaseDatabase>();
+            Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
+        [Test]
+        public void _03_TestSetup_SceneLoader()
+        {
+            List<SceneLoader> assets = FindAssets<SceneLoader>();
+            Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
+        [Test]
+        public void _04_TestSetup_BattleSpawner()
+        {
+            List<BattleSpawner> assets = FindAssets<BattleSpawner>();
+            Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
+        [Test]
+        public void _05_TestSetup_BattleSpawnerHasEnoughSpawnAreas()
+        {
+            List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
+            List<BattleSetup> setups = FindAssets<BattleSetup>();
+
+            int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
+            int maxArmyIdsCount = setups.Max(setup => setup.FindAllArmySetupIds().Count);
+
+            Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

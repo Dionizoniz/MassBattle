@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
@@ -10,7 +12,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner
+    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
 
@@ -21,6 +23,8 @@ namespace MassBattle.Logic.BattleCreator
 
         [Space, SerializeField]
         private List<BoxCollider> _spawnArmyBounds = new();
+
+        public int SpawnArmyBoundsCount => _spawnArmyBounds.Count;
 
         private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
@@ -118,6 +122,15 @@ namespace MassBattle.Logic.BattleCreator
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;
+        }
+
+        public bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = _spawnArmyBounds.Any();
+            isSetupCorrect &= _warriorPrefab != null;
+            isSetupCorrect &= _archerPrefab != null;
+
+            return isSetupCorrect;
         }
     }
 }
