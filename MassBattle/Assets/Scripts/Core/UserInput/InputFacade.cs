@@ -36,7 +36,7 @@ namespace MassBattle.Core.UserInput
 
         private void ProcessMouseWheelScroll()
         {
-            float mouseWheelOffset = Input.GetAxis(_mouseWheelAxis);
+            float mouseWheelOffset = Input.mouseScrollDelta.y;
 
             if (mouseWheelOffset != 0)
             {
