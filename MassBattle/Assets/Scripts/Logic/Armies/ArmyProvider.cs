@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
@@ -12,11 +13,51 @@ namespace MassBattle.Logic.Armies
         public event Action<ArmyData> OnLastArmyStay = delegate { };
         public event Action OnNoArmyStay = delegate { };
 
+        private readonly IUpdateProvider _updateProvider;
         private readonly List<ArmyData> _armiesData = new();
+
+        public ArmyProvider(IUpdateProvider updateProvider)
+        {
+            _updateProvider = updateProvider;
+
+            AttachToEvents();
+        }
+
+        private void AttachToEvents()
+        {
+            _updateProvider.OnEarlyUpdate += EarlyUpdateArmies;
+            _updateProvider.OnUpdate += UpdateArmies;
+        }
+
+        private void EarlyUpdateArmies()
+        {
+            foreach (var armyData in _armiesData)
+            {
+                armyData.EarlyUpdateArmy();
+            }
+        }
+
+        private void UpdateArmies()
+        {
+            foreach (var armyData in _armiesData)
+            {
+                armyData.UpdateArmy();
+            }
+        }
 
         ~ArmyProvider()
         {
+            DetachFromEvents();
             ClearArmies();
+        }
+
+        private void DetachFromEvents()
+        {
+            if (_updateProvider != null)
+            {
+                _updateProvider.OnEarlyUpdate -= EarlyUpdateArmies;
+                _updateProvider.OnUpdate -= UpdateArmies;
+            }
         }
 
         public void ClearArmies()

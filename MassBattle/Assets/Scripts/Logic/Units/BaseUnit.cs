@@ -75,7 +75,6 @@ namespace MassBattle.Logic.Units
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(_armyColor);
-            AttachToEvents();
         }
 
         protected abstract IStrategy CreateStrategy(StrategyType strategyType);
@@ -91,13 +90,7 @@ namespace MassBattle.Logic.Units
             _renderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
-        private void AttachToEvents()
-        {
-            _updateProvider.OnEarlyUpdate += CachePosition;
-            _updateProvider.OnUpdate += ManualUpdate;
-        }
-
-        private void ManualUpdate()
+        public void ManualUpdate()
         {
             if (IsUnitAlive)
             {
@@ -108,6 +101,7 @@ namespace MassBattle.Logic.Units
             }
         }
 
+        // ====================================================
         private BaseUnit FindNearestEnemy() => PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
 
         private void UpdateCooldown()
@@ -229,20 +223,6 @@ namespace MassBattle.Logic.Units
         public void TakeDamageAnimationFinish() => UpdateColor(_armyColor);
         public void DeathAnimationStart() => UpdateColor(_colorDatabase.DeathColor);
         public void DeathAnimationFinish() => Destroy(_gameObject);
-
-        private void OnDestroy()
-        {
-            DetachFromEvents();
-        }
-
-        private void DetachFromEvents()
-        {
-            if (_updateProvider != null)
-            {
-                _updateProvider.OnEarlyUpdate -= CachePosition;
-                _updateProvider.OnUpdate -= ManualUpdate;
-            }
-        }
 
         public override bool IsSetupCorrect()
         {

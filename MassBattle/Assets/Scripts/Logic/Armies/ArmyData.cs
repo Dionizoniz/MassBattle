@@ -63,5 +63,21 @@ namespace MassBattle.Logic.Armies
 
             OnUnitRemove.Invoke();
         }
+
+        public void EarlyUpdateArmy()
+        {
+            for (int i = 0; i < AllUnits.Count; i++)
+            {
+                AllUnits[i].CachePosition();
+            }
+        }
+
+        public void UpdateArmy()
+        {
+            for (int i = 0; i < AllUnits.Count; i++)
+            {
+                AllUnits[i].ManualUpdate();
+            }
+        }
     }
 }
