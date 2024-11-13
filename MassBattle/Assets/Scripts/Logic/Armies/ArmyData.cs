@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using MassBattle.Logic.Units;
+using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
     public class ArmyData
     {
-        private const int FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY = 5;
+        private const int FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY = 10;
 
         public event Action OnUnitRemove = delegate { };
 
@@ -78,11 +79,24 @@ namespace MassBattle.Logic.Armies
 
         public void UpdateArmy()
         {
-            for (int i = 0; i < AllUnits.Count; i++)
-            {
-                AllUnits[i].CacheNearestEnemy();
-            }
+            CacheNearestEnemyForArmy();
+            CallManualUpdateForArmy();
+        }
 
+        private void CacheNearestEnemyForArmy()
+        {
+            float partSize = (float)AllUnits.Count / FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY;
+            int unitsCountToRefresh = Mathf.CeilToInt(partSize);
+
+            for (int i = 0; i < unitsCountToRefresh; i++, _lastUpdatedIndex++)
+            {
+                _lastUpdatedIndex %= AllUnits.Count;
+                AllUnits[_lastUpdatedIndex].CacheNearestEnemy();
+            }
+        }
+
+        private void CallManualUpdateForArmy()
+        {
             for (int i = 0; i < AllUnits.Count; i++)
             {
                 AllUnits[i].ManualUpdate();

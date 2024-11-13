@@ -95,11 +95,6 @@ namespace MassBattle.Logic.Units
         {
             if (IsUnitAlive)
             {
-                if (_cachedNearestEnemy == null)
-                {
-                    //          CacheNearestEnemy();
-                }
-
                 UpdateCooldown();
                 TryMove(_cachedNearestEnemy);
                 TryAttack(_cachedNearestEnemy);
@@ -108,12 +103,7 @@ namespace MassBattle.Logic.Units
 
         public void CacheNearestEnemy()
         {
-            _cachedNearestEnemy = FindNearestEnemy();
-        }
-
-        private BaseUnit FindNearestEnemy()
-        {
-            return PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
+            _cachedNearestEnemy = PositionFinder.FindNearestUnit(this, ArmyData.EnemyArmiesData);
         }
 
         private void UpdateCooldown()
