@@ -9,12 +9,11 @@ namespace MassBattle.Logic.Armies
         public event Action OnUnitRemove = delegate { };
 
         public ArmySetup ArmySetup { get; private set; }
-        public List<BaseUnit> AllUnits => _allUnits;
+        public List<BaseUnit> AllUnits { get; private set; }
         public List<ArmyData> EnemyArmiesData { get; private set; }
 
         private readonly List<Warrior> _warriors;
         private readonly List<Archer> _archers;
-        private List<BaseUnit> _allUnits;
 
         public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
         {
@@ -27,9 +26,9 @@ namespace MassBattle.Logic.Armies
 
         private void CacheAllUnits()
         {
-            _allUnits = new List<BaseUnit>();
-            _allUnits.AddRange(_warriors);
-            _allUnits.AddRange(_archers);
+            AllUnits = new List<BaseUnit>();
+            AllUnits.AddRange(_warriors);
+            AllUnits.AddRange(_archers);
         }
 
         public void InjectEnemyArmies(List<ArmyData> enemyArmiesData)
@@ -52,7 +51,7 @@ namespace MassBattle.Logic.Armies
         private void RemoveWarrior(Warrior warrior)
         {
             _warriors.Remove(warrior);
-            _allUnits.Remove(warrior);
+            AllUnits.Remove(warrior);
 
             OnUnitRemove.Invoke();
         }
@@ -60,7 +59,7 @@ namespace MassBattle.Logic.Armies
         private void RemoveArcher(Archer archer)
         {
             _archers.Remove(archer);
-            _allUnits.Remove(archer);
+            AllUnits.Remove(archer);
 
             OnUnitRemove.Invoke();
         }
