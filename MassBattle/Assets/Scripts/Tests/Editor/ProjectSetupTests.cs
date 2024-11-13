@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Entities.Database;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.SceneLoaders;
@@ -69,6 +70,13 @@ namespace Tests.Editor
             int maxArmyIdsCount = setups.Max(setup => setup.FindAllArmySetupIds().Count);
 
             Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
+        }
+
+        [Test]
+        public void _06_TestSetup_SceneEntities()
+        {
+            List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
+            Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

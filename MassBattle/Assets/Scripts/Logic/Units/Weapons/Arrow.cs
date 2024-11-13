@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Units.Weapons
 {
-    public class Arrow : ExtendedMonoBehaviour, IAttack
+    public class Arrow : BaseSceneEntity, IAttack
     {
         private static readonly int COLOR = Shader.PropertyToID("_Color");
 
@@ -148,6 +148,16 @@ namespace MassBattle.Logic.Units.Weapons
         private void OnDestroy()
         {
             DetachFromEvents();
+        }
+
+        public override bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = _movementSpeed > 0f;
+            isSetupCorrect &= _hitRange > 0f;
+            isSetupCorrect &= _flightDistance > 0f;
+            isSetupCorrect &= _renderer != null;
+
+            return isSetupCorrect;
         }
     }
 }
