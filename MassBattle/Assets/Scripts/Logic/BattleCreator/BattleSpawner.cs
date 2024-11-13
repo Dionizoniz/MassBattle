@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;

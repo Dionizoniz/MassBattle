@@ -1,7 +1,7 @@
 ﻿using System;
 using MassBattle.Core.Entities.Engine;
 
-namespace MassBattle.Logic.Providers
+namespace MassBattle.Core.Providers
 {
     public class UpdateProvider : ExtendedMonoBehaviour, IUpdateProvider
     {

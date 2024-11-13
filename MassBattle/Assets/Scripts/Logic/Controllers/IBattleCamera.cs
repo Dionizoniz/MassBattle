@@ -1,4 +1,5 @@
-﻿using MassBattle.Logic.Armies;
+﻿using MassBattle.Core.Providers;
+using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
 
 namespace MassBattle.Logic.Controllers

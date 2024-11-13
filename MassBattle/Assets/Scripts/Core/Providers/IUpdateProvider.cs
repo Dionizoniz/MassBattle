@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MassBattle.Logic.Providers
+namespace MassBattle.Core.Providers
 {
     public interface IUpdateProvider
     {
