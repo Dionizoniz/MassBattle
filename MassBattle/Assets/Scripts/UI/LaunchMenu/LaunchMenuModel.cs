@@ -1,4 +1,6 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using System.Collections.Generic;
+using System.Linq;
+using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
@@ -16,11 +18,28 @@ namespace MassBattle.UI.LaunchMenu
 
         public void StartBattle(IBattleSetup battleSetup)
         {
-            // TODO add test setup logic to avoid the same Army Names. 
+            if (IsCorrectArmyIdsSetup())
+            {
+                ClearRegisteredArmySetups(battleSetup);
+                RegisterArmiesSetup(battleSetup);
+                LoadBattleScene();
+            }
+            else
+            {
+                _view.ShowArmyIdsErrorMessage();
+            }
+        }
 
-            ClearRegisteredArmySetups(battleSetup);
-            RegisterArmiesSetup(battleSetup);
-            LoadBattleScene();
+        private bool IsCorrectArmyIdsSetup()
+        {
+            IEnumerable<string> activeIds = _view.ArmyPanels.Select(panel => panel.ArmyId);
+
+            List<string> duplicateIds = activeIds.GroupBy(id => id)
+                                                 .Where(group => group.Count() > 1)
+                                                 .Select(group => group.Key)
+                                                 .ToList();
+
+            return duplicateIds.Count == 0;
         }
 
         private void ClearRegisteredArmySetups(IBattleSetup battleSetup)

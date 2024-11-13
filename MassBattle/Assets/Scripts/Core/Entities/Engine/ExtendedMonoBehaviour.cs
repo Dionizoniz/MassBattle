@@ -11,7 +11,7 @@ namespace MassBattle.Core.Entities.Engine
         [HideInInspector]
         public Vector3 cachedPosition;
 
-        protected void CachePosition()
+        public void CachePosition()
         {
             cachedPosition = _transform.position;
         }

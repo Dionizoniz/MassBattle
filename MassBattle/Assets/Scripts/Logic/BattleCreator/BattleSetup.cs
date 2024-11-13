@@ -26,7 +26,7 @@ namespace MassBattle.Logic.BattleCreator
         {
             int index = FindSavedArmySetupIndexBy(armySetup.ArmyId);
 
-            if (index > 0)
+            if (index >= 0)
             {
                 _savedArmySetups.RemoveAt(index);
             }

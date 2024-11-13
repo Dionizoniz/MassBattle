@@ -61,7 +61,7 @@ namespace MassBattle.Logic.Installers
 
         private void CreateInstances()
         {
-            ArmyProvider = new ArmyProvider();
+            ArmyProvider = new ArmyProvider(_updateProvider);
             _unitsFactory = new UnitsFactory();
         }
 

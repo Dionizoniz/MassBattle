@@ -3,18 +3,34 @@ using MassBattle.Core.Entities.MVC;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
+using TMPro;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuView : View
     {
+        private const string ARMY_ID_DUPLICATES_ERROR_MESSAGE = "Remove duplicates in Army Names before Launch Battle.";
+
         [SerializeField]
         private ArmyPanelController _armyPanelToSpawn;
         [SerializeField]
         private RectTransform _armyPanelsRoot;
 
+        [Space, SerializeField]
+        private TextMeshProUGUI _errorMessageLabel;
+
         public List<ArmyPanelController> ArmyPanels { get; } = new();
+
+        private void Awake()
+        {
+            HideErrorMessage();
+        }
+
+        private void HideErrorMessage()
+        {
+            _errorMessageLabel.gameObject.SetActive(false);
+        }
 
         public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
         {
@@ -35,6 +51,17 @@ namespace MassBattle.UI.LaunchMenu
             armyPanel.InitializeData(armySetup, colorDatabase);
 
             ArmyPanels.Add(armyPanel);
+        }
+
+        public void ShowArmyIdsErrorMessage()
+        {
+            ShowErrorMessage(ARMY_ID_DUPLICATES_ERROR_MESSAGE);
+        }
+
+        private void ShowErrorMessage(string errorMessage)
+        {
+            _errorMessageLabel.text = errorMessage;
+            _errorMessageLabel.gameObject.SetActive(true);
         }
 
         private void OnDestroy()
