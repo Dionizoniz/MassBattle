@@ -31,6 +31,8 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private Image _armyColor;
 
+        public string ArmyId => _armyIdInputField.text;
+
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
 
@@ -68,14 +70,13 @@ namespace MassBattle.UI.LaunchMenu
 
         public ArmySetup CreateArmySetup()
         {
-            string armyId = _armyIdInputField.text;
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
             StrategyType strategyType = _strategyTypeWrapper.Value();
             Color armyColor = _armyColor.color;
             bool isArmyActive = _isArmyActiveToggle.isOn;
 
-            return new ArmySetup(armyId, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
+            return new ArmySetup(ArmyId, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()
