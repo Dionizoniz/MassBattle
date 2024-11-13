@@ -3,6 +3,7 @@ using System.Linq;
 using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Entities.Installers;
+using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
@@ -76,6 +77,13 @@ namespace Tests.Editor
         public void _06_TestSetup_SceneEntities()
         {
             List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
+            Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
+        [Test]
+        public void _07_TestSetup_ControllersInMVC()
+        {
+            List<BaseController> assets = FindAssets<BaseController>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
