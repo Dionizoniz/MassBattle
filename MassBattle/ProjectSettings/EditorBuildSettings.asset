@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScenes/LoadingScene.unity
     guid: 5ee1a6973735a8848ab16b6e970814c8
+  - enabled: 1
+    path: Assets/Scenes/ArtScenes/RocksEnvironmentScene.unity
+    guid: ae876bd41e378da4e9999b76c60dc527
   m_configObjects: {}
