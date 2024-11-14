@@ -26,7 +26,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public void StartBattle(IBattleSetup battleSetup)
         {
-            if (IsCorrectArmyIdsSetup())
+            if (IsCorrectArmyNamesSetup())
             {
                 ClearRegisteredArmySetups(battleSetup);
                 RegisterArmiesSetup(battleSetup);
@@ -38,9 +38,10 @@ namespace MassBattle.UI.LaunchMenu
             }
         }
 
-        private bool IsCorrectArmyIdsSetup()
+        private bool IsCorrectArmyNamesSetup()
         {
-            IEnumerable<string> activeIds = _view.ArmyPanels.Select(panel => panel.ArmyId);
+            // TODO add active armies check only !!!
+            IEnumerable<string> activeIds = _view.ArmyPanels.Select(panel => panel.ArmyName);
 
             List<string> duplicateIds = activeIds.GroupBy(id => id)
                                                  .Where(group => group.Count() > 1)
@@ -57,9 +58,10 @@ namespace MassBattle.UI.LaunchMenu
 
         private void RegisterArmiesSetup(IBattleSetup battleSetup)
         {
-            foreach (var panel in _view.ArmyPanels)
+            for (var i = 0; i < _view.ArmyPanels.Count; i++)
             {
-                ArmySetup armySetup = panel.CreateArmySetup();
+                var panel = _view.ArmyPanels[i];
+                ArmySetup armySetup = panel.CreateArmySetup(i);
                 battleSetup.SaveArmySetup(armySetup);
             }
         }

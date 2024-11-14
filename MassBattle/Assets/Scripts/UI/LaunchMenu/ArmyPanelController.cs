@@ -1,3 +1,4 @@
+using System;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
 using MassBattle.Logic.Armies;
@@ -31,7 +32,7 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private Image _armyColor;
 
-        public string ArmyId => _armyIdInputField.text;
+        public string ArmyName => _armyIdInputField.text;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
@@ -40,7 +41,7 @@ namespace MassBattle.UI.LaunchMenu
         {
             _colorDatabase = colorDatabase;
 
-            _armyIdInputField.text = armySetup.ArmyId;
+            _armyIdInputField.text = armySetup.ArmyName;
             _isArmyActiveToggle.isOn = armySetup.IsArmyActive;
             _warriorsSlider.value = armySetup.WarriorsCount;
             _archerSlider.value = armySetup.ArchersCount;
@@ -68,7 +69,7 @@ namespace MassBattle.UI.LaunchMenu
             _archerCountLabel.text = value.ToString();
         }
 
-        public ArmySetup CreateArmySetup()
+        public ArmySetup CreateArmySetup(int index)
         {
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
@@ -76,7 +77,7 @@ namespace MassBattle.UI.LaunchMenu
             Color armyColor = _armyColor.color;
             bool isArmyActive = _isArmyActiveToggle.isOn;
 
-            return new ArmySetup(ArmyId, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
+            return new ArmySetup(index, ArmyName, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Entities.Engine;
@@ -24,7 +25,7 @@ namespace MassBattle.Logic.BattleCreator
 
         public void SaveArmySetup(ArmySetup armySetup)
         {
-            int index = FindSavedArmySetupIndexBy(armySetup.ArmyId);
+            int index = FindSavedArmySetupIndexBy(armySetup.Id);
 
             if (index >= 0)
             {
@@ -36,17 +37,17 @@ namespace MassBattle.Logic.BattleCreator
 
         private int FindSavedArmySetupIndexBy(string id)
         {
-            return _savedArmySetups.FindIndex(armySetup => armySetup.ArmyId == id);
+            return _savedArmySetups.FindIndex(armySetup => armySetup.Id == id);
         }
 
         public List<string> FindAllArmySetupIds()
         {
-            return ArmySetups.Select(x => x.ArmyId).ToList();
+            return ArmySetups.Select(x => x.Id).ToList();
         }
 
         public ArmySetup TryFindArmySetupBy(string id)
         {
-            return ArmySetups.FirstOrDefault(armySetup => armySetup.ArmyId == id);
+            return ArmySetups.FirstOrDefault(armySetup => armySetup.Id == id);
         }
 
         public void ClearSavedArmySetups()
@@ -67,6 +68,14 @@ namespace MassBattle.Logic.BattleCreator
             }
 
             return isSetupCorrect;
+        }
+
+        private void OnValidate()
+        {
+            for (int i = 0; i < _defaultArmySetups.Count; i++)
+            {
+                _defaultArmySetups[i].GenerateId(i);
+            }
         }
     }
 }

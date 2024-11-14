@@ -33,7 +33,7 @@ namespace MassBattle.UI.EndBattlePanel
             _winnerArmyRoot.SetActive(true);
             _drawBattleRoot.SetActive(false);
 
-            _winnerArmyNameLabel.text = armyData.ArmySetup.ArmyId;
+            _winnerArmyNameLabel.text = armyData.ArmySetup.ArmyName;
             ShowContentPanel();
         }
 

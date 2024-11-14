@@ -1,15 +1,19 @@
 using System;
+using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Utilities;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
     [Serializable]
-    public class ArmySetup : ICheckSetup
+    public class ArmySetup : ICheckSetup, IId
     {
+        [SerializeField, ReadOnly]
+        private string _id;
         [SerializeField]
-        private string _armyId;
+        private string _armyName;
 
         [SerializeField]
         private int _warriorsCount;
@@ -22,7 +26,8 @@ namespace MassBattle.Logic.Armies
         [SerializeField]
         private bool _isArmyActive;
 
-        public string ArmyId => _armyId;
+        public string Id => _id;
+        public string ArmyName => _armyName;
         public int WarriorsCount => _warriorsCount;
         public int ArchersCount => _archersCount;
         public StrategyType StrategyType => _strategyType;
@@ -30,10 +35,11 @@ namespace MassBattle.Logic.Armies
         public bool IsArmyActive => _isArmyActive;
 
         public ArmySetup(
-                string armyId, int warriorsCount, int archersCount, StrategyType strategyType, Color armyColor,
-                bool isArmyActive)
+                int index, string armyName, int warriorsCount, int archersCount, StrategyType strategyType,
+                Color armyColor, bool isArmyActive)
         {
-            _armyId = armyId;
+            GenerateId(index);
+            _armyName = armyName;
             _warriorsCount = warriorsCount;
             _archersCount = archersCount;
             _strategyType = strategyType;
@@ -45,9 +51,15 @@ namespace MassBattle.Logic.Armies
         {
             bool isSetupCorrect = true;
 
-            isSetupCorrect &= string.IsNullOrEmpty(_armyId) == false;
+            isSetupCorrect &= string.IsNullOrEmpty(_id) == false;
+            isSetupCorrect &= string.IsNullOrEmpty(_armyName) == false;
 
             return isSetupCorrect;
+        }
+
+        public void GenerateId(int index)
+        {
+            _id = $"{nameof(ArmySetup)}{index}";
         }
     }
 }

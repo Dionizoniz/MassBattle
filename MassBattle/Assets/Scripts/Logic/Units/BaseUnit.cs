@@ -69,7 +69,7 @@ namespace MassBattle.Logic.Units
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
 
-            _armyId = armySetup.ArmyId;
+            _armyId = armySetup.Id;
             _armyColor = armySetup.ArmyColor;
             _strategy = CreateStrategy(armySetup.StrategyType);
             _materialPropertyBlock = new MaterialPropertyBlock();
