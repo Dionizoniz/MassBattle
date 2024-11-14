@@ -69,9 +69,11 @@ namespace MassBattle.Logic.Installers
             _unitsFactory = new UnitsFactory();
         }
 
-        private void Start()
+        protected override void Start()
         {
             InitializeSystems();
+
+            base.Start();
         }
 
         private void InitializeSystems()

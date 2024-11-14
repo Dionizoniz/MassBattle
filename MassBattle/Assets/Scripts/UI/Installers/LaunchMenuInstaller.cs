@@ -48,9 +48,11 @@ namespace MassBattle.UI.Installers
             _exitGameProvider = new ExitGameProvider();
         }
 
-        private void Start()
+        protected override void Start()
         {
             InjectData();
+
+            base.Start();
         }
 
         private void InjectData()
