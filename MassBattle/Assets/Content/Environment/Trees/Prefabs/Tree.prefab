@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6350888702335555584}
   - component: {fileID: 4952970939034792895}
   m_Layer: 0
-  m_Name: TreePart
+  m_Name: MiddlePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,9 +112,9 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5067242931151375010}
-  - {fileID: 4948005233010246584}
   - {fileID: 459249072830517862}
+  - {fileID: 4948005233010246584}
+  - {fileID: 5067242931151375010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8354380152052002458
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 5744621073100361726}
   - component: {fileID: 423188626590149551}
   m_Layer: 0
-  m_Name: TreePart
+  m_Name: TopPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 4393423681224216143}
   - component: {fileID: 6781232524522709110}
   m_Layer: 0
-  m_Name: TreePart
+  m_Name: BottomPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
