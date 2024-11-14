@@ -13,7 +13,7 @@ namespace MassBattle.UI.LaunchMenu
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
         [SerializeField]
-        private float _applicationExitDelay = 4f;
+        private float _applicationExitDelay = 3f;
 
         private ISceneLoader _sceneLoader;
         private IExitGameProvider _exitGameProvider;
