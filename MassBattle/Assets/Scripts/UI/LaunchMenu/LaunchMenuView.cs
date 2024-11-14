@@ -18,6 +18,8 @@ namespace MassBattle.UI.LaunchMenu
         private RectTransform _armyPanelsRoot;
 
         [Space, SerializeField]
+        private GameObject _errorMessageRoot;
+        [SerializeField]
         private TextMeshProUGUI _errorMessageLabel;
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
@@ -29,7 +31,7 @@ namespace MassBattle.UI.LaunchMenu
 
         private void HideErrorMessage()
         {
-            _errorMessageLabel.gameObject.SetActive(false);
+            _errorMessageRoot.gameObject.SetActive(false);
         }
 
         public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
@@ -61,7 +63,7 @@ namespace MassBattle.UI.LaunchMenu
         private void ShowErrorMessage(string errorMessage)
         {
             _errorMessageLabel.text = errorMessage;
-            _errorMessageLabel.gameObject.SetActive(true);
+            _errorMessageRoot.gameObject.SetActive(true);
         }
 
         private void OnDestroy()
