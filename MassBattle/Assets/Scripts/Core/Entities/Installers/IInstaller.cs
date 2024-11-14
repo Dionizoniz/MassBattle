@@ -2,7 +2,7 @@
 
 namespace MassBattle.Core.Entities.Installers
 {
-    public interface IBaseBattleInstaller
+    public interface IInstaller
     {
         event Action OnSpawnFinish;
     }

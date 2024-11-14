@@ -4,7 +4,7 @@ using MassBattle.Core.Entities.Tests;
 
 namespace MassBattle.Core.Entities.Installers
 {
-    public abstract class BaseInstaller : ExtendedMonoBehaviour, IBaseBattleInstaller, ICheckSetup
+    public abstract class BaseInstaller : ExtendedMonoBehaviour, IInstaller, ICheckSetup
     {
         public event Action OnSpawnFinish = delegate { };
 
