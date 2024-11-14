@@ -4,14 +4,14 @@ namespace MassBattle.UI.FadePanel
 {
     public class FadePanelController : Controller<FadePanelModel, FadePanelView>, IFadePanelController
     {
-        public void FadeIn()
+        public void FadeIn(bool isInstant = false)
         {
-            _view.FadeIn();
+            _view.FadeIn(isInstant);
         }
 
-        public void FadeOut()
+        public void FadeOut(bool isInstant = false)
         {
-            _view.FadeOut();
+            _view.FadeOut(isInstant);
         }
     }
 }
