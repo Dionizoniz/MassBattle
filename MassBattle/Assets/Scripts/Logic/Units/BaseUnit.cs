@@ -121,6 +121,7 @@ namespace MassBattle.Logic.Units
                 Vector3 averageMoveDirection = (moveDirection + evadeDirection) * 0.5f;
                 float speed = _movementSpeed * Time.deltaTime;
                 _transform.position += averageMoveDirection * speed;
+                _transform.forward = moveDirection;
             }
 
             UpdateAnimatorMovementSpeed();
