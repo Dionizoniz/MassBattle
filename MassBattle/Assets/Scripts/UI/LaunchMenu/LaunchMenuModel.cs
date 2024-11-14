@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
+using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
+        [SerializeField]
+        private float _applicationExitDelay = 4f;
+
         private ISceneLoader _sceneLoader;
         private IExitGameProvider _exitGameProvider;
 
@@ -66,6 +71,20 @@ namespace MassBattle.UI.LaunchMenu
 
         public void ExitGame()
         {
+            StartExitProcess();
+        }
+
+        private void StartExitProcess()
+        {
+            StartCoroutine(ExitProcess());
+        }
+
+        private IEnumerator ExitProcess()
+        {
+            _view.ShowExitPanel();
+
+            yield return new WaitForSeconds(_applicationExitDelay);
+
             _exitGameProvider.ExitGame();
         }
     }
