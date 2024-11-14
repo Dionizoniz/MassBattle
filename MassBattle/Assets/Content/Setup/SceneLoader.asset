@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: SceneLoader
   m_EditorClassIdentifier: 
   _loadingSceneData:
-    _sceneName: Loading
+    _sceneName: LoadingScene
     _sceneAsset: {fileID: 102900000, guid: 5ee1a6973735a8848ab16b6e970814c8, type: 3}
   _launchMenuSceneData:
-    _sceneName: LaunchMenu
+    _sceneName: LaunchMenuScene
     _sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
   _battleSceneData:
-    _sceneName: Battle
+    _sceneName: BattleScene
     _sceneAsset: {fileID: 102900000, guid: 1ead56edf1b82074ab9400505d23f23d, type: 3}
+  _artScenesData:
+  - _sceneName: RocksEnvironmentScene
+    _sceneAsset: {fileID: 102900000, guid: ae876bd41e378da4e9999b76c60dc527, type: 3}
