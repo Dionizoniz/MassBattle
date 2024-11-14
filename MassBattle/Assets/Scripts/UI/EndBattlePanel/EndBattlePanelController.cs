@@ -1,7 +1,6 @@
 using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
-using UnityEngine.SceneManagement;
 
 namespace MassBattle.UI.EndBattlePanel
 {
