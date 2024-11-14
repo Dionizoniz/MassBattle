@@ -1,4 +1,5 @@
 using MassBattle.Core.Entities.Installers;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
@@ -23,11 +24,13 @@ namespace MassBattle.UI.Installers
         private SceneLoader _sceneLoader;
 
         private ILaunchMenuController _launchMenuController;
+        private IExitGameProvider _exitGameProvider;
 
         private void Awake()
         {
             SpawnLaunchMenuController();
             SpawnEventSystem();
+            CreateInstances();
         }
 
         private void SpawnLaunchMenuController()
@@ -40,6 +43,11 @@ namespace MassBattle.UI.Installers
             Instantiate(_eventSystemToSpawn);
         }
 
+        private void CreateInstances()
+        {
+            _exitGameProvider = new ExitGameProvider();
+        }
+
         private void Start()
         {
             InjectData();
@@ -47,7 +55,7 @@ namespace MassBattle.UI.Installers
 
         private void InjectData()
         {
-            _launchMenuController.InjectData(_battleSetup, _colorDatabase, _sceneLoader);
+            _launchMenuController.InjectData(_battleSetup, _colorDatabase, _sceneLoader, _exitGameProvider);
         }
 
         public override bool IsSetupCorrect()

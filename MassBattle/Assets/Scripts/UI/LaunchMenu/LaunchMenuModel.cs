@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
@@ -10,10 +11,12 @@ namespace MassBattle.UI.LaunchMenu
     public class LaunchMenuModel : Model<LaunchMenuView>
     {
         private ISceneLoader _sceneLoader;
+        private IExitGameProvider _exitGameProvider;
 
-        public void InjectData(ISceneLoader sceneLoader)
+        public void InjectData(ISceneLoader sceneLoader, IExitGameProvider exitGameProvider)
         {
             _sceneLoader = sceneLoader;
+            _exitGameProvider = exitGameProvider;
         }
 
         public void StartBattle(IBattleSetup battleSetup)
@@ -59,6 +62,11 @@ namespace MassBattle.UI.LaunchMenu
         private void LoadBattleScene()
         {
             _sceneLoader.LoadBattleScene();
+        }
+
+        public void ExitGame()
+        {
+            _exitGameProvider.ExitGame();
         }
     }
 }
