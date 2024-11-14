@@ -22,7 +22,7 @@ namespace MassBattle.Logic.Units.Weapons
         private Renderer _renderer;
 
         public float AttackValue { get; private set; }
-        public Vector3 AttackerPosition => _transform.position;
+        public Vector3 AttackerPosition => _initialPosition;
 
         private ArmyData _armyData;
         private Vector3 _initialPosition;
