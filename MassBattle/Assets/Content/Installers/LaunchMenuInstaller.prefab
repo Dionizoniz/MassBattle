@@ -48,6 +48,7 @@ MonoBehaviour:
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
   _launchMenuControllerToSpawn: {fileID: 3678075164039831391, guid: d2ca41999637d9b438c54acd6860919d, type: 3}
+  _fadePanelControllerToSpawn: {fileID: 3495896142305995595, guid: d5a6ef45e2d70114ca0a17ad10acf176, type: 3}
   _eventSystemToSpawn: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}
   _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
   _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}

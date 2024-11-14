@@ -60,7 +60,7 @@ namespace MassBattle.Logic.Installers
 
         private void AdjustCameraControllerRoot()
         {
-            _cameraControllerRoot.transform.SetParent(null);
+            _cameraControllerRoot.SetParent(null);
         }
 
         private void CreateInstances()
@@ -69,9 +69,11 @@ namespace MassBattle.Logic.Installers
             _unitsFactory = new UnitsFactory();
         }
 
-        private void Start()
+        protected override void Start()
         {
             InitializeSystems();
+
+            base.Start();
         }
 
         private void InitializeSystems()

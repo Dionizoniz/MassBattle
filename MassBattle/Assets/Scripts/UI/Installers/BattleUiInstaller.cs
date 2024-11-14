@@ -1,9 +1,9 @@
 ﻿using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Providers;
-using MassBattle.Core.SceneLoaders;
-using MassBattle.Core.UserInput;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;
+using MassBattle.UI.FadePanel;
+using MassBattle.UI.FadePanel.Executors;
 using MassBattle.UI.PauseMenuPanel;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,13 +20,18 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private PauseMenuPanelController _pauseMenuPanelControllerToSpawn;
         [SerializeField]
+        private FadePanelController _fadePanelControllerToSpawn;
+        [SerializeField]
         private EventSystem _eventSystemToSpawn;
 
         private IBattleInstaller BaseInstaller => _spawnedBattleInstaller;
 
-        private IPauseGameProvider _pauseGameProvider;
         private IEndBattlePanelController _endBattlePanel;
         private IPauseMenuPanelController _pauseMenuPanel;
+        private IFadePanelController _fadePanel;
+
+        private IPauseGameProvider _pauseGameProvider;
+        private IFadeExecutor _fadeExecutor;
 
         private void Awake()
         {
@@ -39,6 +44,7 @@ namespace MassBattle.UI.Installers
         {
             _endBattlePanel = Instantiate(_endBattlePanelControllerToSpawn);
             _pauseMenuPanel = Instantiate(_pauseMenuPanelControllerToSpawn);
+            _fadePanel = Instantiate(_fadePanelControllerToSpawn);
         }
 
         private void SpawnEventSystem()
@@ -49,11 +55,14 @@ namespace MassBattle.UI.Installers
         private void CreateInstances()
         {
             _pauseGameProvider = new PauseGameProvider();
+            _fadeExecutor = new FadeExecutor(_fadePanel, this);
         }
 
-        private void Start()
+        protected override void Start()
         {
             InjectData();
+
+            base.Start();
         }
 
         private void InjectData()

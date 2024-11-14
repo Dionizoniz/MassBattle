@@ -6,12 +6,17 @@ namespace MassBattle.Core.Providers
     {
         public void PauseGame()
         {
-            Time.timeScale = 0f;
+            ChangeTimeScale(0f);
+        }
+
+        private void ChangeTimeScale(float timeScale)
+        {
+            Time.timeScale = timeScale;
         }
 
         public void ResumeGame()
         {
-            Time.timeScale = 1f;
+            ChangeTimeScale(1f);
         }
     }
 }

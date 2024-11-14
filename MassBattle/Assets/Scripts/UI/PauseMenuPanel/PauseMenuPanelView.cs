@@ -1,5 +1,4 @@
-﻿using System;
-using MassBattle.Core.Entities.MVC;
+﻿using MassBattle.Core.Entities.MVC;
 using MassBattle.Logic.Armies;
 using UnityEngine;
 

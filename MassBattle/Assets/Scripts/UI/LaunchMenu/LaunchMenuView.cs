@@ -22,16 +22,25 @@ namespace MassBattle.UI.LaunchMenu
         [SerializeField]
         private TextMeshProUGUI _errorMessageLabel;
 
+        [Space, SerializeField]
+        private GameObject _exitScreenRoot;
+
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
         private void Awake()
         {
             HideErrorMessage();
+            HideExitPanel();
         }
 
         private void HideErrorMessage()
         {
             _errorMessageRoot.gameObject.SetActive(false);
+        }
+
+        private void HideExitPanel()
+        {
+            _exitScreenRoot.gameObject.SetActive(false);
         }
 
         public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
@@ -64,6 +73,11 @@ namespace MassBattle.UI.LaunchMenu
         {
             _errorMessageLabel.text = errorMessage;
             _errorMessageRoot.gameObject.SetActive(true);
+        }
+
+        public void ShowExitPanel()
+        {
+            _exitScreenRoot.gameObject.SetActive(true);
         }
 
         private void OnDestroy()
