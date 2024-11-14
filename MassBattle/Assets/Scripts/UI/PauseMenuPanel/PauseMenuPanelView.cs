@@ -1,4 +1,6 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using System;
+using MassBattle.Core.Entities.MVC;
+using MassBattle.Logic.Armies;
 using UnityEngine;
 
 namespace MassBattle.UI.PauseMenuPanel
@@ -9,12 +11,31 @@ namespace MassBattle.UI.PauseMenuPanel
         private GameObject _contentPanel;
         [SerializeField]
         private GameObject _openPauseMenuButton;
+        private IArmyProvider _armyProvider;
 
         public bool IsPanelVisible { get; private set; }
 
-        public void Initialize()
+        public void Initialize(IArmyProvider armyProvider)
         {
+            _armyProvider = armyProvider;
+
+            _armyProvider.OnLastArmyStay += HideAllElements;
+            _armyProvider.OnNoArmyStay += HideAllElements;
+
             HideContentPanel();
+        }
+
+        private void HideAllElements(ArmyData _)
+        {
+            HideAllElements();
+        }
+
+        private void HideAllElements()
+        {
+            _openPauseMenuButton.SetActive(false);
+            _contentPanel.SetActive(false);
+
+            IsPanelVisible = false;
         }
 
         public void HideContentPanel()
@@ -31,6 +52,15 @@ namespace MassBattle.UI.PauseMenuPanel
             _contentPanel.SetActive(true);
 
             IsPanelVisible = true;
+        }
+
+        private void OnDestroy()
+        {
+            if (_armyProvider != null)
+            {
+                _armyProvider.OnLastArmyStay -= HideAllElements;
+                _armyProvider.OnNoArmyStay -= HideAllElements;
+            }
         }
     }
 }
