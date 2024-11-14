@@ -2,7 +2,10 @@
 {
     public interface IFadePanelController
     {
-        void FadeIn(bool isInstant = false);
-        void FadeOut(bool isInstant = false);
+        void FadeIn();
+        void FadeInInstant();
+
+        void FadeOut();
+        void FadeOutInstant();
     }
 }
