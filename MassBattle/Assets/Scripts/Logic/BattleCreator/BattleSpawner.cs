@@ -3,6 +3,7 @@ using System.Linq;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.Providers;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Providers;
@@ -32,19 +33,27 @@ namespace MassBattle.Logic.BattleCreator
         private IUnitsFactory _unitsFactory;
         private IColorDatabase _colorDatabase;
         private Transform _unitsRoot;
+        private SceneLoader _sceneLoader;
 
         public void Initialize(
                 IBattleSetup battleSetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, SceneLoader sceneLoader)
         {
-            _colorDatabase = colorDatabase;
-            _updateProvider = updateProvider;
             _battleSetup = battleSetup;
             _armyProvider = armyProvider;
+            _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
+            _colorDatabase = colorDatabase;
+            _sceneLoader = sceneLoader;
 
+            LoadArtScene();
             CreateUnitsRoot();
             SpawnArmies();
+        }
+
+        private void LoadArtScene()
+        {
+            _sceneLoader.LoadRandomArtScene();
         }
 
         private void CreateUnitsRoot()

@@ -1,9 +1,13 @@
-﻿using MassBattle.Logic.Armies;
+﻿using MassBattle.Core.SceneLoaders;
+using MassBattle.Core.UserInput;
+using MassBattle.Logic.Armies;
 
 namespace MassBattle.Logic.Installers
 {
     public interface IBattleInstaller
     {
         IArmyProvider ArmyProvider { get; }
+        IInputFacade InputFacade { get; }
+        ISceneLoader SceneLoader { get; }
     }
 }
