@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ArtScenes/RocksEnvironmentScene.unity
     guid: ae876bd41e378da4e9999b76c60dc527
+  - enabled: 1
+    path: Assets/Scenes/ArtScenes/TreesEnvironmentScene.unity
+    guid: a1a7c91a359d9724886628848fcfd338
   m_configObjects: {}

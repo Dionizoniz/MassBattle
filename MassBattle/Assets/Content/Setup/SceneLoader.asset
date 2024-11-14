@@ -24,3 +24,5 @@ MonoBehaviour:
   _artScenesData:
   - _sceneName: RocksEnvironmentScene
     _sceneAsset: {fileID: 102900000, guid: ae876bd41e378da4e9999b76c60dc527, type: 3}
+  - _sceneName: TreesEnvironmentScene
+    _sceneAsset: {fileID: 102900000, guid: a1a7c91a359d9724886628848fcfd338, type: 3}
