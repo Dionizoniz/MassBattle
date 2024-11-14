@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.Utilities;
@@ -17,6 +18,9 @@ namespace MassBattle.Core.SceneLoaders
         private SceneData _launchMenuSceneData;
         [SerializeField]
         private SceneData _battleSceneData;
+
+        [Space, SerializeField]
+        private List<SceneData> _artScenesData = new();
 
         public string TargetSceneNameToLoad { get; private set; }
 
@@ -41,7 +45,7 @@ namespace MassBattle.Core.SceneLoaders
 
         private void LoadSceneInstant(SceneData sceneData)
         {
-            SceneManager.LoadScene(sceneData.SceneName);
+            SceneManager.LoadScene(sceneData.SceneName, LoadSceneMode.Single);
         }
 
         public void LoadBattleScene(bool useLoadingScreen = true)
@@ -56,11 +60,27 @@ namespace MassBattle.Core.SceneLoaders
             }
         }
 
+        public void LoadRandomArtScene()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _artScenesData.Count);
+            LoadAdditiveScene(_artScenesData[randomIndex]);
+        }
+
+        private void LoadAdditiveScene(SceneData sceneData)
+        {
+            SceneManager.LoadScene(sceneData.SceneName, LoadSceneMode.Additive);
+        }
+
         private void OnValidate()
         {
             _loadingSceneData.CacheSceneName();
             _launchMenuSceneData.CacheSceneName();
             _battleSceneData.CacheSceneName();
+
+            foreach (var sceneData in _artScenesData)
+            {
+                sceneData.CacheSceneName();
+            }
         }
 
         [Serializable]
@@ -103,6 +123,11 @@ namespace MassBattle.Core.SceneLoaders
             bool isSetupCorrect = _loadingSceneData.IsSetupCorrect();
             isSetupCorrect &= _launchMenuSceneData.IsSetupCorrect();
             isSetupCorrect &= _battleSceneData.IsSetupCorrect();
+
+            foreach (var sceneData in _artScenesData)
+            {
+                isSetupCorrect &= sceneData.IsSetupCorrect();
+            }
 
             return isSetupCorrect;
         }

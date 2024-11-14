@@ -4,5 +4,6 @@
     {
         void LoadLaunchMenuScene(bool useLoadingScreen = true);
         void LoadBattleScene(bool useLoadingScreen = true);
+        void LoadRandomArtScene();
     }
 }

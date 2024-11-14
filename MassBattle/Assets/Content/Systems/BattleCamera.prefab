@@ -111,5 +111,6 @@ MonoBehaviour:
   _camera: {fileID: 5198965635676994205}
   _adjustPositionSpeed: 0.1
   _minZoomLevel: {x: 0, y: -65, z: -50}
-  _maxZoomLevel: {x: 0, y: 0, z: 50}
-  _zoomSpeedMultiplier: 100
+  _maxZoomLevel: {x: 0, y: 0, z: 100}
+  _zoomSpeedMultiplier: 150
+  _framesCountToRefreshArmiesCenter: 10

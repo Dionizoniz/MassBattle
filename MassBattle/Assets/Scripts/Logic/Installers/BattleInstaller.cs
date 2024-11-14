@@ -1,5 +1,6 @@
 ﻿using MassBattle.Core.Entities.Installers;
 using MassBattle.Core.Providers;
+using MassBattle.Core.SceneLoaders;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
@@ -20,17 +21,20 @@ namespace MassBattle.Logic.Installers
         private InputFacade _inputFacadeToSpawn;
 
         [Space, SerializeField]
-        private BattleCamera _battleCameraToSpawn;
-        [SerializeField]
         private Transform _cameraControllerRoot;
+        [SerializeField]
+        private BattleCamera _battleCameraToSpawn;
 
         [Space, SerializeField]
         private BattleSetup _battleSetup;
         [SerializeField]
         private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private SceneLoader _sceneLoader;
 
         public IArmyProvider ArmyProvider { get; private set; }
         public IInputFacade InputFacade { get; private set; }
+        public ISceneLoader SceneLoader => _sceneLoader;
 
         private IBattleSpawner _battleSpawner;
         private IUpdateProvider _updateProvider;
@@ -72,21 +76,27 @@ namespace MassBattle.Logic.Installers
 
         private void InitializeSystems()
         {
-            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase);
-            InputFacade.Initialize(_updateProvider);
+            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
+                                      _sceneLoader);
+
             _battleCamera.Initialize(ArmyProvider, _updateProvider, InputFacade);
+            InputFacade.Initialize(_updateProvider);
         }
 
         public override bool IsSetupCorrect()
         {
             bool isSetupCorrect = true;
 
+            isSetupCorrect &= _battleSpawnerToSpawn != null;
             isSetupCorrect &= _updateProviderToSpawn != null;
             isSetupCorrect &= _inputFacadeToSpawn != null;
-            isSetupCorrect &= _battleCameraToSpawn != null;
+
             isSetupCorrect &= _cameraControllerRoot != null;
+            isSetupCorrect &= _battleCameraToSpawn != null;
+
             isSetupCorrect &= _battleSetup != null;
             isSetupCorrect &= _colorDatabase != null;
+            isSetupCorrect &= _sceneLoader != null;
 
             return isSetupCorrect;
         }

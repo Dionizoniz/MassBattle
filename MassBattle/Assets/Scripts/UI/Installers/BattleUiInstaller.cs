@@ -14,8 +14,6 @@ namespace MassBattle.UI.Installers
     {
         [SerializeField]
         private BattleInstaller _spawnedBattleInstaller;
-        [SerializeField]
-        private SceneLoader _sceneLoader;
 
         [Space, SerializeField]
         private EndBattlePanelController _endBattlePanelControllerToSpawn;
@@ -23,6 +21,8 @@ namespace MassBattle.UI.Installers
         private PauseMenuPanelController _pauseMenuPanelControllerToSpawn;
         [SerializeField]
         private EventSystem _eventSystemToSpawn;
+
+        private IBattleInstaller BaseInstaller => _spawnedBattleInstaller;
 
         private IPauseGameProvider _pauseGameProvider;
         private IEndBattlePanelController _endBattlePanel;
@@ -58,8 +58,8 @@ namespace MassBattle.UI.Installers
 
         private void InjectData()
         {
-            _endBattlePanel.InjectData(_spawnedBattleInstaller.ArmyProvider, _sceneLoader);
-            _pauseMenuPanel.InjectData(_spawnedBattleInstaller.InputFacade, _sceneLoader, _pauseGameProvider);
+            _endBattlePanel.InjectData(BaseInstaller.ArmyProvider, BaseInstaller.SceneLoader);
+            _pauseMenuPanel.InjectData(BaseInstaller.InputFacade, BaseInstaller.SceneLoader, _pauseGameProvider);
         }
 
         public override bool IsSetupCorrect()
@@ -67,8 +67,8 @@ namespace MassBattle.UI.Installers
             bool isSetupCorrect = true;
 
             isSetupCorrect &= _spawnedBattleInstaller == null; // INFO: we referenced in on scene to avoid FindObject
-            isSetupCorrect &= _sceneLoader != null;
             isSetupCorrect &= _endBattlePanelControllerToSpawn != null;
+            isSetupCorrect &= _pauseMenuPanelControllerToSpawn != null;
             isSetupCorrect &= _eventSystemToSpawn != null;
 
             return isSetupCorrect;

@@ -37,6 +37,11 @@ namespace MassBattle.Logic.Controllers
             _updateProvider = updateProvider;
             _inputFacade = inputFacade;
 
+            AttachToEvents();
+        }
+
+        private void AttachToEvents()
+        {
             _updateProvider.OnUpdate += UpdateCameraTransform;
             _inputFacade.OnMouseWheelScroll += AdjustCameraOffset;
         }
@@ -78,9 +83,18 @@ namespace MassBattle.Logic.Controllers
 
         private void OnDestroy()
         {
+            DetachFromEvents();
+        }
+
+        private void DetachFromEvents()
+        {
             if (_updateProvider != null)
             {
                 _updateProvider.OnUpdate -= UpdateCameraTransform;
+            }
+
+            if (_inputFacade != null)
+            {
                 _inputFacade.OnMouseWheelScroll -= AdjustCameraOffset;
             }
         }

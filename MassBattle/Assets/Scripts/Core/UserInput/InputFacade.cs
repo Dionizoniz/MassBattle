@@ -58,7 +58,10 @@ namespace MassBattle.Core.UserInput
 
         private void DetachFromEvents()
         {
-            _updateProvider.OnUpdate -= ProcessInput;
+            if (_updateProvider != null)
+            {
+                _updateProvider.OnUpdate -= ProcessInput;
+            }
         }
     }
 }
