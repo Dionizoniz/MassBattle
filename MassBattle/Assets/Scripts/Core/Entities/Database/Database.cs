@@ -57,6 +57,19 @@ namespace MassBattle.Core.Entities.Database
             return result;
         }
 
+        private void OnValidate()
+        {
+            GenerateIds();
+        }
+
+        private void GenerateIds()
+        {
+            for (var i = 0; i < _elements.Count; i++)
+            {
+                _elements[i].GenerateId(i);
+            }
+        }
+
         public override bool IsSetupCorrect()
         {
             List<string> duplicateIds = _elements.GroupBy(element => element.Id)
