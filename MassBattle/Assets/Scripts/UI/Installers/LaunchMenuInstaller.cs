@@ -3,6 +3,8 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
+using MassBattle.UI.FadePanel;
+using MassBattle.UI.FadePanel.Executors;
 using MassBattle.UI.LaunchMenu;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +16,8 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private LaunchMenuController _launchMenuControllerToSpawn;
         [SerializeField]
+        private FadePanelController _fadePanelControllerToSpawn;
+        [SerializeField]
         private EventSystem _eventSystemToSpawn;
 
         [Space, SerializeField]
@@ -24,18 +28,22 @@ namespace MassBattle.UI.Installers
         private SceneLoader _sceneLoader;
 
         private ILaunchMenuController _launchMenuController;
+        private IFadePanelController _fadePanel;
+
         private IExitGameProvider _exitGameProvider;
+        private IFadeExecutor _fadeExecutor;
 
         private void Awake()
         {
-            SpawnLaunchMenuController();
+            SpawnPanelControllers();
             SpawnEventSystem();
             CreateInstances();
         }
 
-        private void SpawnLaunchMenuController()
+        private void SpawnPanelControllers()
         {
             _launchMenuController = Instantiate(_launchMenuControllerToSpawn);
+            _fadePanel = Instantiate(_fadePanelControllerToSpawn);
         }
 
         private void SpawnEventSystem()
@@ -46,6 +54,7 @@ namespace MassBattle.UI.Installers
         private void CreateInstances()
         {
             _exitGameProvider = new ExitGameProvider();
+            _fadeExecutor = new FadeExecutor(_fadePanel, this);
         }
 
         protected override void Start()
