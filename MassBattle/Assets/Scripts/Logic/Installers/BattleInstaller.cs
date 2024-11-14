@@ -60,7 +60,7 @@ namespace MassBattle.Logic.Installers
 
         private void AdjustCameraControllerRoot()
         {
-            _cameraControllerRoot.transform.SetParent(null);
+            _cameraControllerRoot.SetParent(null);
         }
 
         private void CreateInstances()

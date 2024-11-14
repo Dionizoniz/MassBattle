@@ -83,6 +83,20 @@ namespace MassBattle.Core.SceneLoaders
             }
         }
 
+        public bool IsSetupCorrect()
+        {
+            bool isSetupCorrect = _loadingSceneData.IsSetupCorrect();
+            isSetupCorrect &= _launchMenuSceneData.IsSetupCorrect();
+            isSetupCorrect &= _battleSceneData.IsSetupCorrect();
+
+            foreach (var sceneData in _artScenesData)
+            {
+                isSetupCorrect &= sceneData.IsSetupCorrect();
+            }
+
+            return isSetupCorrect;
+        }
+
         [Serializable]
         private class SceneData : ICheckSetup
         {
@@ -116,20 +130,6 @@ namespace MassBattle.Core.SceneLoaders
 
                 return isSetupCorrect;
             }
-        }
-
-        public bool IsSetupCorrect()
-        {
-            bool isSetupCorrect = _loadingSceneData.IsSetupCorrect();
-            isSetupCorrect &= _launchMenuSceneData.IsSetupCorrect();
-            isSetupCorrect &= _battleSceneData.IsSetupCorrect();
-
-            foreach (var sceneData in _artScenesData)
-            {
-                isSetupCorrect &= sceneData.IsSetupCorrect();
-            }
-
-            return isSetupCorrect;
         }
     }
 }
