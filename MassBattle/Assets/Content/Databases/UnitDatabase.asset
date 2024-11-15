@@ -19,3 +19,6 @@ MonoBehaviour:
   - _id: UnitData1
     _unitName: Warrior
     _unitPrefabToSpawn: {fileID: 1726437177833949907, guid: e0bb51e59cb7ac0479ef15c87dce1c41, type: 3}
+  - _id: UnitData2
+    _unitName: Berserk
+    _unitPrefabToSpawn: {fileID: 1726437177833949907, guid: 2baf0910ccc69a145babbe95a218c3bd, type: 3}
