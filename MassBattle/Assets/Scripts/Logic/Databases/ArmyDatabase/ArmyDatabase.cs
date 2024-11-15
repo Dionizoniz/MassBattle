@@ -7,8 +7,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
     [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = 0)]
     public class ArmyDatabase : Database<InitialArmyData>, IArmyDatabase
     {
-        // Add readonly if you do not need save data between runs in editor mode
-        private List<InitialArmyData> _savedArmiesData = new();
+        private readonly List<InitialArmyData> _savedArmiesData = new();
 
         private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
         public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;

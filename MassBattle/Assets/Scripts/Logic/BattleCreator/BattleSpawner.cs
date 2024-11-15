@@ -155,13 +155,5 @@ namespace MassBattle.Logic.BattleCreator
 
             return isSetupCorrect;
         }
-
-        public void Initialize(
-                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, SceneLoader sceneLoader,
-                IUnitDatabase unitDatabase)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -19,11 +19,9 @@ namespace MassBattle.Logic.Armies
 
         protected override string ClassName => nameof(ArmyData);
 
-        private Dictionary<string, List<BaseUnit>> _spawnedUnits;
-
+        private readonly Dictionary<string, List<BaseUnit>> _spawnedUnits;
         private int _lastUpdatedIndex;
 
-        // TODO change army storage approach
         public ArmyData(InitialArmyData initialArmyData, Dictionary<string, List<BaseUnit>> spawnedUnits)
         {
             OverrideId(initialArmyData.Id);
