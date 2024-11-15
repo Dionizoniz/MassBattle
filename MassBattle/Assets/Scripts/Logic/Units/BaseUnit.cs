@@ -42,7 +42,7 @@ namespace MassBattle.Logic.Units
         [SerializeField]
         private int _bleedingHealthReduction;
         [SerializeField]
-        private float _cooldownToApplyBleed;
+        private float _bleedingCooldown;
 
         [Space, SerializeField]
         protected Animator _animator;
@@ -114,7 +114,7 @@ namespace MassBattle.Logic.Units
 
         private IEnumerator BleedingProcess()
         {
-            WaitForSeconds delay = new WaitForSeconds(_cooldownToApplyBleed);
+            WaitForSeconds delay = new WaitForSeconds(_bleedingCooldown);
 
             while (true)
             {
@@ -278,7 +278,7 @@ namespace MassBattle.Logic.Units
             if (_useBleeding)
             {
                 isSetupCorrect &= _bleedingHealthReduction > 0f;
-                isSetupCorrect &= _cooldownToApplyBleed > 0f;
+                isSetupCorrect &= _bleedingCooldown > 0f;
             }
 
             return isSetupCorrect;
