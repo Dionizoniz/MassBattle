@@ -25,39 +25,55 @@ namespace MassBattle.UI.LaunchMenu
 
         public void StartBattle(IArmyDatabase armyDatabase)
         {
-            if (IsCorrectArmyNamesSetup())
+            bool isCorrectArmyNamesSetup = IsCorrectArmyNamesSetup();
+            bool isCorrectArmyColorsSetup = IsCorrectArmyColorsSetup();
+
+            if (isCorrectArmyNamesSetup && isCorrectArmyColorsSetup)
             {
                 ClearRegisteredArmySetups(armyDatabase);
                 RegisterArmiesSetup(armyDatabase);
                 LoadBattleScene();
             }
-            else
+            else if (isCorrectArmyNamesSetup == false)
             {
                 _view.ShowArmyNamesErrorMessage();
+            }
+            else
+            {
+                _view.ShowArmyColorsErrorMessage();
             }
         }
 
         private bool IsCorrectArmyNamesSetup()
         {
-            IEnumerable<string> activeIds = FindActiveArmiesNames();
-
-            List<string> duplicateIds = activeIds.GroupBy(id => id)
-                                                 .Where(group => group.Count() > 1)
-                                                 .Select(group => group.Key)
-                                                 .ToList();
-
-            return duplicateIds.Count == 0;
+            List<string> names = FindActiveArmiesNames();
+            return IsNoDuplicates(names);
         }
 
-        private IEnumerable<string> FindActiveArmiesNames()
+        private List<string> FindActiveArmiesNames()
         {
-            foreach (ArmyPanelController armyPanel in _view.ArmyPanels)
-            {
-                if (armyPanel.IsArmyActive)
-                {
-                    yield return armyPanel.ArmyName;
-                }
-            }
+            return _view.ArmyPanels.Where(panel => panel.IsArmyActive).Select(panel => panel.ArmyName).ToList();
+        }
+
+        private bool IsNoDuplicates<T>(List<T> items)
+        {
+            List<T> duplicateItems = items.GroupBy(id => id)
+                                          .Where(group => group.Count() > 1)
+                                          .Select(group => group.Key)
+                                          .ToList();
+
+            return duplicateItems.Count == 0;
+        }
+
+        private bool IsCorrectArmyColorsSetup()
+        {
+            List<Color> colors = FindActiveArmiesColors();
+            return IsNoDuplicates(colors);
+        }
+
+        private List<Color> FindActiveArmiesColors()
+        {
+            return _view.ArmyPanels.Where(panel => panel.IsArmyActive).Select(panel => panel.ArmyColor).ToList();
         }
 
         private void ClearRegisteredArmySetups(IArmyDatabase armyDatabase)

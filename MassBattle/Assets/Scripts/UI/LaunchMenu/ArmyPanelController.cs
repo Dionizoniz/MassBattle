@@ -31,6 +31,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public string ArmyName => _armyIdInputField.text;
         public bool IsArmyActive => _isArmyActiveToggle.isOn;
+        public Color ArmyColor => _armyColor.color;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
@@ -80,8 +81,6 @@ namespace MassBattle.UI.LaunchMenu
         public InitialArmyData CreateArmySetup()
         {
             StrategyType strategyType = _strategyTypeWrapper.Value();
-            Color armyColor = _armyColor.color;
-            bool isArmyActive = _isArmyActiveToggle.isOn;
             Dictionary<string, int> unitCountSliders = new();
 
             foreach (var slider in _spawnedUnitsSliders)
@@ -89,7 +88,7 @@ namespace MassBattle.UI.LaunchMenu
                 unitCountSliders.Add(slider.UnitId, slider.UnitsCount);
             }
 
-            return new InitialArmyData(_armyId, ArmyName, unitCountSliders, strategyType, armyColor, isArmyActive);
+            return new InitialArmyData(_armyId, ArmyName, unitCountSliders, strategyType, ArmyColor, IsArmyActive);
         }
 
         public void ChangeArmyColorToNext()
