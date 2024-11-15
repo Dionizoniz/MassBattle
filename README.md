@@ -66,10 +66,14 @@ Armies are composed by the following unit types:
 | Health | 60 pts |
 | Defense | 8 pts |
 | Movement speed | 3 pts |
+| Bleeding health reduction | 1 pts |
+| Bleeding cooldown | 3 seconds |
 
 **Special rules:** When the archer attacks, it spawns an arrow that flies in a straight direction and impacts the target
 from a distance. After the archer attacks, it has a `postAttackDelay` attribute that prevents further movement for its
 given time.
+
+**Special rules:** Bleeding if activate cyclically deals damage to a unit.
 
 ### Strategies
 
