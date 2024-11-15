@@ -1068,6 +1068,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3140361713836729395}
   - component: {fileID: 6058642899876836264}
+  - component: {fileID: 7913933804346431441}
+  - component: {fileID: 7369374159309917727}
   - component: {fileID: 730167411496561958}
   m_Layer: 5
   m_Name: ArmyPanel
@@ -1113,12 +1115,44 @@ MonoBehaviour:
   _gameObject: {fileID: 0}
   _transform: {fileID: 0}
   cachedPosition: {x: 0, y: 0, z: 0}
+  _model: {fileID: 7369374159309917727}
+  _view: {fileID: 7913933804346431441}
+--- !u!114 &7913933804346431441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668997428313140793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43aadf421c88494ab9ae3103cbd0e449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
   _armyIdInputField: {fileID: 4954892924366821625}
   _isArmyActiveToggle: {fileID: 4758873800382963346}
   _unitCountSlidersToSpawn: {fileID: 5901893413125914480, guid: 766c4820a9a2a32498c175f2f7b1ea44, type: 3}
   _unitCountSlidersRoot: {fileID: 4642370211718644114}
   _strategyDropdown: {fileID: 1931070844660064425}
   _armyColor: {fileID: 3201637003222283960}
+--- !u!114 &7369374159309917727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668997428313140793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10cce8a511545e3b94537c6a982c707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameObject: {fileID: 0}
+  _transform: {fileID: 0}
+  cachedPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &730167411496561958
 MonoBehaviour:
   m_ObjectHideFlags: 0
