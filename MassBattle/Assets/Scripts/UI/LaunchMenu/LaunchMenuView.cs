@@ -3,6 +3,7 @@ using MassBattle.Core.Entities.MVC;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using TMPro;
 using UnityEngine;
@@ -44,23 +45,18 @@ namespace MassBattle.UI.LaunchMenu
             _exitScreenRoot.gameObject.SetActive(false);
         }
 
-        public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
+        public void SpawnPanels(IArmyDatabase armyDatabase, IColorDatabase colorDatabase)
         {
-            foreach (var armyId in battleSetup.FindAllArmySetupIds())
+            foreach (InitialArmyData initialArmyData in armyDatabase.ArmiesData)
             {
-                ArmySetup armySetup = battleSetup.TryFindArmySetupBy(armyId);
-
-                if (armySetup != null)
-                {
-                    SpawnArmyPanel(armySetup, colorDatabase);
-                }
+                SpawnArmyPanel(initialArmyData, colorDatabase);
             }
         }
 
-        private void SpawnArmyPanel(ArmySetup armySetup, IColorDatabase colorDatabase)
+        private void SpawnArmyPanel(InitialArmyData initialArmyData, IColorDatabase colorDatabase)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(armySetup, colorDatabase);
+            armyPanel.InitializeData(initialArmyData, colorDatabase);
 
             ArmyPanels.Add(armyPanel);
         }

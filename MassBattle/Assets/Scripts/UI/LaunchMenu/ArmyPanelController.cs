@@ -3,6 +3,7 @@ using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Strategies;
 using TMPro;
@@ -38,18 +39,21 @@ namespace MassBattle.UI.LaunchMenu
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
 
-        public void InitializeData(ArmySetup armySetup, IColorDatabase colorDatabase)
+        private string _cachedId; // TODO improve
+
+        public void InitializeData(InitialArmyData initialArmyData, IColorDatabase colorDatabase)
         {
+            _cachedId = initialArmyData.Id;
             _colorDatabase = colorDatabase;
 
-            _armyIdInputField.text = armySetup.ArmyName;
-            _isArmyActiveToggle.isOn = armySetup.IsArmyActive;
-            _warriorsSlider.value = armySetup.WarriorsCount;
-            _archerSlider.value = armySetup.ArchersCount;
-            _armyColor.color = armySetup.ArmyColor;
+            _armyIdInputField.text = initialArmyData.ArmyName;
+            _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
+            _warriorsSlider.value = initialArmyData.DefaultUnitStackSize;
+            _archerSlider.value = initialArmyData.DefaultUnitStackSize;
+            _armyColor.color = initialArmyData.ArmyColor;
 
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
-            _strategyDropdown.SetValueWithoutNotify((int)armySetup.StrategyType);
+            _strategyDropdown.SetValueWithoutNotify((int)initialArmyData.StrategyType);
 
             ForceRefreshArmyCountLabels();
         }
@@ -70,7 +74,7 @@ namespace MassBattle.UI.LaunchMenu
             _archerCountLabel.text = value.ToString();
         }
 
-        public ArmySetup CreateArmySetup(int index)
+        public InitialArmyData CreateArmySetup(int index)
         {
             int warriorsCount = (int)_warriorsSlider.value;
             int archersCount = (int)_archerSlider.value;
@@ -78,7 +82,8 @@ namespace MassBattle.UI.LaunchMenu
             Color armyColor = _armyColor.color;
             bool isArmyActive = _isArmyActiveToggle.isOn;
 
-            return new ArmySetup(index, ArmyName, warriorsCount, archersCount, strategyType, armyColor, isArmyActive);
+            // TODO improve units count logic
+            return new InitialArmyData(_cachedId, ArmyName, archersCount, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()

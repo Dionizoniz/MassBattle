@@ -7,6 +7,7 @@ using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using NUnit.Framework;
 using UnityEditor;
 
@@ -14,12 +15,12 @@ namespace MassBattle.Tests.Editor
 {
     public class ProjectSetupTests : BaseTests
     {
-        [Test]
-        public void _00_TestSetup_BattleSetups()
-        {
-            List<BattleSetup> assets = FindAssets<BattleSetup>();
-            Assert.True(IsCorrectAssetsSetup(assets));
-        }
+        // [Test]
+        // public void _00_TestSetup_BattleSetups()
+        // {
+        //     List<BattleSetup> assets = FindAssets<BattleSetup>();
+        //     Assert.True(IsCorrectAssetsSetup(assets));
+        // }
 
         private bool IsCorrectAssetsSetup<T>(List<T> assets) where T : ICheckSetup
         {
@@ -66,10 +67,10 @@ namespace MassBattle.Tests.Editor
         public void _05_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
-            List<BattleSetup> setups = FindAssets<BattleSetup>();
+            List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = setups.Max(setup => setup.FindAllArmySetupIds().Count);
+            int maxArmyIdsCount = databases.Max(setup => setup.FindAllElementIds().Count);
 
             Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
         }

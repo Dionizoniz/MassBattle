@@ -6,6 +6,7 @@ using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Controllers;
 using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace MassBattle.Logic.Installers
         private BattleCamera _battleCameraToSpawn;
 
         [Space, SerializeField]
-        private BattleSetup _battleSetup;
+        private ArmyDatabase _armyDatabase;
         [SerializeField]
         private ColorDatabase _colorDatabase;
         [SerializeField]
@@ -79,7 +80,7 @@ namespace MassBattle.Logic.Installers
 
         private void InitializeSystems()
         {
-            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
+            _battleSpawner.Initialize(_armyDatabase, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
                                       _sceneLoader);
 
             _battleCamera.InjectData(ArmyProvider, _updateProvider, InputFacade);
@@ -97,7 +98,7 @@ namespace MassBattle.Logic.Installers
             isSetupCorrect &= _cameraControllerRoot != null;
             isSetupCorrect &= _battleCameraToSpawn != null;
 
-            isSetupCorrect &= _battleSetup != null;
+            isSetupCorrect &= _armyDatabase != null;
             isSetupCorrect &= _colorDatabase != null;
             isSetupCorrect &= _sceneLoader != null;
 

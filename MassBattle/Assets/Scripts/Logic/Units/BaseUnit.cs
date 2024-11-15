@@ -2,6 +2,7 @@
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
@@ -62,7 +63,7 @@ namespace MassBattle.Logic.Units
         private Vector3 _lastPosition;
 
         public void Initialize(
-                ArmySetup armySetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
+                InitialArmyData initialArmyData, IArmyProvider armyProvider, IUpdateProvider updateProvider,
                 IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
             _armyProvider = armyProvider;
@@ -70,9 +71,9 @@ namespace MassBattle.Logic.Units
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
 
-            _armyId = armySetup.Id;
-            _armyColor = armySetup.ArmyColor;
-            _strategy = CreateStrategy(armySetup.StrategyType);
+            _armyId = initialArmyData.Id;
+            _armyColor = initialArmyData.ArmyColor;
+            _strategy = CreateStrategy(initialArmyData.StrategyType);
             _materialPropertyBlock = new MaterialPropertyBlock();
 
             CalculateInitialTimeSinceLastAttack();

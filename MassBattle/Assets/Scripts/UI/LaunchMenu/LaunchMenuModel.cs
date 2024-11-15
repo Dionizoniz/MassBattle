@@ -6,6 +6,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
@@ -24,12 +25,12 @@ namespace MassBattle.UI.LaunchMenu
             _exitGameProvider = exitGameProvider;
         }
 
-        public void StartBattle(IBattleSetup battleSetup)
+        public void StartBattle(IArmyDatabase armyDatabase)
         {
             if (IsCorrectArmyNamesSetup())
             {
-                ClearRegisteredArmySetups(battleSetup);
-                RegisterArmiesSetup(battleSetup);
+                ClearRegisteredArmySetups(armyDatabase);
+                RegisterArmiesSetup(armyDatabase);
                 LoadBattleScene();
             }
             else
@@ -51,18 +52,18 @@ namespace MassBattle.UI.LaunchMenu
             return duplicateIds.Count == 0;
         }
 
-        private void ClearRegisteredArmySetups(IBattleSetup battleSetup)
+        private void ClearRegisteredArmySetups(IArmyDatabase armyDatabase)
         {
-            battleSetup.ClearSavedArmySetups();
+            armyDatabase.ClearSavedArmiesData();
         }
 
-        private void RegisterArmiesSetup(IBattleSetup battleSetup)
+        private void RegisterArmiesSetup(IArmyDatabase armyDatabase)
         {
             for (var i = 0; i < _view.ArmyPanels.Count; i++)
             {
                 var panel = _view.ArmyPanels[i];
-                ArmySetup armySetup = panel.CreateArmySetup(i);
-                battleSetup.SaveArmySetup(armySetup);
+                InitialArmyData armySetup = panel.CreateArmySetup(i);
+                armyDatabase.SaveArmyData(armySetup);
             }
         }
 

@@ -28,6 +28,18 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
 
         protected override string ClassName => nameof(InitialArmyData);
 
+        public InitialArmyData(
+                string id, string armyName, int defaultUnitStackSize, StrategyType strategyType, Color armyColor,
+                bool isArmyActive)
+        {
+            OverrideId(id);
+            _armyName = armyName;
+            _defaultUnitStackSize = defaultUnitStackSize;
+            _strategyType = strategyType;
+            _armyColor = armyColor;
+            _isArmyActive = isArmyActive;
+        }
+
         public bool IsSetupCorrect()
         {
             bool isSetupCorrect = true;

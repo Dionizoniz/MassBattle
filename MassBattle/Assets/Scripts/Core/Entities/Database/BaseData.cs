@@ -17,5 +17,10 @@ namespace MassBattle.Core.Entities.Database
         {
             _id = $"{ClassName}{index}";
         }
+
+        protected void OverrideId(string newId)
+        {
+            _id = newId;
+        }
     }
 }

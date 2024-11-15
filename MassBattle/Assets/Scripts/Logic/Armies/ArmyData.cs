@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace MassBattle.Logic.Armies
 
         public event Action OnUnitRemove = delegate { };
 
-        public ArmySetup ArmySetup { get; private set; }
+        public InitialArmyData InitialArmyData { get; private set; }
         public List<BaseUnit> AllUnits { get; private set; }
         public List<ArmyData> EnemyArmiesData { get; private set; }
 
@@ -20,9 +21,10 @@ namespace MassBattle.Logic.Armies
 
         private int _lastUpdatedIndex;
 
-        public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
+        public ArmyData(InitialArmyData initialArmyData, List<Warrior> warriors, List<Archer> archers)
         {
-            ArmySetup = armySetup;
+            InitialArmyData = initialArmyData;
+
             _warriors = warriors;
             _archers = archers;
 
