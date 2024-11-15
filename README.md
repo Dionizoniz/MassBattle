@@ -1,4 +1,4 @@
-# Battle Simulator
+# Mass Battle Simulator
 
 ![image](https://github.com/user-attachments/assets/4d424fef-3ced-408a-bbdc-73189bcf1b8f)
 
@@ -89,3 +89,38 @@ its `attackRange` attribute.
 Any Unit will just pick the nearest enemy, and advance to it. Warriors will back off when their `attackCooldown > 0`.
 Archers will try to get as far as possible but within their `attackRange`. If any enemy unit gets too near the Archer,
 the Archer will try to move away but at the same time circle its foe.
+
+
+## Architecture
+
+There are few Assemblies in the project. There is a list of them from the lowest to the highest:
+
+- Core
+- Logic
+- UI
+- Tests
+
+In each Assembly, we have namespaces that correlate with folder grouping for dividing systems and project parts. 
+
+
+Principles were used in the project:
+
+- SOLID
+- GRASP
+- DRY
+- YAGNI
+- TDA
+- KISS
+
+Design Patterns were used in the project:
+
+- Dependency Injection
+- Factory
+- Pooling
+- MVC
+- Singleton
+- Facade
+- Flyweight
+- Iterator
+- Observer
+- Strategy
