@@ -281,7 +281,7 @@ MonoBehaviour:
   _postAttackDelay: 0
   _useBleeding: 1
   _bleedingHealthReduction: 1
-  _cooldownToApplyBleed: 3
+  _bleedingCooldown: 3
   _animator: {fileID: 4225873393263677960}
   _renderer: {fileID: 871415844325472315}
 --- !u!4 &5511858739722491805 stripped
