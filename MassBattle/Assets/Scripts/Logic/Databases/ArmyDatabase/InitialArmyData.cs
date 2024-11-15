@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MassBattle.Logic.Databases.ArmyDatabase
 {
     [Serializable]
-    public class InitialArmyData : BaseData, ICheckSetup
+    public class InitialArmyData : BaseData, ICheckSetup, IName
     {
         [SerializeField]
         private string _armyName;
@@ -21,7 +21,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
         [SerializeField]
         private bool _isArmyActive;
 
-        public string ArmyName => _armyName;
+        public string Name => _armyName;
         public int DefaultUnitStackSize => _defaultUnitStackSize;
         public StrategyType StrategyType => _strategyType;
         public Color ArmyColor => _armyColor;

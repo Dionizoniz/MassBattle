@@ -82,7 +82,7 @@ namespace MassBattle.Logic.BattleCreator
                 }
                 else
                 {
-                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {initialArmyData.ArmyName} can not be spawned.");
+                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {initialArmyData.Name} can not be spawned.");
                 }
             }
 

@@ -49,7 +49,7 @@ namespace MassBattle.UI.LaunchMenu
             _colorDatabase = colorDatabase;
             _unitDatabase = unitDatabase;
 
-            _armyIdInputField.text = initialArmyData.ArmyName;
+            _armyIdInputField.text = initialArmyData.Name;
             _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
             _armyColor.color = initialArmyData.ArmyColor;
 

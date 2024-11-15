@@ -21,7 +21,7 @@ namespace MassBattle.UI.Components
         public void Initialize(UnitData unitData, int initialCount)
         {
             UnitId = unitData.Id;
-            _unitsNameLabel.text = unitData.UnitName;
+            _unitsNameLabel.text = unitData.Name;
 
             _slider.SetValueWithoutNotify(initialCount);
             UpdateCountLabel(initialCount);
