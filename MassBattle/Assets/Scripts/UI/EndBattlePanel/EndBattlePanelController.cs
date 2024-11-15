@@ -1,4 +1,5 @@
 using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 
@@ -9,11 +10,14 @@ namespace MassBattle.UI.EndBattlePanel
     {
         private IArmyProvider _armyProvider;
         private ISceneLoader _sceneLoader;
+        private IPauseGameProvider _pauseGameProvider;
 
-        public void InjectData(IArmyProvider armyProvider, ISceneLoader sceneLoader)
+        public void InjectData(
+                IArmyProvider armyProvider, ISceneLoader sceneLoader, IPauseGameProvider pauseGameProvider)
         {
             _armyProvider = armyProvider;
             _sceneLoader = sceneLoader;
+            _pauseGameProvider = pauseGameProvider;
         }
 
         protected override void Initialize()
@@ -21,11 +25,12 @@ namespace MassBattle.UI.EndBattlePanel
             base.Initialize();
 
             _view.Initialize();
-            _model.InjectData(_armyProvider);
+            _model.InjectData(_armyProvider, _pauseGameProvider);
         }
 
         public void LoadLaunchMenuScene()
         {
+            _model.ResumeGame();
             _sceneLoader.LoadLaunchMenuScene();
         }
     }
