@@ -1,4 +1,5 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using System.Collections;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.ArmyDatabase;
@@ -37,6 +38,13 @@ namespace MassBattle.Logic.Units
         protected float _postAttackDelay;
 
         [Space, SerializeField]
+        private bool _useBleeding;
+        [SerializeField]
+        private int _bleedingHealthReduction;
+        [SerializeField]
+        private float _cooldownToApplyBleed;
+
+        [Space, SerializeField]
         protected Animator _animator;
         [SerializeField]
         private Renderer _renderer;
@@ -61,6 +69,7 @@ namespace MassBattle.Logic.Units
         private BaseUnit _cachedNearestEnemy;
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
+        private Coroutine _bleedingProcess;
 
         public void Initialize(
                 string unitId, InitialArmyData initialArmyData, IArmyProvider armyProvider,
@@ -79,6 +88,7 @@ namespace MassBattle.Logic.Units
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(_armyColor);
+            TryToActivateBleeding();
         }
 
         protected abstract IStrategy CreateStrategy(StrategyType strategyType);
@@ -92,6 +102,39 @@ namespace MassBattle.Logic.Units
         {
             _materialPropertyBlock.SetColor(COLOR, color);
             _renderer.SetPropertyBlock(_materialPropertyBlock);
+        }
+
+        private void TryToActivateBleeding()
+        {
+            if (_useBleeding)
+            {
+                _bleedingProcess = StartCoroutine(BleedingProcess());
+            }
+        }
+
+        private IEnumerator BleedingProcess()
+        {
+            WaitForSeconds delay = new WaitForSeconds(_cooldownToApplyBleed);
+
+            while (true)
+            {
+                yield return delay;
+                ApplyDamage(_bleedingHealthReduction);
+            }
+        }
+
+        private void ApplyDamage(float damage)
+        {
+            int animationTriggerToSet = TAKE_DAMAGE;
+            _health -= Mathf.Max(damage, 0);
+
+            if (IsUnitAlive == false)
+            {
+                animationTriggerToSet = DEATH;
+                ArmyData.RemoveUnit(this);
+            }
+
+            _animator.SetTrigger(animationTriggerToSet);
         }
 
         public void ManualUpdate()
@@ -200,24 +243,18 @@ namespace MassBattle.Logic.Units
 
         public void TakeDamage(IAttack attacker)
         {
-            int animationTriggerToSet = TAKE_DAMAGE;
-            _health = CalculateNewHealth(attacker);
+            float damage = CalculateDamage(attacker);
+            ApplyDamage(damage);
 
             if (IsUnitAlive == false)
             {
-                animationTriggerToSet = DEATH;
-
                 TurnUnitTo(attacker);
-                ArmyData.RemoveUnit(this);
             }
-
-            _animator.SetTrigger(animationTriggerToSet);
         }
 
-        private float CalculateNewHealth(IAttack attacker)
+        private float CalculateDamage(IAttack attacker)
         {
-            float damage = attacker.AttackValue - _defense;
-            return _health - Mathf.Max(damage, 0);
+            return attacker.AttackValue - _defense;
         }
 
         private void TurnUnitTo(IAttack attacker)
@@ -237,6 +274,12 @@ namespace MassBattle.Logic.Units
             isSetupCorrect &= _attackCooldown > 0f;
             isSetupCorrect &= _animator != null;
             isSetupCorrect &= _renderer != null;
+
+            if (_useBleeding)
+            {
+                isSetupCorrect &= _bleedingHealthReduction > 0f;
+                isSetupCorrect &= _cooldownToApplyBleed > 0f;
+            }
 
             return isSetupCorrect;
         }
