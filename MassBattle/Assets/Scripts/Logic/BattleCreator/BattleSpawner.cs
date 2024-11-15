@@ -20,11 +20,6 @@ namespace MassBattle.Logic.BattleCreator
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
 
-        [SerializeField]
-        private Warrior _warriorPrefab;
-        [SerializeField]
-        private Archer _archerPrefab;
-
         [Space, SerializeField]
         private List<BoxCollider> _spawnArmyBounds = new();
 
@@ -149,11 +144,7 @@ namespace MassBattle.Logic.BattleCreator
 
         public bool IsSetupCorrect()
         {
-            bool isSetupCorrect = _spawnArmyBounds.Any();
-            isSetupCorrect &= _warriorPrefab != null;
-            isSetupCorrect &= _archerPrefab != null;
-
-            return isSetupCorrect;
+            return _spawnArmyBounds.Any();
         }
     }
 }
