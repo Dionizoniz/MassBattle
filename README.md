@@ -1,6 +1,6 @@
 # Battle Simulator
 
-![](Battle.gif)
+![image](https://github.com/user-attachments/assets/4d424fef-3ced-408a-bbdc-73189bcf1b8f)
 
 In this simulator, armies of varying units and sizes will battle using a set of very simple AI strategies.
 
