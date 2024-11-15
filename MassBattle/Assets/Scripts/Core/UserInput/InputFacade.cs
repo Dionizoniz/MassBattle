@@ -15,7 +15,7 @@ namespace MassBattle.Core.UserInput
 
         private IUpdateProvider _updateProvider;
 
-        public void Initialize(IUpdateProvider updateProvider)
+        public void InjectData(IUpdateProvider updateProvider)
         {
             _updateProvider = updateProvider;
 

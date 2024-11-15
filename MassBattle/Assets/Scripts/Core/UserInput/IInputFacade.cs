@@ -8,6 +8,6 @@ namespace MassBattle.Core.UserInput
         event Action<float> OnMouseWheelScroll;
         event Action OnExitButton;
 
-        void Initialize(IUpdateProvider updateProvider);
+        void InjectData(IUpdateProvider updateProvider);
     }
 }

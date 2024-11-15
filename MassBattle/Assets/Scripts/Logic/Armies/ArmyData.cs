@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using MassBattle.Core.Entities.Database;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
-    public class ArmyData
+    public class ArmyData : BaseData
     {
         private const int FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY = 10;
 
         public event Action OnUnitRemove = delegate { };
 
-        public ArmySetup ArmySetup { get; private set; }
+        public InitialArmyData InitialArmyData { get; private set; }
         public List<BaseUnit> AllUnits { get; private set; }
         public List<ArmyData> EnemyArmiesData { get; private set; }
 
-        private readonly List<Warrior> _warriors;
-        private readonly List<Archer> _archers;
+        protected override string ClassName => nameof(ArmyData);
 
+        private readonly Dictionary<string, List<BaseUnit>> _spawnedUnits;
         private int _lastUpdatedIndex;
 
-        public ArmyData(ArmySetup armySetup, List<Warrior> warriors, List<Archer> archers)
+        public ArmyData(InitialArmyData initialArmyData, Dictionary<string, List<BaseUnit>> spawnedUnits)
         {
-            ArmySetup = armySetup;
-            _warriors = warriors;
-            _archers = archers;
+            OverrideId(initialArmyData.Id);
+
+            InitialArmyData = initialArmyData;
+            _spawnedUnits = spawnedUnits;
 
             CacheAllUnits();
         }
@@ -32,8 +35,11 @@ namespace MassBattle.Logic.Armies
         private void CacheAllUnits()
         {
             AllUnits = new List<BaseUnit>();
-            AllUnits.AddRange(_warriors);
-            AllUnits.AddRange(_archers);
+
+            foreach (KeyValuePair<string, List<BaseUnit>> units in _spawnedUnits)
+            {
+                AllUnits.AddRange(units.Value);
+            }
         }
 
         public void InjectEnemyArmies(List<ArmyData> enemyArmiesData)
@@ -43,29 +49,12 @@ namespace MassBattle.Logic.Armies
 
         public void RemoveUnit(BaseUnit unit)
         {
-            if (unit is Warrior warrior)
+            if (_spawnedUnits.ContainsKey(unit.UnitId))
             {
-                RemoveWarrior(warrior);
+                _spawnedUnits[unit.UnitId].Remove(unit);
             }
-            else
-            {
-                RemoveArcher(unit as Archer);
-            }
-        }
 
-        private void RemoveWarrior(Warrior warrior)
-        {
-            _warriors.Remove(warrior);
-            AllUnits.Remove(warrior);
-
-            OnUnitRemove.Invoke();
-        }
-
-        private void RemoveArcher(Archer archer)
-        {
-            _archers.Remove(archer);
-            AllUnits.Remove(archer);
-
+            AllUnits.Remove(unit);
             OnUnitRemove.Invoke();
         }
 

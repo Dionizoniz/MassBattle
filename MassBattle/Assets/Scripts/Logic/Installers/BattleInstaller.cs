@@ -5,7 +5,9 @@ using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Controllers;
-using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.Logic.Providers;
 using UnityEngine;
 
@@ -26,9 +28,11 @@ namespace MassBattle.Logic.Installers
         private BattleCamera _battleCameraToSpawn;
 
         [Space, SerializeField]
-        private BattleSetup _battleSetup;
+        private ArmyDatabase _armyDatabase;
         [SerializeField]
         private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private UnitDatabase _unitDatabase;
         [SerializeField]
         private SceneLoader _sceneLoader;
 
@@ -78,11 +82,11 @@ namespace MassBattle.Logic.Installers
 
         private void InitializeSystems()
         {
-            _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
-                                      _sceneLoader);
+            _battleSpawner.Initialize(_armyDatabase, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
+                                      _sceneLoader, _unitDatabase);
 
-            _battleCamera.Initialize(ArmyProvider, _updateProvider, InputFacade);
-            InputFacade.Initialize(_updateProvider);
+            _battleCamera.InjectData(ArmyProvider, _updateProvider, InputFacade);
+            InputFacade.InjectData(_updateProvider);
         }
 
         public override bool IsSetupCorrect()
@@ -96,7 +100,7 @@ namespace MassBattle.Logic.Installers
             isSetupCorrect &= _cameraControllerRoot != null;
             isSetupCorrect &= _battleCameraToSpawn != null;
 
-            isSetupCorrect &= _battleSetup != null;
+            isSetupCorrect &= _armyDatabase != null;
             isSetupCorrect &= _colorDatabase != null;
             isSetupCorrect &= _sceneLoader != null;
 

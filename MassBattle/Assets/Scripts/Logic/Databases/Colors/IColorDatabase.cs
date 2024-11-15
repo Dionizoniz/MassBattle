@@ -1,7 +1,7 @@
 ﻿using MassBattle.Core.Entities.Database;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases
+namespace MassBattle.Logic.Databases.Colors
 {
     public interface IColorDatabase : IDatabase<ColorData>
     {

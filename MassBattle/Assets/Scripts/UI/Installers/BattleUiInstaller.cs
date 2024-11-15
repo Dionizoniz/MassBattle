@@ -67,7 +67,7 @@ namespace MassBattle.UI.Installers
 
         private void InjectData()
         {
-            _endBattlePanel.InjectData(BaseInstaller.ArmyProvider, BaseInstaller.SceneLoader);
+            _endBattlePanel.InjectData(BaseInstaller.ArmyProvider, BaseInstaller.SceneLoader, _pauseGameProvider);
 
             _pauseMenuPanel.InjectData(BaseInstaller.InputFacade, BaseInstaller.SceneLoader, _pauseGameProvider,
                                        BaseInstaller.ArmyProvider);

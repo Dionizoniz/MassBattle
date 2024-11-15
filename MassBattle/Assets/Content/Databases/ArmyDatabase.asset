@@ -9,31 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 188c8d75f84842129e5e50ad9b5a1907, type: 3}
-  m_Name: BattleSetup
+  m_Script: {fileID: 11500000, guid: 229309019a1a480b813aa936b5ece9a2, type: 3}
+  m_Name: ArmyDatabase
   m_EditorClassIdentifier: 
-  _defaultArmySetups:
-  - _armyId: Army 1
-    _warriorsCount: 60
-    _archersCount: 60
+  _elements:
+  - _id: InitialArmyData0
+    _armyName: Army 1
+    _defaultUnitStackSize: 100
     _strategyType: 0
-    _armyColor: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
+    _armyColor: {r: 0.23137255, g: 0.7490196, b: 0.7019608, a: 1}
     _isArmyActive: 1
-  - _armyId: Army 2
-    _warriorsCount: 60
-    _archersCount: 60
+  - _id: InitialArmyData1
+    _armyName: Army 2
+    _defaultUnitStackSize: 100
     _strategyType: 0
     _armyColor: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
     _isArmyActive: 1
-  - _armyId: Army 3
-    _warriorsCount: 60
-    _archersCount: 60
+  - _id: InitialArmyData2
+    _armyName: Army 3
+    _defaultUnitStackSize: 100
     _strategyType: 0
     _armyColor: {r: 0.8235294, g: 0.8784314, b: 0.08627451, a: 1}
     _isArmyActive: 0
-  - _armyId: Army 4
-    _warriorsCount: 60
-    _archersCount: 60
+  - _id: InitialArmyData3
+    _armyName: Army 4
+    _defaultUnitStackSize: 100
     _strategyType: 0
     _armyColor: {r: 0.98039216, g: 0.44705883, b: 0, a: 1}
     _isArmyActive: 0

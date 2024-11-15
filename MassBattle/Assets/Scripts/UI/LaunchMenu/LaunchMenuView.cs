@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Entities.MVC;
-using MassBattle.Logic.Armies;
-using MassBattle.Logic.BattleCreator;
-using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +10,11 @@ namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuView : View
     {
-        private const string ARMY_ID_DUPLICATES_ERROR_MESSAGE = "Remove duplicates in Army Names before Launch Battle.";
+        private const string ARMY_NAME_DUPLICATES_ERROR_MESSAGE =
+                "Remove duplicates in army NAMES before starting to make it easier to identify an army.";
+
+        private const string ARMY_COLOR_DUPLICATES_ERROR_MESSAGE =
+                "Remove duplicates in army COLORS before starting to make it easier to identify an army.";
 
         [SerializeField]
         private ArmyPanelController _armyPanelToSpawn;
@@ -43,30 +47,32 @@ namespace MassBattle.UI.LaunchMenu
             _exitScreenRoot.gameObject.SetActive(false);
         }
 
-        public void SpawnPanels(IBattleSetup battleSetup, IColorDatabase colorDatabase)
+        public void SpawnPanels(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
         {
-            foreach (var armyId in battleSetup.FindAllArmySetupIds())
+            foreach (InitialArmyData initialArmyData in armyDatabase.ArmiesData)
             {
-                ArmySetup armySetup = battleSetup.TryFindArmySetupBy(armyId);
-
-                if (armySetup != null)
-                {
-                    SpawnArmyPanel(armySetup, colorDatabase);
-                }
+                SpawnArmyPanel(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
             }
         }
 
-        private void SpawnArmyPanel(ArmySetup armySetup, IColorDatabase colorDatabase)
+        private void SpawnArmyPanel(
+                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
+                IArmyDatabase armyDatabase)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(armySetup, colorDatabase);
+            armyPanel.InitializeData(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
 
             ArmyPanels.Add(armyPanel);
         }
 
-        public void ShowArmyIdsErrorMessage()
+        public void ShowArmyNamesErrorMessage()
         {
-            ShowErrorMessage(ARMY_ID_DUPLICATES_ERROR_MESSAGE);
+            ShowErrorMessage(ARMY_NAME_DUPLICATES_ERROR_MESSAGE);
+        }
+
+        public void ShowArmyColorsErrorMessage()
+        {
+            ShowErrorMessage(ARMY_COLOR_DUPLICATES_ERROR_MESSAGE);
         }
 
         private void ShowErrorMessage(string errorMessage)

@@ -7,6 +7,7 @@ using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using NUnit.Framework;
 using UnityEditor;
 
@@ -14,13 +15,6 @@ namespace MassBattle.Tests.Editor
 {
     public class ProjectSetupTests : BaseTests
     {
-        [Test]
-        public void _00_TestSetup_BattleSetups()
-        {
-            List<BattleSetup> assets = FindAssets<BattleSetup>();
-            Assert.True(IsCorrectAssetsSetup(assets));
-        }
-
         private bool IsCorrectAssetsSetup<T>(List<T> assets) where T : ICheckSetup
         {
             bool isCorrectSetup = true;
@@ -35,61 +29,61 @@ namespace MassBattle.Tests.Editor
         }
 
         [Test]
-        public void _01_TestSetup_Installers()
+        public void _00_TestSetup_Installers()
         {
             List<BaseInstaller> assets = FindAssets<BaseInstaller>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _02_TestSetup_Databases()
+        public void _01_TestSetup_Databases()
         {
             List<BaseDatabase> assets = FindAssets<BaseDatabase>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _03_TestSetup_SceneLoaders()
+        public void _02_TestSetup_SceneLoaders()
         {
             List<SceneLoader> assets = FindAssets<SceneLoader>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _04_TestSetup_BattleSpawners()
+        public void _03_TestSetup_BattleSpawners()
         {
             List<BattleSpawner> assets = FindAssets<BattleSpawner>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _05_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
+        public void _04_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
-            List<BattleSetup> setups = FindAssets<BattleSetup>();
+            List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = setups.Max(setup => setup.FindAllArmySetupIds().Count);
+            int maxArmyIdsCount = databases.Max(setup => setup.FindAllElementIds().Count);
 
             Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
         }
 
         [Test]
-        public void _06_TestSetup_SceneEntities()
+        public void _05_TestSetup_SceneEntities()
         {
             List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _07_TestSetup_ControllersInMVC()
+        public void _06_TestSetup_ControllersInMVC()
         {
             List<BaseController> assets = FindAssets<BaseController>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
-        public void _08_TestSetup_ScenesInBuildSettings()
+        public void _07_TestSetup_ScenesInBuildSettings()
         {
             EditorBuildSettingsScene[] editorBuildSettingsScenes = EditorBuildSettings.scenes;
             bool isNotEmptySceneCollection = editorBuildSettingsScenes.All(s => s.enabled);

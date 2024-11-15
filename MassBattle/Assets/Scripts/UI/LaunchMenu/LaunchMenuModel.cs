@@ -4,8 +4,7 @@ using System.Linq;
 using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Armies;
-using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Databases.ArmyDatabase;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu
@@ -24,43 +23,70 @@ namespace MassBattle.UI.LaunchMenu
             _exitGameProvider = exitGameProvider;
         }
 
-        public void StartBattle(IBattleSetup battleSetup)
+        public void StartBattle(IArmyDatabase armyDatabase)
         {
-            if (IsCorrectArmyIdsSetup())
+            bool isCorrectArmyNamesSetup = IsCorrectArmyNamesSetup();
+            bool isCorrectArmyColorsSetup = IsCorrectArmyColorsSetup();
+
+            if (isCorrectArmyNamesSetup && isCorrectArmyColorsSetup)
             {
-                ClearRegisteredArmySetups(battleSetup);
-                RegisterArmiesSetup(battleSetup);
+                ClearRegisteredArmySetups(armyDatabase);
+                RegisterArmiesSetup(armyDatabase);
                 LoadBattleScene();
+            }
+            else if (isCorrectArmyNamesSetup == false)
+            {
+                _view.ShowArmyNamesErrorMessage();
             }
             else
             {
-                _view.ShowArmyIdsErrorMessage();
+                _view.ShowArmyColorsErrorMessage();
             }
         }
 
-        private bool IsCorrectArmyIdsSetup()
+        private bool IsCorrectArmyNamesSetup()
         {
-            IEnumerable<string> activeIds = _view.ArmyPanels.Select(panel => panel.ArmyId);
-
-            List<string> duplicateIds = activeIds.GroupBy(id => id)
-                                                 .Where(group => group.Count() > 1)
-                                                 .Select(group => group.Key)
-                                                 .ToList();
-
-            return duplicateIds.Count == 0;
+            List<string> names = FindActiveArmiesNames();
+            return IsNoDuplicates(names);
         }
 
-        private void ClearRegisteredArmySetups(IBattleSetup battleSetup)
+        private List<string> FindActiveArmiesNames()
         {
-            battleSetup.ClearSavedArmySetups();
+            return _view.ArmyPanels.Where(panel => panel.IsArmyActive).Select(panel => panel.ArmyName).ToList();
         }
 
-        private void RegisterArmiesSetup(IBattleSetup battleSetup)
+        private bool IsNoDuplicates<T>(List<T> items)
+        {
+            List<T> duplicateItems = items.GroupBy(id => id)
+                                          .Where(group => group.Count() > 1)
+                                          .Select(group => group.Key)
+                                          .ToList();
+
+            return duplicateItems.Count == 0;
+        }
+
+        private bool IsCorrectArmyColorsSetup()
+        {
+            List<Color> colors = FindActiveArmiesColors();
+            return IsNoDuplicates(colors);
+        }
+
+        private List<Color> FindActiveArmiesColors()
+        {
+            return _view.ArmyPanels.Where(panel => panel.IsArmyActive).Select(panel => panel.ArmyColor).ToList();
+        }
+
+        private void ClearRegisteredArmySetups(IArmyDatabase armyDatabase)
+        {
+            armyDatabase.ClearSavedArmiesData();
+        }
+
+        private void RegisterArmiesSetup(IArmyDatabase armyDatabase)
         {
             foreach (var panel in _view.ArmyPanels)
             {
-                ArmySetup armySetup = panel.CreateArmySetup();
-                battleSetup.SaveArmySetup(armySetup);
+                InitialArmyData armySetup = panel.CreateArmySetup();
+                armyDatabase.SaveArmyData(armySetup);
             }
         }
 

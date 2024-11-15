@@ -84,6 +84,7 @@ MonoBehaviour:
   _inputFacadeToSpawn: {fileID: 6876298667965141915, guid: ad1250f1825a30d40a7e2b7ed8fd4626, type: 3}
   _cameraControllerRoot: {fileID: 7259789909605657368}
   _battleCameraToSpawn: {fileID: 5013470841226714775, guid: 0d2cbf27547d47942a065aa39eb57b02, type: 3}
-  _battleSetup: {fileID: 11400000, guid: 4cd71701c2f1c4a47b196e0ba12dc281, type: 2}
+  _armyDatabase: {fileID: 11400000, guid: cef7874774b4e10468bc33b962c0649f, type: 2}
   _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
+  _unitDatabase: {fileID: 11400000, guid: 4658a0618b0a8e9498dfab3afbd64200, type: 2}
   _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}

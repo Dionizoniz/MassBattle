@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: ColorDatabase
   m_EditorClassIdentifier: 
   _elements:
-  - _id: Blue
+  - _id: ColorData0
     color: {r: 0.23137257, g: 0.7490196, b: 0.7019608, a: 1}
-  - _id: Green
+  - _id: ColorData1
     color: {r: 0.16078432, g: 0.7490196, b: 0.2627451, a: 1}
-  - _id: Yellow
+  - _id: ColorData2
     color: {r: 0.82529044, g: 0.8773585, b: 0.086908154, a: 1}
-  - _id: Orange
+  - _id: ColorData3
     color: {r: 0.9811321, g: 0.44843924, b: 0, a: 1}
-  - _id: Brown
+  - _id: ColorData4
     color: {r: 0.5283019, g: 0.19897084, b: 0, a: 1}
-  - _id: Gray
+  - _id: ColorData5
     color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
-  - _id: DarkBlue
+  - _id: ColorData6
     color: {r: 0, g: 0.02951169, b: 1, a: 1}
-  - _id: Purple
+  - _id: ColorData7
     color: {r: 0.6981132, g: 0, b: 0.28237548, a: 1}
-  - _id: White
+  - _id: ColorData8
     color: {r: 0.9013884, g: 0.9056604, b: 0.9021289, a: 1}
   _damageColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
   _deathColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}

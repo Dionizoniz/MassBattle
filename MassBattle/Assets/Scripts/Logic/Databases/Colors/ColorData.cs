@@ -2,17 +2,16 @@
 using MassBattle.Core.Entities.Database;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases
+namespace MassBattle.Logic.Databases.Colors
 {
     [Serializable]
-    public class ColorData : IId
+    public class ColorData : BaseData
     {
-        [SerializeField]
-        private string _id;
         [SerializeField]
         private Color color = Color.white;
 
-        public string Id => _id;
         public Color Color => color;
+
+        protected override string ClassName => nameof(ColorData);
     }
 }

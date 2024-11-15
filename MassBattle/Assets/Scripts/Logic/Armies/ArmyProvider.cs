@@ -98,7 +98,7 @@ namespace MassBattle.Logic.Armies
 
         public ArmyData FindArmyBy(string armyId)
         {
-            return _armiesData.FirstOrDefault(army => army.ArmySetup.ArmyId == armyId);
+            return _armiesData.FirstOrDefault(army => army.Id == armyId);
         }
 
         public void InitializedRegisteredArmies()
@@ -112,7 +112,7 @@ namespace MassBattle.Logic.Armies
             for (int i = 0; i < _armiesData.Count; i++)
             {
                 ArmyData currentArmy = _armiesData[i];
-                List<ArmyData> enemies = FindEnemiesForArmyId(currentArmy.ArmySetup.ArmyId);
+                List<ArmyData> enemies = FindEnemiesForArmyId(currentArmy.Id);
 
                 currentArmy.InjectEnemyArmies(enemies);
             }
@@ -120,7 +120,7 @@ namespace MassBattle.Logic.Armies
 
         private List<ArmyData> FindEnemiesForArmyId(string armyId)
         {
-            return _armiesData.FindAll(army => army.ArmySetup.ArmyId != armyId);
+            return _armiesData.FindAll(army => army.Id != armyId);
         }
 
         public Vector3 FindCenterOfArmies()

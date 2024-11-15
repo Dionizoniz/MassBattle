@@ -1,7 +1,9 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using System.Collections;
+using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
@@ -36,6 +38,13 @@ namespace MassBattle.Logic.Units
         protected float _postAttackDelay;
 
         [Space, SerializeField]
+        private bool _useBleeding;
+        [SerializeField]
+        private int _bleedingHealthReduction;
+        [SerializeField]
+        private float _bleedingCooldown;
+
+        [Space, SerializeField]
         protected Animator _animator;
         [SerializeField]
         private Renderer _renderer;
@@ -44,6 +53,7 @@ namespace MassBattle.Logic.Units
         public float AttackRange => _attackRange;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
         private bool IsUnitAlive => _health > 0;
+        public string UnitId { get; private set; }
 
         private IArmyProvider _armyProvider;
         protected IUpdateProvider _updateProvider;
@@ -59,23 +69,26 @@ namespace MassBattle.Logic.Units
         private BaseUnit _cachedNearestEnemy;
         private float _timeSinceLastAttack;
         private Vector3 _lastPosition;
+        private Coroutine _bleedingProcess;
 
         public void Initialize(
-                ArmySetup armySetup, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
+                string unitId, InitialArmyData initialArmyData, IArmyProvider armyProvider,
+                IUpdateProvider updateProvider, IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
+            UnitId = unitId;
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
 
-            _armyId = armySetup.ArmyId;
-            _armyColor = armySetup.ArmyColor;
-            _strategy = CreateStrategy(armySetup.StrategyType);
+            _armyId = initialArmyData.Id;
+            _armyColor = initialArmyData.ArmyColor;
+            _strategy = CreateStrategy(initialArmyData.StrategyType);
             _materialPropertyBlock = new MaterialPropertyBlock();
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(_armyColor);
+            TryToActivateBleeding();
         }
 
         protected abstract IStrategy CreateStrategy(StrategyType strategyType);
@@ -89,6 +102,39 @@ namespace MassBattle.Logic.Units
         {
             _materialPropertyBlock.SetColor(COLOR, color);
             _renderer.SetPropertyBlock(_materialPropertyBlock);
+        }
+
+        private void TryToActivateBleeding()
+        {
+            if (_useBleeding)
+            {
+                _bleedingProcess = StartCoroutine(BleedingProcess());
+            }
+        }
+
+        private IEnumerator BleedingProcess()
+        {
+            WaitForSeconds delay = new WaitForSeconds(_bleedingCooldown);
+
+            while (true)
+            {
+                yield return delay;
+                ApplyDamage(_bleedingHealthReduction);
+            }
+        }
+
+        private void ApplyDamage(float damage)
+        {
+            int animationTriggerToSet = TAKE_DAMAGE;
+            _health -= Mathf.Max(damage, 0);
+
+            if (IsUnitAlive == false)
+            {
+                animationTriggerToSet = DEATH;
+                ArmyData.RemoveUnit(this);
+            }
+
+            _animator.SetTrigger(animationTriggerToSet);
         }
 
         public void ManualUpdate()
@@ -197,24 +243,18 @@ namespace MassBattle.Logic.Units
 
         public void TakeDamage(IAttack attacker)
         {
-            int animationTriggerToSet = TAKE_DAMAGE;
-            _health = CalculateNewHealth(attacker);
+            float damage = CalculateDamage(attacker);
+            ApplyDamage(damage);
 
             if (IsUnitAlive == false)
             {
-                animationTriggerToSet = DEATH;
-
                 TurnUnitTo(attacker);
-                ArmyData.RemoveUnit(this);
             }
-
-            _animator.SetTrigger(animationTriggerToSet);
         }
 
-        private float CalculateNewHealth(IAttack attacker)
+        private float CalculateDamage(IAttack attacker)
         {
-            float damage = attacker.AttackValue - _defense;
-            return _health - Mathf.Max(damage, 0);
+            return attacker.AttackValue - _defense;
         }
 
         private void TurnUnitTo(IAttack attacker)
@@ -234,6 +274,12 @@ namespace MassBattle.Logic.Units
             isSetupCorrect &= _attackCooldown > 0f;
             isSetupCorrect &= _animator != null;
             isSetupCorrect &= _renderer != null;
+
+            if (_useBleeding)
+            {
+                isSetupCorrect &= _bleedingHealthReduction > 0f;
+                isSetupCorrect &= _bleedingCooldown > 0f;
+            }
 
             return isSetupCorrect;
         }
