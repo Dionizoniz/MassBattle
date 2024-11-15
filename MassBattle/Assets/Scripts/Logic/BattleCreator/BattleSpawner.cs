@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    // TODO change name to ArmySpawner and split logic of load art scene to other system
+    // TODO Future feature - change name to ArmySpawner and split logic of load art scene to other system
     public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
