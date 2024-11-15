@@ -81,8 +81,8 @@ namespace MassBattle.Logic.Installers
             _battleSpawner.Initialize(_battleSetup, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
                                       _sceneLoader);
 
-            _battleCamera.Initialize(ArmyProvider, _updateProvider, InputFacade);
-            InputFacade.Initialize(_updateProvider);
+            _battleCamera.InjectData(ArmyProvider, _updateProvider, InputFacade);
+            InputFacade.InjectData(_updateProvider);
         }
 
         public override bool IsSetupCorrect()

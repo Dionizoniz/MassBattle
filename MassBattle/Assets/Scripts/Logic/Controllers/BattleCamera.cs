@@ -31,7 +31,7 @@ namespace MassBattle.Logic.Controllers
         private Vector3 _cachedArmiesCenter;
         private int _framesToRefreshArmiesCenterLeft;
 
-        public void Initialize(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
+        public void InjectData(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
         {
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;

@@ -6,6 +6,6 @@ namespace MassBattle.Logic.Controllers
 {
     public interface IBattleCamera
     {
-        void Initialize(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade);
+        void InjectData(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade);
     }
 }
