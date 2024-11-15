@@ -3,7 +3,6 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 namespace MassBattle.Logic.Controllers
 {

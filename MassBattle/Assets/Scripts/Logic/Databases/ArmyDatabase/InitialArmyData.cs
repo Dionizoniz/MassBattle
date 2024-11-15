@@ -17,7 +17,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
         [SerializeField]
         private StrategyType _strategyType;
         [SerializeField]
-        private Color _armyColor = Color.white;
+        private Color _armyColor;
         [SerializeField]
         private bool _isArmyActive;
 

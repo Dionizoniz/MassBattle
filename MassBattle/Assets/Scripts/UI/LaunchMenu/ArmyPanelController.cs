@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
-using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.UnitDatabase;

@@ -4,8 +4,6 @@ using System.Linq;
 using MassBattle.Core.Entities.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Armies;
-using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using UnityEngine;
 
