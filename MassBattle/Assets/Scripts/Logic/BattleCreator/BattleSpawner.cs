@@ -6,6 +6,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
+using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;

@@ -1,7 +1,7 @@
 ﻿using MassBattle.Core.Entities.Database;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases
+namespace MassBattle.Logic.Databases.Colors
 {
     [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = 0)]
     public class ColorDatabase : Database<ColorData>, IColorDatabase

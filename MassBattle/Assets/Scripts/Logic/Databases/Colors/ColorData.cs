@@ -3,7 +3,7 @@ using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Utilities;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases
+namespace MassBattle.Logic.Databases.Colors
 {
     [Serializable]
     public class ColorData : IId
