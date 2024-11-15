@@ -5,7 +5,6 @@ using MassBattle.Core.Entities.Tests;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
@@ -15,6 +14,7 @@ using UnityEngine;
 
 namespace MassBattle.Logic.BattleCreator
 {
+    // TODO change name to ArmySpawner and split logic of load art scene to other system
     public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
@@ -96,10 +96,10 @@ namespace MassBattle.Logic.BattleCreator
 
             if (initialArmyData.IsArmyActive)
             {
-                List<Warrior> warriors = SpawnUnits(_warriorPrefab, initialArmyData.DefaultUnitStackSize,
+                List<Warrior> warriors = SpawnUnits(_warriorPrefab, initialArmyData.UnitsCountSetup["0"],
                                                     initialArmyData, spawnBounds);
 
-                List<Archer> archers = SpawnUnits(_archerPrefab, initialArmyData.DefaultUnitStackSize, initialArmyData,
+                List<Archer> archers = SpawnUnits(_archerPrefab, initialArmyData.UnitsCountSetup["1"], initialArmyData,
                                                   spawnBounds);
 
                 armyData = new ArmyData(initialArmyData, warriors, archers);

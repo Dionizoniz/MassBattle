@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MassBattle.Core.Entities.Engine;
 using MassBattle.Core.Utilities;
 using MassBattle.Logic.Armies;
@@ -83,7 +84,11 @@ namespace MassBattle.UI.LaunchMenu
             bool isArmyActive = _isArmyActiveToggle.isOn;
 
             // TODO improve units count logic
-            return new InitialArmyData(_cachedId, ArmyName, archersCount, strategyType, armyColor, isArmyActive);
+            Dictionary<string, int> units = new Dictionary<string, int>();
+            units.Add("0", warriorsCount);
+            units.Add("1", archersCount);
+
+            return new InitialArmyData(_cachedId, ArmyName, units, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()

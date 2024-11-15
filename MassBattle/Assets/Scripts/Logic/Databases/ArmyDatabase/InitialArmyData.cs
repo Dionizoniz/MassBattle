@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MassBattle.Core.Entities.Database;
 using MassBattle.Core.Entities.Tests;
 using MassBattle.Logic.Strategies;
@@ -20,24 +21,28 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
         [SerializeField]
         private bool _isArmyActive;
 
+        // TODO info comment to save???
+        private Dictionary<string, int> _unitsCountSetup = new();
+
         public string ArmyName => _armyName;
         public int DefaultUnitStackSize => _defaultUnitStackSize;
         public StrategyType StrategyType => _strategyType;
         public Color ArmyColor => _armyColor;
         public bool IsArmyActive => _isArmyActive;
+        public Dictionary<string, int> UnitsCountSetup => _unitsCountSetup;
 
         protected override string ClassName => nameof(InitialArmyData);
 
         public InitialArmyData(
-                string id, string armyName, int defaultUnitStackSize, StrategyType strategyType, Color armyColor,
-                bool isArmyActive)
+                string id, string armyName, Dictionary<string, int> unitsCountSetup, StrategyType strategyType,
+                Color armyColor, bool isArmyActive)
         {
             OverrideId(id);
             _armyName = armyName;
-            _defaultUnitStackSize = defaultUnitStackSize;
             _strategyType = strategyType;
             _armyColor = armyColor;
             _isArmyActive = isArmyActive;
+            _unitsCountSetup = unitsCountSetup;
         }
 
         public bool IsSetupCorrect()
@@ -45,6 +50,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
             bool isSetupCorrect = true;
 
             isSetupCorrect &= string.IsNullOrEmpty(_armyName) == false;
+            isSetupCorrect &= _defaultUnitStackSize > 0;
 
             return isSetupCorrect;
         }

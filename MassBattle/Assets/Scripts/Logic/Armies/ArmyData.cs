@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using MassBattle.Core.Entities.Database;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
 namespace MassBattle.Logic.Armies
 {
-    public class ArmyData
+    public class ArmyData : BaseData
     {
         private const int FRAMES_TO_CACHE_UNITS_NEAREST_ENEMY = 10;
 
@@ -16,15 +17,19 @@ namespace MassBattle.Logic.Armies
         public List<BaseUnit> AllUnits { get; private set; }
         public List<ArmyData> EnemyArmiesData { get; private set; }
 
+        protected override string ClassName => nameof(ArmyData);
+
         private readonly List<Warrior> _warriors;
         private readonly List<Archer> _archers;
 
         private int _lastUpdatedIndex;
 
+        // TODO change army storage approach
         public ArmyData(InitialArmyData initialArmyData, List<Warrior> warriors, List<Archer> archers)
         {
-            InitialArmyData = initialArmyData;
+            OverrideId(initialArmyData.Id);
 
+            InitialArmyData = initialArmyData;
             _warriors = warriors;
             _archers = archers;
 
