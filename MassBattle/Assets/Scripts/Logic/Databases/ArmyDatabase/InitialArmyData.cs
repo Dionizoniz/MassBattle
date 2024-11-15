@@ -21,15 +21,12 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
         [SerializeField]
         private bool _isArmyActive;
 
-        // TODO info comment to save???
-        private Dictionary<string, int> _unitsCountSetup = new();
-
         public string ArmyName => _armyName;
         public int DefaultUnitStackSize => _defaultUnitStackSize;
         public StrategyType StrategyType => _strategyType;
         public Color ArmyColor => _armyColor;
         public bool IsArmyActive => _isArmyActive;
-        public Dictionary<string, int> UnitsCountSetup => _unitsCountSetup;
+        public Dictionary<string, int> UnitsCountSetup { get; }
 
         protected override string ClassName => nameof(InitialArmyData);
 
@@ -42,7 +39,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
             _strategyType = strategyType;
             _armyColor = armyColor;
             _isArmyActive = isArmyActive;
-            _unitsCountSetup = unitsCountSetup;
+            UnitsCountSetup = unitsCountSetup;
         }
 
         public bool IsSetupCorrect()

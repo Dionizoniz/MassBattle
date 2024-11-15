@@ -3,6 +3,7 @@ using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.Logic.Providers;
 
 namespace MassBattle.Logic.BattleCreator
@@ -11,6 +12,7 @@ namespace MassBattle.Logic.BattleCreator
     {
         void Initialize(
                 IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, SceneLoader sceneLoader);
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
+                IUnitDatabase unitDatabase);
     }
 }

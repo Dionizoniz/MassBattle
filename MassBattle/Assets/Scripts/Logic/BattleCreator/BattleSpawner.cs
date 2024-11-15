@@ -7,6 +7,7 @@ using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -35,11 +36,13 @@ namespace MassBattle.Logic.BattleCreator
         private IUnitsFactory _unitsFactory;
         private IColorDatabase _colorDatabase;
         private Transform _unitsRoot;
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
+        private IUnitDatabase _unitDatabase;
 
         public void Initialize(
                 IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, SceneLoader sceneLoader)
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
+                IUnitDatabase unitDatabase)
         {
             _armyDatabase = armyDatabase;
             _armyProvider = armyProvider;
@@ -47,6 +50,7 @@ namespace MassBattle.Logic.BattleCreator
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
             _sceneLoader = sceneLoader;
+            _unitDatabase = unitDatabase;
 
             LoadArtScene();
             CreateUnitsRoot();
@@ -96,16 +100,29 @@ namespace MassBattle.Logic.BattleCreator
 
             if (initialArmyData.IsArmyActive)
             {
-                List<Warrior> warriors = SpawnUnits(_warriorPrefab, initialArmyData.UnitsCountSetup["0"],
-                                                    initialArmyData, spawnBounds);
+                Dictionary<string, int> unitsCountSetup = FindUnitsCountSetup(initialArmyData);
 
-                List<Archer> archers = SpawnUnits(_archerPrefab, initialArmyData.UnitsCountSetup["1"], initialArmyData,
-                                                  spawnBounds);
+                List<int> temp = new List<int>();
+
+                foreach (var item in unitsCountSetup)
+                {
+                    temp.Add(item.Value);
+                }
+
+                List<Warrior> warriors = SpawnUnits(_warriorPrefab, temp[0], initialArmyData, spawnBounds);
+                List<Archer> archers = SpawnUnits(_archerPrefab, temp[1], initialArmyData, spawnBounds);
 
                 armyData = new ArmyData(initialArmyData, warriors, archers);
             }
 
             return armyData;
+        }
+
+        private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
+        {
+            return initialArmyData.UnitsCountSetup != null ?
+                           initialArmyData.UnitsCountSetup :
+                           _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
         }
 
         private List<T> SpawnUnits<T>(
@@ -140,6 +157,14 @@ namespace MassBattle.Logic.BattleCreator
             isSetupCorrect &= _archerPrefab != null;
 
             return isSetupCorrect;
+        }
+
+        public void Initialize(
+                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
+                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, SceneLoader sceneLoader,
+                IUnitDatabase unitDatabase)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

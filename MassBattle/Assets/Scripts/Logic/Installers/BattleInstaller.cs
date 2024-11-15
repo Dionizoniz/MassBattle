@@ -8,6 +8,7 @@ using MassBattle.Logic.Controllers;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.Logic.Providers;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ namespace MassBattle.Logic.Installers
         private ArmyDatabase _armyDatabase;
         [SerializeField]
         private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private UnitDatabase _unitDatabase;
         [SerializeField]
         private SceneLoader _sceneLoader;
 
@@ -81,7 +84,7 @@ namespace MassBattle.Logic.Installers
         private void InitializeSystems()
         {
             _battleSpawner.Initialize(_armyDatabase, ArmyProvider, _updateProvider, _unitsFactory, _colorDatabase,
-                                      _sceneLoader);
+                                      _sceneLoader, _unitDatabase);
 
             _battleCamera.InjectData(ArmyProvider, _updateProvider, InputFacade);
             InputFacade.InjectData(_updateProvider);
