@@ -40,7 +40,8 @@ namespace MassBattle.UI.LaunchMenu
         private readonly List<UnitsCountSliderController> _spawnedUnitsSliders = new();
 
         public void InitializeData(
-                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
+                IArmyDatabase armyDatabase)
         {
             _armyId = initialArmyData.Id;
             _colorDatabase = colorDatabase;
@@ -53,17 +54,19 @@ namespace MassBattle.UI.LaunchMenu
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)initialArmyData.StrategyType);
 
-            SpawnUnitsSliders(initialArmyData);
+            SpawnUnitsSliders(initialArmyData, armyDatabase);
         }
 
-        private void SpawnUnitsSliders(InitialArmyData initialArmyData)
+        private void SpawnUnitsSliders(InitialArmyData initialArmyData, IArmyDatabase armyDatabase)
         {
             foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
             {
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
-
                 UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
-                spawnedSlider.Initialize(unitData, unitSetup.Value);
+
+                spawnedSlider.Initialize(unitData, unitSetup.Value, armyDatabase.MinUnitStackSize,
+                                         armyDatabase.MaxUnitStackSize);
+
                 _spawnedUnitsSliders.Add(spawnedSlider);
             }
         }

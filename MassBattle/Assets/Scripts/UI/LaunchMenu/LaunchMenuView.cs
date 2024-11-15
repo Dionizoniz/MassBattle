@@ -48,15 +48,16 @@ namespace MassBattle.UI.LaunchMenu
         {
             foreach (InitialArmyData initialArmyData in armyDatabase.ArmiesData)
             {
-                SpawnArmyPanel(initialArmyData, colorDatabase, unitDatabase);
+                SpawnArmyPanel(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
             }
         }
 
         private void SpawnArmyPanel(
-                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
+                IArmyDatabase armyDatabase)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(initialArmyData, colorDatabase, unitDatabase);
+            armyPanel.InitializeData(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
 
             ArmyPanels.Add(armyPanel);
         }
