@@ -4,6 +4,7 @@ using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -11,6 +12,6 @@ namespace MassBattle.UI.LaunchMenu
     {
         void InjectData(
                 IArmyDatabase armyDatabase, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IExitGameProvider exitGameProvider);
+                IExitGameProvider exitGameProvider, IUnitDatabase unitDatabase);
     }
 }

@@ -13,7 +13,7 @@ namespace MassBattle.UI.Components
         private TextMeshProUGUI _countLabel;
 
         public string UnitId { get; private set; }
-        public int Count => (int)_slider.value;
+        public int UnitsCount => (int)_slider.value;
 
         public void Initialize(string unitId, int count)
         {

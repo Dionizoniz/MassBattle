@@ -52,4 +52,5 @@ MonoBehaviour:
   _eventSystemToSpawn: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}
   _armyDatabase: {fileID: 11400000, guid: cef7874774b4e10468bc33b962c0649f, type: 2}
   _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
+  _unitDatabase: {fileID: 11400000, guid: 4658a0618b0a8e9498dfab3afbd64200, type: 2}
   _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}

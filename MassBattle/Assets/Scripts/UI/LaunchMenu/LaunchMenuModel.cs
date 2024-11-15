@@ -59,10 +59,9 @@ namespace MassBattle.UI.LaunchMenu
 
         private void RegisterArmiesSetup(IArmyDatabase armyDatabase)
         {
-            for (var i = 0; i < _view.ArmyPanels.Count; i++)
+            foreach (var panel in _view.ArmyPanels)
             {
-                var panel = _view.ArmyPanels[i];
-                InitialArmyData armySetup = panel.CreateArmySetup(i);
+                InitialArmyData armySetup = panel.CreateArmySetup();
                 armyDatabase.SaveArmyData(armySetup);
             }
         }

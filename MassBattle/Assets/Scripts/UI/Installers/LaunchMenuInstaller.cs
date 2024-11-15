@@ -5,6 +5,7 @@ using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.UI.FadePanel;
 using MassBattle.UI.FadePanel.Executors;
 using MassBattle.UI.LaunchMenu;
@@ -26,6 +27,8 @@ namespace MassBattle.UI.Installers
         private ArmyDatabase _armyDatabase;
         [SerializeField]
         private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private UnitDatabase _unitDatabase;
         [SerializeField]
         private SceneLoader _sceneLoader;
 
@@ -68,7 +71,8 @@ namespace MassBattle.UI.Installers
 
         private void InjectData()
         {
-            _launchMenuController.InjectData(_armyDatabase, _colorDatabase, _sceneLoader, _exitGameProvider);
+            _launchMenuController.InjectData(_armyDatabase, _colorDatabase, _sceneLoader, _exitGameProvider,
+                                             _unitDatabase);
         }
 
         public override bool IsSetupCorrect()

@@ -5,6 +5,7 @@ using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -14,15 +15,17 @@ namespace MassBattle.UI.LaunchMenu
         private IColorDatabase _colorDatabase;
         private ISceneLoader _sceneLoader;
         private IExitGameProvider _exitGameProvider;
+        private IUnitDatabase _unitDatabase;
 
         public void InjectData(
                 IArmyDatabase battleSetup, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IExitGameProvider exitGameProvider)
+                IExitGameProvider exitGameProvider, IUnitDatabase unitDatabase)
         {
             _armyDatabase = battleSetup;
             _colorDatabase = colorDatabase;
             _sceneLoader = sceneLoader;
             _exitGameProvider = exitGameProvider;
+            _unitDatabase = unitDatabase;
         }
 
         public void StartBattle()
@@ -38,7 +41,7 @@ namespace MassBattle.UI.LaunchMenu
         protected override void Initialize()
         {
             base.Initialize();
-            _view.SpawnPanels(_armyDatabase, _colorDatabase);
+            _view.SpawnPanels(_armyDatabase, _colorDatabase, _unitDatabase);
             _model.InjectData(_sceneLoader, _exitGameProvider);
         }
     }

@@ -6,7 +6,9 @@ using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.UnitDatabase;
 using MassBattle.Logic.Strategies;
+using MassBattle.UI.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,14 +23,7 @@ namespace MassBattle.UI.LaunchMenu
         private Toggle _isArmyActiveToggle;
 
         [Space, SerializeField]
-        private Slider _warriorsSlider;
-        [SerializeField]
-        private TextMeshProUGUI _warriorsCountLabel;
-
-        [Space, SerializeField]
-        private Slider _archerSlider;
-        [SerializeField]
-        private TextMeshProUGUI _archerCountLabel;
+        private List<UnitsCountSliderController> _unitCountSliders = new();
 
         [Space, SerializeField]
         private TMP_Dropdown _strategyDropdown;
@@ -39,56 +34,54 @@ namespace MassBattle.UI.LaunchMenu
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
+        private IUnitDatabase _unitDatabase;
 
         private string _cachedId; // TODO improve
 
-        public void InitializeData(InitialArmyData initialArmyData, IColorDatabase colorDatabase)
+        public void InitializeData(
+                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
         {
             _cachedId = initialArmyData.Id;
             _colorDatabase = colorDatabase;
+            _unitDatabase = unitDatabase;
 
             _armyIdInputField.text = initialArmyData.ArmyName;
             _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
-            _warriorsSlider.value = initialArmyData.DefaultUnitStackSize;
-            _archerSlider.value = initialArmyData.DefaultUnitStackSize;
+
+            Dictionary<string, int> unitsCountSetup = FindUnitsCountSetup(initialArmyData);
+            int tempIndex = 0;
+
+            foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
+            {
+                _unitCountSliders[tempIndex].Initialize(unitSetup.Key, unitSetup.Value);
+                tempIndex++;
+            }
+
             _armyColor.color = initialArmyData.ArmyColor;
 
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)initialArmyData.StrategyType);
-
-            ForceRefreshArmyCountLabels();
         }
 
-        private void ForceRefreshArmyCountLabels() // INFO: if SetupValue is same as SliderValue - labels do not refresh
+        private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
         {
-            RefreshWarriorsCountLabel(_warriorsSlider.value);
-            RefreshArchersCountLabel(_archerSlider.value);
+            Dictionary<string, int> setup = initialArmyData.UnitsCountSetup;
+            return setup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
         }
 
-        public void RefreshWarriorsCountLabel(float value)
+        public InitialArmyData CreateArmySetup()
         {
-            _warriorsCountLabel.text = value.ToString();
-        }
-
-        public void RefreshArchersCountLabel(float value)
-        {
-            _archerCountLabel.text = value.ToString();
-        }
-
-        public InitialArmyData CreateArmySetup(int index)
-        {
-            int warriorsCount = (int)_warriorsSlider.value;
-            int archersCount = (int)_archerSlider.value;
             StrategyType strategyType = _strategyTypeWrapper.Value();
             Color armyColor = _armyColor.color;
             bool isArmyActive = _isArmyActiveToggle.isOn;
+            Dictionary<string, int> unitCountSliders = new();
 
-            // TODO improve units count logic
-            Dictionary<string, int> units = new Dictionary<string, int>();
-            units.Add("0", warriorsCount);
-            units.Add("1", archersCount);
+            foreach (var slider in _unitCountSliders)
+            {
+                unitCountSliders.Add(slider.UnitId, slider.UnitsCount);
+            }
 
-            return new InitialArmyData(_cachedId, ArmyName, units, strategyType, armyColor, isArmyActive);
+            return new InitialArmyData(_cachedId, ArmyName, unitCountSliders, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()
