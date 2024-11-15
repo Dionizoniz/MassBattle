@@ -100,19 +100,17 @@ namespace MassBattle.Logic.BattleCreator
 
             if (initialArmyData.IsArmyActive)
             {
-                Dictionary<string, int> unitsCountSetup = FindUnitsCountSetup(initialArmyData);
+                Dictionary<string, List<BaseUnit>> spawnedUnits = new();
 
-                List<int> temp = new List<int>();
-
-                foreach (var item in unitsCountSetup)
+                foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
                 {
-                    temp.Add(item.Value);
+                    UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                    List<BaseUnit> units = SpawnUnits(unitData, unitSetup.Value, initialArmyData, spawnBounds);
+
+                    spawnedUnits.Add(unitSetup.Key, units);
                 }
 
-                List<Warrior> warriors = SpawnUnits(_warriorPrefab, temp[0], initialArmyData, spawnBounds);
-                List<Archer> archers = SpawnUnits(_archerPrefab, temp[1], initialArmyData, spawnBounds);
-
-                armyData = new ArmyData(initialArmyData, warriors, archers);
+                armyData = new ArmyData(initialArmyData, spawnedUnits);
             }
 
             return armyData;
@@ -120,31 +118,30 @@ namespace MassBattle.Logic.BattleCreator
 
         private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
         {
-            return initialArmyData.UnitsCountSetup != null ?
-                           initialArmyData.UnitsCountSetup :
-                           _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
+            Dictionary<string, int> setup = initialArmyData.UnitsCountSetup;
+            return setup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
         }
 
-        private List<T> SpawnUnits<T>(
-                T unitToSpawn, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
-                where T : BaseUnit
+        private List<BaseUnit> SpawnUnits(
+                UnitData unitData, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
-            List<T> spawnedUnits = new();
+            List<BaseUnit> spawnedUnits = new();
 
             for (int i = 0; i < unitsCount; i++)
             {
-                T spawnUnit = SpawnUnit(unitToSpawn, initialArmyData, spawnBounds);
+                BaseUnit spawnUnit = SpawnUnit(unitData, initialArmyData, spawnBounds);
                 spawnedUnits.Add(spawnUnit);
             }
 
             return spawnedUnits;
         }
 
-        private T SpawnUnit<T>(T unitToSpawn, InitialArmyData initialArmyData, Bounds spawnBounds) where T : BaseUnit
+        private BaseUnit SpawnUnit(UnitData unitData, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
-            T spawnedUnit = Instantiate(unitToSpawn, _unitsRoot);
+            BaseUnit spawnedUnit = Instantiate(unitData.UnitPrefabToSpawn, _unitsRoot);
 
-            spawnedUnit.Initialize(initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
+            string id = unitData.Id;
+            spawnedUnit.Initialize(id, initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;

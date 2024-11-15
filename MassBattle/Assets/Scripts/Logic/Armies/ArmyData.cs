@@ -19,19 +19,17 @@ namespace MassBattle.Logic.Armies
 
         protected override string ClassName => nameof(ArmyData);
 
-        private readonly List<Warrior> _warriors;
-        private readonly List<Archer> _archers;
+        private Dictionary<string, List<BaseUnit>> _spawnedUnits;
 
         private int _lastUpdatedIndex;
 
         // TODO change army storage approach
-        public ArmyData(InitialArmyData initialArmyData, List<Warrior> warriors, List<Archer> archers)
+        public ArmyData(InitialArmyData initialArmyData, Dictionary<string, List<BaseUnit>> spawnedUnits)
         {
             OverrideId(initialArmyData.Id);
 
             InitialArmyData = initialArmyData;
-            _warriors = warriors;
-            _archers = archers;
+            _spawnedUnits = spawnedUnits;
 
             CacheAllUnits();
         }
@@ -39,8 +37,11 @@ namespace MassBattle.Logic.Armies
         private void CacheAllUnits()
         {
             AllUnits = new List<BaseUnit>();
-            AllUnits.AddRange(_warriors);
-            AllUnits.AddRange(_archers);
+
+            foreach (KeyValuePair<string, List<BaseUnit>> units in _spawnedUnits)
+            {
+                AllUnits.AddRange(units.Value);
+            }
         }
 
         public void InjectEnemyArmies(List<ArmyData> enemyArmiesData)
@@ -50,29 +51,12 @@ namespace MassBattle.Logic.Armies
 
         public void RemoveUnit(BaseUnit unit)
         {
-            if (unit is Warrior warrior)
+            if (_spawnedUnits.ContainsKey(unit.UnitId))
             {
-                RemoveWarrior(warrior);
+                _spawnedUnits[unit.UnitId].Remove(unit);
             }
-            else
-            {
-                RemoveArcher(unit as Archer);
-            }
-        }
 
-        private void RemoveWarrior(Warrior warrior)
-        {
-            _warriors.Remove(warrior);
-            AllUnits.Remove(warrior);
-
-            OnUnitRemove.Invoke();
-        }
-
-        private void RemoveArcher(Archer archer)
-        {
-            _archers.Remove(archer);
-            AllUnits.Remove(archer);
-
+            AllUnits.Remove(unit);
             OnUnitRemove.Invoke();
         }
 

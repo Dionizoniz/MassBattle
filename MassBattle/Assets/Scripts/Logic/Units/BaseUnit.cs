@@ -46,6 +46,7 @@ namespace MassBattle.Logic.Units
         public float AttackRange => _attackRange;
         public ArmyData ArmyData => _cachedArmyData ??= _armyProvider.FindArmyBy(_armyId);
         private bool IsUnitAlive => _health > 0;
+        public string UnitId { get; private set; }
 
         private IArmyProvider _armyProvider;
         protected IUpdateProvider _updateProvider;
@@ -63,9 +64,10 @@ namespace MassBattle.Logic.Units
         private Vector3 _lastPosition;
 
         public void Initialize(
-                InitialArmyData initialArmyData, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
+                string unitId, InitialArmyData initialArmyData, IArmyProvider armyProvider,
+                IUpdateProvider updateProvider, IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
+            UnitId = unitId;
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
