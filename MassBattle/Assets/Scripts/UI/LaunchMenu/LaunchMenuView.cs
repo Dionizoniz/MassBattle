@@ -13,7 +13,8 @@ namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuView : View
     {
-        private const string ARMY_ID_DUPLICATES_ERROR_MESSAGE = "Remove duplicates in Army Names before Launch Battle.";
+        private const string ARMY_NAME_DUPLICATES_ERROR_MESSAGE =
+                "Remove duplicates before starting to make it easier to identify army.";
 
         [SerializeField]
         private ArmyPanelController _armyPanelToSpawn;
@@ -63,9 +64,9 @@ namespace MassBattle.UI.LaunchMenu
             ArmyPanels.Add(armyPanel);
         }
 
-        public void ShowArmyIdsErrorMessage()
+        public void ShowArmyNamesErrorMessage()
         {
-            ShowErrorMessage(ARMY_ID_DUPLICATES_ERROR_MESSAGE);
+            ShowErrorMessage(ARMY_NAME_DUPLICATES_ERROR_MESSAGE);
         }
 
         private void ShowErrorMessage(string errorMessage)

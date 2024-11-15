@@ -35,14 +35,13 @@ namespace MassBattle.UI.LaunchMenu
             }
             else
             {
-                _view.ShowArmyIdsErrorMessage();
+                _view.ShowArmyNamesErrorMessage();
             }
         }
 
         private bool IsCorrectArmyNamesSetup()
         {
-            // TODO add active armies check only !!!
-            IEnumerable<string> activeIds = _view.ArmyPanels.Select(panel => panel.ArmyName);
+            IEnumerable<string> activeIds = FindActiveArmiesNames();
 
             List<string> duplicateIds = activeIds.GroupBy(id => id)
                                                  .Where(group => group.Count() > 1)
@@ -50,6 +49,17 @@ namespace MassBattle.UI.LaunchMenu
                                                  .ToList();
 
             return duplicateIds.Count == 0;
+        }
+
+        private IEnumerable<string> FindActiveArmiesNames()
+        {
+            foreach (ArmyPanelController armyPanel in _view.ArmyPanels)
+            {
+                if (armyPanel.IsArmyActive)
+                {
+                    yield return armyPanel.ArmyName;
+                }
+            }
         }
 
         private void ClearRegisteredArmySetups(IArmyDatabase armyDatabase)

@@ -31,6 +31,7 @@ namespace MassBattle.UI.LaunchMenu
         private Image _armyColor;
 
         public string ArmyName => _armyIdInputField.text;
+        public bool IsArmyActive => _isArmyActiveToggle.isOn;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private IColorDatabase _colorDatabase;
