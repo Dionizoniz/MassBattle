@@ -23,7 +23,9 @@ namespace MassBattle.UI.LaunchMenu
         private Toggle _isArmyActiveToggle;
 
         [Space, SerializeField]
-        private List<UnitsCountSliderController> _unitCountSliders = new();
+        private UnitsCountSliderController _unitCountSlidersToSpawn;
+        [SerializeField]
+        private Transform _unitCountSlidersRoot;
 
         [Space, SerializeField]
         private TMP_Dropdown _strategyDropdown;
@@ -37,31 +39,36 @@ namespace MassBattle.UI.LaunchMenu
         private IColorDatabase _colorDatabase;
         private IUnitDatabase _unitDatabase;
 
-        private string _cachedId; // TODO improve
+        private string _armyId;
+        private readonly List<UnitsCountSliderController> _spawnedUnitsSliders = new();
 
         public void InitializeData(
                 InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
         {
-            _cachedId = initialArmyData.Id;
+            _armyId = initialArmyData.Id;
             _colorDatabase = colorDatabase;
             _unitDatabase = unitDatabase;
 
             _armyIdInputField.text = initialArmyData.ArmyName;
             _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
-
-            Dictionary<string, int> unitsCountSetup = FindUnitsCountSetup(initialArmyData);
-            int tempIndex = 0;
-
-            foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
-            {
-                _unitCountSliders[tempIndex].Initialize(unitSetup.Key, unitSetup.Value);
-                tempIndex++;
-            }
-
             _armyColor.color = initialArmyData.ArmyColor;
 
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)initialArmyData.StrategyType);
+
+            SpawnUnitsSliders(initialArmyData);
+        }
+
+        private void SpawnUnitsSliders(InitialArmyData initialArmyData)
+        {
+            foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
+            {
+                UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
+
+                UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                spawnedSlider.Initialize(unitData, unitSetup.Value);
+                _spawnedUnitsSliders.Add(spawnedSlider);
+            }
         }
 
         private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
@@ -77,12 +84,12 @@ namespace MassBattle.UI.LaunchMenu
             bool isArmyActive = _isArmyActiveToggle.isOn;
             Dictionary<string, int> unitCountSliders = new();
 
-            foreach (var slider in _unitCountSliders)
+            foreach (var slider in _spawnedUnitsSliders)
             {
                 unitCountSliders.Add(slider.UnitId, slider.UnitsCount);
             }
 
-            return new InitialArmyData(_cachedId, ArmyName, unitCountSliders, strategyType, armyColor, isArmyActive);
+            return new InitialArmyData(_armyId, ArmyName, unitCountSliders, strategyType, armyColor, isArmyActive);
         }
 
         public void ChangeArmyColorToNext()
