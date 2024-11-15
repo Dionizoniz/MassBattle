@@ -49,6 +49,9 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
             foreach (var initialArmyData in _elements)
             {
                 isSetupCorrect &= initialArmyData.IsSetupCorrect();
+
+                int unitStackSize = initialArmyData.DefaultUnitStackSize;
+                isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
             }
 
             return isSetupCorrect;
