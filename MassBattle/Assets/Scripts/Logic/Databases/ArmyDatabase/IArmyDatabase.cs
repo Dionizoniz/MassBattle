@@ -5,6 +5,6 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
 {
     public interface IArmyDatabase : IDatabase<InitialArmyData>
     {
-        List<ArmyData> SavedArmiesData { get; }
+        //List<ArmyData> SavedArmiesData { get; }
     }
 }
