@@ -9,7 +9,7 @@ namespace MassBattle.Logic.Units.Weapons
 {
     public class Arrow : BaseSceneEntity, IAttack
     {
-        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int COLOR = Shader.PropertyToID("_BaseColor");
 
         [SerializeField]
         private float _movementSpeed = 50f;
@@ -54,10 +54,9 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void UpdateColor(Color color)
         {
-            // MaterialPropertyBlock propertyBlock = new();
-            // propertyBlock.SetColor(COLOR, color);
-            // _renderer.SetPropertyBlock(propertyBlock);
-            _renderer.material.color = color; // TODO optimize solution
+            MaterialPropertyBlock propertyBlock = new();
+            propertyBlock.SetColor(COLOR, color);
+            _renderer.SetPropertyBlock(propertyBlock);
         }
 
         private void CacheMoveDirection(BaseUnit sourceUnit)

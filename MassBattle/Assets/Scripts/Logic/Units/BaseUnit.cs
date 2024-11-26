@@ -13,7 +13,7 @@ namespace MassBattle.Logic.Units
 {
     public abstract class BaseUnit : BaseSceneEntity
     {
-        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int COLOR = Shader.PropertyToID("_BaseColor");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
         private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
         private static readonly int TAKE_DAMAGE = Animator.StringToHash("TakeDamage");
@@ -100,9 +100,8 @@ namespace MassBattle.Logic.Units
 
         private void UpdateColor(Color color)
         {
-            // _materialPropertyBlock.SetColor(COLOR, color);
-            // _renderer.SetPropertyBlock(_materialPropertyBlock);
-            _renderer.material.color = color; // TODO optimize solution
+            _materialPropertyBlock.SetColor(COLOR, color);
+            _renderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
         private void TryToActivateBleeding()
