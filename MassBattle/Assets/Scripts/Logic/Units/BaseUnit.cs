@@ -100,8 +100,9 @@ namespace MassBattle.Logic.Units
 
         private void UpdateColor(Color color)
         {
-            _materialPropertyBlock.SetColor(COLOR, color);
-            _renderer.SetPropertyBlock(_materialPropertyBlock);
+            // _materialPropertyBlock.SetColor(COLOR, color);
+            // _renderer.SetPropertyBlock(_materialPropertyBlock);
+            _renderer.material.color = color; // TODO optimize solution
         }
 
         private void TryToActivateBleeding()

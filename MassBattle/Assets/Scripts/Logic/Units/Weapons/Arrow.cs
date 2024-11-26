@@ -54,9 +54,10 @@ namespace MassBattle.Logic.Units.Weapons
 
         private void UpdateColor(Color color)
         {
-            MaterialPropertyBlock propertyBlock = new();
-            propertyBlock.SetColor(COLOR, color);
-            _renderer.SetPropertyBlock(propertyBlock);
+            // MaterialPropertyBlock propertyBlock = new();
+            // propertyBlock.SetColor(COLOR, color);
+            // _renderer.SetPropertyBlock(propertyBlock);
+            _renderer.material.color = color; // TODO optimize solution
         }
 
         private void CacheMoveDirection(BaseUnit sourceUnit)
