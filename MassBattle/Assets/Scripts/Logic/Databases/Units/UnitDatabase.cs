@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MassBattle.Core.Databases;
-using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Units
 {
     [CreateAssetMenu(menuName = "Databases/" + nameof(UnitDatabase), fileName = nameof(UnitDatabase), order = -10000)]
-    public class UnitDatabase : Database<ColorDescriptor>, IUnitDatabase
+    public class UnitDatabase : Database<UnitDescriptor>, IUnitDatabase
     {
+        public IEnumerable<UnitDescriptor> AllUnits => _descriptors.Select(descriptor => descriptor);
+
         public Dictionary<string, int> GenerateDefaultUnitsCountSetup(int defaultUnitStackSize)
         {
             Dictionary<string, int> defaultUnitsCountSetup = new();

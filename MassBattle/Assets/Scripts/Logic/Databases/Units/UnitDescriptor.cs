@@ -1,5 +1,5 @@
 ﻿using System;
-using MassBattle.Core.Databases;
+using MassBattle.Core.Descriptors;
 using MassBattle.Core.Entities;
 using MassBattle.Logic.Units;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MassBattle.Logic.Databases.Units
 {
     [Serializable]
-    public class UnitData : BaseData, IName
+    public class UnitDescriptor : Descriptor, IUnitDescriptor
     {
         [SerializeField]
         private string _unitName;
@@ -17,6 +17,9 @@ namespace MassBattle.Logic.Databases.Units
         public string Name => _unitName;
         public BaseUnit UnitPrefabToSpawn => _unitPrefabToSpawn;
 
-        protected override string ClassName => nameof(UnitData);
+        public override bool IsSetupCorrect()
+        {
+            return _unitPrefabToSpawn != null && _unitPrefabToSpawn.IsSetupCorrect() && string.IsNullOrEmpty(_unitName);
+        }
     }
 }

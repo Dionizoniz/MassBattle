@@ -18,10 +18,10 @@ namespace MassBattle.UI.Components
         public string UnitId { get; private set; }
         public int UnitsCount => (int)_slider.value;
 
-        public void Initialize(UnitData unitData, int initialCount, int minSliderValue, int maxSliderValue)
+        public void Initialize(UnitDescriptor unitDescriptor, int initialCount, int minSliderValue, int maxSliderValue)
         {
-            UnitId = unitData.DescriptorId;
-            _unitsNameLabel.text = unitData.Name;
+            UnitId = unitDescriptor.DescriptorId;
+            _unitsNameLabel.text = unitDescriptor.Name;
 
             _slider.minValue = minSliderValue;
             _slider.maxValue = maxSliderValue;

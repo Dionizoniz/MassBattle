@@ -118,24 +118,24 @@ namespace MassBattle.Logic.BattleCreator
         }
 
         private List<BaseUnit> SpawnUnits(
-                UnitData unitData, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
+                UnitDescriptor unitDescriptor, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
             List<BaseUnit> spawnedUnits = new();
 
             for (int i = 0; i < unitsCount; i++)
             {
-                BaseUnit spawnUnit = SpawnUnit(unitData, initialArmyData, spawnBounds);
+                BaseUnit spawnUnit = SpawnUnit(unitDescriptor, initialArmyData, spawnBounds);
                 spawnedUnits.Add(spawnUnit);
             }
 
             return spawnedUnits;
         }
 
-        private BaseUnit SpawnUnit(UnitData unitData, InitialArmyData initialArmyData, Bounds spawnBounds)
+        private BaseUnit SpawnUnit(UnitDescriptor unitDescriptor, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
-            BaseUnit spawnedUnit = Instantiate(unitData.UnitPrefabToSpawn, _unitsRoot);
+            BaseUnit spawnedUnit = Instantiate(unitDescriptor.UnitPrefabToSpawn, _unitsRoot);
 
-            string id = unitData.DescriptorId;
+            string id = unitDescriptor.DescriptorId;
             spawnedUnit.Initialize(id, initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 

@@ -5,7 +5,7 @@ namespace MassBattle.Logic.Databases.Colors
 {
     [CreateAssetMenu(menuName = "Descriptors/" + nameof(ColorDescriptor), fileName = nameof(ColorDescriptor),
                      order = -10000)]
-    public class ColorDescriptor : Descriptor
+    public class ColorDescriptor : Descriptor, IColorDescriptor
     {
         [SerializeField]
         private Color _color = Color.white;
