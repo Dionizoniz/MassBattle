@@ -16,7 +16,7 @@ namespace MassBattle.Logic.Databases.Colors
 
         public int FindColorIndex(Color color)
         {
-            return _elements.FindIndex(element => element.Color == color);
+            return _descriptors.FindIndex(element => element.Color == color);
         }
     }
 }

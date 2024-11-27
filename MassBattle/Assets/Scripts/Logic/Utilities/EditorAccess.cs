@@ -1,5 +1,7 @@
 using MassBattle.Core.Engine;
 using MassBattle.Core.SceneLoaders;
+using MassBattle.Logic.Databases.Colors;
+using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +14,8 @@ namespace MassBattle.Logic.Utilities
 
         [SerializeField]
         private SceneLoader _sceneLoader;
+        [SerializeField]
+        private ColorDatabase _colorDatabase;
 
         public ISceneLoader SceneLoader => _sceneLoader;
 
@@ -31,5 +35,7 @@ namespace MassBattle.Logic.Utilities
                 return _instance;
             }
         }
+
+        public ValueDropdownList<string> PossibleColorsDropdown() => _colorDatabase.PossibleDescriptorsDropdown;
     }
 }

@@ -11,6 +11,7 @@ namespace MassBattle.Core.Descriptors
         private string _descriptorId;
 
         public string DescriptorId => _descriptorId;
+        public string AssetName => name;
 
         private void Awake()
         {

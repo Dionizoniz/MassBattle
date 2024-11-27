@@ -48,7 +48,7 @@ namespace MassBattle.Logic.Databases.Armies
         {
             bool isSetupCorrect = base.IsSetupCorrect();
 
-            foreach (var initialArmyData in _elements)
+            foreach (var initialArmyData in _descriptors)
             {
                 //    isSetupCorrect &= initialArmyData.IsSetupCorrect(); TODO restore code
 
