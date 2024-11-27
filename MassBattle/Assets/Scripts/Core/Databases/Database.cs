@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using MassBattle.Core.Descriptors;
 using MassBattle.Core.Entities;
 using Sirenix.OdinInspector;
@@ -59,6 +60,18 @@ namespace MassBattle.Core.Databases
         }
 
         public override bool IsSetupCorrect()
+        {
+            bool isCorrectSetup = true;
+
+            foreach (T descriptor in _descriptors)
+            {
+                isCorrectSetup &= descriptor.IsSetupCorrect();
+            }
+
+            return isCorrectSetup && IsNoDuplicatedIds();
+        }
+
+        private bool IsNoDuplicatedIds()
         {
             List<string> duplicateIds = _descriptors.GroupBy(element => element.DescriptorId)
                                                     .Where(group => group.Count() > 1)

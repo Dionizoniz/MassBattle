@@ -25,5 +25,7 @@ namespace MassBattle.Core.Descriptors
                 _descriptorId = Guid.NewGuid().ToString();
             }
         }
+
+        public abstract bool IsSetupCorrect();
     }
 }

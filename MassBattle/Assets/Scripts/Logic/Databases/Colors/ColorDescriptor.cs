@@ -11,5 +11,7 @@ namespace MassBattle.Logic.Databases.Colors
         private Color _color = Color.white;
 
         public Color Color => _color;
+
+        public override bool IsSetupCorrect() => true;
     }
 }
