@@ -10,9 +10,9 @@ namespace MassBattle.Core.Databases
         [SerializeField]
         protected List<T> _elements = new();
 
-        public List<string> FindAllElementIds()
+        public IEnumerable<string> FindAllDescriptorIds()
         {
-            return _elements.Select(element => element.DescriptorId).ToList();
+            return _elements.Select(element => element.DescriptorId);
         }
 
         public T TryFindElementBy(int index)

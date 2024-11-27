@@ -63,7 +63,7 @@ namespace MassBattle.Tests.Editor
             List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = databases.Max(setup => setup.FindAllElementIds().Count);
+            int maxArmyIdsCount = databases.Max(setup => setup.FindAllDescriptorIds().Count());
 
             Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
         }
