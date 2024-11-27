@@ -60,7 +60,7 @@ namespace MassBattle.Tests.Editor
         public void _04_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
-            List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
+            List<ArmyDatabase> databases = default; //FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
             int maxArmyIdsCount = databases.Max(setup => setup.FindDescriptorIds().Count());

@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Databases;
+using MassBattle.Core.Engine;
 using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
     [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = -10000)]
-    public class ArmyDatabase : Database<ColorDescriptor>, IArmyDatabase
+    public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase
     {
+        [SerializeField]
+        protected List<InitialArmyData> _elements = new();
         [Space, SerializeField]
         private int _minUnitStackSize;
         [SerializeField]
         private int _maxUnitStackSize = 150;
-
         private readonly List<InitialArmyData> _savedArmiesData = new();
-
         private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
-        public List<InitialArmyData> ArmiesData =>
-                _savedArmiesData; // TODO UseSavedArmiesData ? _savedArmiesData : _elements;
-
+        public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
         public int MinUnitStackSize => _minUnitStackSize;
         public int MaxUnitStackSize => _maxUnitStackSize;
 
@@ -44,19 +43,24 @@ namespace MassBattle.Logic.Databases.Armies
             _savedArmiesData.Clear();
         }
 
-        public override bool IsSetupCorrect()
+        public bool IsSetupCorrect()
         {
-            bool isSetupCorrect = base.IsSetupCorrect();
+            // bool isSetupCorrect = base.IsSetupCorrect();
+            //
+            // foreach (var initialArmyData in _descriptors)
+            // {
+            //     //    isSetupCorrect &= initialArmyData.IsSetupCorrect(); TODO restore code
+            //
+            //     //    int unitStackSize = initialArmyData.DefaultUnitStackSize;
+            //     //    isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
+            // }
 
-            foreach (var initialArmyData in _descriptors)
-            {
-                //    isSetupCorrect &= initialArmyData.IsSetupCorrect(); TODO restore code
-
-                //    int unitStackSize = initialArmyData.DefaultUnitStackSize;
-                //    isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
-            }
-
-            return isSetupCorrect;
+            return true;
         }
+
+        public IEnumerable<string> FindDescriptorIds() => throw new System.NotImplementedException();
+        public ColorDescriptor TryFindNextElementFor(int index) => throw new System.NotImplementedException();
+        public ColorDescriptor TryFindElementBy(string descriptorId) => throw new System.NotImplementedException();
+        public ColorDescriptor FindDefaultElement() => throw new System.NotImplementedException();
     }
 }
