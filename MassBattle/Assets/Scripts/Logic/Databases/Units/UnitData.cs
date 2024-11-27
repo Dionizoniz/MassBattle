@@ -4,7 +4,7 @@ using MassBattle.Core.Entities;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.UnitDatabase
+namespace MassBattle.Logic.Databases.Units
 {
     [Serializable]
     public class UnitData : BaseData, IName

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MassBattle.Core.Databases;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Units;
 using UnityEngine;
 

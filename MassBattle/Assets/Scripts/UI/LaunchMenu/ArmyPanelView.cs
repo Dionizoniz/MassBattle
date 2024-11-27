@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Utilities;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.UnitDatabase;
+using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Strategies;
 using MassBattle.UI.Components;
 using TMPro;

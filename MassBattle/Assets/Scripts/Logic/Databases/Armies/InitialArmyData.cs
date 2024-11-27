@@ -5,7 +5,7 @@ using MassBattle.Core.Entities;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.ArmyDatabase
+namespace MassBattle.Logic.Databases.Armies
 {
     [Serializable]
     public class InitialArmyData : BaseData, ICheckSetup, IName

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Databases;
 
-namespace MassBattle.Logic.Databases.UnitDatabase
+namespace MassBattle.Logic.Databases.Units
 {
     public interface IUnitDatabase : IDatabase<UnitData>
     {

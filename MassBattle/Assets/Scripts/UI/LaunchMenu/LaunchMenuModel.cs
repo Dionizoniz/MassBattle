@@ -4,7 +4,7 @@ using System.Linq;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu

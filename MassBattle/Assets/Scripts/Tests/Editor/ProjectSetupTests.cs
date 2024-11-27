@@ -7,7 +7,7 @@ using MassBattle.Core.Installers;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using NUnit.Framework;
 using UnityEditor;
 

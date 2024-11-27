@@ -2,7 +2,7 @@
 using MassBattle.Core.Databases;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.UnitDatabase
+namespace MassBattle.Logic.Databases.Units
 {
     [CreateAssetMenu(menuName = "Databases/" + nameof(UnitDatabase), fileName = nameof(UnitDatabase), order = 0)]
     public class UnitDatabase : Database<UnitData>, IUnitDatabase
