@@ -1,12 +1,11 @@
-﻿using System;
-using MassBattle.Core.Descriptors;
-using MassBattle.Core.Entities;
+﻿using MassBattle.Core.Descriptors;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Units
 {
-    [Serializable]
+    [CreateAssetMenu(menuName = "Descriptors/" + nameof(UnitDescriptor), fileName = nameof(UnitDescriptor),
+                     order = -10000)]
     public class UnitDescriptor : Descriptor, IUnitDescriptor
     {
         [SerializeField]

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7691d37520b74657a4dfcbf77a62262c, type: 3}
+  m_Name: UnitBerserk
+  m_EditorClassIdentifier: 
+  _descriptorId: 8e6cf2ca-e00c-422e-be29-211ca67ba3ff
+  _unitName: Berserk
+  _unitPrefabToSpawn: {fileID: 1726437177833949907, guid: 2baf0910ccc69a145babbe95a218c3bd, type: 3}

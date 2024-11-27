@@ -12,13 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a563a753cea64912a9a762072bf1d9f2, type: 3}
   m_Name: UnitDatabase
   m_EditorClassIdentifier: 
-  _elements:
-  - _id: UnitData0
-    _unitName: Archer
-    _unitPrefabToSpawn: {fileID: 1375424081673512322, guid: a04561132aa8d9043a38b1561f9bf0a6, type: 3}
-  - _id: UnitData1
-    _unitName: Warrior
-    _unitPrefabToSpawn: {fileID: 1726437177833949907, guid: e0bb51e59cb7ac0479ef15c87dce1c41, type: 3}
-  - _id: UnitData2
-    _unitName: Berserk
-    _unitPrefabToSpawn: {fileID: 1726437177833949907, guid: 2baf0910ccc69a145babbe95a218c3bd, type: 3}
+  _descriptors:
+  - {fileID: 11400000, guid: ebe9cd5284a0c8243b906a6751cf5b5c, type: 2}
+  - {fileID: 11400000, guid: 72ac070ce3b17fa4abb8ec4a0fbbf27a, type: 2}
+  - {fileID: 11400000, guid: 023163889fa8f4f4dbfbf60c47fc83f0, type: 2}
