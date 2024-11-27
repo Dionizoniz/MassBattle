@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3357a575bf5f461596e28e81d89f9bd6, type: 3}
-  m_Name: ColorDescriptor
+  m_Name: ColorOrange
   m_EditorClassIdentifier: 
   _descriptorId: 5d4b2f97-d567-4178-87a2-fb4d8de2a7f0
-  _color: {r: 1, g: 1, b: 1, a: 1}
+  _color: {r: 0.98039216, g: 0.44705883, b: 0, a: 1}
