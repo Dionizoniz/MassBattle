@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Databases;
+using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
-    [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = 0)]
-    public class ArmyDatabase : Database<InitialArmyData>, IArmyDatabase
+    [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = -10000)]
+    public class ArmyDatabase : Database<ColorDescriptor>, IArmyDatabase
     {
         [Space, SerializeField]
         private int _minUnitStackSize;
@@ -15,7 +16,8 @@ namespace MassBattle.Logic.Databases.Armies
         private readonly List<InitialArmyData> _savedArmiesData = new();
 
         private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
-        public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
+        public List<InitialArmyData> ArmiesData =>
+                _savedArmiesData; // TODO UseSavedArmiesData ? _savedArmiesData : _elements;
 
         public int MinUnitStackSize => _minUnitStackSize;
         public int MaxUnitStackSize => _maxUnitStackSize;
@@ -48,10 +50,10 @@ namespace MassBattle.Logic.Databases.Armies
 
             foreach (var initialArmyData in _elements)
             {
-                isSetupCorrect &= initialArmyData.IsSetupCorrect();
+                //    isSetupCorrect &= initialArmyData.IsSetupCorrect(); TODO restore code
 
-                int unitStackSize = initialArmyData.DefaultUnitStackSize;
-                isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
+                //    int unitStackSize = initialArmyData.DefaultUnitStackSize;
+                //    isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
             }
 
             return isSetupCorrect;

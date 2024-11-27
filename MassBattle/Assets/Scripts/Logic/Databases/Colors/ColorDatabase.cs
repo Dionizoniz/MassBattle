@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Colors
 {
-    [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = 0)]
-    public class ColorDatabase : Database<ColorData>, IColorDatabase
+    [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = -10000)]
+    public class ColorDatabase : Database<ColorDescriptor>, IColorDatabase
     {
         [Space, SerializeField]
         private Color _damageColor = Color.red;

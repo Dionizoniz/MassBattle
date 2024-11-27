@@ -99,10 +99,10 @@ namespace MassBattle.Logic.BattleCreator
 
                 foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
                 {
-                    UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
-                    List<BaseUnit> units = SpawnUnits(unitData, unitSetup.Value, initialArmyData, spawnBounds);
-
-                    spawnedUnits.Add(unitSetup.Key, units);
+                    // UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                    // List<BaseUnit> units = SpawnUnits(unitData, unitSetup.Value, initialArmyData, spawnBounds);
+                    //
+                    // spawnedUnits.Add(unitSetup.Key, units);
                 }
 
                 armyData = new ArmyData(initialArmyData, spawnedUnits);

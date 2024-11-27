@@ -63,13 +63,13 @@ namespace MassBattle.UI.LaunchMenu
         {
             foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
             {
-                UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
-                UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
-
-                spawnedSlider.Initialize(unitData, unitSetup.Value, armyDatabase.MinUnitStackSize,
-                                         armyDatabase.MaxUnitStackSize);
-
-                _spawnedUnitsSliders.Add(spawnedSlider);
+                // UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
+                // UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                //
+                // spawnedSlider.Initialize(unitData, unitSetup.Value, armyDatabase.MinUnitStackSize,
+                //                          armyDatabase.MaxUnitStackSize);
+                //
+                // _spawnedUnitsSliders.Add(spawnedSlider);
             }
         }
 
@@ -82,12 +82,12 @@ namespace MassBattle.UI.LaunchMenu
         public void ChangeArmyColorToNext()
         {
             int index = _colorDatabase.FindColorIndex(_armyColor.color);
-            ColorData nextColor = FindNextColorData(index);
+            ColorDescriptor nextColor = FindNextColorData(index);
 
             _armyColor.color = nextColor.Color;
         }
 
-        private ColorData FindNextColorData(int index)
+        private ColorDescriptor FindNextColorData(int index)
         {
             return index >= 0 ? _colorDatabase.TryFindNextElementFor(index) : _colorDatabase.FindDefaultElement();
         }

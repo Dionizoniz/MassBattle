@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Descriptors;
 using MassBattle.Core.Entities;
 using UnityEngine;
 
 namespace MassBattle.Core.Databases
 {
-    public abstract class Database<T> : BaseDatabase, IDatabase<T> where T : IDescriptorId
+    public abstract class Database<T> : BaseDatabase, IDatabase<T> where T : IDescriptor
     {
         [SerializeField]
         protected List<T> _elements = new();

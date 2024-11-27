@@ -12,7 +12,7 @@ namespace MassBattle.Core.Descriptors
 
         public string DescriptorId => _descriptorId;
 
-        private void OnValidate()
+        private void Awake()
         {
             TryGenerateDescriptorId();
         }
