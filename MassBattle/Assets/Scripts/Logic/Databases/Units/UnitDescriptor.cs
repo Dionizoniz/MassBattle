@@ -18,7 +18,12 @@ namespace MassBattle.Logic.Databases.Units
 
         public override bool IsSetupCorrect()
         {
-            return _unitPrefabToSpawn != null && _unitPrefabToSpawn.IsSetupCorrect() && string.IsNullOrEmpty(_unitName);
+            bool isSetupCorrect = true;
+
+            isSetupCorrect &= _unitPrefabToSpawn != null && _unitPrefabToSpawn.IsSetupCorrect();
+            isSetupCorrect &= string.IsNullOrEmpty(_unitName) == false;
+
+            return isSetupCorrect;
         }
     }
 }
