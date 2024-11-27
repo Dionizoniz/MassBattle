@@ -1,6 +1,6 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Engine;
 
-namespace MassBattle.Core.Entities.MVC
+namespace MassBattle.Core.Patterns.MVC
 {
     public abstract class View : ExtendedMonoBehaviour, IView
     { }

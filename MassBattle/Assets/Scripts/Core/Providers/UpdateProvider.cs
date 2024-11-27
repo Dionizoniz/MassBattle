@@ -1,5 +1,5 @@
 ﻿using System;
-using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Engine;
 
 namespace MassBattle.Core.Providers
 {

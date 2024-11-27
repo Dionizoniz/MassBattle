@@ -1,5 +1,6 @@
 ﻿using System;
-using MassBattle.Core.Entities.Database;
+using MassBattle.Core.Databases;
+using MassBattle.Core.Entities;
 using MassBattle.Logic.Units;
 using UnityEngine;
 

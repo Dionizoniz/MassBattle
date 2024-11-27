@@ -1,8 +1,8 @@
 ﻿using System;
-using MassBattle.Core.Entities.Engine;
-using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Engine;
+using MassBattle.Core.Entities;
 
-namespace MassBattle.Core.Entities.Installers
+namespace MassBattle.Core.Installers
 {
     public abstract class BaseInstaller : ExtendedMonoBehaviour, IInstaller, ICheckSetup
     {

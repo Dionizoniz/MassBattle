@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Core.Entities.Database
+﻿namespace MassBattle.Core.Entities
 {
     public interface IName
     {

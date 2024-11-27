@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Entities.Database;
+using MassBattle.Core.Databases;
 
 namespace MassBattle.Logic.Databases.ArmyDatabase
 {

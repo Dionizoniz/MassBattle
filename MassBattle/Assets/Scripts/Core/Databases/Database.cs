@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using MassBattle.Core.Entities;
 using UnityEngine;
 
-namespace MassBattle.Core.Entities.Database
+namespace MassBattle.Core.Databases
 {
     public abstract class Database<T> : BaseDatabase, IDatabase<T> where T : IId
     {

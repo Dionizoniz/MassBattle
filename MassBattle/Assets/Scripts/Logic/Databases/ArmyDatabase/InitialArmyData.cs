@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MassBattle.Core.Entities.Database;
-using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Databases;
+using MassBattle.Core.Entities;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
 

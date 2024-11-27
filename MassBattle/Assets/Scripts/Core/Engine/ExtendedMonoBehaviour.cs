@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MassBattle.Core.Entities.Engine
+namespace MassBattle.Core.Engine
 {
     public class ExtendedMonoBehaviour : MonoBehaviour
     {

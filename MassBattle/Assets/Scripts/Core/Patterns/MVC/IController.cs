@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Core.Entities.MVC
+﻿namespace MassBattle.Core.Patterns.MVC
 {
     public interface IController
     { }

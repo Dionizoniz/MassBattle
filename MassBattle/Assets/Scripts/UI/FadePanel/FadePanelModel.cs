@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using MassBattle.Core.Patterns.MVC;
 
 namespace MassBattle.UI.FadePanel
 {

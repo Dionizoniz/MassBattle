@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Core.Entities.Tests
+﻿namespace MassBattle.Core.Entities
 {
     public interface ICheckSetup
     {

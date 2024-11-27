@@ -1,7 +1,7 @@
-﻿using MassBattle.Core.Entities.Engine;
-using MassBattle.Core.Entities.Tests;
+﻿using MassBattle.Core.Engine;
+using MassBattle.Core.Entities;
 
-namespace MassBattle.Core.Entities.MVC
+namespace MassBattle.Core.Patterns.MVC
 {
     public abstract class BaseController : ExtendedMonoBehaviour, ICheckSetup
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Utilities;
 using MassBattle.Logic.Databases.ArmyDatabase;
 using MassBattle.Logic.Databases.Colors;

@@ -1,8 +1,9 @@
 ﻿using System;
+using MassBattle.Core.Entities;
 using MassBattle.Core.Utilities;
 using UnityEngine;
 
-namespace MassBattle.Core.Entities.Database
+namespace MassBattle.Core.Databases
 {
     [Serializable]
     public abstract class BaseData : IId

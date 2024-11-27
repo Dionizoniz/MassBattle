@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Installers;
+﻿using MassBattle.Core.Installers;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Installers;
 using MassBattle.UI.EndBattlePanel;

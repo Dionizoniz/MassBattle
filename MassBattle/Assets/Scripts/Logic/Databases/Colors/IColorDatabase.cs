@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Database;
+﻿using MassBattle.Core.Databases;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Colors

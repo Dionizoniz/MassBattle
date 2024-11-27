@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Engine;
 using MassBattle.Logic.Databases.UnitDatabase;
 using TMPro;
 using UnityEngine;

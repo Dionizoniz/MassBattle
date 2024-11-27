@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MassBattle.Core.Entities.Installers
+namespace MassBattle.Core.Installers
 {
     public interface IInstaller
     {

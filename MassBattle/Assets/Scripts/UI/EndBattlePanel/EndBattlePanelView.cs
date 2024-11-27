@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using MassBattle.Core.Patterns.MVC;
 using MassBattle.Logic.Armies;
 using TMPro;
 using UnityEngine;

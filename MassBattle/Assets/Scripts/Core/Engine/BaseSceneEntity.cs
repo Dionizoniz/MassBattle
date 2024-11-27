@@ -1,6 +1,6 @@
-﻿using MassBattle.Core.Entities.Tests;
+﻿using MassBattle.Core.Entities;
 
-namespace MassBattle.Core.Entities.Engine
+namespace MassBattle.Core.Engine
 {
     public abstract class BaseSceneEntity : ExtendedMonoBehaviour, ICheckSetup
     {

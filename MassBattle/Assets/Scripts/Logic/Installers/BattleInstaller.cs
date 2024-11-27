@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Installers;
+﻿using MassBattle.Core.Installers;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Core.UserInput;

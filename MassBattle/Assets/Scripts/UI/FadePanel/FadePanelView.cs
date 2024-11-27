@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Patterns.MVC;
 using UnityEngine;
 
 namespace MassBattle.UI.FadePanel
