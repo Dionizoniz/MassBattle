@@ -3,7 +3,7 @@ using MassBattle.Core.Entities;
 
 namespace MassBattle.Core.Databases
 {
-    public interface IDatabase<T> where T : IId
+    public interface IDatabase<T> where T : IDescriptorId
     {
         List<string> FindAllElementIds();
         T TryFindElementBy(int index);

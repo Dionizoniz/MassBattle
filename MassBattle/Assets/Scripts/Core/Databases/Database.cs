@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace MassBattle.Core.Databases
 {
-    public abstract class Database<T> : BaseDatabase, IDatabase<T> where T : IId
+    public abstract class Database<T> : BaseDatabase, IDatabase<T> where T : IDescriptorId
     {
         [SerializeField]
         protected List<T> _elements = new();
 
         public List<string> FindAllElementIds()
         {
-            return _elements.Select(element => element.Id).ToList();
+            return _elements.Select(element => element.DescriptorId).ToList();
         }
 
         public T TryFindElementBy(int index)
@@ -47,7 +47,7 @@ namespace MassBattle.Core.Databases
 
         public T TryFindElementBy(string id)
         {
-            T result = _elements.FirstOrDefault(armySetup => armySetup.Id == id);
+            T result = _elements.FirstOrDefault(armySetup => armySetup.DescriptorId == id);
 
             if (result == null)
             {
@@ -67,13 +67,13 @@ namespace MassBattle.Core.Databases
         {
             for (var i = 0; i < _elements.Count; i++)
             {
-                _elements[i].GenerateId(i);
+                //    _elements[i].GenerateId(i); TODO Improve logic
             }
         }
 
         public override bool IsSetupCorrect()
         {
-            List<string> duplicateIds = _elements.GroupBy(element => element.Id)
+            List<string> duplicateIds = _elements.GroupBy(element => element.DescriptorId)
                                                  .Where(group => group.Count() > 1)
                                                  .Select(group => group.Key)
                                                  .ToList();

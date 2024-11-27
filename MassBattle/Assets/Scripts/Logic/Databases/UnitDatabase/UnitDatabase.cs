@@ -13,7 +13,7 @@ namespace MassBattle.Logic.Databases.UnitDatabase
 
             foreach (var unitData in _elements)
             {
-                defaultUnitsCountSetup.Add(unitData.Id, defaultUnitStackSize);
+                defaultUnitsCountSetup.Add(unitData.DescriptorId, defaultUnitStackSize);
             }
 
             return defaultUnitsCountSetup;

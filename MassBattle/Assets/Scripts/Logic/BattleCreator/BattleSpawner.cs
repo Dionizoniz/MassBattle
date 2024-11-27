@@ -135,7 +135,7 @@ namespace MassBattle.Logic.BattleCreator
         {
             BaseUnit spawnedUnit = Instantiate(unitData.UnitPrefabToSpawn, _unitsRoot);
 
-            string id = unitData.Id;
+            string id = unitData.DescriptorId;
             spawnedUnit.Initialize(id, initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 

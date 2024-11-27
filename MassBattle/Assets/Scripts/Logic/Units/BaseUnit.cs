@@ -81,7 +81,7 @@ namespace MassBattle.Logic.Units
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
 
-            _armyId = initialArmyData.Id;
+            _armyId = initialArmyData.DescriptorId;
             _armyColor = initialArmyData.ArmyColor;
             _strategy = CreateStrategy(initialArmyData.StrategyType);
             _materialPropertyBlock = new MaterialPropertyBlock();

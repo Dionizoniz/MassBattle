@@ -24,7 +24,7 @@ namespace MassBattle.Logic.Armies
 
         public ArmyData(InitialArmyData initialArmyData, Dictionary<string, List<BaseUnit>> spawnedUnits)
         {
-            OverrideId(initialArmyData.Id);
+            OverrideId(initialArmyData.DescriptorId);
 
             InitialArmyData = initialArmyData;
             _spawnedUnits = spawnedUnits;

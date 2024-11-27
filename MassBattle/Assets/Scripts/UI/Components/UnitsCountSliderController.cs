@@ -20,7 +20,7 @@ namespace MassBattle.UI.Components
 
         public void Initialize(UnitData unitData, int initialCount, int minSliderValue, int maxSliderValue)
         {
-            UnitId = unitData.Id;
+            UnitId = unitData.DescriptorId;
             _unitsNameLabel.text = unitData.Name;
 
             _slider.minValue = minSliderValue;

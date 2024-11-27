@@ -22,7 +22,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
 
         public void SaveArmyData(InitialArmyData armyData)
         {
-            int index = FindSavedArmyDataIndexBy(armyData.Id);
+            int index = FindSavedArmyDataIndexBy(armyData.DescriptorId);
 
             if (index >= 0)
             {
@@ -34,7 +34,7 @@ namespace MassBattle.Logic.Databases.ArmyDatabase
 
         private int FindSavedArmyDataIndexBy(string id)
         {
-            return _savedArmiesData.FindIndex(armyData => armyData.Id == id);
+            return _savedArmiesData.FindIndex(armyData => armyData.DescriptorId == id);
         }
 
         public void ClearSavedArmiesData()
