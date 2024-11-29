@@ -16,6 +16,7 @@ namespace MassBattle.DependencyInjection.Installers
 
         private void BindEventSystem()
         {
+            // INFO spawn and bind prefab
             Container.Bind<EventSystem>().FromComponentInNewPrefab(_eventSystem).AsSingle().NonLazy();
         }
     }
