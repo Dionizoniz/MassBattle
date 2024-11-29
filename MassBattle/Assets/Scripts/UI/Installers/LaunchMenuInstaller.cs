@@ -8,7 +8,6 @@ using MassBattle.UI.FadePanel;
 using MassBattle.UI.FadePanel.Executors;
 using MassBattle.UI.LaunchMenu;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace MassBattle.UI.Installers
 {
@@ -18,8 +17,6 @@ namespace MassBattle.UI.Installers
         private LaunchMenuController _launchMenuControllerToSpawn;
         [SerializeField]
         private FadePanelController _fadePanelControllerToSpawn;
-        [SerializeField]
-        private EventSystem _eventSystemToSpawn;
 
         [Space, SerializeField]
         private ArmyDatabase _armyDatabase;
@@ -39,7 +36,6 @@ namespace MassBattle.UI.Installers
         private void Awake()
         {
             SpawnPanelControllers();
-            SpawnEventSystem();
             CreateInstances();
         }
 
@@ -47,11 +43,6 @@ namespace MassBattle.UI.Installers
         {
             _launchMenuController = Instantiate(_launchMenuControllerToSpawn);
             _fadePanel = Instantiate(_fadePanelControllerToSpawn);
-        }
-
-        private void SpawnEventSystem()
-        {
-            Instantiate(_eventSystemToSpawn);
         }
 
         private void CreateInstances()
@@ -78,7 +69,6 @@ namespace MassBattle.UI.Installers
             bool isSetupCorrect = true;
 
             isSetupCorrect &= _launchMenuControllerToSpawn != null;
-            isSetupCorrect &= _eventSystemToSpawn != null;
             isSetupCorrect &= _armyDatabase != null;
             isSetupCorrect &= _colorDatabase != null;
             isSetupCorrect &= _sceneLoader != null;
