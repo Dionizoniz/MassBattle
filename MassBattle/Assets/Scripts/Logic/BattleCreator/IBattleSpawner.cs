@@ -1,9 +1,9 @@
 ﻿using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.UnitDatabase;
+using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Providers;
 
 namespace MassBattle.Logic.BattleCreator

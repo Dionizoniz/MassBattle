@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using MassBattle.Core.Entities.Engine;
+﻿using System;
+using System.Collections;
+using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
@@ -13,7 +14,7 @@ namespace MassBattle.Logic.Units
 {
     public abstract class BaseUnit : BaseSceneEntity
     {
-        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int COLOR = Shader.PropertyToID("_BaseColor");
         private static readonly int ATTACK = Animator.StringToHash("Attack");
         private static readonly int MOVEMENT_SPEED = Animator.StringToHash("MovementSpeed");
         private static readonly int TAKE_DAMAGE = Animator.StringToHash("TakeDamage");
@@ -81,7 +82,7 @@ namespace MassBattle.Logic.Units
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
 
-            _armyId = initialArmyData.Id;
+            _armyId = initialArmyData.DescriptorId;
             _armyColor = initialArmyData.ArmyColor;
             _strategy = CreateStrategy(initialArmyData.StrategyType);
             _materialPropertyBlock = new MaterialPropertyBlock();
@@ -282,6 +283,20 @@ namespace MassBattle.Logic.Units
             }
 
             return isSetupCorrect;
+        }
+
+        private void OnDestroy()
+        {
+            DisposeCoroutines();
+        }
+
+        private void DisposeCoroutines()
+        {
+            if (_bleedingProcess != null)
+            {
+                StopCoroutine(_bleedingProcess);
+                _bleedingProcess = null;
+            }
         }
     }
 }

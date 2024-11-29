@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using MassBattle.Core.Entities.Database;
-using MassBattle.Core.Entities.Engine;
-using MassBattle.Core.Entities.Installers;
-using MassBattle.Core.Entities.MVC;
-using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Databases;
+using MassBattle.Core.Engine;
+using MassBattle.Core.Entities;
+using MassBattle.Core.Installers;
+using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using NUnit.Framework;
 using UnityEditor;
 
@@ -60,10 +60,10 @@ namespace MassBattle.Tests.Editor
         public void _04_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
-            List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
+            List<ArmyDatabase> databases = default; //FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = databases.Max(setup => setup.FindAllElementIds().Count);
+            int maxArmyIdsCount = databases.Max(setup => setup.FindDescriptorIds().Count());
 
             Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
         }

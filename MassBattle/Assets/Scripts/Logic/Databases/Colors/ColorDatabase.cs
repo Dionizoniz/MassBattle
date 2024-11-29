@@ -1,10 +1,10 @@
-﻿using MassBattle.Core.Entities.Database;
+﻿using MassBattle.Core.Databases;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Colors
 {
-    [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = 0)]
-    public class ColorDatabase : Database<ColorData>, IColorDatabase
+    [CreateAssetMenu(menuName = "Databases/" + nameof(ColorDatabase), fileName = nameof(ColorDatabase), order = -10000)]
+    public class ColorDatabase : Database<ColorDescriptor>, IColorDatabase
     {
         [Space, SerializeField]
         private Color _damageColor = Color.red;
@@ -16,7 +16,7 @@ namespace MassBattle.Logic.Databases.Colors
 
         public int FindColorIndex(Color color)
         {
-            return _elements.FindIndex(element => element.Color == color);
+            return _descriptors.FindIndex(element => element.Color == color);
         }
     }
 }

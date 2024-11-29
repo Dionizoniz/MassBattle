@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MassBattle.Core.Entities.Engine;
-using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Engine;
+using MassBattle.Core.Entities;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.UnitDatabase;
+using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
@@ -99,8 +99,8 @@ namespace MassBattle.Logic.BattleCreator
 
                 foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
                 {
-                    UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
-                    List<BaseUnit> units = SpawnUnits(unitData, unitSetup.Value, initialArmyData, spawnBounds);
+                    UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                    List<BaseUnit> units = SpawnUnits(unitDescriptor, unitSetup.Value, initialArmyData, spawnBounds);
 
                     spawnedUnits.Add(unitSetup.Key, units);
                 }
@@ -118,24 +118,24 @@ namespace MassBattle.Logic.BattleCreator
         }
 
         private List<BaseUnit> SpawnUnits(
-                UnitData unitData, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
+                UnitDescriptor unitDescriptor, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
             List<BaseUnit> spawnedUnits = new();
 
             for (int i = 0; i < unitsCount; i++)
             {
-                BaseUnit spawnUnit = SpawnUnit(unitData, initialArmyData, spawnBounds);
+                BaseUnit spawnUnit = SpawnUnit(unitDescriptor, initialArmyData, spawnBounds);
                 spawnedUnits.Add(spawnUnit);
             }
 
             return spawnedUnits;
         }
 
-        private BaseUnit SpawnUnit(UnitData unitData, InitialArmyData initialArmyData, Bounds spawnBounds)
+        private BaseUnit SpawnUnit(UnitDescriptor unitDescriptor, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
-            BaseUnit spawnedUnit = Instantiate(unitData.UnitPrefabToSpawn, _unitsRoot);
+            BaseUnit spawnedUnit = Instantiate(unitDescriptor.UnitPrefabToSpawn, _unitsRoot);
 
-            string id = unitData.Id;
+            string id = unitDescriptor.DescriptorId;
             spawnedUnit.Initialize(id, initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 

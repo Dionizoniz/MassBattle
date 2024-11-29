@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using UnityEngine;
 
 namespace MassBattle.UI.LaunchMenu

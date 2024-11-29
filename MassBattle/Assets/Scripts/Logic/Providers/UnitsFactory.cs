@@ -34,5 +34,16 @@ namespace MassBattle.Logic.Providers
             arrow._gameObject.SetActive(false);
             _arrowsPool.Push(arrow);
         }
+
+        ~UnitsFactory()
+        {
+            ClearStack();
+        }
+
+        private void ClearStack()
+        {
+            // INFO: We do not need to destroy objects, all was removed during scene unload. 
+            _arrowsPool.Clear();
+        }
     }
 }

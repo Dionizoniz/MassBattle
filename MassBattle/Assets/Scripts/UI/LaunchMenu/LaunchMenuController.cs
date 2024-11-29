@@ -1,9 +1,9 @@
-using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.UnitDatabase;
+using MassBattle.Logic.Databases.Units;
 
 namespace MassBattle.UI.LaunchMenu
 {

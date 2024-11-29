@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 32
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544104795ab146f79597af196d7ec14d, type: 3}
+  m_Name: ColorDatabase
+  m_EditorClassIdentifier: 
+  _descriptors:
+  - {fileID: 11400000, guid: 56737bb57bad10740931699478c3dbf3, type: 2}
+  - {fileID: 11400000, guid: e4d3642dd141c0f4f93b0e479cd7a6c6, type: 2}
+  - {fileID: 11400000, guid: ae92eed8d53a0c94e9bb8cfe60bca1b9, type: 2}
+  - {fileID: 11400000, guid: 4f6dfc39d26925e479c3a822e2c63c52, type: 2}
+  - {fileID: 11400000, guid: 7b9d20e5b191c524b94321a3c865e0ca, type: 2}
+  - {fileID: 11400000, guid: 62d434417acded049b38e018bbecedce, type: 2}
+  - {fileID: 11400000, guid: 755f3e0fada97f542ac630b4b067a5c7, type: 2}
+  - {fileID: 11400000, guid: bc71dde6366c0b94c8f53c804453fe29, type: 2}
+  - {fileID: 11400000, guid: 96f14191e46d35249acf555400c9a7c3, type: 2}
+  _damageColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
+  _deathColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}

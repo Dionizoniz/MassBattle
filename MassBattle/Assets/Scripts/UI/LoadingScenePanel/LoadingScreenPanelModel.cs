@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.MVC;
+﻿using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +7,8 @@ namespace MassBattle.UI.LoadingScenePanel
 {
     public class LoadingScreenPanelModel : Model<LoadingScreenPanelView>
     {
+        private const float SCENE_IS_READY_TO_LOAD_PROGRESS_VALUE = 0.9f;
+
         [SerializeField]
         private SceneLoader _sceneLoader;
         [SerializeField]
@@ -34,7 +36,7 @@ namespace MassBattle.UI.LoadingScenePanel
 
         private void TryAllowSceneActivation()
         {
-            if (_loadingTime > _minLoadingTime && _loadSceneOperation.progress >= 0.9f)
+            if (_loadingTime > _minLoadingTime && _loadSceneOperation.progress >= SCENE_IS_READY_TO_LOAD_PROGRESS_VALUE)
             {
                 _loadSceneOperation.allowSceneActivation = true;
             }

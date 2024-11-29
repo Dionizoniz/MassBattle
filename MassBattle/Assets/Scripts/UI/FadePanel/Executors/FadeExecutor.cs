@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Installers;
+﻿using MassBattle.Core.Installers;
 
 namespace MassBattle.UI.FadePanel.Executors
 {

@@ -1,4 +1,4 @@
-﻿using MassBattle.Core.Entities.Engine;
+﻿using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;

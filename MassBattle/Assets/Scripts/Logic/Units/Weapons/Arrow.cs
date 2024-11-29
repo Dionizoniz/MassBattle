@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MassBattle.Core.Entities.Engine;
+using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
@@ -9,7 +9,7 @@ namespace MassBattle.Logic.Units.Weapons
 {
     public class Arrow : BaseSceneEntity, IAttack
     {
-        private static readonly int COLOR = Shader.PropertyToID("_Color");
+        private static readonly int COLOR = Shader.PropertyToID("_BaseColor");
 
         [SerializeField]
         private float _movementSpeed = 50f;
@@ -123,7 +123,8 @@ namespace MassBattle.Logic.Units.Weapons
             if (_isInitialized)
             {
                 DetachFromEvents();
-                _unitsFactory.ReturnArrowInstance(this);
+                TryReturnArrowInstance();
+
                 _isInitialized = false;
             }
         }
@@ -134,6 +135,18 @@ namespace MassBattle.Logic.Units.Weapons
             {
                 _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
+            }
+        }
+
+        private void TryReturnArrowInstance()
+        {
+            if (_unitsFactory != null)
+            {
+                _unitsFactory.ReturnArrowInstance(this);
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
 

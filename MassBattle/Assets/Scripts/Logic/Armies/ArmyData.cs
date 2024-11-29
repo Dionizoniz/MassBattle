@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MassBattle.Core.Entities.Database;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Core.Databases;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Units;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ namespace MassBattle.Logic.Armies
 
         public ArmyData(InitialArmyData initialArmyData, Dictionary<string, List<BaseUnit>> spawnedUnits)
         {
-            OverrideId(initialArmyData.Id);
+            OverrideId(initialArmyData.DescriptorId);
 
             InitialArmyData = initialArmyData;
             _spawnedUnits = spawnedUnits;

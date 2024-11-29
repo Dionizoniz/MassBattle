@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MassBattle.Core.Entities.Engine;
-using MassBattle.Core.Entities.Tests;
+using MassBattle.Core.Engine;
+using MassBattle.Core.Entities;
 using MassBattle.Core.Utilities;
 using UnityEditor;
 using UnityEngine;

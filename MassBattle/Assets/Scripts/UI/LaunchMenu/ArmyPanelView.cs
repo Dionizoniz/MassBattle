@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Entities.MVC;
+using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Utilities;
-using MassBattle.Logic.Databases.ArmyDatabase;
+using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.UnitDatabase;
+using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Strategies;
 using MassBattle.UI.Components;
 using TMPro;
@@ -48,7 +48,7 @@ namespace MassBattle.UI.LaunchMenu
             _colorDatabase = colorDatabase;
             _unitDatabase = unitDatabase;
 
-            ArmyId = initialArmyData.Id;
+            ArmyId = initialArmyData.DescriptorId;
             _armyIdInputField.text = initialArmyData.Name;
             _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
             _armyColor.color = initialArmyData.ArmyColor;
@@ -64,9 +64,9 @@ namespace MassBattle.UI.LaunchMenu
             foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
             {
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
-                UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
+                UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
 
-                spawnedSlider.Initialize(unitData, unitSetup.Value, armyDatabase.MinUnitStackSize,
+                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, armyDatabase.MinUnitStackSize,
                                          armyDatabase.MaxUnitStackSize);
 
                 _spawnedUnitsSliders.Add(spawnedSlider);
@@ -82,12 +82,12 @@ namespace MassBattle.UI.LaunchMenu
         public void ChangeArmyColorToNext()
         {
             int index = _colorDatabase.FindColorIndex(_armyColor.color);
-            ColorData nextColor = FindNextColorData(index);
+            ColorDescriptor nextColor = FindNextColorData(index);
 
             _armyColor.color = nextColor.Color;
         }
 
-        private ColorData FindNextColorData(int index)
+        private ColorDescriptor FindNextColorData(int index)
         {
             return index >= 0 ? _colorDatabase.TryFindNextElementFor(index) : _colorDatabase.FindDefaultElement();
         }

@@ -5,7 +5,8 @@
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner",
     "MassBattle.Tests.Editor",
-    "MassBattle.Core"
+    "MassBattle.Core",
+    "MassBattle.Logic"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
