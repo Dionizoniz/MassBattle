@@ -123,7 +123,8 @@ namespace MassBattle.Logic.Units.Weapons
             if (_isInitialized)
             {
                 DetachFromEvents();
-                _unitsFactory.ReturnArrowInstance(this);
+                TryReturnArrowInstance();
+
                 _isInitialized = false;
             }
         }
@@ -134,6 +135,18 @@ namespace MassBattle.Logic.Units.Weapons
             {
                 _updateProvider.OnEarlyUpdate -= CachePosition;
                 _updateProvider.OnUpdate -= ManualUpdate;
+            }
+        }
+
+        private void TryReturnArrowInstance()
+        {
+            if (_unitsFactory != null)
+            {
+                _unitsFactory.ReturnArrowInstance(this);
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
 
