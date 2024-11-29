@@ -63,13 +63,13 @@ namespace MassBattle.UI.LaunchMenu
         {
             foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
             {
-                // UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
-                // UnitData unitData = _unitDatabase.TryFindElementBy(unitSetup.Key);
-                //
-                // spawnedSlider.Initialize(unitData, unitSetup.Value, armyDatabase.MinUnitStackSize,
-                //                          armyDatabase.MaxUnitStackSize);
-                //
-                // _spawnedUnitsSliders.Add(spawnedSlider);
+                UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
+                UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
+
+                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, armyDatabase.MinUnitStackSize,
+                                         armyDatabase.MaxUnitStackSize);
+
+                _spawnedUnitsSliders.Add(spawnedSlider);
             }
         }
 
