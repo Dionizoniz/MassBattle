@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
@@ -282,6 +283,20 @@ namespace MassBattle.Logic.Units
             }
 
             return isSetupCorrect;
+        }
+
+        private void OnDestroy()
+        {
+            DisposeCoroutines();
+        }
+
+        private void DisposeCoroutines()
+        {
+            if (_bleedingProcess != null)
+            {
+                StopCoroutine(_bleedingProcess);
+                _bleedingProcess = null;
+            }
         }
     }
 }
