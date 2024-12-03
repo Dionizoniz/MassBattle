@@ -55,7 +55,7 @@ namespace MassBattle.UI.Installers
         private void CreateInstances()
         {
             _pauseGameProvider = new PauseGameProvider();
-            _fadeExecutor = new FadeExecutor(_fadePanel, this);
+            _fadeExecutor = new FadeExecutor();
         }
 
         protected override void Start()

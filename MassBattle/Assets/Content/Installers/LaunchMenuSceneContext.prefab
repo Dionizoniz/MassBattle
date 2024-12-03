@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launchMenuController: {fileID: 3678075164039831391, guid: d2ca41999637d9b438c54acd6860919d, type: 3}
+  _fadePanelControllerToSpawn: {fileID: 3495896142305995595, guid: d5a6ef45e2d70114ca0a17ad10acf176, type: 3}
 --- !u!1 &7707012914841892366
 GameObject:
   m_ObjectHideFlags: 0
