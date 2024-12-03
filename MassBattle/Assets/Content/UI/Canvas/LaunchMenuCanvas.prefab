@@ -105,7 +105,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &3678075164039831391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +123,10 @@ MonoBehaviour:
   cachedPosition: {x: 0, y: 0, z: 0}
   _model: {fileID: 7408683372009728387}
   _view: {fileID: 2575470813176336879}
+  _armyDatabase: {fileID: 11400000, guid: cef7874774b4e10468bc33b962c0649f, type: 2}
+  _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
+  _unitDatabase: {fileID: 11400000, guid: 4658a0618b0a8e9498dfab3afbd64200, type: 2}
+  _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}
 --- !u!114 &2575470813176336879
 MonoBehaviour:
   m_ObjectHideFlags: 0

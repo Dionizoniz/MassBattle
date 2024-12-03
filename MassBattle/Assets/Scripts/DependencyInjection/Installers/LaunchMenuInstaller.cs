@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MassBattle.Core.Providers;
+using MassBattle.UI.LaunchMenu;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -9,15 +11,19 @@ namespace MassBattle.DependencyInjection.Installers
         [SerializeField]
         private EventSystem _eventSystem;
 
+        [SerializeField]
+        private LaunchMenuController _launchMenuController;
+
         public override void InstallBindings()
         {
-            BindEventSystem();
-        }
+            Container.BindInterfacesTo<ExitGameProvider>().AsSingle().NonLazy(); // ???
 
-        private void BindEventSystem()
-        {
-            // INFO spawn and bind prefab
             Container.Bind<EventSystem>().FromComponentInNewPrefab(_eventSystem).AsSingle().NonLazy();
+
+            Container.BindInterfacesTo<LaunchMenuController>()
+                     .FromComponentInNewPrefab(_launchMenuController)
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

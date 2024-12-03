@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}
+  _launchMenuController: {fileID: 3678075164039831391, guid: d2ca41999637d9b438c54acd6860919d, type: 3}
 --- !u!1 &4973600420940669002
 GameObject:
   m_ObjectHideFlags: 0

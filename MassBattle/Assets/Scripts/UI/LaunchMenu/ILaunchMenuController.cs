@@ -10,6 +10,6 @@ namespace MassBattle.UI.LaunchMenu
     {
         void InjectData(
                 IArmyDatabase armyDatabase, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IExitGameProvider exitGameProvider, IUnitDatabase unitDatabase);
+                IUnitDatabase unitDatabase);
     }
 }

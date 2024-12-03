@@ -6,6 +6,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Databases.Armies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -17,10 +18,15 @@ namespace MassBattle.UI.LaunchMenu
         private ISceneLoader _sceneLoader;
         private IExitGameProvider _exitGameProvider;
 
-        public void InjectData(ISceneLoader sceneLoader, IExitGameProvider exitGameProvider)
+        [Inject]
+        private void Construct(IExitGameProvider exitGameProvider)
+        {
+            _exitGameProvider = exitGameProvider;
+        }
+
+        public void InjectData(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
-            _exitGameProvider = exitGameProvider;
         }
 
         public void StartBattle(IArmyDatabase armyDatabase)

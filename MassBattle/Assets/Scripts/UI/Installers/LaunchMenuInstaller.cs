@@ -8,13 +8,12 @@ using MassBattle.UI.FadePanel;
 using MassBattle.UI.FadePanel.Executors;
 using MassBattle.UI.LaunchMenu;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.Installers
 {
     public class LaunchMenuInstaller : BaseInstaller, ILaunchMenuInstaller
     {
-        [SerializeField]
-        private LaunchMenuController _launchMenuControllerToSpawn;
         [SerializeField]
         private FadePanelController _fadePanelControllerToSpawn;
 
@@ -27,10 +26,8 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private SceneLoader _sceneLoader;
 
-        private ILaunchMenuController _launchMenuController;
         private IFadePanelController _fadePanel;
 
-        private IExitGameProvider _exitGameProvider;
         private IFadeExecutor _fadeExecutor;
 
         private void Awake()
@@ -41,34 +38,18 @@ namespace MassBattle.UI.Installers
 
         private void SpawnPanelControllers()
         {
-            _launchMenuController = Instantiate(_launchMenuControllerToSpawn);
             _fadePanel = Instantiate(_fadePanelControllerToSpawn);
         }
 
         private void CreateInstances()
         {
-            _exitGameProvider = new ExitGameProvider();
             _fadeExecutor = new FadeExecutor(_fadePanel, this);
-        }
-
-        protected override void Start()
-        {
-            InjectData();
-
-            base.Start();
-        }
-
-        private void InjectData()
-        {
-            _launchMenuController.InjectData(_armyDatabase, _colorDatabase, _sceneLoader, _exitGameProvider,
-                                             _unitDatabase);
         }
 
         public override bool IsSetupCorrect()
         {
             bool isSetupCorrect = true;
 
-            isSetupCorrect &= _launchMenuControllerToSpawn != null;
             isSetupCorrect &= _armyDatabase != null;
             isSetupCorrect &= _colorDatabase != null;
             isSetupCorrect &= _sceneLoader != null;
