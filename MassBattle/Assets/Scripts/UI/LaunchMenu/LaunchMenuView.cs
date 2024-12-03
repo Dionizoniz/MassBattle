@@ -30,24 +30,23 @@ namespace MassBattle.UI.LaunchMenu
         [Space, SerializeField]
         private GameObject _exitScreenRoot;
 
-        private IArmyDatabase _armyDatabase;
-        private IColorDatabase _colorDatabase;
-        private IUnitDatabase _unitDatabase;
-
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
+        private IArmyDatabase _armyDatabase;
+        private DiContainer _container;
+
         [Inject]
-        private void Construct(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+        private void Construct(IArmyDatabase armyDatabase, DiContainer container)
         {
             _armyDatabase = armyDatabase;
-            _colorDatabase = colorDatabase;
-            _unitDatabase = unitDatabase;
+            _container = container;
         }
 
         private void Awake()
         {
             HideErrorMessage();
             HideExitPanel();
+            SpawnPanels();
         }
 
         private void HideErrorMessage()
@@ -60,7 +59,7 @@ namespace MassBattle.UI.LaunchMenu
             _exitScreenRoot.gameObject.SetActive(false);
         }
 
-        public void SpawnPanels()
+        private void SpawnPanels()
         {
             foreach (InitialArmyData initialArmyData in _armyDatabase.ArmiesData)
             {
@@ -71,7 +70,8 @@ namespace MassBattle.UI.LaunchMenu
         private void SpawnArmyPanel(InitialArmyData initialArmyData)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(initialArmyData, _colorDatabase, _unitDatabase, _armyDatabase);
+            _container.InjectGameObject(armyPanel.gameObject);
+            armyPanel.InitializeData(initialArmyData);
 
             ArmyPanels.Add(armyPanel);
         }

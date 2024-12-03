@@ -9,6 +9,7 @@ using MassBattle.UI.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -35,19 +36,23 @@ namespace MassBattle.UI.LaunchMenu
         public StrategyType StrategyType => _strategyTypeWrapper.Value();
         public string ArmyId { get; private set; }
 
+        private IArmyDatabase _armyDatabase;
         private IColorDatabase _colorDatabase;
         private IUnitDatabase _unitDatabase;
 
         private EnumDropdownWrapper<StrategyType> _strategyTypeWrapper;
         private readonly List<UnitsCountSliderController> _spawnedUnitsSliders = new();
 
-        public void InitializeData(
-                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
-                IArmyDatabase armyDatabase)
+        [Inject]
+        private void Construct(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
         {
+            _armyDatabase = armyDatabase;
             _colorDatabase = colorDatabase;
             _unitDatabase = unitDatabase;
+        }
 
+        public void InitializeData(InitialArmyData initialArmyData)
+        {
             ArmyId = initialArmyData.DescriptorId;
             _armyIdInputField.text = initialArmyData.Name;
             _isArmyActiveToggle.isOn = initialArmyData.IsArmyActive;
@@ -56,10 +61,10 @@ namespace MassBattle.UI.LaunchMenu
             _strategyTypeWrapper = new EnumDropdownWrapper<StrategyType>(_strategyDropdown);
             _strategyDropdown.SetValueWithoutNotify((int)initialArmyData.StrategyType);
 
-            SpawnUnitsSliders(initialArmyData, armyDatabase);
+            SpawnUnitsSliders(initialArmyData);
         }
 
-        private void SpawnUnitsSliders(InitialArmyData initialArmyData, IArmyDatabase armyDatabase)
+        private void SpawnUnitsSliders(InitialArmyData initialArmyData)
         {
             foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
             {

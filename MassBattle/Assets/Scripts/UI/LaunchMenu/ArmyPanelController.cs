@@ -3,6 +3,7 @@ using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -12,11 +13,9 @@ namespace MassBattle.UI.LaunchMenu
         public string ArmyName => _view.ArmyName;
         public Color ArmyColor => _view.ArmyColor;
 
-        public void InitializeData(
-                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
-                IArmyDatabase armyDatabase)
+        public void InitializeData(InitialArmyData initialArmyData)
         {
-            _view.InitializeData(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
+            _view.InitializeData(initialArmyData);
         }
 
         public InitialArmyData CreateArmySetup()

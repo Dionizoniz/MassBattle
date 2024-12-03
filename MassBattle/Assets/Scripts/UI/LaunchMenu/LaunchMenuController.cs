@@ -20,11 +20,5 @@ namespace MassBattle.UI.LaunchMenu
         {
             _model.ExitGame();
         }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            _view.SpawnPanels();
-        }
     }
 }
