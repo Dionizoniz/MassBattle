@@ -15,6 +15,11 @@ namespace MassBattle.Core.Installers
             Container.BindInterfacesTo<T>().AsSingle().NonLazy();
         }
 
+        protected void BindInterfacesAndSelfTo<T>()
+        {
+            Container.BindInterfacesAndSelfTo<T>().AsSingle().NonLazy();
+        }
+
         protected void BindFromComponentInNewPrefab<T>(T prefab) where T : Component
         {
             Container.Bind<T>().FromComponentInNewPrefab(prefab).AsSingle().NonLazy();
