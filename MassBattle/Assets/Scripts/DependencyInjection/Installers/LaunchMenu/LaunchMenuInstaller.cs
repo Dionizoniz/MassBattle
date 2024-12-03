@@ -8,7 +8,7 @@ using MassBattle.UI.LaunchMenu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace MassBattle.DependencyInjection.Installers
+namespace MassBattle.DependencyInjection.Installers.LaunchMenu
 {
     public class LaunchMenuInstaller : ExtendedMonoInstaller
     {
