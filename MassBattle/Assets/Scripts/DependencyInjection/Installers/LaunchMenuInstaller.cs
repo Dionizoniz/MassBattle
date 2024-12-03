@@ -1,4 +1,5 @@
-﻿using MassBattle.Core.Providers;
+﻿using MassBattle.Core.Installers;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Colors;
@@ -6,11 +7,10 @@ using MassBattle.Logic.Databases.Units;
 using MassBattle.UI.LaunchMenu;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace MassBattle.DependencyInjection.Installers
 {
-    public class LaunchMenuInstaller : MonoInstaller
+    public class LaunchMenuInstaller : ExtendedMonoInstaller
     {
         [SerializeField]
         private EventSystem _eventSystem;
@@ -29,19 +29,15 @@ namespace MassBattle.DependencyInjection.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<ExitGameProvider>().AsSingle().NonLazy();
+            BindInterfacesTo<ExitGameProvider>();
+            BindFromComponentInNewPrefab(_eventSystem);
 
-            Container.Bind<EventSystem>().FromComponentInNewPrefab(_eventSystem).AsSingle().NonLazy();
+            BindInterfacesToFromInstance(_armyDatabase);
+            BindInterfacesToFromInstance(_colorDatabase);
+            BindInterfacesToFromInstance(_unitDatabase);
+            BindInterfacesToFromInstance(_sceneLoader);
 
-            Container.BindInterfacesTo<LaunchMenuController>()
-                     .FromComponentInNewPrefab(_launchMenuController)
-                     .AsSingle()
-                     .NonLazy();
-
-            Container.BindInterfacesTo<ArmyDatabase>().FromInstance(_armyDatabase).AsSingle().NonLazy();
-            Container.BindInterfacesTo<ColorDatabase>().FromInstance(_colorDatabase).AsSingle().NonLazy();
-            Container.BindInterfacesTo<UnitDatabase>().FromInstance(_unitDatabase).AsSingle().NonLazy();
-            Container.BindInterfacesTo<SceneLoader>().FromInstance(_sceneLoader).AsSingle().NonLazy();
+            BindInterfacesToFromComponentInNewPrefab(_launchMenuController);
         }
     }
 }
