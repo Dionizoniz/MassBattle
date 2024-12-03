@@ -11,6 +11,7 @@ namespace MassBattle.UI.LaunchMenu
 {
     public class LaunchMenuView : View
     {
+        // TODO move to const's class
         private const string ARMY_NAME_DUPLICATES_ERROR_MESSAGE =
                 "Remove duplicates in army NAMES before starting to make it easier to identify an army.";
 

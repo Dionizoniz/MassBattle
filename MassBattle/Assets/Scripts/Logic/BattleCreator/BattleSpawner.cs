@@ -113,8 +113,7 @@ namespace MassBattle.Logic.BattleCreator
 
         private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
         {
-            Dictionary<string, int> setup = initialArmyData.UnitsCountSetup;
-            return setup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
+            return initialArmyData.UnitsCountSetup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData);
         }
 
         private List<BaseUnit> SpawnUnits(

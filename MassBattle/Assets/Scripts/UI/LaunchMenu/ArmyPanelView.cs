@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Utilities;
 using MassBattle.Logic.Databases.Armies;
@@ -78,8 +79,7 @@ namespace MassBattle.UI.LaunchMenu
 
         private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
         {
-            Dictionary<string, int> setup = initialArmyData.UnitsCountSetup;
-            return setup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData.DefaultUnitStackSize);
+            return initialArmyData.UnitsCountSetup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData);
         }
 
         public void ChangeArmyColorToNext()
@@ -97,14 +97,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public Dictionary<string, int> FindUnitsCountSetup()
         {
-            Dictionary<string, int> unitsCountSetup = new();
-
-            foreach (var slider in _spawnedUnitsSliders)
-            {
-                unitsCountSetup.Add(slider.UnitId, slider.UnitsCount);
-            }
-
-            return unitsCountSetup;
+            return _spawnedUnitsSliders.ToDictionary(slider => slider.UnitId, slider => slider.UnitsCount);
         }
 
         private void OnDestroy()
