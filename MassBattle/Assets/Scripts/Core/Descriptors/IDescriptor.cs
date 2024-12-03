@@ -3,6 +3,5 @@
 namespace MassBattle.Core.Descriptors
 {
     public interface IDescriptor : IDescriptorId, IAssetName, ICheckSetup
-    {
-    }
+    { }
 }

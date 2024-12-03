@@ -70,7 +70,7 @@ namespace MassBattle.UI.LaunchMenu
             {
                 UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
-                
+
                 spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, _armyDatabase.UnitStackSizeRange);
                 _spawnedUnitsSliders.Add(spawnedSlider);
             }
