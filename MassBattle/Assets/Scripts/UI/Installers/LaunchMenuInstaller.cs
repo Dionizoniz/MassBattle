@@ -17,15 +17,6 @@ namespace MassBattle.UI.Installers
         [SerializeField]
         private FadePanelController _fadePanelControllerToSpawn;
 
-        [Space, SerializeField]
-        private ArmyDatabase _armyDatabase;
-        [SerializeField]
-        private ColorDatabase _colorDatabase;
-        [SerializeField]
-        private UnitDatabase _unitDatabase;
-        [SerializeField]
-        private SceneLoader _sceneLoader;
-
         private IFadePanelController _fadePanel;
 
         private IFadeExecutor _fadeExecutor;
@@ -46,15 +37,6 @@ namespace MassBattle.UI.Installers
             _fadeExecutor = new FadeExecutor(_fadePanel, this);
         }
 
-        public override bool IsSetupCorrect()
-        {
-            bool isSetupCorrect = true;
-
-            isSetupCorrect &= _armyDatabase != null;
-            isSetupCorrect &= _colorDatabase != null;
-            isSetupCorrect &= _sceneLoader != null;
-
-            return isSetupCorrect;
-        }
+        public override bool IsSetupCorrect() => true;
     }
 }

@@ -5,6 +5,7 @@ using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -29,7 +30,19 @@ namespace MassBattle.UI.LaunchMenu
         [Space, SerializeField]
         private GameObject _exitScreenRoot;
 
+        private IArmyDatabase _armyDatabase;
+        private IColorDatabase _colorDatabase;
+        private IUnitDatabase _unitDatabase;
+
         public List<ArmyPanelController> ArmyPanels { get; } = new();
+
+        [Inject]
+        private void Construct(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+        {
+            _armyDatabase = armyDatabase;
+            _colorDatabase = colorDatabase;
+            _unitDatabase = unitDatabase;
+        }
 
         private void Awake()
         {
@@ -47,20 +60,18 @@ namespace MassBattle.UI.LaunchMenu
             _exitScreenRoot.gameObject.SetActive(false);
         }
 
-        public void SpawnPanels(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+        public void SpawnPanels()
         {
-            foreach (InitialArmyData initialArmyData in armyDatabase.ArmiesData)
+            foreach (InitialArmyData initialArmyData in _armyDatabase.ArmiesData)
             {
-                SpawnArmyPanel(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
+                SpawnArmyPanel(initialArmyData);
             }
         }
 
-        private void SpawnArmyPanel(
-                InitialArmyData initialArmyData, IColorDatabase colorDatabase, IUnitDatabase unitDatabase,
-                IArmyDatabase armyDatabase)
+        private void SpawnArmyPanel(InitialArmyData initialArmyData)
         {
             ArmyPanelController armyPanel = Instantiate(_armyPanelToSpawn, _armyPanelsRoot);
-            armyPanel.InitializeData(initialArmyData, colorDatabase, unitDatabase, armyDatabase);
+            armyPanel.InitializeData(initialArmyData, _colorDatabase, _unitDatabase, _armyDatabase);
 
             ArmyPanels.Add(armyPanel);
         }
