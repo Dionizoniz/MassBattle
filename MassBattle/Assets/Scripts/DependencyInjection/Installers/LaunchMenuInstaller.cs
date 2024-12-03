@@ -38,10 +38,10 @@ namespace MassBattle.DependencyInjection.Installers
                      .AsSingle()
                      .NonLazy();
 
-            Container.BindInterfacesTo<ArmyDatabase>().FromInstance(_armyDatabase);
-            Container.BindInterfacesTo<ColorDatabase>().FromInstance(_colorDatabase);
-            Container.BindInterfacesTo<UnitDatabase>().FromInstance(_unitDatabase);
-            Container.BindInterfacesTo<SceneLoader>().FromInstance(_sceneLoader);
+            Container.BindInterfacesTo<ArmyDatabase>().FromInstance(_armyDatabase).AsSingle().NonLazy();
+            Container.BindInterfacesTo<ColorDatabase>().FromInstance(_colorDatabase).AsSingle().NonLazy();
+            Container.BindInterfacesTo<UnitDatabase>().FromInstance(_unitDatabase).AsSingle().NonLazy();
+            Container.BindInterfacesTo<SceneLoader>().FromInstance(_sceneLoader).AsSingle().NonLazy();
         }
     }
 }
