@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 5071681516369159809, guid: fd21e17fc1ffdd04598cc2186ff50c52, type: 3}
+  _camera: {fileID: 1520259614088791688, guid: 5c7b35e6813b0824599ffe509ba44b44, type: 3}
   _sceneLoader: {fileID: 11400000, guid: 288c1dd4215f20e4db853fed76a8de91, type: 2}
 --- !u!1 &8316553869227781324
 GameObject:

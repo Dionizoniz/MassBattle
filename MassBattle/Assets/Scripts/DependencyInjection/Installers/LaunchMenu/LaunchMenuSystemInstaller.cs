@@ -12,14 +12,32 @@ namespace MassBattle.DependencyInjection.Installers.LaunchMenu
         [SerializeField]
         private EventSystem _eventSystem;
         [SerializeField]
+        private Camera _camera;
+
+        [Space, SerializeField]
         private SceneLoader _sceneLoader;
 
         public override void InstallBindings()
         {
+            BindClasses();
+            BindPrefabs();
+            BindInstances();
+        }
+
+        private void BindClasses()
+        {
             BindInterfacesTo<ExitGameProvider>();
             Bind<FadeExecutor>();
+        }
 
+        private void BindPrefabs()
+        {
             BindFromComponentInNewPrefab(_eventSystem);
+            BindFromComponentInNewPrefab(_camera);
+        }
+
+        private void BindInstances()
+        {
             BindInterfacesToFromInstance(_sceneLoader);
         }
     }
