@@ -1,14 +1,7 @@
 using MassBattle.Core.Installers;
-using MassBattle.Core.Providers;
-using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.Armies;
-using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.Units;
 using MassBattle.UI.FadePanel;
 using MassBattle.UI.FadePanel.Executors;
-using MassBattle.UI.LaunchMenu;
 using UnityEngine;
-using Zenject;
 
 namespace MassBattle.UI.Installers
 {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Databases;
 using MassBattle.Core.Engine;
 using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
@@ -44,7 +43,7 @@ namespace MassBattle.Logic.Databases.Armies
             _savedArmiesData.Clear();
         }
 
-        public bool IsSetupCorrect()
+        public bool IsSetupCorrect() // TODO
         {
             // bool isSetupCorrect = base.IsSetupCorrect();
             //
@@ -59,6 +58,7 @@ namespace MassBattle.Logic.Databases.Armies
             return true;
         }
 
+        // TODO
         public IEnumerable<string> FindDescriptorIds() => throw new System.NotImplementedException();
         public ColorDescriptor TryFindNextElementFor(int index) => throw new System.NotImplementedException();
         public ColorDescriptor TryFindElementBy(string descriptorId) => throw new System.NotImplementedException();
