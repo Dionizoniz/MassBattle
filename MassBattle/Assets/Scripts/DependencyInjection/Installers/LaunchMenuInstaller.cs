@@ -27,6 +27,7 @@ namespace MassBattle.DependencyInjection.Installers
         [SerializeField]
         private SceneLoader _sceneLoader;
 
+        // TODO split into smaller installers 
         public override void InstallBindings()
         {
             BindInterfacesTo<ExitGameProvider>();
