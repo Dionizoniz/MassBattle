@@ -66,8 +66,7 @@ namespace MassBattle.UI.LaunchMenu
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
                 UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
 
-                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, armyDatabase.MinUnitStackSize,
-                                         armyDatabase.MaxUnitStackSize);
+                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, _armyDatabase.UnitStackSizeRange);
 
                 _spawnedUnitsSliders.Add(spawnedSlider);
             }

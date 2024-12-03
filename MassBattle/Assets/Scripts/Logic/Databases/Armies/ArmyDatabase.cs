@@ -15,11 +15,12 @@ namespace MassBattle.Logic.Databases.Armies
         private int _minUnitStackSize;
         [SerializeField]
         private int _maxUnitStackSize = 150;
+
         private readonly List<InitialArmyData> _savedArmiesData = new();
         private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
         public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
-        public int MinUnitStackSize => _minUnitStackSize;
-        public int MaxUnitStackSize => _maxUnitStackSize;
+
+        public Vector2 UnitStackSizeRange => new(_minUnitStackSize, _maxUnitStackSize);
 
         public void SaveArmyData(InitialArmyData armyData)
         {
