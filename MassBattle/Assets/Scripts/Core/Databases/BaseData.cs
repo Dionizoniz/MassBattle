@@ -1,6 +1,6 @@
 ﻿using System;
 using MassBattle.Core.Entities;
-using MassBattle.Core.Utilities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MassBattle.Core.Databases
