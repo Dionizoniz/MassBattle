@@ -53,34 +53,40 @@ namespace MassBattle.Logic.BattleCreator
             _unitsRoot = new GameObject(ConstantValues.UNITS_ROOT_NAME).transform;
         }
 
-        private void SpawnArmies() // TODO: simplify code
+        private void SpawnArmies()
+        {
+            ClearCurrentArmies();
+            TrySpawnArmiesInBounds();
+            InitializedRegisteredArmies();
+            FinalizeArmySpawn();
+        }
+
+        private void ClearCurrentArmies()
         {
             _armyProvider.ClearArmies();
+        }
 
-            for (int armyIndex = 0, boundsIndex = 0; armyIndex < _armyDatabase.ArmiesData.Count; armyIndex++)
+        private void TrySpawnArmiesInBounds()
+        {
+            int armyCount = _armyDatabase.ArmiesData.Count;
+            int boundsCount = _spawnArmyBounds.Count;
+
+            for (int armyIndex = 0, boundsIndex = 0; armyIndex < armyCount && boundsIndex < boundsCount; armyIndex++)
             {
                 InitialArmyData initialArmyData = _armyDatabase.ArmiesData[armyIndex];
+                ArmyData armyData = TrySpawnArmy(initialArmyData, _spawnArmyBounds[boundsIndex].bounds);
 
-                if (boundsIndex < _spawnArmyBounds.Count)
+                if (armyData != null)
                 {
-                    ArmyData armyData = TrySpawnArmy(initialArmyData, _spawnArmyBounds[boundsIndex].bounds);
-
-                    if (armyData != null)
-                    {
-                        _armyProvider.RegisterArmy(armyData);
-                        boundsIndex++;
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"Not enough army bounds in BattleSpawner. Army {initialArmyData.Name} can not be spawned.");
+                    _armyProvider.RegisterArmy(armyData);
+                    boundsIndex++;
                 }
             }
 
-            _armyProvider.InitializedRegisteredArmies();
-
-            IsSceneSpawned = true;
-            OnSpawnScene.Invoke();
+            if (armyCount > boundsCount)
+            {
+                Debug.LogError("Not enough army bounds in BattleSpawner. Some Armies can not be spawned!!!");
+            }
         }
 
         private ArmyData TrySpawnArmy(InitialArmyData initialArmyData, Bounds spawnBounds)
@@ -91,11 +97,9 @@ namespace MassBattle.Logic.BattleCreator
             {
                 Dictionary<string, List<BaseUnit>> spawnedUnits = new();
 
-                foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
+                foreach (KeyValuePair<string, int> unitSetup in FindUnitsCountSetup(initialArmyData))
                 {
-                    UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
-                    List<BaseUnit> units = SpawnUnits(unitDescriptor, unitSetup.Value, initialArmyData, spawnBounds);
-
+                    List<BaseUnit> units = SpawnUnits(unitSetup, initialArmyData, spawnBounds);
                     spawnedUnits.Add(unitSetup.Key, units);
                 }
 
@@ -111,9 +115,11 @@ namespace MassBattle.Logic.BattleCreator
         }
 
         private List<BaseUnit> SpawnUnits(
-                UnitDescriptor unitDescriptor, int unitsCount, InitialArmyData initialArmyData, Bounds spawnBounds)
+                KeyValuePair<string, int> unitSetup, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
             List<BaseUnit> spawnedUnits = new();
+            UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
+            int unitsCount = unitSetup.Value;
 
             for (int i = 0; i < unitsCount; i++)
             {
@@ -133,6 +139,17 @@ namespace MassBattle.Logic.BattleCreator
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;
+        }
+
+        private void InitializedRegisteredArmies()
+        {
+            _armyProvider.InitializedRegisteredArmies();
+        }
+
+        private void FinalizeArmySpawn()
+        {
+            IsSceneSpawned = true;
+            OnSpawnScene.Invoke();
         }
 
         public bool IsSetupCorrect()
