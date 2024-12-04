@@ -7,7 +7,7 @@ namespace MassBattle.Tests.Editor
 {
     public class BaseTests
     {
-        public List<T> FindAssets<T>(string filter = "*") where T : Object
+        protected List<T> FindAssets<T>(string filter = "*") where T : Object
         {
             List<T> assetsList = new();
 
