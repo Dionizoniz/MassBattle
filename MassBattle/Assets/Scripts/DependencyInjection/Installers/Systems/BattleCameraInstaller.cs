@@ -1,7 +1,6 @@
 ﻿using MassBattle.Core.Installers;
 using MassBattle.Logic.Controllers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace MassBattle.DependencyInjection.Installers.Systems
 {
@@ -14,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindFromComponentInNewPrefab(_battleCamera);
         }
+
+        public override bool IsSetupCorrect() => _battleCamera != null;
     }
 }

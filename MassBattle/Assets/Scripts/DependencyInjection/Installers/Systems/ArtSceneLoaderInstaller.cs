@@ -9,5 +9,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             Bind<ArtSceneLoader>();
         }
+
+        public override bool IsSetupCorrect() => true;
     }
 }

@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Ui
         {
             BindInterfacesToFromComponentInNewPrefab(_launchMenuController);
         }
+
+        public override bool IsSetupCorrect() => _launchMenuController != null;
     }
 }

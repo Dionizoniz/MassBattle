@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Ui
         {
             BindInterfacesToFromComponentInNewPrefab(_fadePanelControllerToSpawn);
         }
+
+        public override bool IsSetupCorrect() => _fadePanelControllerToSpawn != null;
     }
 }

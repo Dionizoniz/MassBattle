@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Databases
         {
             BindInterfacesToFromInstance(_armyDatabase);
         }
+
+        public override bool IsSetupCorrect() => _armyDatabase != null;
     }
 }

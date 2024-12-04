@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using MassBattle.Core.Entities;
+using UnityEngine;
 using Zenject;
 
 namespace MassBattle.Core.Installers
 {
-    public class ExtendedMonoInstaller : MonoInstaller
+    public abstract class ExtendedMonoInstaller : MonoInstaller, ICheckSetup
     {
         protected void Bind<T>()
         {
@@ -34,5 +35,7 @@ namespace MassBattle.Core.Installers
         {
             Container.BindInterfacesTo<T>().FromComponentInNewPrefab(prefab).AsSingle().NonLazy();
         }
+
+        public abstract bool IsSetupCorrect();
     }
 }

@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesToFromComponentInNewPrefab(_inputFacade);
         }
+
+        public override bool IsSetupCorrect() => _inputFacade != null;
     }
 }

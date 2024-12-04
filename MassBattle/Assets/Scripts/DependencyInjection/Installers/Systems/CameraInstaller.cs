@@ -12,5 +12,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindFromComponentInNewPrefab(_camera);
         }
+
+        public override bool IsSetupCorrect() => _camera != null;
     }
 }

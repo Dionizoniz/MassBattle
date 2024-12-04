@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesToFromComponentInNewPrefab(_updateProvider);
         }
+
+        public override bool IsSetupCorrect() => _updateProvider;
     }
 }

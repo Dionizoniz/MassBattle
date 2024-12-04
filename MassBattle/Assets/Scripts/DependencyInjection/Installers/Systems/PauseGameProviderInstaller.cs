@@ -9,5 +9,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesTo<PauseGameProvider>();
         }
+
+        public override bool IsSetupCorrect() => true;
     }
 }

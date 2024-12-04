@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesToFromInstance(_sceneLoader);
         }
+
+        public override bool IsSetupCorrect() => _sceneLoader != null;
     }
 }

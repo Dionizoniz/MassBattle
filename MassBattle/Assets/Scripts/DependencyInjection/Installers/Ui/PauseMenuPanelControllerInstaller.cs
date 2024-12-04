@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Ui
         {
             BindInterfacesToFromComponentInNewPrefab(_pauseMenuPanelController);
         }
+
+        public override bool IsSetupCorrect() => _pauseMenuPanelController != null;
     }
 }

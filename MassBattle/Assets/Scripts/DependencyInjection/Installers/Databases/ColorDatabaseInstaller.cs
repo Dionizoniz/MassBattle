@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Databases
         {
             BindInterfacesToFromInstance(_colorDatabase);
         }
+
+        public override bool IsSetupCorrect() => _colorDatabase != null;
     }
 }

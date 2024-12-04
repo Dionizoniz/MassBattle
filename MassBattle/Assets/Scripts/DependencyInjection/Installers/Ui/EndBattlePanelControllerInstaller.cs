@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Ui
         {
             BindInterfacesToFromComponentInNewPrefab(_endBattlePanelController);
         }
+
+        public override bool IsSetupCorrect() => _endBattlePanelController != null;
     }
 }

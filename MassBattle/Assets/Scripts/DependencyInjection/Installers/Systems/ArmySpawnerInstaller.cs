@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesToFromComponentInNewPrefab(_armySpawner);
         }
+
+        public override bool IsSetupCorrect() => _armySpawner != null;
     }
 }

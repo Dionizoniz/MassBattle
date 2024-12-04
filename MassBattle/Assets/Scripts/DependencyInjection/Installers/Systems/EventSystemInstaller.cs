@@ -13,5 +13,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindFromComponentInNewPrefab(_eventSystem);
         }
+
+        public override bool IsSetupCorrect() => _eventSystem != null;
     }
 }

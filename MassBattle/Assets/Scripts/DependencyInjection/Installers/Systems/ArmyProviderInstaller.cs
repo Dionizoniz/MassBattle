@@ -9,5 +9,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
         {
             BindInterfacesTo<ArmyProvider>();
         }
+
+        public override bool IsSetupCorrect() => true;
     }
 }
