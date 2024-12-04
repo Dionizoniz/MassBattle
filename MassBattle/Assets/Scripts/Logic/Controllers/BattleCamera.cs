@@ -76,10 +76,11 @@ namespace MassBattle.Logic.Controllers
 
         private void AdjustCameraOffset(float scrollOffset)
         {
-            Vector3 targetZoomLevel = scrollOffset > 0 ? _maxZoomLevel : _minZoomLevel;
+            Transform cameraTransform = _camera.transform;
+            Vector3 targetZoom = scrollOffset > 0 ? _maxZoomLevel : _minZoomLevel;
             float speed = _zoomSpeedMultiplier * Time.deltaTime;
 
-            _transform.localPosition = Vector3.MoveTowards(_transform.localPosition, targetZoomLevel, speed);
+            cameraTransform.localPosition = Vector3.MoveTowards(cameraTransform.localPosition, targetZoom, speed);
         }
 
         private void OnDestroy()
