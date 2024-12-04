@@ -1,34 +1,28 @@
+using System;
+using MassBattle.Core.Entities;
 using MassBattle.Core.Patterns.MVC;
-using MassBattle.Core.Providers;
-using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.Armies;
-using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.Units;
 
 namespace MassBattle.UI.LaunchMenu
 {
-    public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>, ILaunchMenuController
+    public class LaunchMenuController : Controller<LaunchMenuModel, LaunchMenuView>, ILaunchMenuController,
+                                        ISceneSpawner
     {
-        private IArmyDatabase _armyDatabase;
-        private IColorDatabase _colorDatabase;
-        private ISceneLoader _sceneLoader;
-        private IExitGameProvider _exitGameProvider;
-        private IUnitDatabase _unitDatabase;
+        public event Action OnSpawnScene = delegate { };
 
-        public void InjectData(
-                IArmyDatabase battleSetup, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IExitGameProvider exitGameProvider, IUnitDatabase unitDatabase)
+        public bool IsSceneSpawned { get; private set; }
+
+        protected override void Initialize()
         {
-            _armyDatabase = battleSetup;
-            _colorDatabase = colorDatabase;
-            _sceneLoader = sceneLoader;
-            _exitGameProvider = exitGameProvider;
-            _unitDatabase = unitDatabase;
+            base.Initialize();
+            _view.SpawnPanels();
+
+            IsSceneSpawned = true;
+            OnSpawnScene.Invoke();
         }
 
         public void StartBattle()
         {
-            _model.StartBattle(_armyDatabase);
+            _model.StartBattle();
         }
 
         public void ExitGame()
@@ -36,11 +30,9 @@ namespace MassBattle.UI.LaunchMenu
             _model.ExitGame();
         }
 
-        protected override void Initialize()
+        private void OnDestroy()
         {
-            base.Initialize();
-            _view.SpawnPanels(_armyDatabase, _colorDatabase, _unitDatabase);
-            _model.InjectData(_sceneLoader, _exitGameProvider);
+            IsSceneSpawned = false;
         }
     }
 }

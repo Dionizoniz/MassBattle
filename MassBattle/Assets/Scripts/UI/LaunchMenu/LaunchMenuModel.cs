@@ -6,6 +6,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Databases.Armies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
@@ -15,23 +16,26 @@ namespace MassBattle.UI.LaunchMenu
         private float _applicationExitDelay = 3f;
 
         private ISceneLoader _sceneLoader;
+        private IArmyDatabase _armyDatabase;
         private IExitGameProvider _exitGameProvider;
 
-        public void InjectData(ISceneLoader sceneLoader, IExitGameProvider exitGameProvider)
+        [Inject]
+        private void Construct(ISceneLoader sceneLoader, IArmyDatabase armyDatabase, IExitGameProvider exitGameProvider)
         {
             _sceneLoader = sceneLoader;
+            _armyDatabase = armyDatabase;
             _exitGameProvider = exitGameProvider;
         }
 
-        public void StartBattle(IArmyDatabase armyDatabase)
+        public void StartBattle()
         {
             bool isCorrectArmyNamesSetup = IsCorrectArmyNamesSetup();
             bool isCorrectArmyColorsSetup = IsCorrectArmyColorsSetup();
 
             if (isCorrectArmyNamesSetup && isCorrectArmyColorsSetup)
             {
-                ClearRegisteredArmySetups(armyDatabase);
-                RegisterArmiesSetup(armyDatabase);
+                ClearRegisteredArmySetups();
+                RegisterArmiesSetup();
                 LoadBattleScene();
             }
             else if (isCorrectArmyNamesSetup == false)
@@ -76,17 +80,17 @@ namespace MassBattle.UI.LaunchMenu
             return _view.ArmyPanels.Where(panel => panel.IsArmyActive).Select(panel => panel.ArmyColor).ToList();
         }
 
-        private void ClearRegisteredArmySetups(IArmyDatabase armyDatabase)
+        private void ClearRegisteredArmySetups()
         {
-            armyDatabase.ClearSavedArmiesData();
+            _armyDatabase.ClearSavedArmiesData();
         }
 
-        private void RegisterArmiesSetup(IArmyDatabase armyDatabase)
+        private void RegisterArmiesSetup()
         {
             foreach (var panel in _view.ArmyPanels)
             {
                 InitialArmyData armySetup = panel.CreateArmySetup();
-                armyDatabase.SaveArmyData(armySetup);
+                _armyDatabase.SaveArmyData(armySetup);
             }
         }
 

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Databases;
 using MassBattle.Core.Engine;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
-    [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = -10000)]
+    [CreateAssetMenu(menuName = ConstantValues.DATABASE_MENU_GROUP + nameof(ArmyDatabase),
+                     fileName = nameof(ArmyDatabase), order = ConstantValues.DATABASE_MENU_ORDER)]
     public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase
     {
         [SerializeField]
@@ -15,11 +16,12 @@ namespace MassBattle.Logic.Databases.Armies
         private int _minUnitStackSize;
         [SerializeField]
         private int _maxUnitStackSize = 150;
+
         private readonly List<InitialArmyData> _savedArmiesData = new();
         private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
         public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
-        public int MinUnitStackSize => _minUnitStackSize;
-        public int MaxUnitStackSize => _maxUnitStackSize;
+
+        public Vector2 UnitStackSizeRange => new(_minUnitStackSize, _maxUnitStackSize);
 
         public void SaveArmyData(InitialArmyData armyData)
         {
@@ -43,7 +45,7 @@ namespace MassBattle.Logic.Databases.Armies
             _savedArmiesData.Clear();
         }
 
-        public bool IsSetupCorrect()
+        public bool IsSetupCorrect() // TODO
         {
             // bool isSetupCorrect = base.IsSetupCorrect();
             //
@@ -58,6 +60,7 @@ namespace MassBattle.Logic.Databases.Armies
             return true;
         }
 
+        // TODO
         public IEnumerable<string> FindDescriptorIds() => throw new System.NotImplementedException();
         public ColorDescriptor TryFindNextElementFor(int index) => throw new System.NotImplementedException();
         public ColorDescriptor TryFindElementBy(string descriptorId) => throw new System.NotImplementedException();

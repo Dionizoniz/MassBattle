@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
-using MassBattle.Core.Utilities;
+using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;

@@ -1,5 +1,4 @@
 ﻿using System;
-using MassBattle.Core.Providers;
 
 namespace MassBattle.Core.UserInput
 {
@@ -7,7 +6,5 @@ namespace MassBattle.Core.UserInput
     {
         event Action<float> OnMouseWheelScroll;
         event Action OnExitButton;
-
-        void InjectData(IUpdateProvider updateProvider);
     }
 }

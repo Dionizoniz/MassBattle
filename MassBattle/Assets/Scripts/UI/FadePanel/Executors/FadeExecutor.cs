@@ -1,26 +1,55 @@
-﻿using MassBattle.Core.Installers;
+﻿using MassBattle.Core.Entities;
+using Zenject;
 
 namespace MassBattle.UI.FadePanel.Executors
 {
     public class FadeExecutor : IFadeExecutor
     {
-        private readonly IFadePanelController _fadePanelController;
-        private readonly IInstaller _installer;
+        private IFadePanelController _fadePanelController;
+        private ISceneSpawner _sceneSpawner;
 
-        public FadeExecutor(IFadePanelController fadePanelController, IInstaller installer)
+        [Inject]
+        private void Construct(IFadePanelController fadePanelController, ISceneSpawner sceneSpawner)
         {
             _fadePanelController = fadePanelController;
-            _installer = installer;
+            _sceneSpawner = sceneSpawner;
 
             _fadePanelController.FadeInInstant();
-            _installer.OnSpawnFinish += _fadePanelController.FadeOut;
+            TryFadeOut();
+        }
+
+        private void TryFadeOut()
+        {
+            if (_sceneSpawner.IsSceneSpawned)
+            {
+                FadeOut();
+            }
+            else
+            {
+                AttachToEvents();
+            }
+        }
+
+        private void FadeOut()
+        {
+            _fadePanelController.FadeOut();
+        }
+
+        private void AttachToEvents()
+        {
+            _sceneSpawner.OnSpawnScene += FadeOut;
         }
 
         ~FadeExecutor()
         {
-            if (_installer != null)
+            DetachFromEvents();
+        }
+
+        private void DetachFromEvents()
+        {
+            if (_sceneSpawner != null)
             {
-                _installer.OnSpawnFinish -= _fadePanelController.FadeOut;
+                _sceneSpawner.OnSpawnScene -= FadeOut;
             }
         }
     }

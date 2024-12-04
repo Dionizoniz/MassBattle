@@ -9,6 +9,7 @@ using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Units
 {
@@ -57,7 +58,6 @@ namespace MassBattle.Logic.Units
         public string UnitId { get; private set; }
 
         private IArmyProvider _armyProvider;
-        protected IUpdateProvider _updateProvider;
         protected IUnitsFactory _unitsFactory;
         private IColorDatabase _colorDatabase;
 
@@ -72,20 +72,21 @@ namespace MassBattle.Logic.Units
         private Vector3 _lastPosition;
         private Coroutine _bleedingProcess;
 
-        public void Initialize(
-                string unitId, InitialArmyData initialArmyData, IArmyProvider armyProvider,
-                IUpdateProvider updateProvider, IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
+        [Inject]
+        private void Construct(IArmyProvider armyProvider, IUnitsFactory unitsFactory, IColorDatabase colorDatabase)
         {
-            UnitId = unitId;
             _armyProvider = armyProvider;
-            _updateProvider = updateProvider;
             _unitsFactory = unitsFactory;
             _colorDatabase = colorDatabase;
+        }
+
+        public void Initialize(string unitId, InitialArmyData initialArmyData)
+        {
+            UnitId = unitId;
 
             _armyId = initialArmyData.DescriptorId;
             _armyColor = initialArmyData.ArmyColor;
             _strategy = CreateStrategy(initialArmyData.StrategyType);
-            _materialPropertyBlock = new MaterialPropertyBlock();
 
             CalculateInitialTimeSinceLastAttack();
             UpdateColor(_armyColor);
@@ -101,6 +102,7 @@ namespace MassBattle.Logic.Units
 
         private void UpdateColor(Color color)
         {
+            _materialPropertyBlock ??= new MaterialPropertyBlock();
             _materialPropertyBlock.SetColor(COLOR, color);
             _renderer.SetPropertyBlock(_materialPropertyBlock);
         }

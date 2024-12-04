@@ -2,6 +2,7 @@
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Core.UserInput;
+using Zenject;
 
 namespace MassBattle.UI.PauseMenuPanel
 {
@@ -11,7 +12,8 @@ namespace MassBattle.UI.PauseMenuPanel
         private ISceneLoader _sceneLoader;
         private IPauseGameProvider _pauseGameProvider;
 
-        public void InjectData(IInputFacade inputFacade, ISceneLoader sceneLoader, IPauseGameProvider pauseGameProvider)
+        [Inject]
+        public void Construct(IInputFacade inputFacade, ISceneLoader sceneLoader, IPauseGameProvider pauseGameProvider)
         {
             _inputFacade = inputFacade;
             _sceneLoader = sceneLoader;

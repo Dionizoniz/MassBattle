@@ -1,6 +1,7 @@
 ﻿using MassBattle.Core.Patterns.MVC;
 using MassBattle.Logic.Armies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.UI.PauseMenuPanel
 {
@@ -14,7 +15,8 @@ namespace MassBattle.UI.PauseMenuPanel
 
         public bool IsPanelVisible { get; private set; }
 
-        public void Initialize(IArmyProvider armyProvider)
+        [Inject]
+        public void Construct(IArmyProvider armyProvider)
         {
             _armyProvider = armyProvider;
 

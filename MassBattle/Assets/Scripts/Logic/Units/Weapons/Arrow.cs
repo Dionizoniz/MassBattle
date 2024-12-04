@@ -4,6 +4,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Providers;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Units.Weapons
 {
@@ -33,15 +34,18 @@ namespace MassBattle.Logic.Units.Weapons
         private Vector3 _moveDirection;
         private bool _isInitialized;
 
-        public void Initialize(
-                BaseUnit sourceUnit, BaseUnit targetUnit, Color color, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory)
+        [Inject]
+        private void Construct(IUpdateProvider updateProvider, IUnitsFactory unitsFactory)
+        {
+            _updateProvider = updateProvider;
+            _unitsFactory = unitsFactory;
+        }
+
+        public void Initialize(BaseUnit sourceUnit, BaseUnit targetUnit, Color color)
         {
             _armyData = sourceUnit.ArmyData;
             _initialPosition = sourceUnit._transform.position;
             _targetPosition = targetUnit._transform.position;
-            _updateProvider = updateProvider;
-            _unitsFactory = unitsFactory;
             AttackValue = sourceUnit.AttackValue;
 
             UpdateColor(color);

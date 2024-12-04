@@ -3,6 +3,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Controllers
 {
@@ -30,7 +31,8 @@ namespace MassBattle.Logic.Controllers
         private Vector3 _cachedArmiesCenter;
         private int _framesToRefreshArmiesCenterLeft;
 
-        public void InjectData(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
+        [Inject]
+        private void Construct(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
         {
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;
@@ -74,10 +76,11 @@ namespace MassBattle.Logic.Controllers
 
         private void AdjustCameraOffset(float scrollOffset)
         {
-            Vector3 targetZoomLevel = scrollOffset > 0 ? _maxZoomLevel : _minZoomLevel;
+            Transform cameraTransform = _camera.transform;
+            Vector3 targetZoom = scrollOffset > 0 ? _maxZoomLevel : _minZoomLevel;
             float speed = _zoomSpeedMultiplier * Time.deltaTime;
 
-            _transform.localPosition = Vector3.MoveTowards(_transform.localPosition, targetZoomLevel, speed);
+            cameraTransform.localPosition = Vector3.MoveTowards(cameraTransform.localPosition, targetZoom, speed);
         }
 
         private void OnDestroy()

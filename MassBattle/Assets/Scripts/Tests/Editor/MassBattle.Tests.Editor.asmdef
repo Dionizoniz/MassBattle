@@ -2,10 +2,10 @@
     "name": "MassBattle.Tests.Editor",
     "rootNamespace": "MassBattle",
     "references": [
-        "GUID:a12dca627f400e147b2bbc36b3a017e4",
-        "GUID:6171c1edf9eaa6d4582c8acf77070b6e",
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
-        "GUID:0acc523941302664db1f4e527237feb3"
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:a12dca627f400e147b2bbc36b3a017e4",
+        "GUID:6171c1edf9eaa6d4582c8acf77070b6e"
     ],
     "includePlatforms": [
         "Editor"

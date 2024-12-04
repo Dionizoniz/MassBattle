@@ -18,7 +18,7 @@ namespace MassBattle.UI.EndBattlePanel
         [Space, SerializeField]
         private GameObject _drawBattleRoot;
 
-        public void Initialize()
+        private void Awake()
         {
             HideContentPanel();
         }

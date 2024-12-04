@@ -1,6 +1,7 @@
 ﻿using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
+using Zenject;
 
 namespace MassBattle.UI.EndBattlePanel
 {
@@ -9,7 +10,8 @@ namespace MassBattle.UI.EndBattlePanel
         private IArmyProvider _armyProvider;
         private IPauseGameProvider _pauseGameProvider;
 
-        public void InjectData(IArmyProvider armyProvider, IPauseGameProvider pauseGameProvider)
+        [Inject]
+        public void Construct(IArmyProvider armyProvider, IPauseGameProvider pauseGameProvider)
         {
             _armyProvider = armyProvider;
             _pauseGameProvider = pauseGameProvider;
