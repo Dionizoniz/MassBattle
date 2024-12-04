@@ -7,7 +7,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
     {
         public override void InstallBindings()
         {
-            Bind<PauseGameProvider>();
+            BindInterfacesTo<PauseGameProvider>();
         }
     }
 }

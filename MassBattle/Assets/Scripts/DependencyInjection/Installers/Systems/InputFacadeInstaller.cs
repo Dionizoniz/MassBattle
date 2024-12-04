@@ -11,7 +11,7 @@ namespace MassBattle.DependencyInjection.Installers.Systems
 
         public override void InstallBindings()
         {
-            BindFromComponentInNewPrefab(_inputFacade);
+            BindInterfacesToFromComponentInNewPrefab(_inputFacade);
         }
     }
 }
