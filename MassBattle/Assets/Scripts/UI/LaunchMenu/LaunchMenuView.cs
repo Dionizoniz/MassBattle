@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Logic.Databases.Armies;
-using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.Units;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -47,7 +45,6 @@ namespace MassBattle.UI.LaunchMenu
         {
             HideErrorMessage();
             HideExitPanel();
-            SpawnPanels();
         }
 
         private void HideErrorMessage()
@@ -60,7 +57,7 @@ namespace MassBattle.UI.LaunchMenu
             _exitScreenRoot.gameObject.SetActive(false);
         }
 
-        private void SpawnPanels()
+        public void SpawnPanels()
         {
             foreach (InitialArmyData initialArmyData in _armyDatabase.ArmiesData)
             {
