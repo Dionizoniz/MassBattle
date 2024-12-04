@@ -155,6 +155,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1185529741947520607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3411075766203130252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5813491727013954236}
+  - component: {fileID: 3927482349458888830}
+  m_Layer: 0
+  m_Name: FadePanelControllerInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5813491727013954236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411075766203130252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4093924426997579186}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3927482349458888830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411075766203130252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b974d0b0d33945e08d83a6d2826a6bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadePanelControllerToSpawn: {fileID: 3495896142305995595, guid: d5a6ef45e2d70114ca0a17ad10acf176, type: 3}
 --- !u!1 &4973600420940669002
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +234,6 @@ Transform:
   - {fileID: 5349252493205038311}
   - {fileID: 4093924426997579186}
   - {fileID: 8953985044194165951}
-  - {fileID: 709945015912593669}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &587289936676076779
@@ -210,7 +254,8 @@ MonoBehaviour:
   - {fileID: 4486520931168921145}
   - {fileID: 4837642796409647982}
   - {fileID: 6276205038053858321}
-  - {fileID: 6210707257458102466}
+  - {fileID: 7075155663779493296}
+  - {fileID: 3927482349458888830}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -256,10 +301,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2595689898661457703}
+  - {fileID: 5813491727013954236}
   m_Father: {fileID: 1185529741947520607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6706174765354255882
+--- !u!1 &6439551889069383239
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,44 +314,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 709945015912593669}
-  - component: {fileID: 6210707257458102466}
+  - component: {fileID: 2595689898661457703}
+  - component: {fileID: 7075155663779493296}
   m_Layer: 0
-  m_Name: UiInstaller
+  m_Name: LaunchMenuControllerInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &709945015912593669
+--- !u!4 &2595689898661457703
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6706174765354255882}
+  m_GameObject: {fileID: 6439551889069383239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1185529741947520607}
+  m_Father: {fileID: 4093924426997579186}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6210707257458102466
+--- !u!114 &7075155663779493296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6706174765354255882}
+  m_GameObject: {fileID: 6439551889069383239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132effb36c314dd599d9ca0dd19fae08, type: 3}
+  m_Script: {fileID: 11500000, guid: 4510bb47b5714353a1701a288ecd4cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _launchMenuController: {fileID: 3678075164039831391, guid: d2ca41999637d9b438c54acd6860919d, type: 3}
-  _fadePanelControllerToSpawn: {fileID: 3495896142305995595, guid: d5a6ef45e2d70114ca0a17ad10acf176, type: 3}
 --- !u!1 &7707012914841892366
 GameObject:
   m_ObjectHideFlags: 0
