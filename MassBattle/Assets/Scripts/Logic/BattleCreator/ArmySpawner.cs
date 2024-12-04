@@ -13,7 +13,7 @@ using Zenject;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup, ISceneSpawner
+    public class ArmySpawner : ExtendedMonoBehaviour, IArmySpawner, ICheckSetup, ISceneSpawner
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
 

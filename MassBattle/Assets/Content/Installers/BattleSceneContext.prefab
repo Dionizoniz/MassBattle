@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 123359439212173002}
   - component: {fileID: 4179735416293065126}
   m_Layer: 0
-  m_Name: BattleSpawnerInstaller
+  m_Name: ArmySpawnerInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b915f042a394f9f9dffa13e8b35a7b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleSpawner: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
+  _armySpawner: {fileID: 4425368132453578425, guid: 25c7fbba42cd8c046a59aa3f63190ba1, type: 3}
 --- !u!1 &4600566823006324497
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace MassBattle.DependencyInjection.Installers.Systems
 {
-    public class BattleSpawnerInstaller : ExtendedMonoInstaller
+    public class ArmySpawnerInstaller : ExtendedMonoInstaller
     {
         [SerializeField]
-        private BattleSpawner _battleSpawner;
+        private ArmySpawner _armySpawner;
 
         public override void InstallBindings()
         {
-            BindInterfacesToFromComponentInNewPrefab(_battleSpawner);
+            BindInterfacesToFromComponentInNewPrefab(_armySpawner);
         }
     }
 }

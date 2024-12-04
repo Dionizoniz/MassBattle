@@ -52,14 +52,14 @@ namespace MassBattle.Tests.Editor
         [Test]
         public void _03_TestSetup_BattleSpawners()
         {
-            List<BattleSpawner> assets = FindAssets<BattleSpawner>();
+            List<ArmySpawner> assets = FindAssets<ArmySpawner>();
             Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
         public void _04_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
-            List<BattleSpawner> spawners = FindAssets<BattleSpawner>();
+            List<ArmySpawner> spawners = FindAssets<ArmySpawner>();
             List<ArmyDatabase> databases = default; //FindAssets<ArmyDatabase>();
 
             int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
