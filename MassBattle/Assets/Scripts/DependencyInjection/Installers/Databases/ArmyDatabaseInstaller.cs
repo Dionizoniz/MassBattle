@@ -6,7 +6,7 @@ namespace MassBattle.DependencyInjection.Installers.Databases
 {
     public class ArmyDatabaseInstaller : ExtendedMonoInstaller
     {
-        [Space, SerializeField]
+        [SerializeField]
         private ArmyDatabase _armyDatabase;
 
         public override void InstallBindings()
