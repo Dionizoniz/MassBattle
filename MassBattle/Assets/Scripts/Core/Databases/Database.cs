@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using MassBattle.Core.Descriptors;
-using MassBattle.Core.Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

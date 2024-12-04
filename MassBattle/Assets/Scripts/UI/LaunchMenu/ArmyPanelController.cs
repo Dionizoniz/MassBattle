@@ -1,9 +1,6 @@
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Logic.Databases.Armies;
-using MassBattle.Logic.Databases.Colors;
-using MassBattle.Logic.Databases.Units;
 using UnityEngine;
-using Zenject;
 
 namespace MassBattle.UI.LaunchMenu
 {
