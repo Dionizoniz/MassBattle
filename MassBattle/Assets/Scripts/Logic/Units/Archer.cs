@@ -1,6 +1,7 @@
 ﻿using MassBattle.Logic.Strategies;
 using MassBattle.Logic.Units.Weapons;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Units
 {
@@ -8,6 +9,14 @@ namespace MassBattle.Logic.Units
     {
         [Space, SerializeField]
         private Arrow _arrowPrefab;
+
+        private DiContainer _container;
+
+        [Inject]
+        private void Construct(DiContainer container)
+        {
+            _container = container;
+        }
 
         protected override IStrategy CreateStrategy(StrategyType strategyType)
         {
@@ -28,7 +37,8 @@ namespace MassBattle.Logic.Units
         protected override void PerformAttack(BaseUnit enemy)
         {
             Arrow spawnedArrow = _unitsFactory.CreateArrowInstance(_arrowPrefab);
-            spawnedArrow.Initialize(this, enemy, ArmyData.InitialArmyData.ArmyColor, _updateProvider, _unitsFactory);
+            _container.InjectGameObject(spawnedArrow._gameObject);
+            spawnedArrow.Initialize(this, enemy, ArmyData.InitialArmyData.ArmyColor);
         }
     }
 }

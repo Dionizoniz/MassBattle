@@ -2,6 +2,7 @@
 using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Core.UserInput
 {
@@ -15,7 +16,8 @@ namespace MassBattle.Core.UserInput
 
         private IUpdateProvider _updateProvider;
 
-        public void InjectData(IUpdateProvider updateProvider)
+        [Inject]
+        private void Construct(IUpdateProvider updateProvider)
         {
             _updateProvider = updateProvider;
 

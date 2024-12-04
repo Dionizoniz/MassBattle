@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
-using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.Armies;
-using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
-using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
@@ -17,20 +15,20 @@ using Zenject;
 namespace MassBattle.Logic.BattleCreator
 {
     // TODO Future feature - change name to ArmySpawner and split logic of load art scene to other system
-    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup
+    public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup, ISceneSpawner
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
+
+        public event Action OnSpawnScene = delegate { };
 
         [Space, SerializeField]
         private List<BoxCollider> _spawnArmyBounds = new();
 
         public int SpawnArmyBoundsCount => _spawnArmyBounds.Count;
+        public bool IsSceneSpawned { get; private set; }
 
         private IArmyDatabase _armyDatabase;
         private IArmyProvider _armyProvider;
-        private IUpdateProvider _updateProvider;
-        private IUnitsFactory _unitsFactory;
-        private IColorDatabase _colorDatabase;
         private ISceneLoader _sceneLoader;
         private IUnitDatabase _unitDatabase;
         private DiContainer _container;
@@ -39,22 +37,24 @@ namespace MassBattle.Logic.BattleCreator
 
         [Inject]
         private void Construct(
-                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
+                IArmyDatabase armyDatabase, IArmyProvider armyProvider, ISceneLoader sceneLoader,
                 IUnitDatabase unitDatabase, DiContainer container)
         {
             _armyDatabase = armyDatabase;
             _armyProvider = armyProvider;
-            _updateProvider = updateProvider;
-            _unitsFactory = unitsFactory;
-            _colorDatabase = colorDatabase;
             _sceneLoader = sceneLoader;
             _unitDatabase = unitDatabase;
             _container = container;
+        }
 
+        private void Awake() // TODO: IMPROVE LOGIC
+        {
             LoadArtScene();
             CreateUnitsRoot();
             SpawnArmies();
+
+            IsSceneSpawned = true;
+            OnSpawnScene.Invoke();
         }
 
         private void LoadArtScene()
