@@ -5,6 +5,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Armies
 {
@@ -13,10 +14,11 @@ namespace MassBattle.Logic.Armies
         public event Action<ArmyData> OnLastArmyStay = delegate { };
         public event Action OnNoArmyStay = delegate { };
 
-        private readonly IUpdateProvider _updateProvider;
+        private IUpdateProvider _updateProvider;
         private readonly List<ArmyData> _armiesData = new();
 
-        public ArmyProvider(IUpdateProvider updateProvider)
+        [Inject]
+        private void Construct(IUpdateProvider updateProvider)
         {
             _updateProvider = updateProvider;
 
