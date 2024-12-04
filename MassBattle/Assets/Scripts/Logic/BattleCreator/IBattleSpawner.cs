@@ -10,9 +10,5 @@ namespace MassBattle.Logic.BattleCreator
 {
     public interface IBattleSpawner
     {
-        void Initialize(
-                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
-                IUnitsFactory unitsFactory, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IUnitDatabase unitDatabase);
     }
 }

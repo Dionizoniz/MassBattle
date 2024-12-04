@@ -3,6 +3,7 @@ using MassBattle.Core.Providers;
 using MassBattle.Core.UserInput;
 using MassBattle.Logic.Armies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Controllers
 {
@@ -30,7 +31,8 @@ namespace MassBattle.Logic.Controllers
         private Vector3 _cachedArmiesCenter;
         private int _framesToRefreshArmiesCenterLeft;
 
-        public void InjectData(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
+        [Inject]
+        private void Construct(IArmyProvider armyProvider, IUpdateProvider updateProvider, IInputFacade inputFacade)
         {
             _armyProvider = armyProvider;
             _updateProvider = updateProvider;

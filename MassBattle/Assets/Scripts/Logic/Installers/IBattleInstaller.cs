@@ -6,8 +6,5 @@ namespace MassBattle.Logic.Installers
 {
     public interface IBattleInstaller
     {
-        IArmyProvider ArmyProvider { get; }
-        IInputFacade InputFacade { get; }
-        ISceneLoader SceneLoader { get; }
     }
 }

@@ -12,6 +12,7 @@ using MassBattle.Logic.Providers;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.BattleCreator
 {
@@ -30,14 +31,17 @@ namespace MassBattle.Logic.BattleCreator
         private IUpdateProvider _updateProvider;
         private IUnitsFactory _unitsFactory;
         private IColorDatabase _colorDatabase;
-        private Transform _unitsRoot;
         private ISceneLoader _sceneLoader;
         private IUnitDatabase _unitDatabase;
+        private DiContainer _container;
 
-        public void Initialize(
+        private Transform _unitsRoot;
+
+        [Inject]
+        private void Construct(
                 IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUpdateProvider updateProvider,
                 IUnitsFactory unitsFactory, IColorDatabase colorDatabase, ISceneLoader sceneLoader,
-                IUnitDatabase unitDatabase)
+                IUnitDatabase unitDatabase, DiContainer container)
         {
             _armyDatabase = armyDatabase;
             _armyProvider = armyProvider;
@@ -46,6 +50,7 @@ namespace MassBattle.Logic.BattleCreator
             _colorDatabase = colorDatabase;
             _sceneLoader = sceneLoader;
             _unitDatabase = unitDatabase;
+            _container = container;
 
             LoadArtScene();
             CreateUnitsRoot();
@@ -133,9 +138,9 @@ namespace MassBattle.Logic.BattleCreator
         private BaseUnit SpawnUnit(UnitDescriptor unitDescriptor, InitialArmyData initialArmyData, Bounds spawnBounds)
         {
             BaseUnit spawnedUnit = Instantiate(unitDescriptor.UnitPrefabToSpawn, _unitsRoot);
+            _container.InjectGameObject(spawnedUnit.gameObject);
 
-            string id = unitDescriptor.DescriptorId;
-            spawnedUnit.Initialize(id, initialArmyData, _armyProvider, _updateProvider, _unitsFactory, _colorDatabase);
+            spawnedUnit.Initialize(unitDescriptor.DescriptorId, initialArmyData);
             spawnedUnit._transform.position = PositionFinder.FindRandomPositionIn(spawnBounds);
 
             return spawnedUnit;
