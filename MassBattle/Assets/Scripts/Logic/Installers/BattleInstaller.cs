@@ -20,8 +20,6 @@ namespace MassBattle.Logic.Installers
         [SerializeField]
         private BattleCamera _battleCameraToSpawn;
 
-        private IBattleCamera _battleCamera;
-
         private void Awake()
         {
             SpawnSystems();
@@ -29,7 +27,7 @@ namespace MassBattle.Logic.Installers
 
         private void SpawnSystems()
         {
-            _battleCamera = Instantiate(_battleCameraToSpawn, _cameraControllerRoot);
+            Instantiate(_battleCameraToSpawn, _cameraControllerRoot);
             AdjustCameraControllerRoot();
         }
 
