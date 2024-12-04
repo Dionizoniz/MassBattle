@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Engine;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
-    [CreateAssetMenu(menuName = "Databases/" + nameof(ArmyDatabase), fileName = nameof(ArmyDatabase), order = -10000)]
+    [CreateAssetMenu(menuName = ConstantValues.DATABASE_MENU_GROUP + nameof(ArmyDatabase),
+                     fileName = nameof(ArmyDatabase), order = ConstantValues.DATABASE_MENU_ORDER)]
     public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase
     {
         [SerializeField]

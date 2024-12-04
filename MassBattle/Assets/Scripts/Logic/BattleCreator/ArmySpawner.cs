@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
+using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Units;
@@ -15,8 +16,6 @@ namespace MassBattle.Logic.BattleCreator
 {
     public class ArmySpawner : ExtendedMonoBehaviour, IArmySpawner, ICheckSetup, ISceneSpawner
     {
-        private const string UNITS_ROOT_NAME = "UnitsRoot";
-
         public event Action OnSpawnScene = delegate { };
 
         [Space, SerializeField]
@@ -51,10 +50,10 @@ namespace MassBattle.Logic.BattleCreator
 
         private void CreateUnitsRoot()
         {
-            _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
+            _unitsRoot = new GameObject(ConstantValues.UNITS_ROOT_NAME).transform;
         }
 
-        private void SpawnArmies() // TODO simplify code
+        private void SpawnArmies() // TODO: simplify code
         {
             _armyProvider.ClearArmies();
 
