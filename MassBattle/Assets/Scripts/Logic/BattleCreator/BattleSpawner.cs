@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
-using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Armies;
 using MassBattle.Logic.Databases.Armies;
 using MassBattle.Logic.Databases.Units;
@@ -14,7 +13,6 @@ using Zenject;
 
 namespace MassBattle.Logic.BattleCreator
 {
-    // TODO Future feature - change name to ArmySpawner and split logic of load art scene to other system
     public class BattleSpawner : ExtendedMonoBehaviour, IBattleSpawner, ICheckSetup, ISceneSpawner
     {
         private const string UNITS_ROOT_NAME = "UnitsRoot";
@@ -29,7 +27,6 @@ namespace MassBattle.Logic.BattleCreator
 
         private IArmyDatabase _armyDatabase;
         private IArmyProvider _armyProvider;
-        private ISceneLoader _sceneLoader;
         private IUnitDatabase _unitDatabase;
         private DiContainer _container;
 
@@ -37,29 +34,19 @@ namespace MassBattle.Logic.BattleCreator
 
         [Inject]
         private void Construct(
-                IArmyDatabase armyDatabase, IArmyProvider armyProvider, ISceneLoader sceneLoader,
-                IUnitDatabase unitDatabase, DiContainer container)
+                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUnitDatabase unitDatabase,
+                DiContainer container)
         {
             _armyDatabase = armyDatabase;
             _armyProvider = armyProvider;
-            _sceneLoader = sceneLoader;
             _unitDatabase = unitDatabase;
             _container = container;
         }
 
-        private void Awake() // TODO: IMPROVE LOGIC
+        private void Awake()
         {
-            LoadArtScene();
             CreateUnitsRoot();
             SpawnArmies();
-
-            IsSceneSpawned = true;
-            OnSpawnScene.Invoke();
-        }
-
-        private void LoadArtScene()
-        {
-            _sceneLoader.LoadRandomArtScene();
         }
 
         private void CreateUnitsRoot()
@@ -67,7 +54,7 @@ namespace MassBattle.Logic.BattleCreator
             _unitsRoot = new GameObject(UNITS_ROOT_NAME).transform;
         }
 
-        private void SpawnArmies()
+        private void SpawnArmies() // TODO simplify code
         {
             _armyProvider.ClearArmies();
 
@@ -92,6 +79,9 @@ namespace MassBattle.Logic.BattleCreator
             }
 
             _armyProvider.InitializedRegisteredArmies();
+
+            IsSceneSpawned = true;
+            OnSpawnScene.Invoke();
         }
 
         private ArmyData TrySpawnArmy(InitialArmyData initialArmyData, Bounds spawnBounds)
