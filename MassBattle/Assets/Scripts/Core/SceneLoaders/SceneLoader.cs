@@ -22,13 +22,13 @@ namespace MassBattle.Core.SceneLoaders
         [Space, SerializeField]
         private List<SceneData> _artScenesData = new();
 
-        public string TargetSceneNameToLoad { get; private set; }
+        private SceneData _targetSceneToLoad;
 
         public void LoadLaunchMenuScene(bool useLoadingScreen = true)
         {
             if (useLoadingScreen)
             {
-                LoadScene(_launchMenuSceneData);
+                OpenLoadingSceneAfterCacheSceneToLoad(_launchMenuSceneData);
             }
             else
             {
@@ -36,11 +36,10 @@ namespace MassBattle.Core.SceneLoaders
             }
         }
 
-        private void LoadScene(SceneData sceneData)
+        private void OpenLoadingSceneAfterCacheSceneToLoad(SceneData sceneData)
         {
-            TargetSceneNameToLoad = sceneData.SceneName;
-
-            SceneManager.LoadScene(_loadingSceneData.SceneName);
+            _targetSceneToLoad = sceneData;
+            LoadSceneInstant(_loadingSceneData);
         }
 
         private void LoadSceneInstant(SceneData sceneData)
@@ -52,7 +51,7 @@ namespace MassBattle.Core.SceneLoaders
         {
             if (useLoadingScreen)
             {
-                LoadScene(_battleSceneData);
+                OpenLoadingSceneAfterCacheSceneToLoad(_battleSceneData);
             }
             else
             {
@@ -69,6 +68,11 @@ namespace MassBattle.Core.SceneLoaders
         private void LoadAdditiveScene(SceneData sceneData)
         {
             SceneManager.LoadScene(sceneData.SceneName, LoadSceneMode.Additive);
+        }
+
+        public AsyncOperation LoadTargetScene()
+        {
+            return SceneManager.LoadSceneAsync(_targetSceneToLoad.SceneName);
         }
 
         private void OnValidate()
