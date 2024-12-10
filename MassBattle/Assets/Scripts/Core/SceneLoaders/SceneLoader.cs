@@ -14,7 +14,8 @@ namespace MassBattle.Core.SceneLoaders
     {
         [SerializeField]
         private SceneData _loadingSceneData;
-        [SerializeField]
+
+        [Space, SerializeField]
         private SceneData _launchMenuSceneData;
         [SerializeField]
         private SceneData _battleSceneData;
