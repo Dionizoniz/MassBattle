@@ -7,9 +7,18 @@ using UnityEngine;
 namespace MassBattle.Logic.Databases.Armies
 {
     [CreateAssetMenu(menuName = ConstantValues.DATABASE_MENU_GROUP + nameof(ArmyDatabase),
-                     fileName = nameof(ArmyDatabase), order = ConstantValues.DATABASE_MENU_ORDER)]
-    public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase
+                     fileName = nameof(ArmyDatabase), order = ConstantValues.DATABASE_MENU_ORDER)] // TODO setup
+    public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase // TODO rename to setup class + interface
     {
+        // TODO implement
+        // min units
+        // max units
+        // default units 
+        // max army count
+        // default active army count
+
+        // saved armies data
+
         [SerializeField]
         protected List<InitialArmyData> _elements = new();
         [Space, SerializeField]
@@ -18,7 +27,7 @@ namespace MassBattle.Logic.Databases.Armies
         private int _maxUnitStackSize = 150;
 
         private readonly List<InitialArmyData> _savedArmiesData = new();
-        private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
+        private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0; // TODO remove
         public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
 
         public Vector2 UnitStackSizeRange => new(_minUnitStackSize, _maxUnitStackSize);
@@ -60,7 +69,7 @@ namespace MassBattle.Logic.Databases.Armies
             return true;
         }
 
-        // TODO
+        // TODO remove
         public IEnumerable<string> FindDescriptorIds() => throw new System.NotImplementedException();
         public ColorDescriptor TryFindNextElementFor(int index) => throw new System.NotImplementedException();
         public ColorDescriptor TryFindElementBy(string descriptorId) => throw new System.NotImplementedException();

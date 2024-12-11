@@ -13,7 +13,7 @@ namespace MassBattle.Logic.Databases.Armies
         [SerializeField]
         private string _armyName;
         [SerializeField]
-        private int _defaultUnitStackSize;
+        private int _defaultUnitStackSize; // TODO remove
         [SerializeField]
         private StrategyType _strategyType;
         [SerializeField]
