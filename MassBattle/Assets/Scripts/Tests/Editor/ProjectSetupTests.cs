@@ -23,7 +23,7 @@ namespace MassBattle.Tests.Editor
             List<ExtendedMonoInstaller> extendedMonoInstallers = new();
             ValidationData validationData = new();
 
-            foreach (var installer in monoInstallers)
+            foreach (MonoInstaller installer in monoInstallers)
             {
                 if (installer is ExtendedMonoInstaller extendedMonoInstaller)
                 {
