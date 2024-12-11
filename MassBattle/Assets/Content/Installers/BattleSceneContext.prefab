@@ -139,9 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 864479073821565148}
   - {fileID: 1692713316213907963}
   - {fileID: 4640745793393370311}
+  - {fileID: 864479073821565148}
   - {fileID: 4179735416293065126}
   - {fileID: 4206217321906574329}
   - {fileID: 3476321347618472866}
@@ -380,6 +380,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 780107696705711931}
   - {fileID: 123359439212173002}
   - {fileID: 3116072740211612810}
   - {fileID: 7162401318570924609}
@@ -750,7 +751,7 @@ GameObject:
   - component: {fileID: 780107696705711931}
   - component: {fileID: 864479073821565148}
   m_Layer: 0
-  m_Name: ArmyDatabaseInstaler
+  m_Name: BattleSetupInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,12 +765,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6489315410263908384}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5254646169799848828}
+  m_Father: {fileID: 1905512583021719352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &864479073821565148
 MonoBehaviour:
@@ -783,7 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e9493c97314d9ba89f41d5f7ef910e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armyDatabase: {fileID: 11400000, guid: cef7874774b4e10468bc33b962c0649f, type: 2}
+  _battleSetup: {fileID: 11400000, guid: cef7874774b4e10468bc33b962c0649f, type: 2}
 --- !u!1 &7829527738722948392
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +859,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 780107696705711931}
   - {fileID: 6938204529563327191}
   - {fileID: 7331797359060222287}
   m_Father: {fileID: 8352272129662848395}

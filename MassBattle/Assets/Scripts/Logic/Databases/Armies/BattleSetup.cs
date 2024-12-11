@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
-    [CreateAssetMenu(menuName = ConstantValues.DATABASE_MENU_GROUP + nameof(ArmyDatabase),
-                     fileName = nameof(ArmyDatabase), order = ConstantValues.DATABASE_MENU_ORDER)] // TODO setup
-    public class ArmyDatabase : ExtendedScriptableObject, IArmyDatabase // TODO rename to setup class + interface
+    [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(BattleSetup),
+                     fileName = nameof(BattleSetup), order = ConstantValues.SETUP_MENU_ORDER)]
+    public class BattleSetup : ExtendedScriptableObject, IBattleSetup
     {
         // TODO implement
         // min units
@@ -68,11 +68,5 @@ namespace MassBattle.Logic.Databases.Armies
 
             return true;
         }
-
-        // TODO remove
-        public IEnumerable<string> FindDescriptorIds() => throw new System.NotImplementedException();
-        public ColorDescriptor TryFindNextElementFor(int index) => throw new System.NotImplementedException();
-        public ColorDescriptor TryFindElementBy(string descriptorId) => throw new System.NotImplementedException();
-        public ColorDescriptor FindDefaultElement() => throw new System.NotImplementedException();
     }
 }

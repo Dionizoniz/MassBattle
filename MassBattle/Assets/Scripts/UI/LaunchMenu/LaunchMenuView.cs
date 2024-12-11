@@ -25,13 +25,13 @@ namespace MassBattle.UI.LaunchMenu
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
-        private IArmyDatabase _armyDatabase;
+        private IBattleSetup _battleSetup;
         private DiContainer _container;
 
         [Inject]
-        private void Construct(IArmyDatabase armyDatabase, DiContainer container)
+        private void Construct(IBattleSetup battleSetup, DiContainer container)
         {
-            _armyDatabase = armyDatabase;
+            _battleSetup = battleSetup;
             _container = container;
         }
 
@@ -53,7 +53,8 @@ namespace MassBattle.UI.LaunchMenu
 
         public void SpawnPanels()
         {
-            foreach (InitialArmyData initialArmyData in _armyDatabase.ArmiesData)
+            // TODO: improve spawning for empty list
+            foreach (InitialArmyData initialArmyData in _battleSetup.ArmiesData)
             {
                 SpawnArmyPanel(initialArmyData);
             }

@@ -24,7 +24,7 @@ namespace MassBattle.Logic.BattleCreator
         public int SpawnArmyBoundsCount => _spawnArmyBounds.Count;
         public bool IsSceneSpawned { get; private set; }
 
-        private IArmyDatabase _armyDatabase;
+        private IBattleSetup _battleSetup;
         private IArmyProvider _armyProvider;
         private IUnitDatabase _unitDatabase;
         private DiContainer _container;
@@ -33,10 +33,10 @@ namespace MassBattle.Logic.BattleCreator
 
         [Inject]
         private void Construct(
-                IArmyDatabase armyDatabase, IArmyProvider armyProvider, IUnitDatabase unitDatabase,
+                IBattleSetup battleSetup, IArmyProvider armyProvider, IUnitDatabase unitDatabase,
                 DiContainer container)
         {
-            _armyDatabase = armyDatabase;
+            _battleSetup = battleSetup;
             _armyProvider = armyProvider;
             _unitDatabase = unitDatabase;
             _container = container;
@@ -68,12 +68,12 @@ namespace MassBattle.Logic.BattleCreator
 
         private void TrySpawnArmiesInBounds()
         {
-            int armyCount = _armyDatabase.ArmiesData.Count;
+            int armyCount = _battleSetup.ArmiesData.Count;
             int boundsCount = _spawnArmyBounds.Count;
 
             for (int armyIndex = 0, boundsIndex = 0; armyIndex < armyCount && boundsIndex < boundsCount; armyIndex++)
             {
-                InitialArmyData initialArmyData = _armyDatabase.ArmiesData[armyIndex];
+                InitialArmyData initialArmyData = _battleSetup.ArmiesData[armyIndex];
                 ArmyData armyData = TrySpawnArmy(initialArmyData, _spawnArmyBounds[boundsIndex].bounds);
 
                 if (armyData != null)

@@ -37,7 +37,7 @@ namespace MassBattle.UI.LaunchMenu
         public StrategyType StrategyType => _strategyTypeWrapper.Value();
         public string ArmyId { get; private set; }
 
-        private IArmyDatabase _armyDatabase;
+        private IBattleSetup _battleSetup;
         private IColorDatabase _colorDatabase;
         private IUnitDatabase _unitDatabase;
 
@@ -45,9 +45,9 @@ namespace MassBattle.UI.LaunchMenu
         private readonly List<UnitsCountSliderController> _spawnedUnitsSliders = new();
 
         [Inject]
-        private void Construct(IArmyDatabase armyDatabase, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
+        private void Construct(IBattleSetup battleSetup, IColorDatabase colorDatabase, IUnitDatabase unitDatabase)
         {
-            _armyDatabase = armyDatabase;
+            _battleSetup = battleSetup;
             _colorDatabase = colorDatabase;
             _unitDatabase = unitDatabase;
         }
@@ -72,7 +72,7 @@ namespace MassBattle.UI.LaunchMenu
                 UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
 
-                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, _armyDatabase.UnitStackSizeRange);
+                spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, _battleSetup.UnitStackSizeRange);
                 _spawnedUnitsSliders.Add(spawnedSlider);
             }
         }

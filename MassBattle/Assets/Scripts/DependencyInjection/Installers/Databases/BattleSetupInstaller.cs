@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace MassBattle.DependencyInjection.Installers.Databases
 {
-    public class ArmyDatabaseInstaller : ExtendedMonoInstaller
+    public class BattleSetupInstaller : ExtendedMonoInstaller
     {
         [SerializeField]
-        private ArmyDatabase _armyDatabase;
+        private BattleSetup _battleSetup;
 
         public override void InstallBindings()
         {
-            BindInterfacesToFromInstance(_armyDatabase);
+            BindInterfacesToFromInstance(_battleSetup);
         }
 
-        public override bool IsSetupCorrect() => _armyDatabase != null;
+        public override bool IsSetupCorrect() => _battleSetup != null;
     }
 }
