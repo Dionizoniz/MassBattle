@@ -3,17 +3,26 @@ using System.Linq;
 using MassBattle.Core.Databases;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
+using MassBattle.Core.Installers;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases.Armies;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
 
 namespace MassBattle.Tests.Editor
 {
     public class ProjectSetupTests : BaseTests
     {
+        [Test]
+        public void _00_TestSetup_Installers()
+        {
+            var assets = FindAssets<ExtendedMonoInstaller>();
+            Assert.True(IsCorrectAssetsSetup(assets));
+        }
+
         private bool IsCorrectAssetsSetup<T>(List<T> assets) where T : ICheckSetup
         {
             bool isCorrectSetup = true;
@@ -25,13 +34,6 @@ namespace MassBattle.Tests.Editor
             }
 
             return isCorrectSetup && isAnySetup;
-        }
-
-        [Test]
-        public void _00_TestSetup_Installers() // TODO: improve issue with this test.
-        {
-            // var assets = FindAssets<ExtendedMonoInstaller>();
-            // Assert.True(IsCorrectAssetsSetup(assets));
         }
 
         [Test]
