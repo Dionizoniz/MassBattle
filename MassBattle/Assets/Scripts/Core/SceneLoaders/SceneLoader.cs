@@ -14,7 +14,8 @@ namespace MassBattle.Core.SceneLoaders
     {
         [SerializeField]
         private SceneData _loadingSceneData;
-        [SerializeField]
+
+        [Space, SerializeField]
         private SceneData _launchMenuSceneData;
         [SerializeField]
         private SceneData _battleSceneData;
@@ -22,13 +23,13 @@ namespace MassBattle.Core.SceneLoaders
         [Space, SerializeField]
         private List<SceneData> _artScenesData = new();
 
-        public string TargetSceneNameToLoad { get; private set; }
+        private SceneData _targetSceneToLoad;
 
         public void LoadLaunchMenuScene(bool useLoadingScreen = true)
         {
             if (useLoadingScreen)
             {
-                LoadScene(_launchMenuSceneData);
+                OpenLoadingSceneAfterCacheSceneToLoad(_launchMenuSceneData);
             }
             else
             {
@@ -36,11 +37,10 @@ namespace MassBattle.Core.SceneLoaders
             }
         }
 
-        private void LoadScene(SceneData sceneData)
+        private void OpenLoadingSceneAfterCacheSceneToLoad(SceneData sceneData)
         {
-            TargetSceneNameToLoad = sceneData.SceneName;
-
-            SceneManager.LoadScene(_loadingSceneData.SceneName);
+            _targetSceneToLoad = sceneData;
+            LoadSceneInstant(_loadingSceneData);
         }
 
         private void LoadSceneInstant(SceneData sceneData)
@@ -52,7 +52,7 @@ namespace MassBattle.Core.SceneLoaders
         {
             if (useLoadingScreen)
             {
-                LoadScene(_battleSceneData);
+                OpenLoadingSceneAfterCacheSceneToLoad(_battleSceneData);
             }
             else
             {
@@ -69,6 +69,17 @@ namespace MassBattle.Core.SceneLoaders
         private void LoadAdditiveScene(SceneData sceneData)
         {
             SceneManager.LoadScene(sceneData.SceneName, LoadSceneMode.Additive);
+        }
+
+        public AsyncOperation LoadTargetScene()
+        {
+            SceneData sceneToLoad = FindTargetScene();
+            return SceneManager.LoadSceneAsync(sceneToLoad.SceneName);
+        }
+
+        private SceneData FindTargetScene()
+        {
+            return string.IsNullOrEmpty(_targetSceneToLoad.SceneName) ? _launchMenuSceneData : _targetSceneToLoad;
         }
 
         private void OnValidate()
