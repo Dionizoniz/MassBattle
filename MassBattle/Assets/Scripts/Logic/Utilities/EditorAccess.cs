@@ -1,4 +1,5 @@
 using MassBattle.Core.Engine;
+using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Databases.Colors;
 using Sirenix.OdinInspector;
@@ -7,7 +8,8 @@ using UnityEngine;
 
 namespace MassBattle.Logic.Utilities
 {
-    [CreateAssetMenu(menuName = nameof(EditorAccess), fileName = nameof(EditorAccess), order = 0)]
+    [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(EditorAccess), fileName = nameof(EditorAccess),
+                     order = ConstantValues.SETUP_MENU_ORDER)]
     public class EditorAccess : ExtendedScriptableObject
     {
         private const string PATH = "Assets/Content/Setup/EditorAccess.asset";

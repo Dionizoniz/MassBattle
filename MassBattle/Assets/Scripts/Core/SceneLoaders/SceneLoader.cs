@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
+using MassBattle.Core.Providers;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +10,8 @@ using UnityEngine.SceneManagement;
 
 namespace MassBattle.Core.SceneLoaders
 {
-    [CreateAssetMenu(menuName = nameof(SceneLoader), fileName = nameof(SceneLoader), order = 0)]
+    [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(SceneLoader), fileName = nameof(SceneLoader),
+                     order = ConstantValues.SETUP_MENU_ORDER)]
     public class SceneLoader : ExtendedScriptableObject, ISceneLoader, ICheckSetup
     {
         [SerializeField]

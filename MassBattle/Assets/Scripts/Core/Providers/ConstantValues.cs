@@ -15,5 +15,8 @@
 
         public const string DESCRIPTOR_MENU_GROUP = "Descriptors/";
         public const int DESCRIPTOR_MENU_ORDER = -10000;
+
+        public const string SETUP_MENU_GROUP = "Setup/";
+        public const int SETUP_MENU_ORDER = -10000;
     }
 }
