@@ -1,5 +1,4 @@
-﻿using System;
-using MassBattle.Core.Patterns.MVC;
+﻿using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
 using UnityEngine;
@@ -25,8 +24,14 @@ namespace MassBattle.UI.LoadingScenePanel
         {
             _sceneLoader = sceneLoader;
             _updateProvider = updateProvider;
+        }
 
+        public void StartLoadingTargetScene()
+        {
             _updateProvider.OnUpdate += ManualUpdate;
+
+            _loadSceneOperation = _sceneLoader.LoadTargetScene();
+            _loadSceneOperation.allowSceneActivation = false;
         }
 
         private void ManualUpdate()
@@ -46,12 +51,6 @@ namespace MassBattle.UI.LoadingScenePanel
             {
                 _loadSceneOperation.allowSceneActivation = true;
             }
-        }
-
-        public void StartLoadingTargetScene()
-        {
-            _loadSceneOperation = _sceneLoader.LoadTargetScene();
-            _loadSceneOperation.allowSceneActivation = false;
         }
 
         private void OnDestroy()

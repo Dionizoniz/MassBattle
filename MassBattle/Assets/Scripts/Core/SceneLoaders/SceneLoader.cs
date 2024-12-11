@@ -73,7 +73,13 @@ namespace MassBattle.Core.SceneLoaders
 
         public AsyncOperation LoadTargetScene()
         {
-            return SceneManager.LoadSceneAsync(_targetSceneToLoad.SceneName);
+            SceneData sceneToLoad = FindTargetScene();
+            return SceneManager.LoadSceneAsync(sceneToLoad.SceneName);
+        }
+
+        private SceneData FindTargetScene()
+        {
+            return string.IsNullOrEmpty(_targetSceneToLoad.SceneName) ? _launchMenuSceneData : _targetSceneToLoad;
         }
 
         private void OnValidate()
