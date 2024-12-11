@@ -10,7 +10,7 @@ using MassBattle.Logic.BattleCreator;
 using MassBattle.Logic.Databases.Armies;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Tests.Editor
 {
@@ -19,42 +19,72 @@ namespace MassBattle.Tests.Editor
         [Test]
         public void _00_TestSetup_Installers()
         {
-            var assets = FindAssets<ExtendedMonoInstaller>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            IEnumerable<MonoInstaller> monoInstallers = FindAssets<SceneContext>().SelectMany(s => s.Installers);
+            List<ExtendedMonoInstaller> extendedMonoInstallers = new();
+            ValidationData validationData = new();
+
+            foreach (var installer in monoInstallers)
+            {
+                if (installer is ExtendedMonoInstaller extendedMonoInstaller)
+                {
+                    extendedMonoInstallers.Add(extendedMonoInstaller);
+                }
+                else
+                {
+                    validationData.AddErrorMessage($"Installer {installer.GetType()} has wrong base class.");
+                }
+            }
+
+            validationData = IsCorrectAssetsSetup(extendedMonoInstallers, validationData);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
-        private bool IsCorrectAssetsSetup<T>(List<T> assets) where T : ICheckSetup
+        private ValidationData IsCorrectAssetsSetup<T>(List<T> assets, ValidationData data = null) where T : ICheckSetup
         {
-            bool isCorrectSetup = true;
-            bool isAnySetup = assets.Any();
+            data ??= new ValidationData();
+
+            if (assets.Any() == false)
+            {
+                data.AddErrorMessage($"No assets of type {typeof(T)} found.");
+            }
 
             foreach (T asset in assets)
             {
-                isCorrectSetup &= asset.IsSetupCorrect();
+                if (asset.IsSetupCorrect() == false)
+                {
+                    data.AddErrorMessage($"Asset {asset} is not setup correctly");
+                }
             }
 
-            return isCorrectSetup && isAnySetup;
+            return data;
         }
 
         [Test]
         public void _01_TestSetup_Databases()
         {
             List<BaseDatabase> assets = FindAssets<BaseDatabase>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
         [Test]
         public void _02_TestSetup_SceneLoaders()
         {
             List<SceneLoader> assets = FindAssets<SceneLoader>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
         [Test]
         public void _03_TestSetup_BattleSpawners()
         {
             List<ArmySpawner> assets = FindAssets<ArmySpawner>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
         [Test]
@@ -73,14 +103,18 @@ namespace MassBattle.Tests.Editor
         public void _05_TestSetup_SceneEntities()
         {
             List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
         [Test]
         public void _06_TestSetup_ControllersInMVC()
         {
             List<BaseController> assets = FindAssets<BaseController>();
-            Assert.True(IsCorrectAssetsSetup(assets));
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
         [Test]
