@@ -53,8 +53,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public void SpawnPanels()
         {
-            // TODO: improve spawning for empty list
-            foreach (InitialArmyData initialArmyData in _battleSetup.SavedArmiesData)
+            foreach (InitialArmyData initialArmyData in _battleSetup.ArmiesData)
             {
                 SpawnArmyPanel(initialArmyData);
             }

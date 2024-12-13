@@ -67,7 +67,7 @@ namespace MassBattle.UI.LaunchMenu
 
         private void SpawnUnitsSliders(InitialArmyData initialArmyData)
         {
-            foreach (var unitSetup in FindUnitsCountSetup(initialArmyData))
+            foreach (var unitSetup in initialArmyData.UnitsCountSetup)
             {
                 UnitDescriptor unitDescriptor = _unitDatabase.TryFindElementBy(unitSetup.Key);
                 UnitsCountSliderController spawnedSlider = Instantiate(_unitCountSlidersToSpawn, _unitCountSlidersRoot);
@@ -75,11 +75,6 @@ namespace MassBattle.UI.LaunchMenu
                 spawnedSlider.Initialize(unitDescriptor, unitSetup.Value, _battleSetup.UnitStackSizeRange);
                 _spawnedUnitsSliders.Add(spawnedSlider);
             }
-        }
-
-        private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
-        {
-            return initialArmyData.UnitsCountSetup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData);
         }
 
         public void ChangeArmyColorToNext()

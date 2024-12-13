@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
+using MassBattle.Logic.Databases.Colors;
+using MassBattle.Logic.Databases.Units;
+using MassBattle.Logic.Strategies;
 using UnityEngine;
+using Zenject;
 
 namespace MassBattle.Logic.Battle.Setup
 {
@@ -19,10 +23,35 @@ namespace MassBattle.Logic.Battle.Setup
         [Space, SerializeField]
         private int _maxArmiesCount = 4;
         [SerializeField]
-        private int _defaultActiveArmiesCount = 4;
+        private int _defaultActiveArmiesCount = 2;
+
+        [Space, SerializeField]
+        private ColorDatabase _colorDatabase;
+        [SerializeField]
+        private UnitDatabase _unitDatabase;
 
         public Vector2 UnitStackSizeRange => new(_minUnitStackSize, _maxUnitStackSize);
-        public List<InitialArmyData> SavedArmiesData { get; private set; }
+        private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0;
+        public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : GenerateDefaultArmies();
+
+        private readonly List<InitialArmyData> _savedArmiesData = new();
+
+        private List<InitialArmyData> GenerateDefaultArmies()
+        {
+            List<InitialArmyData> defaultArmies = new();
+            int id = 0;
+
+            foreach (var colorDescriptor in _colorDatabase.AllColors)
+            {
+                InitialArmyData data = new(id.ToString(), $"Army {id}",
+                                           _unitDatabase.GenerateDefaultUnitsCountSetup(_defaultUnitStackSize),
+                                           StrategyType.Basic, colorDescriptor.Color, true);
+
+                defaultArmies.Add(data);
+            }
+
+            return defaultArmies;
+        }
 
         public void SaveArmyData(InitialArmyData armyData)
         {
@@ -30,25 +59,27 @@ namespace MassBattle.Logic.Battle.Setup
 
             if (index >= 0)
             {
-                SavedArmiesData.RemoveAt(index);
+                _savedArmiesData.RemoveAt(index);
             }
 
-            SavedArmiesData.Add(armyData);
+            _savedArmiesData.Add(armyData);
         }
 
         private int FindSavedArmyDataIndexBy(string id)
         {
-            return SavedArmiesData.FindIndex(data => data.DescriptorId == id);
+            return _savedArmiesData.FindIndex(data => data.DescriptorId == id);
         }
 
         public void ClearSavedArmiesData()
         {
-            SavedArmiesData.Clear();
+            _savedArmiesData.Clear();
         }
 
         public bool IsSetupCorrect() // TODO improve
         {
-            // bool isSetupCorrect = base.IsSetupCorrect();
+            bool isSetupCorrect =
+                    _defaultUnitStackSize >= _minUnitStackSize && _defaultUnitStackSize <= _maxUnitStackSize;
+
             //
             // foreach (var initialArmyData in _descriptors)
             // {

@@ -1,4 +1,5 @@
-﻿using MassBattle.Core.Databases;
+﻿using System.Collections.Generic;
+using MassBattle.Core.Databases;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Colors
@@ -7,6 +8,7 @@ namespace MassBattle.Logic.Databases.Colors
     {
         Color DamageColor { get; }
         Color DeathColor { get; }
+        List<ColorDescriptor> AllColors { get; }
 
         int FindColorIndex(Color color);
     }

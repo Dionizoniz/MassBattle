@@ -68,12 +68,12 @@ namespace MassBattle.Logic.Battle.Spawner
 
         private void TrySpawnArmiesInBounds()
         {
-            int armyCount = _battleSetup.SavedArmiesData.Count;
+            int armyCount = _battleSetup.ArmiesData.Count;
             int boundsCount = _spawnArmyBounds.Count;
 
             for (int armyIndex = 0, boundsIndex = 0; armyIndex < armyCount && boundsIndex < boundsCount; armyIndex++)
             {
-                InitialArmyData initialArmyData = _battleSetup.SavedArmiesData[armyIndex];
+                InitialArmyData initialArmyData = _battleSetup.ArmiesData[armyIndex];
                 ArmyData armyData = TrySpawnArmy(initialArmyData, _spawnArmyBounds[boundsIndex].bounds);
 
                 if (armyData != null)
@@ -97,7 +97,7 @@ namespace MassBattle.Logic.Battle.Spawner
             {
                 Dictionary<string, List<BaseUnit>> spawnedUnits = new();
 
-                foreach (KeyValuePair<string, int> unitSetup in FindUnitsCountSetup(initialArmyData))
+                foreach (KeyValuePair<string, int> unitSetup in initialArmyData.UnitsCountSetup)
                 {
                     List<BaseUnit> units = SpawnUnits(unitSetup, initialArmyData, spawnBounds);
                     spawnedUnits.Add(unitSetup.Key, units);
@@ -107,11 +107,6 @@ namespace MassBattle.Logic.Battle.Spawner
             }
 
             return armyData;
-        }
-
-        private Dictionary<string, int> FindUnitsCountSetup(InitialArmyData initialArmyData)
-        {
-            return initialArmyData.UnitsCountSetup ?? _unitDatabase.GenerateDefaultUnitsCountSetup(initialArmyData);
         }
 
         private List<BaseUnit> SpawnUnits(
