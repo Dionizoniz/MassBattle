@@ -39,13 +39,13 @@ namespace MassBattle.Logic.Battle.Setup
         private List<InitialArmyData> GenerateDefaultArmies()
         {
             List<InitialArmyData> defaultArmies = new();
-            int id = 0;
 
-            foreach (var colorDescriptor in _colorDatabase.AllColors)
+            for (int i = 0; i < _maxArmiesCount; i++) // TODO improve
             {
-                InitialArmyData data = new(id.ToString(), $"Army {id}",
+                InitialArmyData data = new(i.ToString(), $"Army {i}",
                                            _unitDatabase.GenerateDefaultUnitsCountSetup(_defaultUnitStackSize),
-                                           StrategyType.Basic, colorDescriptor.Color, true);
+                                           StrategyType.Basic, _colorDatabase.AllColors[i].Color,
+                                           i < _defaultActiveArmiesCount);
 
                 defaultArmies.Add(data);
             }
