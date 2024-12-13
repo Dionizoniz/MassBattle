@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 32
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229309019a1a480b813aa936b5ece9a2, type: 3}
+  m_Name: BattleSetup
+  m_EditorClassIdentifier: 
+  _minUnitStackSize: 0
+  _maxUnitStackSize: 150
+  _defaultUnitStackSize: 100
+  _maxArmiesCount: 4
+  _defaultActiveArmiesCount: 2
+  _defaultArmyNamePrefix: Army
+  _defaultStrategyType: 0
+  _colorDatabase: {fileID: 11400000, guid: e26ceef2b9a95fe40a5692d22d27a73d, type: 2}
+  _unitDatabase: {fileID: 11400000, guid: 4658a0618b0a8e9498dfab3afbd64200, type: 2}

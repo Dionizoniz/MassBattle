@@ -5,15 +5,13 @@ using MassBattle.Core.Entities;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.Armies
+namespace MassBattle.Logic.Battle.Setup
 {
     [Serializable]
-    public class InitialArmyData : BaseData, ICheckSetup, IName
+    public class InitialArmyData : BaseData, IName
     {
         [SerializeField]
         private string _armyName;
-        [SerializeField]
-        private int _defaultUnitStackSize;
         [SerializeField]
         private StrategyType _strategyType;
         [SerializeField]
@@ -22,7 +20,6 @@ namespace MassBattle.Logic.Databases.Armies
         private bool _isArmyActive;
 
         public string Name => _armyName;
-        public int DefaultUnitStackSize => _defaultUnitStackSize;
         public StrategyType StrategyType => _strategyType;
         public Color ArmyColor => _armyColor;
         public bool IsArmyActive => _isArmyActive;
@@ -40,16 +37,6 @@ namespace MassBattle.Logic.Databases.Armies
             _armyColor = armyColor;
             _isArmyActive = isArmyActive;
             UnitsCountSetup = unitsCountSetup;
-        }
-
-        public bool IsSetupCorrect()
-        {
-            bool isSetupCorrect = true;
-
-            isSetupCorrect &= string.IsNullOrEmpty(_armyName) == false;
-            isSetupCorrect &= _defaultUnitStackSize > 0;
-
-            return isSetupCorrect;
         }
     }
 }

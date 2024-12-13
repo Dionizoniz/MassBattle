@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using MassBattle.Core.Databases;
-using MassBattle.Logic.Databases.Colors;
+using MassBattle.Core.Entities;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.Armies
+namespace MassBattle.Logic.Battle.Setup
 {
-    public interface IArmyDatabase : IDatabase<ColorDescriptor>
+    public interface IBattleSetup : ICheckSetup
     {
         List<InitialArmyData> ArmiesData { get; }
 

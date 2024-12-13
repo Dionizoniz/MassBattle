@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -25,13 +25,13 @@ namespace MassBattle.UI.LaunchMenu
 
         public List<ArmyPanelController> ArmyPanels { get; } = new();
 
-        private IArmyDatabase _armyDatabase;
+        private IBattleSetup _battleSetup;
         private DiContainer _container;
 
         [Inject]
-        private void Construct(IArmyDatabase armyDatabase, DiContainer container)
+        private void Construct(IBattleSetup battleSetup, DiContainer container)
         {
-            _armyDatabase = armyDatabase;
+            _battleSetup = battleSetup;
             _container = container;
         }
 
@@ -53,7 +53,7 @@ namespace MassBattle.UI.LaunchMenu
 
         public void SpawnPanels()
         {
-            foreach (InitialArmyData initialArmyData in _armyDatabase.ArmiesData)
+            foreach (InitialArmyData initialArmyData in _battleSetup.ArmiesData)
             {
                 SpawnArmyPanel(initialArmyData);
             }

@@ -1,0 +1,19 @@
+﻿using MassBattle.Core.Installers;
+using MassBattle.Logic.Battle.Setup;
+using UnityEngine;
+
+namespace MassBattle.DependencyInjection.Installers.Databases
+{
+    public class BattleSetupInstaller : ExtendedMonoInstaller
+    {
+        [SerializeField]
+        private BattleSetup _battleSetup;
+
+        public override void InstallBindings()
+        {
+            BindInterfacesToFromInstance(_battleSetup);
+        }
+
+        public override bool IsSetupCorrect() => _battleSetup != null;
+    }
+}

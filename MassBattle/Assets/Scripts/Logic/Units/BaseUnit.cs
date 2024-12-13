@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using MassBattle.Core.Engine;
-using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Providers;
 using MassBattle.Logic.Strategies;

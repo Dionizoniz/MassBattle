@@ -1,4 +1,4 @@
-﻿namespace MassBattle.Logic.BattleCreator
+﻿namespace MassBattle.Logic.Battle.Spawner
 {
     public interface IArmySpawner
     { }

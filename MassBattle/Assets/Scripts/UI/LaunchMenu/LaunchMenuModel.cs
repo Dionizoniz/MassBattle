@@ -4,7 +4,7 @@ using System.Linq;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using UnityEngine;
 using Zenject;
 
@@ -16,14 +16,14 @@ namespace MassBattle.UI.LaunchMenu
         private float _applicationExitDelay = 3f;
 
         private ISceneLoader _sceneLoader;
-        private IArmyDatabase _armyDatabase;
+        private IBattleSetup _battleSetup;
         private IExitGameProvider _exitGameProvider;
 
         [Inject]
-        private void Construct(ISceneLoader sceneLoader, IArmyDatabase armyDatabase, IExitGameProvider exitGameProvider)
+        private void Construct(ISceneLoader sceneLoader, IBattleSetup battleSetup, IExitGameProvider exitGameProvider)
         {
             _sceneLoader = sceneLoader;
-            _armyDatabase = armyDatabase;
+            _battleSetup = battleSetup;
             _exitGameProvider = exitGameProvider;
         }
 
@@ -82,7 +82,7 @@ namespace MassBattle.UI.LaunchMenu
 
         private void ClearRegisteredArmySetups()
         {
-            _armyDatabase.ClearSavedArmiesData();
+            _battleSetup.ClearSavedArmiesData();
         }
 
         private void RegisterArmiesSetup()
@@ -90,7 +90,7 @@ namespace MassBattle.UI.LaunchMenu
             foreach (var panel in _view.ArmyPanels)
             {
                 InitialArmyData armySetup = panel.CreateArmySetup();
-                _armyDatabase.SaveArmyData(armySetup);
+                _battleSetup.SaveArmyData(armySetup);
             }
         }
 

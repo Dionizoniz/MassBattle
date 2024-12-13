@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Databases;
 using MassBattle.Core.Engine;
-using MassBattle.Core.Entities;
 using MassBattle.Core.Installers;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
-using MassBattle.Logic.BattleCreator;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
+using MassBattle.Logic.Battle.Spawner;
+using MassBattle.Logic.Databases.Colors;
 using NUnit.Framework;
 using UnityEditor;
 using Zenject;
@@ -40,81 +40,46 @@ namespace MassBattle.Tests.Editor
             Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
-        private ValidationData IsCorrectAssetsSetup<T>(List<T> assets, ValidationData data = null) where T : ICheckSetup
-        {
-            data ??= new ValidationData();
-
-            if (assets.Any() == false)
-            {
-                data.AddErrorMessage($"No assets of type {typeof(T)} found.");
-            }
-
-            foreach (T asset in assets)
-            {
-                if (asset.IsSetupCorrect() == false)
-                {
-                    data.AddErrorMessage($"Asset {asset} is not setup correctly");
-                }
-            }
-
-            return data;
-        }
-
         [Test]
         public void _01_TestSetup_Databases()
         {
-            List<BaseDatabase> assets = FindAssets<BaseDatabase>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseDatabase>();
         }
 
         [Test]
         public void _02_TestSetup_SceneLoaders()
         {
-            List<SceneLoader> assets = FindAssets<SceneLoader>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<SceneLoader>();
         }
 
         [Test]
         public void _03_TestSetup_BattleSpawners()
         {
-            List<ArmySpawner> assets = FindAssets<ArmySpawner>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<ArmySpawner>();
         }
 
         [Test]
         public void _04_TestSetup_BattleSpawnersHaveEnoughSpawnAreas()
         {
             List<ArmySpawner> spawners = FindAssets<ArmySpawner>();
-            List<ArmyDatabase> databases = FindAssets<ArmyDatabase>();
+            List<BattleSetup> setups = FindAssets<BattleSetup>();
 
-            int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = databases.Max(setup => setup.FindDescriptorIds().Count());
+            int minBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
+            int maxArmiesCount = setups.Max(setup => setup.ArmiesData.Count);
 
-            Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
+            Assert.True(minBoundsCount >= maxArmiesCount);
         }
 
         [Test]
         public void _05_TestSetup_SceneEntities()
         {
-            List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseSceneEntity>();
         }
 
         [Test]
-        public void _06_TestSetup_ControllersInMVC()
+        public void _06_TestSetup_ControllersInMvc()
         {
-            List<BaseController> assets = FindAssets<BaseController>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseController>();
         }
 
         [Test]
@@ -124,6 +89,24 @@ namespace MassBattle.Tests.Editor
             bool isNotEmptySceneCollection = editorBuildSettingsScenes.All(s => s.enabled);
 
             Assert.True(isNotEmptySceneCollection);
+        }
+
+        [Test]
+        public void _08_TestSetup_ColorDatabaseHaveEnoughColors()
+        {
+            List<ColorDatabase> databases = FindAssets<ColorDatabase>();
+            List<BattleSetup> setups = FindAssets<BattleSetup>();
+
+            int minColorsCount = databases.Min(spawner => spawner.AllColors.Count);
+            int maxArmiesCount = setups.Max(setup => setup.ArmiesData.Count);
+
+            Assert.True(minColorsCount >= maxArmiesCount);
+        }
+
+        [Test]
+        public void _09_TestSetup_BattleSetups()
+        {
+            ValidateAssets<BattleSetup>();
         }
     }
 }
