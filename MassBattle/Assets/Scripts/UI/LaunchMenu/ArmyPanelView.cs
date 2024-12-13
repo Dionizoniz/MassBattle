@@ -2,7 +2,7 @@
 using System.Linq;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Utilities;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Strategies;

@@ -1,5 +1,5 @@
 ﻿using MassBattle.Core.Installers;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using UnityEngine;
 
 namespace MassBattle.DependencyInjection.Installers.Databases

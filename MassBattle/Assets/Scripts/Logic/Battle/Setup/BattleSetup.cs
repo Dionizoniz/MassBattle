@@ -3,7 +3,7 @@ using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.Armies
+namespace MassBattle.Logic.Battle.Setup
 {
     [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(BattleSetup), fileName = nameof(BattleSetup),
                      order = ConstantValues.SETUP_MENU_ORDER)]

@@ -2,7 +2,7 @@
 using MassBattle.Core.Entities;
 using UnityEngine;
 
-namespace MassBattle.Logic.Databases.Armies
+namespace MassBattle.Logic.Battle.Setup
 {
     public interface IBattleSetup : ICheckSetup
     {

@@ -1,5 +1,5 @@
 ﻿using MassBattle.Core.Installers;
-using MassBattle.Logic.BattleCreator;
+using MassBattle.Logic.Battle.Spawner;
 using UnityEngine;
 
 namespace MassBattle.DependencyInjection.Installers.Systems

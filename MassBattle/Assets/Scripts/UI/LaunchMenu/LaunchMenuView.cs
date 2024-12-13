@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.Providers;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using TMPro;
 using UnityEngine;
 using Zenject;

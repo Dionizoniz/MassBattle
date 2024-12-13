@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Patterns.MVC;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 
 namespace MassBattle.UI.LaunchMenu
 {

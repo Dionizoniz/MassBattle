@@ -5,14 +5,14 @@ using MassBattle.Core.Engine;
 using MassBattle.Core.Entities;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Armies;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Units;
 using MassBattle.Logic.Utilities;
 using UnityEngine;
 using Zenject;
 
-namespace MassBattle.Logic.BattleCreator
+namespace MassBattle.Logic.Battle.Spawner
 {
     public class ArmySpawner : ExtendedMonoBehaviour, IArmySpawner, ICheckSetup, ISceneSpawner
     {

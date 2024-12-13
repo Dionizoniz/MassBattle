@@ -2,7 +2,7 @@
 using System.Linq;
 using MassBattle.Core.Databases;
 using MassBattle.Core.Providers;
-using MassBattle.Logic.Databases.Armies;
+using MassBattle.Logic.Battle.Setup;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Units
