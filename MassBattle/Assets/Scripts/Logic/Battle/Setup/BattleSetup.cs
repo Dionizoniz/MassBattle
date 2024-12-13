@@ -5,7 +5,6 @@ using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
 using MassBattle.Logic.Strategies;
 using UnityEngine;
-using Zenject;
 
 namespace MassBattle.Logic.Battle.Setup
 {
@@ -24,6 +23,11 @@ namespace MassBattle.Logic.Battle.Setup
         private int _maxArmiesCount = 4;
         [SerializeField]
         private int _defaultActiveArmiesCount = 2;
+        [SerializeField]
+        private string _defaultArmyNamePrefix = "Army";
+
+        [Space, SerializeField]
+        private StrategyType _defaultStrategyType = StrategyType.Basic;
 
         [Space, SerializeField]
         private ColorDatabase _colorDatabase;
@@ -40,18 +44,27 @@ namespace MassBattle.Logic.Battle.Setup
         {
             List<InitialArmyData> defaultArmies = new();
 
-            for (int i = 0; i < _maxArmiesCount; i++) // TODO improve
+            for (int i = 0; i < _maxArmiesCount; i++)
             {
-                InitialArmyData data = new(i.ToString(), $"Army {i}",
-                                           _unitDatabase.GenerateDefaultUnitsCountSetup(_defaultUnitStackSize),
-                                           StrategyType.Basic, _colorDatabase.AllColors[i].Color,
-                                           i < _defaultActiveArmiesCount);
-
+                InitialArmyData data = GenerateDefaultArmy(i);
                 defaultArmies.Add(data);
             }
 
             return defaultArmies;
         }
+
+        private InitialArmyData GenerateDefaultArmy(int index)
+        {
+            Dictionary<string, int> unitsCountSetup = _unitDatabase.GenerateUnitsCountSetup(_defaultUnitStackSize);
+            Color color = _colorDatabase.AllColors[index].Color;
+            bool isActive = index < _defaultActiveArmiesCount;
+
+            return new InitialArmyData(FindArmyId(index), FindArmyName(index), unitsCountSetup, _defaultStrategyType,
+                                       color, isActive);
+        }
+
+        private string FindArmyId(int index) => index.ToString();
+        private string FindArmyName(int index) => $"{_defaultArmyNamePrefix} {index + 1}";
 
         public void SaveArmyData(InitialArmyData armyData)
         {
@@ -75,21 +88,14 @@ namespace MassBattle.Logic.Battle.Setup
             _savedArmiesData.Clear();
         }
 
-        public bool IsSetupCorrect() // TODO improve
+        public bool IsSetupCorrect()
         {
-            bool isSetupCorrect =
-                    _defaultUnitStackSize >= _minUnitStackSize && _defaultUnitStackSize <= _maxUnitStackSize;
+            bool isCorrectStackSetup = _defaultUnitStackSize >= _minUnitStackSize &&
+                                       _defaultUnitStackSize <= _maxUnitStackSize;
 
-            //
-            // foreach (var initialArmyData in _descriptors)
-            // {
-            //     //    isSetupCorrect &= initialArmyData.IsSetupCorrect(); TODO restore code
-            //
-            //     //    int unitStackSize = initialArmyData.DefaultUnitStackSize;
-            //     //    isSetupCorrect &= unitStackSize >= MinUnitStackSize && unitStackSize <= MaxUnitStackSize;
-            // }
+            bool isCorrectArmySetup = _defaultActiveArmiesCount <= _maxArmiesCount;
 
-            return true;
+            return isCorrectStackSetup && isCorrectArmySetup && _colorDatabase != null && _unitDatabase != null;
         }
     }
 }

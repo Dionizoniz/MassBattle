@@ -13,7 +13,7 @@ namespace MassBattle.Logic.Databases.Units
     {
         public IEnumerable<UnitDescriptor> AllUnits => _descriptors.Select(descriptor => descriptor);
 
-        public Dictionary<string, int> GenerateDefaultUnitsCountSetup(int unitStackSize)
+        public Dictionary<string, int> GenerateUnitsCountSetup(int unitStackSize)
         {
             Dictionary<string, int> defaultUnitsCountSetup = new();
 
