@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MassBattle.Core.Databases;
 using MassBattle.Core.Engine;
-using MassBattle.Core.Entities;
 using MassBattle.Core.Installers;
 using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
@@ -41,51 +40,22 @@ namespace MassBattle.Tests.Editor
             Assert.True(validationData.IsValid, validationData.ErrorMessage);
         }
 
-        private ValidationData IsCorrectAssetsSetup<T>(List<T> assets, ValidationData data = null) where T : ICheckSetup
-        {
-            data ??= new ValidationData();
-
-            if (assets.Any() == false)
-            {
-                data.AddErrorMessage($"No assets of type {typeof(T)} found.");
-            }
-
-            foreach (T asset in assets)
-            {
-                if (asset.IsSetupCorrect() == false)
-                {
-                    data.AddErrorMessage($"Asset {asset} is not setup correctly");
-                }
-            }
-
-            return data;
-        }
-
         [Test]
         public void _01_TestSetup_Databases()
         {
-            List<BaseDatabase> assets = FindAssets<BaseDatabase>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseDatabase>();
         }
 
         [Test]
         public void _02_TestSetup_SceneLoaders()
         {
-            List<SceneLoader> assets = FindAssets<SceneLoader>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<SceneLoader>();
         }
 
         [Test]
         public void _03_TestSetup_BattleSpawners()
         {
-            List<ArmySpawner> assets = FindAssets<ArmySpawner>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<ArmySpawner>();
         }
 
         [Test]
@@ -103,19 +73,13 @@ namespace MassBattle.Tests.Editor
         [Test]
         public void _05_TestSetup_SceneEntities()
         {
-            List<BaseSceneEntity> assets = FindAssets<BaseSceneEntity>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseSceneEntity>();
         }
 
         [Test]
         public void _06_TestSetup_ControllersInMvc()
         {
-            List<BaseController> assets = FindAssets<BaseController>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BaseController>();
         }
 
         [Test]
@@ -142,10 +106,7 @@ namespace MassBattle.Tests.Editor
         [Test]
         public void _09_TestSetup_BattleSetups()
         {
-            List<BattleSetup> assets = FindAssets<BattleSetup>();
-            ValidationData validationData = IsCorrectAssetsSetup(assets);
-
-            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+            ValidateAssets<BattleSetup>();
         }
     }
 }
