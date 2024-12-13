@@ -68,12 +68,12 @@ namespace MassBattle.Logic.BattleCreator
 
         private void TrySpawnArmiesInBounds()
         {
-            int armyCount = _battleSetup.ArmiesData.Count;
+            int armyCount = _battleSetup.SavedArmiesData.Count;
             int boundsCount = _spawnArmyBounds.Count;
 
             for (int armyIndex = 0, boundsIndex = 0; armyIndex < armyCount && boundsIndex < boundsCount; armyIndex++)
             {
-                InitialArmyData initialArmyData = _battleSetup.ArmiesData[armyIndex];
+                InitialArmyData initialArmyData = _battleSetup.SavedArmiesData[armyIndex];
                 ArmyData armyData = TrySpawnArmy(initialArmyData, _spawnArmyBounds[boundsIndex].bounds);
 
                 if (armyData != null)

@@ -6,7 +6,7 @@ namespace MassBattle.Logic.Databases.Armies
 {
     public interface IBattleSetup : ICheckSetup
     {
-        List<InitialArmyData> ArmiesData { get; }
+        List<InitialArmyData> SavedArmiesData { get; }
 
         Vector2 UnitStackSizeRange { get; }
 

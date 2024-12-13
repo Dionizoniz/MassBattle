@@ -1,36 +1,28 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Engine;
 using MassBattle.Core.Providers;
-using MassBattle.Logic.Databases.Colors;
 using UnityEngine;
 
 namespace MassBattle.Logic.Databases.Armies
 {
-    [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(BattleSetup),
-                     fileName = nameof(BattleSetup), order = ConstantValues.SETUP_MENU_ORDER)]
+    [CreateAssetMenu(menuName = ConstantValues.SETUP_MENU_GROUP + nameof(BattleSetup), fileName = nameof(BattleSetup),
+                     order = ConstantValues.SETUP_MENU_ORDER)]
     public class BattleSetup : ExtendedScriptableObject, IBattleSetup
     {
-        // TODO implement
-        // min units
-        // max units
-        // default units 
-        // max army count
-        // default active army count
-
-        // saved armies data
-
-        [SerializeField]
-        protected List<InitialArmyData> _elements = new();
         [Space, SerializeField]
         private int _minUnitStackSize;
         [SerializeField]
         private int _maxUnitStackSize = 150;
+        [SerializeField]
+        private int _defaultUnitStackSize = 100;
 
-        private readonly List<InitialArmyData> _savedArmiesData = new();
-        private bool UseSavedArmiesData => _savedArmiesData != null && _savedArmiesData.Count > 0; // TODO remove
-        public List<InitialArmyData> ArmiesData => UseSavedArmiesData ? _savedArmiesData : _elements;
+        [Space, SerializeField]
+        private int _maxArmiesCount = 4;
+        [SerializeField]
+        private int _defaultActiveArmiesCount = 4;
 
         public Vector2 UnitStackSizeRange => new(_minUnitStackSize, _maxUnitStackSize);
+        public List<InitialArmyData> SavedArmiesData { get; private set; }
 
         public void SaveArmyData(InitialArmyData armyData)
         {
@@ -38,23 +30,23 @@ namespace MassBattle.Logic.Databases.Armies
 
             if (index >= 0)
             {
-                _savedArmiesData.RemoveAt(index);
+                SavedArmiesData.RemoveAt(index);
             }
 
-            _savedArmiesData.Add(armyData);
+            SavedArmiesData.Add(armyData);
         }
 
         private int FindSavedArmyDataIndexBy(string id)
         {
-            return _savedArmiesData.FindIndex(armyData => armyData.DescriptorId == id);
+            return SavedArmiesData.FindIndex(data => data.DescriptorId == id);
         }
 
         public void ClearSavedArmiesData()
         {
-            _savedArmiesData.Clear();
+            SavedArmiesData.Clear();
         }
 
-        public bool IsSetupCorrect() // TODO
+        public bool IsSetupCorrect() // TODO improve
         {
             // bool isSetupCorrect = base.IsSetupCorrect();
             //
