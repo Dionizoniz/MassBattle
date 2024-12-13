@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MassBattle.Core.Engine;
+using MassBattle.Core.ExtensionMethods;
 using MassBattle.Core.Providers;
 using MassBattle.Logic.Databases.Colors;
 using MassBattle.Logic.Databases.Units;
@@ -90,9 +91,7 @@ namespace MassBattle.Logic.Battle.Setup
 
         public bool IsSetupCorrect()
         {
-            bool isCorrectStackSetup = _defaultUnitStackSize >= _minUnitStackSize &&
-                                       _defaultUnitStackSize <= _maxUnitStackSize;
-
+            bool isCorrectStackSetup = _defaultUnitStackSize.IsInRange(_minUnitStackSize, _maxUnitStackSize);
             bool isCorrectArmySetup = _defaultActiveArmiesCount <= _maxArmiesCount;
 
             return isCorrectStackSetup && isCorrectArmySetup && _colorDatabase != null && _unitDatabase != null;
