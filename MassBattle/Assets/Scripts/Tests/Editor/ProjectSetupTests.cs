@@ -8,6 +8,7 @@ using MassBattle.Core.Patterns.MVC;
 using MassBattle.Core.SceneLoaders;
 using MassBattle.Logic.Battle.Setup;
 using MassBattle.Logic.Battle.Spawner;
+using MassBattle.Logic.Databases.Colors;
 using NUnit.Framework;
 using UnityEditor;
 using Zenject;
@@ -93,10 +94,10 @@ namespace MassBattle.Tests.Editor
             List<ArmySpawner> spawners = FindAssets<ArmySpawner>();
             List<BattleSetup> setups = FindAssets<BattleSetup>();
 
-            int minSpawnArmyBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
-            int maxArmyIdsCount = setups.Max(setup => setup.ArmiesData.Count);
+            int minBoundsCount = spawners.Min(spawner => spawner.SpawnArmyBoundsCount);
+            int maxArmiesCount = setups.Max(setup => setup.ArmiesData.Count);
 
-            Assert.True(minSpawnArmyBoundsCount >= maxArmyIdsCount);
+            Assert.True(minBoundsCount >= maxArmiesCount);
         }
 
         [Test]
@@ -109,7 +110,7 @@ namespace MassBattle.Tests.Editor
         }
 
         [Test]
-        public void _06_TestSetup_ControllersInMVC()
+        public void _06_TestSetup_ControllersInMvc()
         {
             List<BaseController> assets = FindAssets<BaseController>();
             ValidationData validationData = IsCorrectAssetsSetup(assets);
@@ -124,6 +125,18 @@ namespace MassBattle.Tests.Editor
             bool isNotEmptySceneCollection = editorBuildSettingsScenes.All(s => s.enabled);
 
             Assert.True(isNotEmptySceneCollection);
+        }
+
+        [Test]
+        public void _08_TestSetup_ColorDatabaseHaveEnoughColors()
+        {
+            List<ColorDatabase> databases = FindAssets<ColorDatabase>();
+            List<BattleSetup> setups = FindAssets<BattleSetup>();
+
+            int minColorsCount = databases.Min(spawner => spawner.AllColors.Count);
+            int maxArmiesCount = setups.Max(setup => setup.ArmiesData.Count);
+
+            Assert.True(minColorsCount >= maxArmiesCount);
         }
     }
 }
