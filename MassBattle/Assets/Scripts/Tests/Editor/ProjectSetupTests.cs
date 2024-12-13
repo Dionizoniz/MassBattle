@@ -138,5 +138,14 @@ namespace MassBattle.Tests.Editor
 
             Assert.True(minColorsCount >= maxArmiesCount);
         }
+
+        [Test]
+        public void _09_TestSetup_BattleSetups()
+        {
+            List<BattleSetup> assets = FindAssets<BattleSetup>();
+            ValidationData validationData = IsCorrectAssetsSetup(assets);
+
+            Assert.True(validationData.IsValid, validationData.ErrorMessage);
+        }
     }
 }
