@@ -43,12 +43,12 @@ namespace MassBattle.UI.LaunchMenu
 
         private void HideErrorMessage()
         {
-            _errorMessageRoot.gameObject.SetActive(false);
+            _errorMessageRoot.SetActive(false);
         }
 
         private void HideExitPanel()
         {
-            _exitScreenRoot.gameObject.SetActive(false);
+            _exitScreenRoot.SetActive(false);
         }
 
         public void SpawnPanels()
@@ -81,12 +81,12 @@ namespace MassBattle.UI.LaunchMenu
         private void ShowErrorMessage(string errorMessage)
         {
             _errorMessageLabel.text = errorMessage;
-            _errorMessageRoot.gameObject.SetActive(true);
+            _errorMessageRoot.SetActive(true);
         }
 
         public void ShowExitPanel()
         {
-            _exitScreenRoot.gameObject.SetActive(true);
+            _exitScreenRoot.SetActive(true);
         }
 
         private void OnDestroy()
